@@ -3,6 +3,7 @@ import { routerTransition } from '../../../router.animations';
 import { Observable } from 'rxjs';
 import { PersonaService } from '../../../servicios/persona.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consultar-persona',
@@ -16,26 +17,19 @@ export class ConsultarPersonaComponent implements OnInit {
   private userDoc: AngularFirestoreDocument;
 
   constructor(private personaService: PersonaService, private readonly afs: AngularFirestore) {
-    this.userDoc = this.afs.doc(localStorage.getItem('empresa'));
 
-
-
-  //  this.personas = this.userDoc.collection('persona').valueChanges();
-
-    this.personas = this.afs.collection('persona').valueChanges()
-
-
+    this.obtenerPersonas()
   }
 
   ngOnInit() {
   }
 
   obtenerPersonas() {
-    this.personas = this.personaService.obtenerPersonas()
+    this.personas =this.personaService.obtenerPersonas()
+  }
 
-    this.personas.forEach(element => {
-      console.log(element)
-    });
+  verPersona(persona){
+    console.log(persona)
   }
 
 }

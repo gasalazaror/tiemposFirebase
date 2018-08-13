@@ -23,12 +23,15 @@
             </thead>
             <tbody>
               <tr *ngFor="let persona of personas | async">
-                <td>{{persona.tipo}}</td>
-                <td>{{persona.cedula}}</td>
-                <td>{{persona.nombre}}</td>
-                <td>{{persona.direccion}}</td>
-                <td>{{persona.correo}}</td>
-                <td>{{persona.telefono}}</td>
+                <td>
+                  <button (click)="verPersona(persona)">ver</button>
+                </td>
+                <td>{{persona.data.tipo}}</td>
+                <td>{{persona.data.cedula}}</td>
+                <td>{{persona.data.nombre}}</td>
+                <td>{{persona.data.direccion}}</td>
+                <td>{{persona.data.correo}}</td>
+                <td>{{persona.data.telefono}}</td>
               </tr>
 
 
