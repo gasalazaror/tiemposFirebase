@@ -27,11 +27,11 @@
                 <td>
                   <button (click)="verPersona(persona)">ver</button>
                 </td>
-                <td>{{persona.data.tipo}}</td>
-                <td>{{persona.data.cedula}}</td>
-                <td><a href="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre}}</a></td>
-                <td>{{persona.data.direccion}}</td>
-                <td>{{persona.data.correo}}</td>
+                <td>{{persona.data.tipo | uppercase}}</td>
+                <td>{{persona.data.cedula | uppercase}}</td>
+                <td><a href="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre | uppercase}}</a></td>
+                <td>{{persona.data.direccion | uppercase}}</td>
+                <td>{{persona.data.correo }}</td>
                 <td>{{persona.data.telefono}}</td>
                 <td>
                   <p *ngIf="persona.data.cliente">Cliente</p>

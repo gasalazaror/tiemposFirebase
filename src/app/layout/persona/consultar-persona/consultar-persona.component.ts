@@ -16,17 +16,18 @@ export class ConsultarPersonaComponent implements OnInit {
 
   constructor(private personaService: PersonaService) {
 
-    this.obtenerPersonas()
+
   }
 
   ngOnInit() {
+    this.obtenerPersonas()
   }
 
   obtenerPersonas() {
-    this.personas =this.personaService.obtenerPersonas()
+    this.personas = this.personaService.obtenerPersonas()
   }
 
-  verPersona(persona){
+  verPersona(persona) {
     console.log(persona)
   }
 
