@@ -1,0 +1,54 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Consultar vehículo'" [icon]="'fa-edit'"></app-page-header>
+  
+    <div class="row">
+      <div class="col col-xl-12 col-lg-12">
+  
+  
+        <div class="card mb-3">
+          <div class="card-header">Vehículos</div>
+          <div class="card-body table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>ID / Placa</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Color</th>
+                  <th>No. Motor</th>
+                  <th>No. Chasis</th>
+                  <th>Año de fabricación</th>
+                  <th>Dueño actual</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vehiculo of vehiculos | async">
+                  <td>
+                    <button (click)="verPersona(persona)">ver</button>
+                  </td>
+                  <td>{{vehiculo.data.placa}}</td>
+                  <td>{{vehiculo.data.marca}}</td>
+                  <td><a href="/persona/informacionpersona/{{vehiculo.id}}">{{vehiculo.data.modelo}}</a></td>
+                  <td>{{vehiculo.data.color}}</td>
+                  <td>{{vehiculo.data.numeroMotor}}</td>
+                  <td>{{vehiculo.data.numeroChasis}}</td>
+                  <td>{{vehiculo.data.anioFabricacion}}</td>
+                  <td>{{vehiculo.data.dueno.data.nombre}}</td>
+                 
+                </tr>
+  
+  
+  
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+  
+  
+  
+  </div>

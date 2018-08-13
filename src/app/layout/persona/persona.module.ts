@@ -5,6 +5,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PageHeaderModule } from '../../shared';
 import { ConsultarPersonaComponent } from './consultar-persona/consultar-persona.component';
+import { InformacionPersonaComponent } from './informacion-persona/informacion-persona.component';
 
 
 @NgModule({
@@ -15,6 +16,6 @@ import { ConsultarPersonaComponent } from './consultar-persona/consultar-persona
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [CrearPersonaComponent, ConsultarPersonaComponent]
+  declarations: [CrearPersonaComponent, ConsultarPersonaComponent, InformacionPersonaComponent]
 })
 export class PersonaModule { }

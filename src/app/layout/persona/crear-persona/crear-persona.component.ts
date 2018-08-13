@@ -24,6 +24,8 @@ export class CrearPersonaComponent implements OnInit {
     direccion: ['', [Validators.required]],
     telefono: ['', [Validators.required]],
     correo: ['', [Validators.required, Validators.email]],
+    cliente: [false],
+    empleado: [false]
   })
 
   constructor(private fb: FormBuilder, private personaService: PersonaService, public db: AngularFirestore) { 

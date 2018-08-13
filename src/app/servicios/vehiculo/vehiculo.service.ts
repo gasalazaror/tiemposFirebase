@@ -6,37 +6,31 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonaService {
+export class VehiculoService {
 
-  private personasCollection: AngularFirestoreCollection;
+  private persona: AngularFirestoreDocument;
   private empresa: AngularFirestoreDocument;
-  private personaDoc: AngularFirestore
-  personas: Observable<any[]>;
-  persona: Observable<any[]>;
+
 
   constructor(private readonly afs: AngularFirestore) {
-    this.personasCollection = afs.collection('persona');
+
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
 
-  }
+   }
 
-  crearPersona(persona) {
+  crearVehiculo(vehiculo) {
     const id = this.afs.createId();
-   return this.empresa.collection('personas').doc(id).set(persona);
+    return this.empresa.collection('vehiculos').doc(id).set(vehiculo);
   }
 
-  obtenerPersonas() {
+  obtenerVehiculos() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('personas').snapshotChanges().pipe(
+    return this.empresa.collection('vehiculos').snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
         return { id, data };
       }))
     );
-  }
-
-  obtenerUnaPersona(id){
-   return this.empresa.collection('personas').doc(id).valueChanges()
   }
 }

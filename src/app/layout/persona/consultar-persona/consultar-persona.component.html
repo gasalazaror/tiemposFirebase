@@ -11,13 +11,14 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-
+                <th></th>
                 <th>Tipo</th>
                 <th>Cédula</th>
                 <th>Nombre</th>
                 <th>Dirección</th>
                 <th>Correo</th>
                 <th>Teléfono</th>
+                <th>Roles</th>
 
               </tr>
             </thead>
@@ -28,10 +29,14 @@
                 </td>
                 <td>{{persona.data.tipo}}</td>
                 <td>{{persona.data.cedula}}</td>
-                <td>{{persona.data.nombre}}</td>
+                <td><a href="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre}}</a></td>
                 <td>{{persona.data.direccion}}</td>
                 <td>{{persona.data.correo}}</td>
                 <td>{{persona.data.telefono}}</td>
+                <td>
+                  <p *ngIf="persona.data.cliente">Cliente</p>
+                  <p *ngIf="persona.data.empleado">Empleado</p>
+                </td>
               </tr>
 
 
