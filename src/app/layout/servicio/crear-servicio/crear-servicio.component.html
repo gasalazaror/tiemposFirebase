@@ -1,3 +1,64 @@
-<p>
-  crear-servicio works!
-</p>
+<div [@routerTransition]>
+  <app-page-header [heading]="'Crear servicio'" [icon]="'fa-edit'"></app-page-header>
+
+
+  <div class="row container">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Seleccionar categoría
+        </div>
+        <div class="card-body">
+          <div class="card">
+            <div class="card-body">
+              <div>
+                <ul class="list-inline border">
+                  <li class="list-inline-item" *ngFor="let categoria of categorias | async">
+                    <button type="button" (click)="seleccionarCategoria(categoria)" class="btn btn-link">{{categoria.data.nombre}}</button>
+                  </li>
+                  <li class="list-inline-item">
+                    <button class="btn btn-default btn-sm" (click)=agregarCategoria()>
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="categoriaSeleccionada" class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Información del servicio
+        </div>
+        <div class="card-body">
+
+          <p *ngIf="categoriaSeleccionada"><strong>Categoria: </strong>{{categoriaSeleccionada.data.nombre}}</p>
+          <form class="form-inline" [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
+            <div class="form-group mb-2 mx-sm-2">
+              <label for="staticEmail2" class="">Código</label>
+              <input autofocus type="text" formControlName="codigo" style="max-width: 150px;" class="form-control" id="staticEmail2">
+            </div>
+
+
+            <div class="form-group mb-2 mx-sm-2">
+              <label for="staticEmail2" class="">Servicio</label>
+              <input type="text" formControlName="descripcion" class="form-control" id="staticEmail2">
+            </div>
+
+            <div class="form-group mb-2 mx-sm-3">
+                <label for="staticEmail2" class="">Tiempo estandar(min)</label>
+                <input type="number" formControlName="tiempoEstandar" style="max-width: 100px;" class="form-control" id="staticEmail2">
+              </div>
+
+            <button type="submit" [disabled]="!servicioForm.valid" class="btn btn-primary mb-2">Guardar</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,11 +4,19 @@ import { CrearServicioComponent } from './crear-servicio/crear-servicio.componen
 import { ConsultarServicioComponent } from './consultar-servicio/consultar-servicio.component';
 import { InformacionServicioComponent } from './informacion-servicio/informacion-servicio.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { PageHeaderModule } from '../../shared';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PageHeaderModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule.forRoot(),
+
   ],
   declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent]
 })

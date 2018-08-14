@@ -51,22 +51,45 @@
             </li>
         </div>
         <div class="nested-menu">
-                <a class="list-group-item" (click)="addExpandClass('pages3')">
+            <a class="list-group-item" (click)="addExpandClass('pages3')">
+                <i class="fa fa-user"></i>&nbsp;
+                <span>{{ 'Servicios' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages3'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/servicio/crearservicio']" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Crear Servicio' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/servicio/consultarservicio']" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Consultar Servicio' | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+
+        <div class="nested-menu">
+                <a class="list-group-item" (click)="addExpandClass('pages4')">
                     <i class="fa fa-user"></i>&nbsp;
-                    <span>{{ 'Servicios' | translate }}</span>
+                    <span>{{ 'Ordenes de trabajo' | translate }}</span>
                 </a>
-                <li class="nested" [class.expand]="showMenu === 'pages3'">
+                <li class="nested" [class.expand]="showMenu === 'pages4'">
                     <ul class="submenu">
                         <li>
-                            <a [routerLink]="['/servicio/crearservicio']" [routerLinkActive]="['router-link-active']">
+                            <a [routerLink]="['/orden/crearorden']" [routerLinkActive]="['router-link-active']">
                                 <i class="fa fa-monument"></i>&nbsp;
-                                <span>{{ 'Crear Servicio' | translate }}</span>
+                                <span>{{ 'Crear Orden de trabajo' | translate }}</span>
                             </a>
                         </li>
                         <li>
-                            <a [routerLink]="['/servicio/consultarservicio']" [routerLinkActive]="['router-link-active']">
+                            <a [routerLink]="['/orden/consultarorden']" [routerLinkActive]="['router-link-active']">
                                 <i class="fa fa-monument"></i>&nbsp;
-                                <span>{{ 'Consultar Servicio' | translate }}</span>
+                                <span>{{ 'Consultar Orden de trabajo' | translate }}</span>
                             </a>
                         </li>
                     </ul>
@@ -76,26 +99,8 @@
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
         </a>
-        <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-table"></i>&nbsp;
-            <span>{{ 'Tables' | translate }}</span>
-        </a>
-        <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-edit"></i>&nbsp;
-            <span>{{ 'Forms' | translate }}</span>
-        </a>
-        <a [routerLink]="['/bs-element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-desktop"></i>&nbsp;
-            <span>{{ 'Bootstrap Element' | translate }}</span>
-        </a>
-        <a [routerLink]="['/grid']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-wrench"></i>&nbsp;
-            <span>{{ 'Bootstrap Grid' | translate }}</span>
-        </a>
-        <a [routerLink]="['/components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-th-list"></i>&nbsp;
-            <span>{{ 'Component' | translate }}</span>
-        </a>
+
+
 
 
 

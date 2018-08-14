@@ -3,7 +3,6 @@ import { routerTransition } from '../../../router.animations';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { PersonaService } from '../../../servicios/persona.service';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-crear-persona',
@@ -13,7 +12,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 })
 export class CrearPersonaComponent implements OnInit {
 
-  private itemDoc: AngularFirestoreDocument;
+
   
   
   personaForm = this.fb.group({
@@ -28,10 +27,9 @@ export class CrearPersonaComponent implements OnInit {
     empleado: [false]
   })
 
-  constructor(private fb: FormBuilder, private personaService: PersonaService, public db: AngularFirestore) { 
+  constructor(private fb: FormBuilder, private personaService: PersonaService) { 
 
-    
-   this.itemDoc= this.db.doc(localStorage.getItem('empresa'));
+
  
 
   }

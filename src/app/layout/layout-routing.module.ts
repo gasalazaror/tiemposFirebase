@@ -14,6 +14,7 @@ const routes: Routes = [
             { path: 'persona', loadChildren: './persona/persona.module#PersonaModule' },
             { path: 'vehiculo', loadChildren: './vehiculo/vehiculo.module#VehiculoModule' },
             { path: 'servicio', loadChildren: './servicio/servicio.module#ServicioModule' },
+            { path: 'orden', loadChildren: './orden-trabajo/orden-trabajo.module#OrdenTrabajoModule' },
             { path: 'forms', loadChildren: './form/form.module#FormModule' },
             { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
             { path: 'grid', loadChildren: './grid/grid.module#GridModule' },

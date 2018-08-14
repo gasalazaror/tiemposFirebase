@@ -12,11 +12,7 @@ import { PersonaService } from '../../../servicios/persona.service';
 export class ConsultarPersonaComponent implements OnInit {
 
   personas: Observable<any[]>;
-
-
   constructor(private personaService: PersonaService) {
-
-
   }
 
   ngOnInit() {
@@ -26,9 +22,4 @@ export class ConsultarPersonaComponent implements OnInit {
   obtenerPersonas() {
     this.personas = this.personaService.obtenerPersonas()
   }
-
-  verPersona(persona) {
-    console.log(persona)
-  }
-
 }

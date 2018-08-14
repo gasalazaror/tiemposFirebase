@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -8,9 +7,8 @@ import { map } from 'rxjs/operators';
 })
 export class VehiculoService {
 
-  private persona: AngularFirestoreDocument;
+
   private empresa: AngularFirestoreDocument;
-  private vehiculo: AngularFirestoreDocument;
 
   constructor(private readonly afs: AngularFirestore) {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
@@ -20,7 +18,6 @@ export class VehiculoService {
     const itemDoc = this.afs.doc('personas/' + persona)
     const id = this.afs.createId();
     this.empresa.collection('vehiculos').doc(id).set(vehiculo)
-    this.vehiculo = this.afs.doc('vehiculos/' + id);
     return this.empresa.collection('vehiculos').doc(id).update({ dueno: itemDoc.ref })
   }
 
