@@ -1,3 +1,106 @@
-<p>
-  crear-orden works!
-</p>
+<div [@routerTransition]>
+  <app-page-header [heading]="'Crear orden de trabajo'" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Información del cliente
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table table-sm table-bordered">
+
+                <tbody>
+                  <tr>
+                    <th>Buscar</th>
+                    <td>
+                      <div class="form-group mx-sm-2 mb-2">
+          
+                        <ng-select class="form-control" [items]="personas | async" bindLabel="data.nombre" formControlName="dueno">
+                        </ng-select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Cédula / RUC</th>
+                    <td>{{ (persona | async)?.cedula }}</td>
+                  </tr>
+                  <tr>
+                    <th>Nombre / Razón social</th>
+                    <td>{{ (persona | async)?.nombre }}</td>
+                  </tr>
+                  <tr>
+                    <th>Dirección</th>
+                    <td>{{ (persona | async)?.direccion }}</td>
+                  </tr>
+                  <tr>
+                    <th>Correo</th>
+                    <td>{{ (persona | async)?.correo }}</td>
+                  </tr>
+                  <tr>
+                    <th>Teléfono</th>
+                    <td>{{ (persona | async)?.telefono }}</td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Información del vehículo
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table table-sm table-bordered">
+
+                <tbody>
+                  <tr>
+                    <th>Cédula / RUC</th>
+                    <td>{{ (persona | async)?.cedula }}</td>
+                  </tr>
+                  <tr>
+                    <th>Nombre / Razón social</th>
+                    <td>{{ (persona | async)?.nombre }}</td>
+                  </tr>
+                  <tr>
+                    <th>Dirección</th>
+                    <td>{{ (persona | async)?.direccion }}</td>
+                  </tr>
+                  <tr>
+                    <th>Correo</th>
+                    <td>{{ (persona | async)?.correo }}</td>
+                  </tr>
+                  <tr>
+                    <th>Teléfono</th>
+                    <td>{{ (persona | async)?.telefono }}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
