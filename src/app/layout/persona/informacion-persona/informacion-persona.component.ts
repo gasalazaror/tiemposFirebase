@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PersonaService } from '../../../servicios/persona.service';
 import { Observable } from 'rxjs';
 
@@ -23,9 +23,6 @@ export class InformacionPersonaComponent implements OnInit {
   ngOnInit() {
   }
 
-  obtenerPersona(id){
-    
-    console.log(this.persona)
-  }
+ 
 
 }

@@ -27,9 +27,9 @@
                   <td>
                     <button (click)="verPersona(persona)">ver</button>
                   </td>
-                  <td>{{vehiculo.data.placa}}</td>
+                  <td><a href="/vehiculo/informacionvehiculo/{{vehiculo.id}}">{{vehiculo.data.placa}}</a></td>
                   <td>{{vehiculo.data.marca}}</td>
-                  <td><a href="/persona/informacionpersona/{{vehiculo.id}}">{{vehiculo.data.modelo}}</a></td>
+                  <td>{{vehiculo.data.modelo}}</td>
                   <td>{{vehiculo.data.color}}</td>
                   <td>{{vehiculo.data.numeroMotor}}</td>
                   <td>{{vehiculo.data.numeroChasis}}</td>

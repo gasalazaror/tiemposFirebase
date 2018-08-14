@@ -41,7 +41,8 @@ export class CrearVehiculoComponent implements OnInit {
   ngOnInit() {
   }
   guardarVehiculo(){
-    this.vehiculoService.crearVehiculo(this.vehiculoForm.value).then(vehiculo=>{this.vehiculoForm.reset()}, error=>{console.log('mal')})
+    console.log(this.vehiculoForm.value.dueno.id)
+    this.vehiculoService.crearVehiculo(this.vehiculoForm.value.dueno.id,this.vehiculoForm.value).then(vehiculo=>{this.vehiculoForm.reset()}, error=>{console.log(error)})
   }
   obtenerPersonas() {
     this.personas =this.personaService.obtenerPersonas()

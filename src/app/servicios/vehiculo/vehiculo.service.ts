@@ -10,17 +10,18 @@ export class VehiculoService {
 
   private persona: AngularFirestoreDocument;
   private empresa: AngularFirestoreDocument;
-
+  private vehiculo: AngularFirestoreDocument;
 
   constructor(private readonly afs: AngularFirestore) {
-
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+  }
 
-   }
-
-  crearVehiculo(vehiculo) {
+  crearVehiculo(persona, vehiculo) {
+    const itemDoc = this.afs.doc('personas/' + persona)
     const id = this.afs.createId();
-    return this.empresa.collection('vehiculos').doc(id).set(vehiculo);
+    this.empresa.collection('vehiculos').doc(id).set(vehiculo)
+    this.vehiculo = this.afs.doc('vehiculos/' + id);
+    return this.empresa.collection('vehiculos').doc(id).update({ dueno: itemDoc.ref })
   }
 
   obtenerVehiculos() {
@@ -32,5 +33,9 @@ export class VehiculoService {
         return { id, data };
       }))
     );
+  }
+
+  obtenerUnVehiculo(id) {
+    return this.empresa.collection('vehiculos').doc(id).valueChanges()
   }
 }

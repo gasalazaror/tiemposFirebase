@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PageHeaderModule } from '../../shared';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ConsultarVehiculoComponent } from './consultar-vehiculo/consultar-vehiculo.component';
+import { InformacionVehiculoComponent } from './informacion-vehiculo/informacion-vehiculo.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ConsultarVehiculoComponent } from './consultar-vehiculo/consultar-vehic
     NgSelectModule,
     FormsModule
   ],
-  declarations: [CrearVehiculoComponent, ConsultarVehiculoComponent]
+  declarations: [CrearVehiculoComponent, ConsultarVehiculoComponent, InformacionVehiculoComponent]
 })
 export class VehiculoModule { }
