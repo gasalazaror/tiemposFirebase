@@ -17,6 +17,7 @@ import { InformacionVehiculoComponent } from './informacion-vehiculo/informacion
     NgSelectModule,
     FormsModule
   ],
+  exports:[CrearVehiculoComponent],
   declarations: [CrearVehiculoComponent, ConsultarVehiculoComponent, InformacionVehiculoComponent]
 })
 export class VehiculoModule { }

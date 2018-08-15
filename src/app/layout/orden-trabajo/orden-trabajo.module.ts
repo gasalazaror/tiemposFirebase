@@ -6,14 +6,24 @@ import { ConsultarOrdenComponent } from './consultar-orden/consultar-orden.compo
 import { InformacionOrdenComponent } from './informacion-orden/informacion-orden.component';
 import { PageHeaderModule } from '../../shared';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
+import { PersonaModule } from '../persona/persona.module';
+import { VehiculoModule } from '../vehiculo/vehiculo.module';
+import { ServicioModule } from '../servicio/servicio.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AppRoutingModule,
     PageHeaderModule,
-    NgSelectModule
-    
+    NgSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule.forRoot(),
+    PersonaModule,
+    VehiculoModule,
+    ServicioModule
   ],
   declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent]
 })

@@ -15,14 +15,14 @@ export class CrearServicioComponent implements OnInit {
 
   categorias: Observable<any[]>;
 
-  categoriaSeleccionada:any
+  categoriaSeleccionada: any
 
   servicioForm = this.fb.group({
     codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
     tiempoEstandar: ['', Validators.required],
+    detalle: ['', Validators.required],
   })
- 
 
   constructor(public servicioService: ServicioService, private fb: FormBuilder) { }
 
@@ -30,7 +30,7 @@ export class CrearServicioComponent implements OnInit {
     this.obtenerCategorias()
   }
 
-  seleccionarCategoria(categoria){
+  seleccionarCategoria(categoria) {
     this.categoriaSeleccionada = categoria
     console.log(this.categoriaSeleccionada)
   }
@@ -39,9 +39,9 @@ export class CrearServicioComponent implements OnInit {
   agregarCategoria() {
     var categoria = prompt('Ingrese el nombre de la categoría', '');
     if (categoria) {
-      this.servicioService.crearCategoria({nombre: categoria.toUpperCase().trim()}).then(categoria=>{
+      this.servicioService.crearCategoria({ nombre: categoria.toUpperCase().trim() }).then(categoria => {
       },
-      error=>{})
+        error => { })
     } else {
     }
   }
@@ -50,14 +50,14 @@ export class CrearServicioComponent implements OnInit {
     this.categorias = this.servicioService.obtenerCategorias()
   }
 
-  guardarServicio(){
+  guardarServicio() {
     this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
-    .then(servicio=>{
-      console.log(servicio)
-      this.servicioForm.reset()
-    }, error=>{
+      .then(servicio => {
+        console.log(servicio)
+        this.servicioForm.reset()
+      }, error => {
 
-    })
+      })
   }
 
 

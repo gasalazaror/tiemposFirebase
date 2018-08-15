@@ -36,7 +36,8 @@
         </div>
         <div class="card-body">
 
-          <p *ngIf="categoriaSeleccionada"><strong>Categoria: </strong>{{categoriaSeleccionada.data.nombre}}</p>
+          <p *ngIf="categoriaSeleccionada">
+            <strong>Categoria: </strong>{{categoriaSeleccionada.data.nombre}}</p>
           <form class="form-inline" [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
             <div class="form-group mb-2 mx-sm-2">
               <label for="staticEmail2" class="">Código</label>
@@ -49,10 +50,15 @@
               <input type="text" formControlName="descripcion" class="form-control" id="staticEmail2">
             </div>
 
+            <div class="form-group mb-2 mx-sm-2">
+              <label for="staticEmail2" class="">Detalle</label>
+              <input type="text" formControlName="detalle" class="form-control" id="staticEmail2">
+            </div>
+
             <div class="form-group mb-2 mx-sm-3">
-                <label for="staticEmail2" class="">Tiempo estandar(min)</label>
-                <input type="number" formControlName="tiempoEstandar" style="max-width: 100px;" class="form-control" id="staticEmail2">
-              </div>
+              <label for="staticEmail2" class="">Tiempo estandar(min)</label>
+              <input type="number" formControlName="tiempoEstandar" style="max-width: 100px;" class="form-control" id="staticEmail2">
+            </div>
 
             <button type="submit" [disabled]="!servicioForm.valid" class="btn btn-primary mb-2">Guardar</button>
           </form>

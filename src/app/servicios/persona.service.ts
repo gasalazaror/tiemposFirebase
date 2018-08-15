@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { query } from '../../../node_modules/@angular/core/src/render3/query';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class PersonaService {
 
   crearPersona(persona) {
     const id = this.afs.createId();
-   return this.empresa.collection('personas').doc(id).set(persona);
+    return this.empresa.collection('personas').doc(id).set(persona);
   }
 
   obtenerPersonas() {
@@ -36,7 +37,18 @@ export class PersonaService {
     );
   }
 
-  obtenerUnaPersona(id){
-   return this.empresa.collection('personas').doc(id).valueChanges()
+  obtenerVehiculos(uid) {
+    const userRef = this.afs.collection('personas').doc(uid)
+    return this.empresa.collection('vehiculos', query=> query.where('dueno','==',userRef.ref)).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+  }
+
+  obtenerUnaPersona(id) {
+    return this.empresa.collection('personas').doc(id).valueChanges()
   }
 }

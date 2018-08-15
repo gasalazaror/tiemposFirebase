@@ -18,6 +18,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
     NgbModule.forRoot(),
 
   ],
+  exports: [CrearServicioComponent],
   declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent]
 })
 export class ServicioModule { }

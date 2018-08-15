@@ -16,6 +16,7 @@ import { InformacionPersonaComponent } from './informacion-persona/informacion-p
     ReactiveFormsModule,
     FormsModule
   ],
+  exports: [CrearPersonaComponent],
   declarations: [CrearPersonaComponent, ConsultarPersonaComponent, InformacionPersonaComponent]
 })
 export class PersonaModule { }

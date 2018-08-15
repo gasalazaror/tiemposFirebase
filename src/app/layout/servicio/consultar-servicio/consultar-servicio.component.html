@@ -10,7 +10,7 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th></th>
+        
                 <th>Código</th>
                 <th>Servicio</th>
                 <th>Tiempo estandar</th>
@@ -19,9 +19,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let servicio of servicios | async">
-                <td>
-                  <button (click)="verPersona(persona)">ver</button>
-                </td>
+            
                 <td>{{servicio.data.codigo | uppercase}}</td>
                 <td>
                   <a href="">{{servicio.data.descripcion | uppercase}}</a>
