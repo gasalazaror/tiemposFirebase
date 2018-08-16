@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PageHeaderModule } from '../../shared';
 import { ConsultarPersonaComponent } from './consultar-persona/consultar-persona.component';
 import { InformacionPersonaComponent } from './informacion-persona/informacion-persona.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { InformacionPersonaComponent } from './informacion-persona/informacion-p
     AppRoutingModule,
     PageHeaderModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule
   ],
   exports: [CrearPersonaComponent],
   declarations: [CrearPersonaComponent, ConsultarPersonaComponent, InformacionPersonaComponent]
