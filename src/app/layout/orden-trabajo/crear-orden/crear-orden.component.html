@@ -1,121 +1,88 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Crear orden de trabajo'" [icon]="'fa-edit'"></app-page-header>
-
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          Información del cliente
+          Información de la orden de trabajo
         </div>
-        <div class="card-body">
+        <div class="card-body" style="font-size: 14px">
           <div class="row">
-            <div class="col-md-12">
-              <button class="btn btn-light btn-sm" (click)="open(content)">
+            <div class="col">
+              <label for="">Cliente:</label>
+              <form class="form" [formGroup]="ClienteForm" (ngSubmit)="seleccionarPersona()">
+                <div class="">
+                  <ng-select class="form-control" style="font-size: 14px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
+                    [items]="personas | async" bindLabel="data.nombre" formControlName="persona">
+                  </ng-select>
+                </div>
+              </form>
+            </div>
+            <div>
+            </div>
+            <div class="col">
+              <label for="">Cédula</label>
+              <br> {{ (personaSeleccionada)?.data.cedula | uppercase }}
+            </div>
+            <div class="col">
+              <label for="">Dirección</label>
+              <br> {{ (personaSeleccionada)?.data.direccion | uppercase }}
+            </div>
+            <div class="col">
+              <label for="">Teléfono</label>
+              <br> {{ (personaSeleccionada)?.data.telefono | uppercase }}
+            </div>
+            <div class="col">
+              <label for="">Correo</label>
+              <br> {{ (personaSeleccionada)?.data.correo }}
+            </div>
+            <div class="col">
+              <label for=""> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+              <button class="btn btn-primary " (click)="open(content)">
                 <i class="fa fa-plus"></i> Nuevo
               </button>
-              <hr>
-              <table class="table table-sm table-bordered table-sm
-              ">
-                <tbody>
-                  <tr>
-                    <th>Buscar</th>
-                    <td>
-                      <form class="form" [formGroup]="ClienteForm" (ngSubmit)="seleccionarPersona()">
-                        <div class="">
-                          <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control" [items]="personas | async"
-                            bindLabel="data.nombre" formControlName="persona">
-                          </ng-select>
-                        </div>
-                      </form>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Cédula / RUC</th>
-                    <td>{{ (personaSeleccionada)?.data.cedula | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <th>Nombre / Razón social</th>
-                    <td>{{ (personaSeleccionada)?.data.nombre | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <th>Dirección</th>
-                    <td>{{ (personaSeleccionada)?.data.direccion | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <th>Correo</th>
-                    <td>{{ (personaSeleccionada)?.data.correo }}</td>
-                  </tr>
-                  <tr>
-                    <th>Teléfono</th>
-                    <td>{{ (personaSeleccionada)?.data.telefono | uppercase }}</td>
-                  </tr>
-
-
-                </tbody>
-              </table>
             </div>
           </div>
-
-
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          Información del vehículo
-        </div>
-        <div class="card-body">
-
+          <hr>
           <div class="row">
-            <div class="col-md-12">
-              <button class="btn btn-light btn-sm" (click)="open(content2)">
+            <div class="col">
+              <label for="">Vehículo:</label>
+              <form class="form" [formGroup]="VehiculoForm" (ngSubmit)="seleccionarPersona()">
+                <div class=""  >
+                  <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarVehiculo()" class="form-control" [items]="vehiculos | async"  
+                  bindLabel="data.placa" formControlName="vehiculo" >
+                  </ng-select>
+                </div>
+              </form>
+            </div>
+            <div class="col">
+              <label for="">Placa</label>
+              <br> {{ (vehiculoSeleccionado)?.data.placa | uppercase }}
+            </div>
+            <div class="col">
+              <label for="">Marca</label>
+              <br> {{ (vehiculoSeleccionado)?.data.marca | uppercase }}
+            </div>
+            <div class="col">
+              <label for="">Modelo</label>
+              <br> {{ (vehiculoSeleccionado)?.data.modelo | uppercase }}
+            </div>
+            <div class="col">
+              <label for="">Color</label>
+              <br> {{ (vehiculoSeleccionado)?.data.color | uppercase }}
+            </div>
+            <div class="col">
+              <label for=""> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+              <button class="btn btn-primary " (click)="open(content2)">
                 <i class="fa fa-plus"></i> Nuevo
               </button>
-              <hr>
-              <table class="table table-sm table-bordered table-sm">
-                <tbody>
-                  <tr>
-                    <th>Buscar</th>
-                    <td>
-                      <form class="form" [formGroup]="VehiculoForm" (ngSubmit)="seleccionarPersona()">
-                        <div class="">
-                          <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarVehiculo()" class="form-control" [items]="vehiculos | async"
-                            bindLabel="data.placa" formControlName="vehiculo">
-                          </ng-select>
-                        </div>
-                      </form>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>ID / Placa</th>
-                    <td>{{ (vehiculoSeleccionado)?.data.placa | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <th>Marca</th>
-                    <td>{{ (vehiculoSeleccionado)?.data.marca | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <th>Modelo</th>
-                    <td>{{ (vehiculoSeleccionado)?.data.modelo | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <th>Color</th>
-                    <td>{{ (vehiculoSeleccionado)?.data.color }}</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
   </div>
-
+  <br>
   <div class="row">
     <div class="col-md-12">
       <div class="card">
@@ -123,19 +90,19 @@
           Servicios
         </div>
         <div class="card-body">
-          <button class="btn btn-light btn-sm" (click)="open(content3)">
-            <i class="fa fa-plus"></i> Nuevo
-          </button>
-          <hr> Servicios disponibles:
-          <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
-            <div class="">
-              <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
-                bindLabel="data.descripcion" formControlName="servicio">
-              </ng-select>
-            </div>
-          </form>
+          <div class="row">
+            Servicios disponibles:
+            <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
+              <div class="">
+                <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
+                  bindLabel="data.descripcion" formControlName="servicio">
+                </ng-select>
+              </div>
+            </form>
+          </div>
           <hr>
-          <p><strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>
+          <p>
+            <strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
@@ -148,77 +115,53 @@
             <tbody>
               <tr *ngFor="let servicio of serviciosSeleccionados;let i = index">
                 <td>
-                    <button (click)="eliminarServicio(i)" type="button" class="btn btn-danger btn-sm">
-                        <i class="fa fa-trash"></i>
-                      </button>
+                  <button (click)="eliminarServicio(i)" type="button" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash"></i>
+                  </button>
                 </td>
                 <td *ngIf="servicio.data">{{servicio.data.descripcion}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.detalle}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.tiempoEstandar}} minutos</td>
               </tr>
-
             </tbody>
           </table>
           <hr>
 
-
-
+          <button [disabled]="serviciosSeleccionados.length==0 || ClienteForm.persona=={} || VehiculoForm.vehiculo=={}" class="btn btn-primary" (click)="guardarOrden()">Guardar</button>
         </div>
       </div>
     </div>
   </div>
-
-
-
-
-
 </div>
-
 <ng-template #content let-c="close" let-d="dismiss">
-
   <div class="modal-header">
-
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
   <div class="modal-body">
-
     <app-crear-persona></app-crear-persona>
   </div>
-
 </ng-template>
-
 <ng-template #content2 let-c="close" let-d="dismiss">
-
   <div class="modal-header">
-
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
   <div class="modal-body">
-
     <app-crear-vehiculo></app-crear-vehiculo>
   </div>
   <div class="modal-footer">
-   
   </div>
 </ng-template>
-
 <ng-template #content3 let-c="close" let-d="dismiss">
-
   <div class="modal-header">
-
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
   <div class="modal-body">
-
     <app-crear-servicio></app-crear-servicio>
   </div>
   <div class="modal-footer">

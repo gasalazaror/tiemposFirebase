@@ -7,7 +7,7 @@ import { Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { ServicioService } from '../../../servicios/servicio/servicio.service';
-
+import { OrdenService } from '../../../servicios/orden/orden.service';
 
 @Component({
   selector: 'app-crear-orden',
@@ -21,10 +21,12 @@ export class CrearOrdenComponent implements OnInit {
   personas: Observable<any[]>;
   personaSeleccionada: any
   vehiculoSeleccionado: any
+  vehiculoSeleccionadoaux: any
   closeResult: string;
   vehiculos: Observable<any[]>;
   servicios: Observable<any[]>;
   serviciosSeleccionados: any[];
+
 
   ClienteForm = this.fb.group({
     persona: [{}, Validators.required]
@@ -43,12 +45,13 @@ export class CrearOrdenComponent implements OnInit {
     private fb: FormBuilder,
     private modalService: NgbModal,
     private vehiculoService: VehiculoService,
-    private servicioService: ServicioService
+    private servicioService: ServicioService,
+    private ordenService: OrdenService
 
   ) {
 
-   this.vehiculos= this.vehiculoService.obtenerVehiculos()
-   this.serviciosSeleccionados=[]
+    this.vehiculos = this.vehiculoService.obtenerVehiculos()
+    this.serviciosSeleccionados = []
 
   }
 
@@ -61,7 +64,7 @@ export class CrearOrdenComponent implements OnInit {
     this.personas = this.personaService.obtenerPersonas()
   }
 
-  obtenerServicios(){
+  obtenerServicios() {
     this.servicios = this.servicioService.obtenerServicios()
   }
 
@@ -73,11 +76,36 @@ export class CrearOrdenComponent implements OnInit {
     this.vehiculos = this.personaService.obtenerVehiculos(this.personaSeleccionada.id)
   }
 
-  seleccionarServicio(){
-    if(this.ServicioForm.value.servicio.data){
+  seleccionarServicio() {
+    if (this.ServicioForm.value.servicio.data) {
       this.serviciosSeleccionados.push(this.ServicioForm.value.servicio)
     }
-   
+  }
+
+  guardarOrden() {
+
+    var confirmacion = confirm("¿Está seguro que desea guardar la orden")
+
+    if (confirmacion) {
+      this.VehiculoForm = this.fb.group({
+        vehiculo: [{}, Validators.required]
+      })
+
+      this.VehiculoForm.value.vehiculo
+
+
+
+     
+      var orden = {
+        cliente: this.ClienteForm.value.persona.data,
+        vehiculo: this.vehiculoSeleccionado,
+        servicios: this.serviciosSeleccionados
+      }
+      this.ordenService.crearOrden(orden)
+    }
+
+
+
   }
 
   eliminarServicio(indice): void {

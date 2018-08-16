@@ -105,10 +105,7 @@
 
 
         <div class="header-fields">
-            <a (click)="rltAndLtr()" class="list-group-item">
-                <span>
-                    <i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
-            </a>
+           
             <div class="nested-menu">
                 <a class="list-group-item" (click)="addExpandClass('languages')">
                     <span>
@@ -157,10 +154,7 @@
                 </li>
             </div>
             <div class="nested-menu">
-                <a class="list-group-item" (click)="addExpandClass('profile')">
-                    <span>
-                        <i class="fa fa-user"></i>&nbsp; John Smith</span>
-                </a>
+               
                 <li class="nested" [class.expand]="showMenu === 'profile'">
                     <ul class="submenu">
                         <li>
