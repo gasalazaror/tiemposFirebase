@@ -37,6 +37,28 @@ export class PersonaService {
     );
   }
 
+  obtenerUsuarios() {
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('personas', query=>query.where('empleado','==',true)).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+  }
+
+  obtenerClientes() {
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('personas', query=>query.where('cliente','==',true)).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+  }
+
   obtenerVehiculos(uid) {
     const userRef = this.afs.collection('personas').doc(uid)
     return this.empresa.collection('vehiculos', query=> query.where('dueno','==',userRef.ref)).snapshotChanges().pipe(

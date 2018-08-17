@@ -24,26 +24,23 @@ export class LoginComponent implements OnInit {
      }
 
 onLoggedin() {
-    console.log(this.usuario)
     this.afAuth.auth.signInWithEmailAndPassword(this.usuario.email, this.usuario.password)
         .then((usuario: any) => {
             this.itemDoc = this.db.doc('usuario/'+this.afAuth.auth.currentUser.uid);
             this.item = this.itemDoc.valueChanges();
             this.item.subscribe(usuario=>{
-                console.log(usuario)
+     
                 localStorage.setItem('usuario', usuario.nombre);
                 localStorage.setItem('empresa', usuario.empresa.path);
                 localStorage.setItem('isLoggedin', 'true');
+                localStorage.setItem('empresa', 'true');
               
             })
         
         }, error => {
             console.log('Existió un error')
-        })
-      
+        }) 
 }
 
-imprimir(item){
-    console.log(item)
-}
+
 }

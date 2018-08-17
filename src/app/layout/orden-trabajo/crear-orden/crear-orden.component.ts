@@ -61,7 +61,7 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   obtenerPersonas() {
-    this.personas = this.personaService.obtenerPersonas()
+    this.personas = this.personaService.obtenerClientes()
   }
 
   obtenerServicios() {
@@ -83,29 +83,59 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   guardarOrden() {
-
-    var confirmacion = confirm("¿Está seguro que desea guardar la orden")
-
+    var confirmacion = confirm("¿Está seguro que desea guardar la orden");
     if (confirmacion) {
-      this.VehiculoForm = this.fb.group({
-        vehiculo: [{}, Validators.required]
-      })
-
-      this.VehiculoForm.value.vehiculo
-
-
-
-     
-      var orden = {
-        cliente: this.ClienteForm.value.persona.data,
-        vehiculo: this.vehiculoSeleccionado,
-        servicios: this.serviciosSeleccionados
+      var vehiculo = {
+        placa: this.vehiculoSeleccionado.data.placa,
+        marca: this.vehiculoSeleccionado.data.marca,
+        modelo: this.vehiculoSeleccionado.data.modelo,
+        color: this.vehiculoSeleccionado.data.color,
+        numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
+        numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
       }
-      this.ordenService.crearOrden(orden)
-    }
 
+      var cliente = {
+        cedula: this.personaSeleccionada.data.cedula,
+        nombre: this.personaSeleccionada.data.nombre,
+        direccion: this.personaSeleccionada.data.direccion,
+        telefono: this.personaSeleccionada.data.direccion,
+        correo: this.personaSeleccionada.data.correo
+      }
 
+      var servicios = []
 
+      this.serviciosSeleccionados.forEach(servicio => {
+        servicios.push({ codigo: servicio.data.codigo, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar, estado: 'CITA/RECEPCION' })
+      });
+      
+
+      var orden = {
+        cliente: cliente,
+        vehiculo: vehiculo,
+        servicios: servicios,
+        fecha: new Date()
+      }
+      this.ordenService.crearOrden(orden, servicios)
+
+      this.reiniciar()
+
+    } 
+  }
+
+  reiniciar(){
+    this.personaSeleccionada=null
+    this.vehiculoSeleccionado = null
+    this.serviciosSeleccionados=[]
+
+    this.ClienteForm = this.fb.group({
+      persona: [{}, Validators.required]
+    })
+  
+    
+  
+    this.VehiculoForm = this.fb.group({
+      vehiculo: [{}, Validators.required]
+    })
   }
 
   eliminarServicio(indice): void {
