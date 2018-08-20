@@ -9,7 +9,7 @@ import { InformacionVehiculoComponent } from './informacion-vehiculo/informacion
 
 const routes: Routes = [
   {
-    path: 'crearvehiculo',
+    path: 'crearvehiculo/:id',
     component: CrearVehiculoComponent
   },
 

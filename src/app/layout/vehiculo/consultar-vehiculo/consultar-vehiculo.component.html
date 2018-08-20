@@ -24,7 +24,7 @@
               <tbody>
                 <tr *ngFor="let vehiculo of vehiculos | async">
                   <td>
-                    <button (click)="verPersona(persona)">ver</button>
+                    <a href="/vehiculo/crearvehiculo/{{vehiculo.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                   </td>
                   <td><a href="/vehiculo/informacionvehiculo/{{vehiculo.id}}">{{vehiculo.data.placa}}</a></td>
                   <td>{{vehiculo.data.marca}}</td>

@@ -17,7 +17,6 @@ export class InformacionPersonaComponent implements OnInit {
   constructor(private route: ActivatedRoute, private personaService: PersonaService) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.persona = this.personaService.obtenerUnaPersona(this.id)
-    console.log(this.persona)
   }
 
   ngOnInit() {

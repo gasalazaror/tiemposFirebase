@@ -27,7 +27,7 @@
             <tbody>
               <tr *ngFor="let persona of personas | async">
                 <td>
-                  <button (click)="verPersona(persona)">ver</button>
+                  <a href="/persona/crearpersona/{{persona.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                 </td>
                 <td>{{persona.data.tipo | uppercase}}</td>
                 <td>{{persona.data.cedula | uppercase}}</td>

@@ -178,7 +178,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 var routes = [
     {
-        path: 'crearpersona',
+        path: 'crearpersona/:id',
         component: _crear_persona_crear_persona_component__WEBPACK_IMPORTED_MODULE_2__["CrearPersonaComponent"]
     },
     {
@@ -213,7 +213,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <button (click)=\"verPersona(persona)\">ver</button>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -352,6 +352,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router.animations */ "./src/app/router.animations.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../servicios/persona.service */ "./src/app/servicios/persona.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -366,10 +367,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var CrearPersonaComponent = /** @class */ (function () {
-    function CrearPersonaComponent(fb, personaService) {
+    function CrearPersonaComponent(fb, personaService, route) {
+        var _this = this;
         this.fb = fb;
         this.personaService = personaService;
+        this.route = route;
         this.personaForm = this.fb.group({
             estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             tipo: ['Natural', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
@@ -381,17 +385,43 @@ var CrearPersonaComponent = /** @class */ (function () {
             cliente: [false],
             empleado: [false]
         });
+        this.id = this.route.snapshot.paramMap.get('id');
+        if (this.id != 'nuevo') {
+            this.persona = this.personaService.obtenerUnaPersona(this.id);
+            this.persona.subscribe(function (persona) {
+                _this.personaForm = _this.fb.group({
+                    estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+                    tipo: ['Natural', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+                    cedula: [persona.cedula, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(10), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(13)]],
+                    nombre: [persona.nombre, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
+                    direccion: [persona.direccion, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
+                    telefono: [persona.telefono, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
+                    correo: [persona.correo, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]],
+                    cliente: [persona.cliente],
+                    empleado: [persona.empleado]
+                });
+            });
+        }
     }
     CrearPersonaComponent.prototype.ngOnInit = function () {
     };
     CrearPersonaComponent.prototype.guardarPersona = function () {
         var _this = this;
-        console.log(this.personaForm.value);
-        this.personaService.crearPersona(this.personaForm.value).then(function (persona) {
-            _this.personaForm.reset();
-        }, function (error) {
-            console.log('existió un error');
-        });
+        if (this.id == 'nuevo') {
+            this.personaService.crearPersona(this.personaForm.value).then(function (persona) {
+                alert('Persona guardada correctamente');
+                _this.personaForm.reset();
+            }, function (error) {
+                alert('Existió un error al guardar la persona');
+            });
+        }
+        else {
+            this.personaService.modificarPersona(this.id, this.personaForm.value).then(function (persona) {
+                alert('Persona modificada correctamente');
+            }, function (error) {
+                alert('Existió un error al modificar la persona');
+            });
+        }
     };
     CrearPersonaComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -400,7 +430,7 @@ var CrearPersonaComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./crear-persona.component.scss */ "./src/app/layout/persona/crear-persona/crear-persona.component.scss")],
             animations: [Object(_router_animations__WEBPACK_IMPORTED_MODULE_1__["routerTransition"])()]
         }),
-        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__["PersonaService"]])
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__["PersonaService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
     ], CrearPersonaComponent);
     return CrearPersonaComponent;
 }());
@@ -464,7 +494,6 @@ var InformacionPersonaComponent = /** @class */ (function () {
         this.personaService = personaService;
         this.id = this.route.snapshot.paramMap.get('id');
         this.persona = this.personaService.obtenerUnaPersona(this.id);
-        console.log(this.persona);
     }
     InformacionPersonaComponent.prototype.ngOnInit = function () {
     };

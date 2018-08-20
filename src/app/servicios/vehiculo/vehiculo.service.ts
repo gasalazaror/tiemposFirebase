@@ -14,12 +14,15 @@ export class VehiculoService {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
   }
 
-  crearVehiculo(persona, vehiculo) {
-    const itemDoc = this.afs.doc('personas/' + persona)
+  crearVehiculo(vehiculo) {
     const id = this.afs.createId();
-    this.empresa.collection('vehiculos').doc(id).set(vehiculo)
-    return this.empresa.collection('vehiculos').doc(id).update({ dueno: itemDoc.ref })
+    return this.empresa.collection('vehiculos').doc(id).set(vehiculo)
   }
+
+  modificarVehiculo(id, vehiculo) {
+    return this.empresa.collection('vehiculos').doc(id).update(vehiculo)
+  }
+
 
   obtenerVehiculos() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
@@ -36,5 +39,5 @@ export class VehiculoService {
     return this.empresa.collection('vehiculos').doc(id).valueChanges()
   }
 
-  
+
 }

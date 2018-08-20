@@ -11,6 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 import { PersonaModule } from '../persona/persona.module';
 import { VehiculoModule } from '../vehiculo/vehiculo.module';
 import { ServicioModule } from '../servicio/servicio.module';
+import { OperacionComponent } from './operacion/operacion.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,6 @@ import { ServicioModule } from '../servicio/servicio.module';
     VehiculoModule,
     ServicioModule
   ],
-  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent]
+  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent]
 })
 export class OrdenTrabajoModule { }

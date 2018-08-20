@@ -8,7 +8,7 @@ import { InformacionPersonaComponent } from './informacion-persona/informacion-p
 
 const routes: Routes = [
   {
-    path: 'crearpersona',
+    path: 'crearpersona/:id',
     component: CrearPersonaComponent
   },
   {

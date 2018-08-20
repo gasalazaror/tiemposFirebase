@@ -106,13 +106,11 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.onLoggedin = function () {
         var _this = this;
-        console.log(this.usuario);
         this.afAuth.auth.signInWithEmailAndPassword(this.usuario.email, this.usuario.password)
             .then(function (usuario) {
             _this.itemDoc = _this.db.doc('usuario/' + _this.afAuth.auth.currentUser.uid);
             _this.item = _this.itemDoc.valueChanges();
             _this.item.subscribe(function (usuario) {
-                console.log(usuario);
                 localStorage.setItem('usuario', usuario.nombre);
                 localStorage.setItem('empresa', usuario.empresa.path);
                 localStorage.setItem('isLoggedin', 'true');
@@ -120,9 +118,6 @@ var LoginComponent = /** @class */ (function () {
         }, function (error) {
             console.log('Existió un error');
         });
-    };
-    LoginComponent.prototype.imprimir = function (item) {
-        console.log(item);
     };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

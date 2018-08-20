@@ -33,7 +33,6 @@ onLoggedin() {
                 localStorage.setItem('usuario', usuario.nombre);
                 localStorage.setItem('empresa', usuario.empresa.path);
                 localStorage.setItem('isLoggedin', 'true');
-                localStorage.setItem('empresa', 'true');
               
             })
         

@@ -13,7 +13,7 @@
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
                     <li>
-                        <a [routerLink]="['/persona/crearpersona']" [routerLinkActive]="['router-link-active']">
+                        <a [routerLink]="['/persona/crearpersona/nuevo']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Crear Persona' | translate }}</span>
                         </a>
@@ -36,7 +36,8 @@
             <li class="nested" [class.expand]="showMenu === 'pages2'">
                 <ul class="submenu">
                     <li>
-                        <a [routerLink]="['/vehiculo/crearvehiculo']" [routerLinkActive]="['router-link-active']">
+
+                        <a [routerLink]="['/vehiculo/crearvehiculo/nuevo']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
                             <span>{{ 'Crear Vehículo' | translate }}</span>
                         </a>
@@ -74,27 +75,34 @@
         </div>
 
         <div class="nested-menu">
-                <a class="list-group-item" (click)="addExpandClass('pages4')">
-                    <i class="fa fa-user"></i>&nbsp;
-                    <span>{{ 'Ordenes de trabajo' | translate }}</span>
-                </a>
-                <li class="nested" [class.expand]="showMenu === 'pages4'">
-                    <ul class="submenu">
-                        <li>
-                            <a [routerLink]="['/orden/crearorden']" [routerLinkActive]="['router-link-active']">
-                                <i class="fa fa-monument"></i>&nbsp;
-                                <span>{{ 'Crear Orden de trabajo' | translate }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/orden/consultarorden']" [routerLinkActive]="['router-link-active']">
-                                <i class="fa fa-monument"></i>&nbsp;
-                                <span>{{ 'Consultar Orden de trabajo' | translate }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </div>
+            <a class="list-group-item" (click)="addExpandClass('pages4')">
+                <i class="fa fa-user"></i>&nbsp;
+                <span>{{ 'Ordenes de trabajo' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages4'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/orden/crearorden']" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Crear Orden de trabajo' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/orden/consultarorden']" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Consultar Orden de trabajo' | translate }}</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a [routerLink]="['/orden/operaciones']" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-monument"></i>&nbsp;
+                            <span>{{ 'Operaciones' | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
         <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
@@ -105,7 +113,7 @@
 
 
         <div class="header-fields">
-           
+
             <div class="nested-menu">
                 <a class="list-group-item" (click)="addExpandClass('languages')">
                     <span>
@@ -154,7 +162,7 @@
                 </li>
             </div>
             <div class="nested-menu">
-               
+
                 <li class="nested" [class.expand]="showMenu === 'profile'">
                     <ul class="submenu">
                         <li>

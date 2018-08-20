@@ -26,6 +26,10 @@ export class PersonaService {
     return this.empresa.collection('personas').doc(id).set(persona);
   }
 
+  modificarPersona(id, persona) {
+    return this.empresa.collection('personas').doc(id).update(persona);
+  }
+
   obtenerPersonas() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('personas').snapshotChanges().pipe(

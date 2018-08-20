@@ -114,9 +114,28 @@ var PersonaService = /** @class */ (function () {
         var id = this.afs.createId();
         return this.empresa.collection('personas').doc(id).set(persona);
     };
+    PersonaService.prototype.modificarPersona = function (id, persona) {
+        return this.empresa.collection('personas').doc(id).update(persona);
+    };
     PersonaService.prototype.obtenerPersonas = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('personas').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    PersonaService.prototype.obtenerUsuarios = function () {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('personas', function (query) { return query.where('empleado', '==', true); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    PersonaService.prototype.obtenerClientes = function () {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('personas', function (query) { return query.where('cliente', '==', true); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
             var data = a.payload.doc.data();
             var id = a.payload.doc.id;
             return { id: id, data: data };
