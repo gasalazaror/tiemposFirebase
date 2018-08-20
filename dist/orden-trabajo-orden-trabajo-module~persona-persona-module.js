@@ -213,7 +213,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n          <button (click)=\"rerender()\">res</button>\r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -267,29 +267,27 @@ var ConsultarPersonaComponent = /** @class */ (function () {
     ConsultarPersonaComponent.prototype.ngOnInit = function () {
         this.obtenerPersonas();
     };
-    ConsultarPersonaComponent.prototype.obtenerPersonas = function () {
+    ConsultarPersonaComponent.prototype.ngAfterViewInit = function () { this.dtTrigger.next(); };
+    ConsultarPersonaComponent.prototype.rerender = function () {
         var _this = this;
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: 10,
-            autoWidth: true,
-        };
-        this.personas = this.personaService.obtenerPersonas();
-        this.personas.subscribe(function (res) {
-            if (_this.dtElement) {
-                _this.dtElement.dtInstance.then(function (dtInstance) {
-                    // Destroy the table first
-                    dtInstance.destroy();
-                    // Call the dtTrigger to rerender again
-                    _this.dtTrigger.next();
-                });
-            }
-            else {
-                _this.dtTrigger.next();
-            }
+        console.log(this.dtElement);
+        this.dtElement.dtInstance.then(function (dtInstance) {
+            // Destroy the table first
+            dtInstance.destroy();
+            // Call the dtTrigger to rerender again
+            _this.dtTrigger.next();
         });
     };
-    ConsultarPersonaComponent.prototype.rerender = function () {
+    ConsultarPersonaComponent.prototype.obtenerPersonas = function () {
+        var _this = this;
+        this.personas = this.personaService.obtenerPersonas();
+        this.personas.subscribe(function (res) {
+            _this.dtOptions = {
+                pagingType: 'full_numbers',
+                pageLength: 5,
+                autoWidth: true,
+            };
+        });
     };
     ConsultarPersonaComponent.prototype.llenarTabla = function () {
         this.dtOptions = {
@@ -297,6 +295,7 @@ var ConsultarPersonaComponent = /** @class */ (function () {
         };
     };
     __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
         __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
     ], ConsultarPersonaComponent.prototype, "personas", void 0);

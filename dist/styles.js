@@ -580,8 +580,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Proyectos\tiemposFirebase\node_modules\font-awesome\css\font-awesome.css */"./node_modules/font-awesome/css/font-awesome.css");
-module.exports = __webpack_require__(/*! C:\Proyectos\tiemposFirebase\src\styles\app.scss */"./src/styles/app.scss");
+__webpack_require__(/*! C:\Proyectos\CONTROL DE TIEMPOS\tiemposFirebase\node_modules\font-awesome\css\font-awesome.css */"./node_modules/font-awesome/css/font-awesome.css");
+module.exports = __webpack_require__(/*! C:\Proyectos\CONTROL DE TIEMPOS\tiemposFirebase\src\styles\app.scss */"./src/styles/app.scss");
 
 
 /***/ })

@@ -1,4 +1,4 @@
-@angular/forms@6.1.3
+@angular/forms@6.1.2
 MIT
 MIT
 
@@ -192,7 +192,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@ng-select/ng-select@2.5.0
+@ng-select/ng-select@2.4.2
 MIT
 MIT
 
@@ -269,31 +269,31 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-@angular/animations@6.1.3
+@angular/animations@6.1.2
 MIT
 MIT
 
-@angular/common@6.1.3
+@angular/common@6.1.2
 MIT
 MIT
 
-@angular/compiler@6.1.3
+@angular/compiler@6.1.2
 MIT
 MIT
 
-@angular/core@6.1.3
+@angular/core@6.1.2
 MIT
 MIT
 
-@angular/platform-browser-dynamic@6.1.3
+@angular/platform-browser-dynamic@6.1.2
 MIT
 MIT
 
-@angular/platform-browser@6.1.3
+@angular/platform-browser@6.1.2
 MIT
 MIT
 
-@angular/router@6.1.3
+@angular/router@6.1.2
 MIT
 MIT
 
@@ -505,7 +505,7 @@ Apache License
    See the License for the specific language governing permissions and
    limitations under the License.
 
-@firebase/firestore@0.7.0
+@firebase/firestore@0.6.1
 Apache-2.0
 Apache-2.0
 
@@ -537,7 +537,7 @@ angularfire2@5.0.0-rc.11
 MIT
 MIT
 
-firebase@5.4.0
+firebase@5.3.1
 Apache-2.0
 Apache-2.0
 

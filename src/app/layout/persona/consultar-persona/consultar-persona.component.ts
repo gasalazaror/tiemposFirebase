@@ -37,6 +37,7 @@ export class ConsultarPersonaComponent implements OnInit {
     this.personas.subscribe(res => {
 
       if (this.dtElement) {
+        console.log(true)
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           // Destroy the table first
           dtInstance.destroy();
@@ -44,6 +45,7 @@ export class ConsultarPersonaComponent implements OnInit {
           this.dtTrigger.next();
         });
       } else {
+        console.log(false)
         this.dtTrigger.next();
       }
 
@@ -52,7 +54,13 @@ export class ConsultarPersonaComponent implements OnInit {
   }
 
   rerender(): void {
-
+    console.log(this.dtTrigger.next)
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
   }
 
   llenarTabla() {

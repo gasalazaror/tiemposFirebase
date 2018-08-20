@@ -9,50 +9,40 @@
         <div class="card-header">Ordenes de trabajo</div>
         <div class="card-body table-responsive">
 
-        
+
+
+
+
 
 
           <div *ngFor="let orden of ordenes | async">
 
             <table class="table table-bordered table-sm">
               <thead>
-                <tr class="">
-                  <th colspan="6">
-                    <div class="row">
-                      <div class="col">
-                        <p style="font-size: 15px"><strong>Cliente: </strong>{{orden.data.cliente.nombre}}</p>
-                      </div>
-                      <div class="col">
-                        <p style="font-size: 15px"><strong>Vehículo: </strong>{{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}}
-                          - {{orden.data.vehiculo.modelo}}</p>
-                      </div>
-                    </div>
 
-
-                  </th>
-                </tr>
                 <tr>
-
-
+                
+                  <th>Cliente</th>
+                  <th>Vehículo</th>
                   <th>Servicio</th>
-                  <th>Dettalle</th>
                   <th>Estado</th>
                   <th>Operador</th>
                 </tr>
               </thead>
               <tbody>
-
                 <tr *ngFor="let servicio of orden.data.servicios " [class.table-danger]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" [class.table-warning]="servicio.estado=='EN PRODUCCIÓN'"
                   [class.table-success]="servicio.estado=='POR FACTURAR'">
-
-
-
+                
+                  <td>
+                    {{orden.data.cliente.nombre}}
+                  </td>
+                  <td>
+                    {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
+                  </td>
                   <td>
                     {{servicio.descripcion}}
                   </td>
-                  <td>
-                    {{servicio.detalle}}
-                  </td>
+
                   <td>
                     {{servicio.estado}}
                   </td>
@@ -60,9 +50,7 @@
                     {{servicio.operador.data.nombre}}
                   </td>
                 </tr>
-
               </tbody>
-
             </table>
 
           </div>
