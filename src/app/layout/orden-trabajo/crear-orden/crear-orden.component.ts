@@ -70,10 +70,10 @@ export class CrearOrdenComponent implements OnInit {
 
   seleccionarPersona() {
     this.personaSeleccionada = this.ClienteForm.value.persona
-    this.VehiculoForm = this.fb.group({
-      vehiculo: [{}, Validators.required]
-    })
-    this.vehiculos = this.personaService.obtenerVehiculos(this.personaSeleccionada.id)
+    // this.VehiculoForm = this.fb.group({
+    //   vehiculo: [{}, Validators.required]
+    // })
+    // this.vehiculos = this.personaService.obtenerVehiculos(this.personaSeleccionada.id)
   }
 
   seleccionarServicio() {
