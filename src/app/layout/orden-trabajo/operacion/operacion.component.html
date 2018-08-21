@@ -7,53 +7,85 @@
 
       <div class="card mb-3">
         <div class="card-header">Ordenes de trabajo</div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+
+              <div class="card-body">
+                <p><strong>Eficiencia</strong></p>
+                <div class="row">
+                  <div class="col" class="table-success" style="width: 15px"></div>
+                  <div class="col">POR FACTURAR</div>
+                </div>
+
+                <div class="row">
+                  <div class="col" class="table-warning" style="width: 15px"></div>
+                  <div class="col">EN PRODUCCIÓN</div>
+                </div>
+
+                <div class="row">
+                  <div class="col" class="table-danger" style="width: 15px"></div>
+                  <div class="col">CITA/RECEPCIÓN</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> 
         <div class="card-body table-responsive">
 
+          <table class="table table-bordered table-sm table-responsive-sm">
+            <thead>
+
+              <tr>
+
+                <th>Cliente</th>
+                <th>Vehículo</th>
+                <th>Servicio</th>
+                <th>Estado</th>
+                <th>Tiempo Estandar</th>
+                <th>Operador</th>
+
+
+
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let servicio of tareas " [class.table-warning]="servicio.servicio.estado=='EN PRODUCCIÓN' || servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'"
+                [class.table-danger]="servicio.servicio.estado=='CITA/RECEPCION' || servicio.servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
+                [class.table-success]="servicio.servicio.estado=='POR FACTURAR'">
+
+                <td>
+                  {{servicio.cliente.nombre}}
+                </td>
+                <td>
+                  {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}
+                </td>
+                <td>
+                  {{servicio.servicio.descripcion}}
+                </td>
+                <td>
+                  {{servicio.servicio.tiempoEstandar}} minutos
+                </td>
+                <td>
+                  {{servicio.servicio.estado}}
+                </td>
+
+                <td>
+                  {{servicio.servicio.operador.data.nombre}}
+                </td>
+
+
+              </tr>
+            </tbody>
+          </table>
 
 
 
 
 
 
-          <div *ngFor="let orden of ordenes | async">
-
-            <table class="table table-bordered table-sm">
-              <thead>
-
-                <tr>
-                
-                  <th>Cliente</th>
-                  <th>Vehículo</th>
-                  <th>Servicio</th>
-                  <th>Estado</th>
-                  <th>Operador</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let servicio of orden.data.servicios " [class.table-danger]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" [class.table-warning]="servicio.estado=='EN PRODUCCIÓN'"
-                  [class.table-success]="servicio.estado=='POR FACTURAR'">
-                
-                  <td>
-                    {{orden.data.cliente.nombre}}
-                  </td>
-                  <td>
-                    {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
-                  </td>
-                  <td>
-                    {{servicio.descripcion}}
-                  </td>
-
-                  <td>
-                    {{servicio.estado}}
-                  </td>
-                  <td>
-                    {{servicio.operador.data.nombre}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
 
 
 

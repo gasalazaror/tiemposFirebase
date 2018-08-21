@@ -1,0 +1,106 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Reportes'" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+
+
+      <div class="card mb-3">
+        <div class="card-header">Reportes</div>
+
+        <div class="card-body ">
+
+          <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                
+                    <div class="card-body">
+                      <p><strong>Eficiencia</strong></p>
+                      <div class="row">
+                        <div class="col" class="table-success" style="width: 15px"></div>
+                        <div class="col">Muy buena</div>
+                      </div>
+      
+                      <div class="row">
+                        <div class="col" class="table-warning" style="width: 15px"></div>
+                        <div class="col">Buena</div>
+                      </div>
+      
+                      <div class="row">
+                        <div class="col" class="table-danger" style="width: 15px"></div>
+                        <div class="col">Regular</div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+           
+          </div>
+
+
+
+
+          <br>
+
+          <table class="table table-bordered table-sm table-responsive">
+            <thead>
+
+              <tr>
+
+                <th>Cliente</th>
+                <th>Vehículo</th>
+                <th>Servicio</th>
+                <th>Operador</th>
+                <th>Tiempo Estandar</th>
+                <th>Lead Time</th>
+                <th>Tiempo Real</th>
+                <th>Eficiencia</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let servicio of tareas " [class.table-success]="servicio.servicio.eficiencia>=100" [class.table-warning]="servicio.servicio.eficiencia>=80 && servicio.servicio.eficiencia<100"
+                [class.table-danger]="servicio.servicio.eficiencia<80">
+
+                <td>
+                  {{servicio.cliente.nombre}}
+                </td>
+                <td>
+                  {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}
+                </td>
+                <td>
+                  {{servicio.servicio.descripcion}}
+                </td>
+                <td>
+                  {{servicio.servicio.operador.data.nombre}}
+                </td>
+                <td>
+                  {{servicio.servicio.tiempoEstandarFor}}
+                </td>
+                <td>
+                  {{servicio.servicio.leadTime}}
+                </td>
+                <td>
+                  {{servicio.servicio.tiempoReal}}
+                </td>
+                <td>
+                  {{servicio.servicio.eficiencia}}%
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+</div>

@@ -213,7 +213,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n          <button (click)=\"rerender()\">res</button>\r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n      \r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -267,26 +267,38 @@ var ConsultarPersonaComponent = /** @class */ (function () {
     ConsultarPersonaComponent.prototype.ngOnInit = function () {
         this.obtenerPersonas();
     };
-    ConsultarPersonaComponent.prototype.ngAfterViewInit = function () { this.dtTrigger.next(); };
+    ConsultarPersonaComponent.prototype.obtenerPersonas = function () {
+        var _this = this;
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 10,
+            autoWidth: true,
+        };
+        this.personas = this.personaService.obtenerPersonas();
+        this.personas.subscribe(function (res) {
+            if (_this.dtElement) {
+                console.log(true);
+                _this.dtElement.dtInstance.then(function (dtInstance) {
+                    // Destroy the table first
+                    dtInstance.destroy();
+                    // Call the dtTrigger to rerender again
+                    _this.dtTrigger.next();
+                });
+            }
+            else {
+                console.log(false);
+                _this.dtTrigger.next();
+            }
+        });
+    };
     ConsultarPersonaComponent.prototype.rerender = function () {
         var _this = this;
-        console.log(this.dtElement);
+        console.log(this.dtTrigger.next);
         this.dtElement.dtInstance.then(function (dtInstance) {
             // Destroy the table first
             dtInstance.destroy();
             // Call the dtTrigger to rerender again
             _this.dtTrigger.next();
-        });
-    };
-    ConsultarPersonaComponent.prototype.obtenerPersonas = function () {
-        var _this = this;
-        this.personas = this.personaService.obtenerPersonas();
-        this.personas.subscribe(function (res) {
-            _this.dtOptions = {
-                pagingType: 'full_numbers',
-                pageLength: 5,
-                autoWidth: true,
-            };
         });
     };
     ConsultarPersonaComponent.prototype.llenarTabla = function () {
@@ -295,7 +307,6 @@ var ConsultarPersonaComponent = /** @class */ (function () {
         };
     };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
         __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
     ], ConsultarPersonaComponent.prototype, "personas", void 0);
@@ -445,7 +456,7 @@ var CrearPersonaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Información persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <table class=\"table table-sm table-bordered\">\r\n\r\n        <tbody>\r\n          <tr>\r\n            <th>Tipo</th>\r\n            <td>{{ (persona | async)?.tipo }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Cédula / RUC</th>\r\n            <td>{{ (persona | async)?.cedula }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Nombre / Razón social</th>\r\n            <td>{{ (persona | async)?.nombre }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Dirección</th>\r\n            <td>{{ (persona | async)?.direccion }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Correo</th>\r\n            <td>{{ (persona | async)?.correo }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Teléfono</th>\r\n            <td>{{ (persona | async)?.telefono }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Roles</th>\r\n            <td>\r\n              <p *ngIf=\"(persona | async)?.cliente\">Cliente</p>\r\n              <p *ngIf=\"(persona | async)?.empleado\">Empleado</p>\r\n            </td>\r\n          </tr>\r\n\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Información persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Información\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <table class=\"table table-sm table-bordered\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>Tipo</th>\r\n                <td>{{ (persona | async)?.tipo }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Cédula / RUC</th>\r\n                <td>{{ (persona | async)?.cedula }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Nombre / Razón social</th>\r\n                <td>{{ (persona | async)?.nombre }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Dirección</th>\r\n                <td>{{ (persona | async)?.direccion }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Correo</th>\r\n                <td>{{ (persona | async)?.correo }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Teléfono</th>\r\n                <td>{{ (persona | async)?.telefono }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Roles</th>\r\n                <td>\r\n                  <p *ngIf=\"(persona | async)?.cliente\">Cliente</p>\r\n                  <p *ngIf=\"(persona | async)?.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n\r\n    </div>\r\n\r\n    <div *ngIf=\"(persona | async)?.empleado\" class=\"col-md-6\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Información de usuario\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <button *ngIf=\"!(persona | async)?.usuario \" (click)=\"generarUsuario(persona)\" class=\"btn btn-primary\">Generar usuario</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -474,6 +485,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router.animations */ "./src/app/router.animations.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../servicios/persona.service */ "./src/app/servicios/persona.service.ts");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -487,14 +500,37 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var InformacionPersonaComponent = /** @class */ (function () {
-    function InformacionPersonaComponent(route, personaService) {
+    function InformacionPersonaComponent(route, personaService, auth, db) {
+        var _this = this;
         this.route = route;
         this.personaService = personaService;
+        this.auth = auth;
+        this.db = db;
         this.id = this.route.snapshot.paramMap.get('id');
         this.persona = this.personaService.obtenerUnaPersona(this.id);
+        this.persona.subscribe(function (res) {
+            _this.personaq = res;
+        });
     }
     InformacionPersonaComponent.prototype.ngOnInit = function () {
+    };
+    InformacionPersonaComponent.prototype.generarUsuario = function (persona) {
+        var _this = this;
+        this.empresa = this.db.doc(localStorage.getItem('empresa'));
+        console.log(this.personaq);
+        this.auth.auth.createUserWithEmailAndPassword(this.personaq.correo, this.personaq.cedula)
+            .then(function (ususario) {
+            _this.db.collection('usuario').doc(_this.auth.auth.currentUser.uid).set({ empresa: _this.empresa.ref, nombre: _this.personaq.nombre, id: _this.auth.auth.currentUser.uid });
+            _this.empresa.collection('personas').doc(_this.id).update({ usuario: _this.auth.auth.currentUser.uid });
+            // console.log(this.auth.auth.currentUser.sendEmailVerification())
+            console.log(ususario);
+        }, function (err) {
+            _this.db.collection('usuario').doc(_this.auth.auth.currentUser.uid).set({ empresa: _this.empresa.ref, nombre: _this.personaq.nombre, id: _this.auth.auth.currentUser.uid });
+            _this.empresa.collection('personas').doc(_this.id).update({ usuario: _this.auth.auth.currentUser.uid });
+        });
     };
     InformacionPersonaComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -503,7 +539,10 @@ var InformacionPersonaComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./informacion-persona.component.scss */ "./src/app/layout/persona/informacion-persona/informacion-persona.component.scss")],
             animations: [Object(_router_animations__WEBPACK_IMPORTED_MODULE_1__["routerTransition"])()]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__["PersonaService"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
+            _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__["PersonaService"],
+            angularfire2_auth__WEBPACK_IMPORTED_MODULE_4__["AngularFireAuth"],
+            angularfire2_firestore__WEBPACK_IMPORTED_MODULE_5__["AngularFirestore"]])
     ], InformacionPersonaComponent);
     return InformacionPersonaComponent;
 }());

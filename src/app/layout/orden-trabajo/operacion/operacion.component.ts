@@ -12,6 +12,7 @@ import { OrdenService } from '../../../servicios/orden/orden.service';
 export class OperacionComponent implements OnInit {
 
   ordenes: Observable<any[]>;
+  tareas: any
 
   constructor(private ordenService: OrdenService) { }
 
@@ -19,11 +20,25 @@ export class OperacionComponent implements OnInit {
     this.obtenerOrdenes()
   }
   obtenerOrdenes() {
-    this.ordenes =this.ordenService.obtenerOrdenes();
+    this.ordenes = this.ordenService.obtenerOrdenes();
 
-    this.ordenes.forEach(element => {
+    this.ordenes.subscribe(res => {
+      this.tareas = []
+      res.forEach(element => {
+        element.data.servicios.forEach(servicio => {
+          
 
-    });
-  
+          if (!servicio.operador) {
+            servicio.operador = {data: {nombre:''}}
+          }
+          this.tareas.push({ cliente: element.data.cliente, servicio: servicio, vehiculo: element.data.vehiculo })
+
+
+        });
+
+
+      });
+    })
+
   }
 }

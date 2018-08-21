@@ -20,39 +20,48 @@ var map = {
 		"./src/app/layout/bs-component/bs-component.module.ts",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
+		"common",
 		"bs-component-bs-component-module"
 	],
 	"./bs-element/bs-element.module": [
 		"./src/app/layout/bs-element/bs-element.module.ts",
+		"common",
 		"bs-element-bs-element-module"
 	],
 	"./charts/charts.module": [
 		"./src/app/layout/charts/charts.module.ts",
+		"charts-charts-module~reporte-reporte-module",
+		"common",
 		"charts-charts-module"
 	],
 	"./dashboard/dashboard.module": [
 		"./src/app/layout/dashboard/dashboard.module.ts",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
+		"common",
 		"dashboard-dashboard-module"
 	],
 	"./form/form.module": [
 		"./src/app/layout/form/form.module.ts",
+		"common",
 		"form-form-module"
 	],
 	"./grid/grid.module": [
 		"./src/app/layout/grid/grid.module.ts",
+		"common",
 		"grid-grid-module"
 	],
 	"./layout/layout.module": [
 		"./src/app/layout/layout.module.ts",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
+		"common",
 		"layout-layout-module"
 	],
 	"./login/login.module": [
 		"./src/app/login/login.module.ts",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"common",
 		"login-login-module"
 	],
 	"./not-found/not-found.module": [
@@ -66,13 +75,21 @@ var map = {
 		"orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module",
 		"orden-trabajo-orden-trabajo-module~servicio-servicio-module",
+		"common",
 		"orden-trabajo-orden-trabajo-module"
 	],
 	"./persona/persona.module": [
 		"./src/app/layout/persona/persona.module.ts",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module",
+		"common",
 		"persona-persona-module"
+	],
+	"./reporte/reporte.module": [
+		"./src/app/layout/reporte/reporte.module.ts",
+		"charts-charts-module~reporte-reporte-module",
+		"common",
+		"reporte-reporte-module"
 	],
 	"./server-error/server-error.module": [
 		"./src/app/server-error/server-error.module.ts",
@@ -83,20 +100,24 @@ var map = {
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
 		"orden-trabajo-orden-trabajo-module~servicio-servicio-module",
+		"common",
 		"servicio-servicio-module"
 	],
 	"./signup/signup.module": [
 		"./src/app/signup/signup.module.ts",
+		"common",
 		"signup-signup-module"
 	],
 	"./tables/tables.module": [
 		"./src/app/layout/tables/tables.module.ts",
+		"common",
 		"tables-tables-module"
 	],
 	"./vehiculo/vehiculo.module": [
 		"./src/app/layout/vehiculo/vehiculo.module.ts",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
-		"orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module"
+		"orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module",
+		"common"
 	]
 };
 function webpackAsyncContext(req) {

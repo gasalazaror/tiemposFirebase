@@ -51,7 +51,7 @@ var LoginRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"login-page\" [@routerTransition]>\r\n    <div class=\"row justify-content-md-center\">\r\n        <div class=\"col-md-4\">\r\n            <img src=\"assets/images/logo.png\" width=\"150px\" class=\"user-avatar\" />\r\n            <h1>SB Admin BS4 Angular5</h1>\r\n            <h2>{{ (item | async)?.nombre }}</h2>\r\n         \r\n   \r\n                <div class=\"form-content\">\r\n                    <div class=\"form-group\">\r\n                        <input type=\"text\" [(ngModel)]=\"usuario.email\" class=\"form-control input-underline input-lg\" id=\"1\" placeholder=\"Email\">\r\n                    </div>\r\n\r\n                    <div class=\"form-group\">\r\n                        <input type=\"password\" [(ngModel)]=\"usuario.password\" class=\"form-control input-underline input-lg\" id=\"2\" placeholder=\"Password\">\r\n                    </div>\r\n                </div>\r\n                <a class=\"btn rounded-btn\" [routerLink]=\"['/dashboard']\" (click)=\"onLoggedin()\"> Log in </a>\r\n                &nbsp;\r\n                <a class=\"btn rounded-btn\" [routerLink]=\"['/signup']\">Register</a>\r\n   \r\n        </div>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"login-page\" [@routerTransition]>\r\n    <div class=\"row justify-content-md-center\">\r\n        <div class=\"col-md-4\">\r\n            <img src=\"assets/images/logo.png\" width=\"150px\" class=\"user-avatar\" />\r\n            <h1>Control de tiempos</h1>\r\n            <div class=\"form-content\">\r\n                <div class=\"form-group\">\r\n                    <input autofocus type=\"text\" [(ngModel)]=\"usuario.email\" class=\"form-control input-underline input-lg\" id=\"1\" placeholder=\"Email\">\r\n                </div>\r\n                <div class=\"form-group\">\r\n                    <input type=\"password\" [(ngModel)]=\"usuario.password\" class=\"form-control input-underline input-lg\" id=\"2\" placeholder=\"Password\">\r\n                </div>\r\n                <div *ngIf=\"error!=''\" class=\"alert alert-danger\" role=\"alert\">\r\n                    <strong>Error: </strong> {{error}}\r\n                </div>\r\n            </div>\r\n            <button class=\"btn rounded-btn\" (click)=\"onLoggedin()\">Iniciar sesión</button>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -100,7 +100,8 @@ var LoginComponent = /** @class */ (function () {
         this.router = router;
         this.afAuth = afAuth;
         this.db = db;
-        this.usuario = { email: 'gabrielsalazar@outlook.com', password: '123456' };
+        this.usuario = { email: '', password: '' };
+        this.error = '';
     }
     LoginComponent.prototype.ngOnInit = function () {
     };
@@ -114,9 +115,10 @@ var LoginComponent = /** @class */ (function () {
                 localStorage.setItem('usuario', usuario.nombre);
                 localStorage.setItem('empresa', usuario.empresa.path);
                 localStorage.setItem('isLoggedin', 'true');
+                _this.router.navigate(['/']);
             });
         }, function (error) {
-            console.log('Existió un error');
+            _this.error = 'Usuario o contraseña incorrectos';
         });
     };
     LoginComponent = __decorate([

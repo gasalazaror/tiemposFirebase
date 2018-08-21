@@ -228,10 +228,10 @@ var CrearOrdenComponent = /** @class */ (function () {
     };
     CrearOrdenComponent.prototype.seleccionarPersona = function () {
         this.personaSeleccionada = this.ClienteForm.value.persona;
-        this.VehiculoForm = this.fb.group({
-            vehiculo: [{}, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]
-        });
-        this.vehiculos = this.personaService.obtenerVehiculos(this.personaSeleccionada.id);
+        // this.VehiculoForm = this.fb.group({
+        //   vehiculo: [{}, Validators.required]
+        // })
+        // this.vehiculos = this.personaService.obtenerVehiculos(this.personaSeleccionada.id)
     };
     CrearOrdenComponent.prototype.seleccionarServicio = function () {
         if (this.ServicioForm.value.servicio.data) {
@@ -422,7 +422,7 @@ var InformacionOrdenComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Operaciones'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n          <div *ngFor=\"let orden of ordenes | async\">\r\n\r\n            <table class=\"table table-bordered table-sm\">\r\n              <thead>\r\n\r\n                <tr>\r\n                \r\n                  <th>Cliente</th>\r\n                  <th>Vehículo</th>\r\n                  <th>Servicio</th>\r\n                  <th>Estado</th>\r\n                  <th>Operador</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let servicio of orden.data.servicios \" [class.table-danger]=\"servicio.estado=='EN ESPERA DE PRODUCCIÓN'\" [class.table-warning]=\"servicio.estado=='EN PRODUCCIÓN'\"\r\n                  [class.table-success]=\"servicio.estado=='POR FACTURAR'\">\r\n                \r\n                  <td>\r\n                    {{orden.data.cliente.nombre}}\r\n                  </td>\r\n                  <td>\r\n                    {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}\r\n                  </td>\r\n                  <td>\r\n                    {{servicio.descripcion}}\r\n                  </td>\r\n\r\n                  <td>\r\n                    {{servicio.estado}}\r\n                  </td>\r\n                  <td>\r\n                    {{servicio.operador.data.nombre}}\r\n                  </td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Operaciones'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-3\">\r\n            <div class=\"card\">\r\n\r\n              <div class=\"card-body\">\r\n                <p><strong>Eficiencia</strong></p>\r\n                <div class=\"row\">\r\n                  <div class=\"col\" class=\"table-success\" style=\"width: 15px\"></div>\r\n                  <div class=\"col\">POR FACTURAR</div>\r\n                </div>\r\n\r\n                <div class=\"row\">\r\n                  <div class=\"col\" class=\"table-warning\" style=\"width: 15px\"></div>\r\n                  <div class=\"col\">EN PRODUCCIÓN</div>\r\n                </div>\r\n\r\n                <div class=\"row\">\r\n                  <div class=\"col\" class=\"table-danger\" style=\"width: 15px\"></div>\r\n                  <div class=\"col\">CITA/RECEPCIÓN</div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n        </div> \r\n        <div class=\"card-body table-responsive\">\r\n\r\n          <table class=\"table table-bordered table-sm table-responsive-sm\">\r\n            <thead>\r\n\r\n              <tr>\r\n\r\n                <th>Cliente</th>\r\n                <th>Vehículo</th>\r\n                <th>Servicio</th>\r\n                <th>Estado</th>\r\n                <th>Tiempo Estandar</th>\r\n                <th>Operador</th>\r\n\r\n\r\n\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of tareas \" [class.table-warning]=\"servicio.servicio.estado=='EN PRODUCCIÓN' || servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'\"\r\n                [class.table-danger]=\"servicio.servicio.estado=='CITA/RECEPCION' || servicio.servicio.estado=='EN ESPERA DE PRODUCCIÓN'\"\r\n                [class.table-success]=\"servicio.servicio.estado=='POR FACTURAR'\">\r\n\r\n                <td>\r\n                  {{servicio.cliente.nombre}}\r\n                </td>\r\n                <td>\r\n                  {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}\r\n                </td>\r\n                <td>\r\n                  {{servicio.servicio.descripcion}}\r\n                </td>\r\n                <td>\r\n                  {{servicio.servicio.tiempoEstandar}} minutos\r\n                </td>\r\n                <td>\r\n                  {{servicio.servicio.estado}}\r\n                </td>\r\n\r\n                <td>\r\n                  {{servicio.servicio.operador.data.nombre}}\r\n                </td>\r\n\r\n\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -470,8 +470,18 @@ var OperacionComponent = /** @class */ (function () {
         this.obtenerOrdenes();
     };
     OperacionComponent.prototype.obtenerOrdenes = function () {
+        var _this = this;
         this.ordenes = this.ordenService.obtenerOrdenes();
-        this.ordenes.forEach(function (element) {
+        this.ordenes.subscribe(function (res) {
+            _this.tareas = [];
+            res.forEach(function (element) {
+                element.data.servicios.forEach(function (servicio) {
+                    if (!servicio.operador) {
+                        servicio.operador = { data: { nombre: '' } };
+                    }
+                    _this.tareas.push({ cliente: element.data.cliente, servicio: servicio, vehiculo: element.data.vehiculo });
+                });
+            });
         });
     };
     OperacionComponent = __decorate([
@@ -555,74 +565,6 @@ var OrdenTrabajoModule = /** @class */ (function () {
         })
     ], OrdenTrabajoModule);
     return OrdenTrabajoModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/servicios/orden/orden.service.ts":
-/*!**************************************************!*\
-  !*** ./src/app/servicios/orden/orden.service.ts ***!
-  \**************************************************/
-/*! exports provided: OrdenService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrdenService", function() { return OrdenService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var OrdenService = /** @class */ (function () {
-    function OrdenService(afs) {
-        this.afs = afs;
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    }
-    OrdenService.prototype.crearOrden = function (orden, servicios) {
-        var id = this.afs.createId();
-        return this.empresa.collection('ordenes').doc(id).set(orden);
-    };
-    OrdenService.prototype.obtenerOrdenes = function () {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.collection('ordenes').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
-            var data = a.payload.doc.data();
-            var id = a.payload.doc.id;
-            return { id: id, data: data };
-        }); }));
-    };
-    OrdenService.prototype.obtenerUnaOrden = function (id) {
-        return this.empresa.collection('ordenes').doc(id).valueChanges();
-    };
-    OrdenService.prototype.obtenerServicios = function (id) {
-        return this.empresa.collection('ordenes').doc(id).collection('ordenServicios').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
-            var data = a.payload.doc.data();
-            var id = a.payload.doc.id;
-            return { id: id, data: data };
-        }); }));
-    };
-    OrdenService.prototype.modificarServicio = function (orden, datos) {
-        return this.empresa.collection('ordenes').doc(orden).update(datos);
-    };
-    OrdenService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
-            providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"]])
-    ], OrdenService);
-    return OrdenService;
 }());
 
 

@@ -2,23 +2,19 @@
     <div class="row justify-content-md-center">
         <div class="col-md-4">
             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>SB Admin BS4 Angular5</h1>
-            <h2>{{ (item | async)?.nombre }}</h2>
-         
-   
-                <div class="form-content">
-                    <div class="form-group">
-                        <input type="text" [(ngModel)]="usuario.email" class="form-control input-underline input-lg" id="1" placeholder="Email">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" [(ngModel)]="usuario.password" class="form-control input-underline input-lg" id="2" placeholder="Password">
-                    </div>
+            <h1>Control de tiempos</h1>
+            <div class="form-content">
+                <div class="form-group">
+                    <input autofocus type="text" [(ngModel)]="usuario.email" class="form-control input-underline input-lg" id="1" placeholder="Email">
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Log in </a>
-                &nbsp;
-                <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
-   
+                <div class="form-group">
+                    <input type="password" [(ngModel)]="usuario.password" class="form-control input-underline input-lg" id="2" placeholder="Password">
+                </div>
+                <div *ngIf="error!=''" class="alert alert-danger" role="alert">
+                    <strong>Error: </strong> {{error}}
+                </div>
+            </div>
+            <button class="btn rounded-btn" (click)="onLoggedin()">Iniciar sesión</button>
         </div>
     </div>
 </div>
