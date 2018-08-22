@@ -14,7 +14,12 @@
                     <strong>Error: </strong> {{error}}
                 </div>
             </div>
-            <button class="btn rounded-btn" (click)="onLoggedin()">Iniciar sesión</button>
+
+            <select *ngIf="listaEmpresas.length>0" class="form-control">
+                <option *ngFor="let empresa of listaEmpresas">{{empresa.nombre}}</option>
+            </select>
+            <br>
+            <button class="btn rounded-btn" (click)="onLoggedin2()">Iniciar sesión</button>
         </div>
     </div>
 </div>

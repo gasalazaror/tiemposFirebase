@@ -33,8 +33,7 @@ export class CrearPersonaComponent implements OnInit {
   constructor(private fb: FormBuilder, private personaService: PersonaService, private route: ActivatedRoute, ) {
 
     this.id = this.route.snapshot.paramMap.get('id');
-
-    if (this.id != 'nuevo') {
+    if (this.id != 'nuevo' && this.id!=null) {
       this.persona = this.personaService.obtenerUnaPersona(this.id);
 
       this.persona.subscribe(persona => {

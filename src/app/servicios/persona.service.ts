@@ -30,6 +30,10 @@ export class PersonaService {
     return this.empresa.collection('personas').doc(id).update(persona);
   }
 
+  eliminarPersona(idPersona) {
+    return this.empresa.collection('personas').doc(idPersona).delete()
+  }
+
   obtenerPersonas() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('personas').snapshotChanges().pipe(
@@ -43,7 +47,7 @@ export class PersonaService {
 
   obtenerUsuarios() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('personas', query=>query.where('empleado','==',true)).snapshotChanges().pipe(
+    return this.empresa.collection('personas', query => query.where('empleado', '==', true)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -54,7 +58,7 @@ export class PersonaService {
 
   obtenerClientes() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('personas', query=>query.where('cliente','==',true)).snapshotChanges().pipe(
+    return this.empresa.collection('personas', query => query.where('cliente', '==', true)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -65,7 +69,7 @@ export class PersonaService {
 
   obtenerVehiculos(uid) {
     const userRef = this.afs.collection('personas').doc(uid)
-    return this.empresa.collection('vehiculos', query=> query.where('dueno','==',userRef.ref)).snapshotChanges().pipe(
+    return this.empresa.collection('vehiculos', query => query.where('dueno', '==', userRef.ref)).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;

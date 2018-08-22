@@ -5,6 +5,7 @@ import { PersonaService } from '../../../servicios/persona.service';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Alert } from 'selenium-webdriver';
 
 
 
@@ -31,6 +32,7 @@ export class InformacionPersonaComponent implements OnInit {
     this.persona = this.personaService.obtenerUnaPersona(this.id)
     this.persona.subscribe(res => {
       this.personaq = res
+      console.log(this.personaq)
     })
   }
 
@@ -51,11 +53,19 @@ export class InformacionPersonaComponent implements OnInit {
         this.db.collection('usuario').doc(this.auth.auth.currentUser.uid).set({empresa:this.empresa.ref, nombre: this.personaq.nombre,  id: this.auth.auth.currentUser.uid});
         this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
       })
+  }
 
-
-
+  enviarCorreoRecuperacion(persona){
+    console.log(persona)
+    this.auth.auth.sendPasswordResetEmail(persona.correo).then(email=>{
+      alert('Se envió un email de recuperación correctamente')
+    },error=>{
+      alert('Existió un error al enviar el email de recuperación')
+    })
   }
 
 
 
-}
+
+
+} 

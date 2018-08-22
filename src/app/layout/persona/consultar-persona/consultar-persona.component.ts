@@ -68,4 +68,19 @@ export class ConsultarPersonaComponent implements OnInit {
       pagingType: 'full_numbers'
     };
   }
+
+  eliminarPersona(persona) {
+    console.log(persona)
+    var confirmacion = confirm("¿Está seguro que desea eliminar a la persona: "+persona.data.nombre)
+
+    if (confirmacion) {
+      this.personaService.eliminarPersona(persona.id).then(persona=>{
+        alert('Persona eliminada correctamente')
+      },err=>{
+        alert('Existió un error al eliminar a la persona')
+      })
+    } else {
+      
+    }
+  }
 }
