@@ -21,6 +21,8 @@ export class InformacionPersonaComponent implements OnInit {
   persona: Observable<any>;
   personaq: any
   empresa: AngularFirestoreDocument
+  user: AngularFirestoreDocument
+  error = ''
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +34,7 @@ export class InformacionPersonaComponent implements OnInit {
     this.persona = this.personaService.obtenerUnaPersona(this.id)
     this.persona.subscribe(res => {
       this.personaq = res
-      console.log(this.personaq)
+    
     })
   }
 
@@ -42,16 +44,52 @@ export class InformacionPersonaComponent implements OnInit {
   generarUsuario(persona) {
     this.empresa = this.db.doc(localStorage.getItem('empresa'));
     console.log(this.personaq)
+
+  
     this.auth.auth.createUserWithEmailAndPassword(this.personaq.correo, this.personaq.cedula)
       .then(ususario => {
+        const id = this.db.createId()
+        this.user = this.db.doc('usuario/'+this.auth.auth.currentUser.uid);
+        this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, usuario: this.user.ref, correo: this.personaq.correo, tipo: 'usuario'})
+        .then(user=>{
+          console.log(user)
+          this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
+          alert('usuario')
+        })
 
-        this.db.collection('usuario').doc(this.auth.auth.currentUser.uid).set({empresa:this.empresa.ref, nombre: this.personaq.nombre, id: this.auth.auth.currentUser.uid});
-        this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
-       // console.log(this.auth.auth.currentUser.sendEmailVerification())
-        console.log(ususario)
+
+     
       }, err => {
-        this.db.collection('usuario').doc(this.auth.auth.currentUser.uid).set({empresa:this.empresa.ref, nombre: this.personaq.nombre,  id: this.auth.auth.currentUser.uid});
-        this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
+      
+        console.log(this.auth.auth.currentUser.uid)
+
+        this.auth.user.subscribe(res=>{
+          console.log(res)
+        })
+
+        this.user = this.db.doc('usuario/'+this.auth.auth.currentUser.uid);
+
+  
+     
+        this.db.collection('empresaUsuario', 
+        query=>query.where('empresa','==',this.empresa.ref).where('email','==',this.personaq.correo)).valueChanges().subscribe(res=>{
+     
+          if (res.length==0) {
+            const id = this.db.createId()
+            this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, usuario: this.user.ref, tipo: 'usuario'})
+            .then(user=>{
+          
+              this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
+              alert('usuario')
+            })
+          } else {
+            console.log('Ya existe un usuario con el correo electrónico ingresado')
+            this.error = 'Ya existe un usuario con el correo electrónico ingresado'
+          }
+        })
+        console.log(err)
+     //   this.db.collection('usuario').doc(this.auth.auth.currentUser.uid).set({empresa:this.empresa.ref, nombre: this.personaq.nombre,  id: this.auth.auth.currentUser.uid});
+    //    
       })
   }
 

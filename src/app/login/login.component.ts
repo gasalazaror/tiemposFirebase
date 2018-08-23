@@ -18,12 +18,14 @@ export class LoginComponent implements OnInit {
     private itemDoc: AngularFirestoreDocument;
     item: Observable<any>;
     empresas: Observable<any>;
-    listaEmpresas:any[];
+    listaEmpresas: any[];
     error: any
+    empresaSeleccionada: any
 
     constructor(public router: Router, public afAuth: AngularFireAuth, public db: AngularFirestore) {
         this.error = ''
         this.listaEmpresas = []
+        this.empresaSeleccionada = ''
     }
 
     ngOnInit() {
@@ -51,38 +53,48 @@ export class LoginComponent implements OnInit {
     }
 
     onLoggedin2() {
-        this.afAuth.auth.signInWithEmailAndPassword(this.usuario.email, this.usuario.password)
-            .then((usuario: any) => {
-                this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
-                this.empresas= this.db.collection('empresaUsuario', 
-                query=>query.where('usuario','==', this.itemDoc.ref).where('tipo','==','usuario')).valueChanges()
+        // this.afAuth.auth.setPersistence('none').then(usuario => {
+            
+        // })
 
-                this.empresas.subscribe(res=>{
+        this.afAuth.auth.signInWithEmailAndPassword(this.usuario.email, this.usuario.password)
+        .then((usuario: any) => {
+            if (usuario.user.emailVerified) {
+                this.error = ''
+                this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
+                this.empresas = this.db.collection('empresaUsuario',
+                    query => query.where('usuario', '==', this.itemDoc.ref).where('tipo', '==', 'usuario')).valueChanges()
+                this.empresas.subscribe(res => {
+                    this.listaEmpresas = []
                     res.forEach(elemento => {
                         this.itemDoc = this.db.doc(elemento.empresa.path)
-                        this.itemDoc.valueChanges().subscribe(res=>{
+                        this.itemDoc.valueChanges().subscribe(res => {
+                            res.path = elemento.empresa.path;
                             this.listaEmpresas.push(res)
                         })
-
-                        console.log(this.listaEmpresas)
                     });
+
+                    
                 })
 
-                // this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
-                // this.item = this.itemDoc.valueChanges();
-                // this.item.subscribe(usuario => {
+            } else {
+                this.router.navigate(['/recuperacion']);
+            }
 
-                //     localStorage.setItem('usuario', usuario.nombre);
-                //     localStorage.setItem('empresa', usuario.empresa.path);
-                //     localStorage.setItem('isLoggedin', 'true');
-                //     this.router.navigate(['/']);
+        }, error => {
+            this.error = error.message
+            console.log(error)
+        })
 
 
-                // })
+    }
 
-            }, error => {
-                this.error = 'Usuario o contraseña incorrectos'
-            })
+    seleccionarEmpresa() {
+        console.log(this.empresaSeleccionada)
+
+         localStorage.setItem('empresa', this.empresaSeleccionada);
+         localStorage.setItem('isLoggedin', 'true');
+         this.router.navigate(['/']);
     }
 
 
