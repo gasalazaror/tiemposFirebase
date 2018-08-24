@@ -7,6 +7,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { PageHeaderModule } from '../../shared';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [
@@ -15,8 +16,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
     PageHeaderModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule.forRoot(),
-
+    NgbModule.forRoot(), 
+    DataTablesModule
   ],
   exports: [CrearServicioComponent],
   declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent]

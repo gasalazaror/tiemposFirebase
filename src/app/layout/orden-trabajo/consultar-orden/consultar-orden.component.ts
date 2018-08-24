@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Observable } from 'rxjs';
 import { OrdenService } from '../../../servicios/orden/orden.service';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-consultar-orden',
@@ -11,6 +12,10 @@ import { OrdenService } from '../../../servicios/orden/orden.service';
   animations: [routerTransition()]
 })
 export class ConsultarOrdenComponent implements OnInit {
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
 
   ordenes: Observable<any[]>;
 
@@ -22,11 +27,17 @@ export class ConsultarOrdenComponent implements OnInit {
   }
 
   obtenerOrdenes() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      autoWidth: true,
+
+    };
     this.ordenes =this.ordenService.obtenerOrdenes();
 
-    this.ordenes.forEach(element => {
-      console.log(element)
-    });
+    this.ordenes.subscribe(res=>{
+      this.dtTrigger.next();
+    })
   
   }
 

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { Observable } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 
 
@@ -13,6 +15,11 @@ import { Observable } from 'rxjs';
 })
 export class ConsultarVehiculoComponent implements OnInit {
 
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  
   vehiculos: Observable<any[]>;
 
   constructor(private vehiculoService: VehiculoService) { 
@@ -23,10 +30,17 @@ export class ConsultarVehiculoComponent implements OnInit {
   }
 
   obtenerVehiculos() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      autoWidth: true,
+
+    };
+
     this.vehiculos =this.vehiculoService.obtenerVehiculos();
-    this.vehiculos.forEach(element => {
-      console.log(element)
-    });
+    this.vehiculos.subscribe(res=>{
+      this.dtTrigger.next();
+    })
   }
 
 }

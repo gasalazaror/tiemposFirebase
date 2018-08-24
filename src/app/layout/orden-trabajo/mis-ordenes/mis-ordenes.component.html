@@ -31,10 +31,7 @@
             </div>
           </div>
 
-          <div class="col-md-4">
-            <br><br>
-            <a target="_blank" class="btn btn-primary" href="https://kanban-mobil.firebaseapp.com/">Ir a operaciones</a>
-          </div>
+
 
         </div>
         <div class="card-body table-responsive">
@@ -49,7 +46,7 @@
                 <th>Servicio</th>
                 <th>T. estandar</th>
                 <th>Estado</th>
-                <th>Operador</th>
+     
 
 
 
@@ -57,37 +54,42 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let servicio of tareas " [class.table-warning]="servicio.servicio.estado=='EN PRODUCCIÓN' || servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'"
-                [class.table-danger]="servicio.servicio.estado=='CITA/RECEPCION' || servicio.servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
-                [class.table-success]="servicio.servicio.estado=='POR FACTURAR'">
-
-                <td>
-                  {{servicio.cliente.nombre}}
-                </td>
-                <td>
-                  {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}
-                </td>
-                <td>
-                  {{servicio.servicio.descripcion}}
-                </td>
-                <td>
-                  {{servicio.servicio.tiempoEstandar}} minutos
-                </td>
-                <td>
-                  {{servicio.servicio.estado}}
-                  <div *ngIf="servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'">
-           
-                    <p><strong>Motivo: </strong>{{servicio.servicio.motivo}}</p>
-                  </div>
-                 
-                </td>
-
-                <td>
-                  {{servicio.servicio.operador.data.nombre}}
-                </td>
 
 
-              </tr>
+              <ng-container *ngFor="let servicio of tareas">
+                <tr *ngIf="servicio.servicio.operador.data.usuario == usuarioid" [class.table-warning]="servicio.servicio.estado=='EN PRODUCCIÓN' || servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'"
+                  [class.table-danger]="servicio.servicio.estado=='CITA/RECEPCION' || servicio.servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
+                  [class.table-success]="servicio.servicio.estado=='POR FACTURAR'">
+
+                  <td>
+                    {{servicio.cliente.nombre}}
+                  </td>
+                  <td>
+                    {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}
+                  </td>
+                  <td>
+                    {{servicio.servicio.descripcion}}
+                  </td>
+                  <td>
+                    {{servicio.servicio.tiempoEstandar}} minutos
+                  </td>
+                  <td>
+                    {{servicio.servicio.estado}}
+                    <div *ngIf="servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'">
+
+                      <p><strong>Motivo: </strong>{{servicio.servicio.motivo}}</p>
+                    </div>
+
+                  </td>
+
+                
+
+
+                </tr>
+              </ng-container>
+
+
+
             </tbody>
           </table>
 

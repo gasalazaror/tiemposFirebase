@@ -2786,6 +2786,156 @@ NgSelectModule.decorators = [
 
 /***/ }),
 
+/***/ "./node_modules/angular-datatables/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/angular-datatables/index.js ***!
+  \**************************************************/
+/*! exports provided: DataTableDirective, DataTablesModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/angular-datatables.directive */ "./node_modules/angular-datatables/src/angular-datatables.directive.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DataTableDirective", function() { return _src_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_0__["DataTableDirective"]; });
+
+/* harmony import */ var _src_angular_datatables_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/angular-datatables.module */ "./node_modules/angular-datatables/src/angular-datatables.module.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DataTablesModule", function() { return _src_angular_datatables_module__WEBPACK_IMPORTED_MODULE_1__["DataTablesModule"]; });
+
+/**
+ * @license
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
+ */
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/angular-datatables/src/angular-datatables.directive.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/angular-datatables/src/angular-datatables.directive.js ***!
+  \*****************************************************************************/
+/*! exports provided: DataTableDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataTableDirective", function() { return DataTableDirective; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/**
+ * @license
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
+ */
+
+
+var DataTableDirective = /** @class */ (function () {
+    function DataTableDirective(el) {
+        this.el = el;
+        /**
+           * The DataTable option you pass to configure your table.
+           */
+        this.dtOptions = {};
+    }
+    DataTableDirective.prototype.ngOnInit = function () {
+        var _this = this;
+        if (this.dtTrigger) {
+            this.dtTrigger.subscribe(function () {
+                _this.displayTable();
+            });
+        }
+        else {
+            this.displayTable();
+        }
+    };
+    DataTableDirective.prototype.ngOnDestroy = function () {
+        if (this.dtTrigger) {
+            this.dtTrigger.unsubscribe();
+        }
+        if (this.dt) {
+            this.dt.destroy(true);
+        }
+    };
+    DataTableDirective.prototype.displayTable = function () {
+        var _this = this;
+        this.dtInstance = new Promise(function (resolve, reject) {
+            Promise.resolve(_this.dtOptions).then(function (dtOptions) {
+                // Using setTimeout as a "hack" to be "part" of NgZone
+                setTimeout(function () {
+                    _this.dt = $(_this.el.nativeElement).DataTable(dtOptions);
+                    resolve(_this.dt);
+                });
+            });
+        });
+    };
+    DataTableDirective.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: '[datatable]'
+                },] },
+    ];
+    /** @nocollapse */
+    DataTableDirective.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], },
+    ]; };
+    DataTableDirective.propDecorators = {
+        "dtOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+        "dtTrigger": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
+    };
+    return DataTableDirective;
+}());
+
+//# sourceMappingURL=angular-datatables.directive.js.map
+
+/***/ }),
+
+/***/ "./node_modules/angular-datatables/src/angular-datatables.module.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/angular-datatables/src/angular-datatables.module.js ***!
+  \**************************************************************************/
+/*! exports provided: DataTablesModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataTablesModule", function() { return DataTablesModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_datatables_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./angular-datatables.directive */ "./node_modules/angular-datatables/src/angular-datatables.directive.js");
+/**
+ * @license
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
+ */
+
+
+
+var DataTablesModule = /** @class */ (function () {
+    function DataTablesModule() {
+    }
+    DataTablesModule.forRoot = function () {
+        return {
+            ngModule: DataTablesModule
+        };
+    };
+    DataTablesModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
+                    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
+                    declarations: [_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_2__["DataTableDirective"]],
+                    exports: [_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_2__["DataTableDirective"]]
+                },] },
+    ];
+    return DataTablesModule;
+}());
+
+//# sourceMappingURL=angular-datatables.module.js.map
+
+/***/ }),
+
 /***/ "./src/app/layout/vehiculo/app-routing.module.ts":
 /*!*******************************************************!*\
   !*** ./src/app/layout/vehiculo/app-routing.module.ts ***!
@@ -2849,7 +2999,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n    <app-page-header [heading]=\"'Consultar vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  \r\n    <div class=\"row\">\r\n      <div class=\"col col-xl-12 col-lg-12\">\r\n  \r\n  \r\n        <div class=\"card mb-3\">\r\n          <div class=\"card-header\">Vehículos</div>\r\n          <div class=\"card-body table-responsive\">\r\n            <table class=\"table table-bordered\">\r\n              <thead>\r\n                <tr>\r\n                  <th></th>\r\n                  <th>ID / Placa</th>\r\n                  <th>Marca</th>\r\n                  <th>Modelo</th>\r\n                  <th>Color</th>\r\n                  <th>No. Motor</th>\r\n                  <th>No. Chasis</th>\r\n                  <th>Año de fabricación</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let vehiculo of vehiculos | async\">\r\n                  <td>\r\n                    <a href=\"/vehiculo/crearvehiculo/{{vehiculo.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                  </td>\r\n                  <td><a href=\"/vehiculo/informacionvehiculo/{{vehiculo.id}}\">{{vehiculo.data.placa}}</a></td>\r\n                  <td>{{vehiculo.data.marca}}</td>\r\n                  <td>{{vehiculo.data.modelo}}</td>\r\n                  <td>{{vehiculo.data.color}}</td>\r\n                  <td>{{vehiculo.data.numeroMotor}}</td>\r\n                  <td>{{vehiculo.data.numeroChasis}}</td>\r\n                  <td>{{vehiculo.data.anioFabricacion}}</td>\r\n                 \r\n                </tr>\r\n  \r\n  \r\n  \r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n  \r\n      </div>\r\n    </div>\r\n  \r\n  \r\n  \r\n  \r\n  </div>"
+module.exports = "<div [@routerTransition]>\r\n    <app-page-header [heading]=\"'Consultar vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  \r\n    <div class=\"row\">\r\n      <div class=\"col col-xl-12 col-lg-12\">\r\n  \r\n  \r\n        <div class=\"card mb-3\">\r\n          <div class=\"card-header\">Vehículos</div>\r\n          <div class=\"card-body table-responsive\">\r\n            <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n              <thead>\r\n                <tr>\r\n                  <th></th>\r\n                  <th>ID / Placa</th>\r\n                  <th>Marca</th>\r\n                  <th>Modelo</th>\r\n                  <th>Color</th>\r\n                  <th>No. Motor</th>\r\n                  <th>No. Chasis</th>\r\n                  <th>Año de fabricación</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let vehiculo of vehiculos | async\">\r\n                  <td>\r\n                    <a href=\"/vehiculo/crearvehiculo/{{vehiculo.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                  </td>\r\n                  <td><a href=\"/vehiculo/informacionvehiculo/{{vehiculo.id}}\">{{vehiculo.data.placa}}</a></td>\r\n                  <td>{{vehiculo.data.marca}}</td>\r\n                  <td>{{vehiculo.data.modelo}}</td>\r\n                  <td>{{vehiculo.data.color}}</td>\r\n                  <td>{{vehiculo.data.numeroMotor}}</td>\r\n                  <td>{{vehiculo.data.numeroChasis}}</td>\r\n                  <td>{{vehiculo.data.anioFabricacion}}</td>\r\n                 \r\n                </tr>\r\n  \r\n  \r\n  \r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n  \r\n      </div>\r\n    </div>\r\n  \r\n  \r\n  \r\n  \r\n  </div>"
 
 /***/ }),
 
@@ -2877,6 +3027,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _router_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router.animations */ "./src/app/router.animations.ts");
 /* harmony import */ var _servicios_vehiculo_vehiculo_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../servicios/vehiculo/vehiculo.service */ "./src/app/servicios/vehiculo/vehiculo.service.ts");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2889,19 +3041,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var ConsultarVehiculoComponent = /** @class */ (function () {
     function ConsultarVehiculoComponent(vehiculoService) {
         this.vehiculoService = vehiculoService;
+        this.dtOptions = {};
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.obtenerVehiculos();
     }
     ConsultarVehiculoComponent.prototype.ngOnInit = function () {
     };
     ConsultarVehiculoComponent.prototype.obtenerVehiculos = function () {
+        var _this = this;
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 10,
+            autoWidth: true,
+        };
         this.vehiculos = this.vehiculoService.obtenerVehiculos();
-        this.vehiculos.forEach(function (element) {
-            console.log(element);
+        this.vehiculos.subscribe(function (res) {
+            _this.dtTrigger.next();
         });
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"]),
+        __metadata("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"])
+    ], ConsultarVehiculoComponent.prototype, "dtElement", void 0);
     ConsultarVehiculoComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-consultar-vehiculo',
@@ -2990,7 +3156,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
             dueno: [{}, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
         this.id = this.route.snapshot.paramMap.get('id');
-        if (this.id != 'nuevo') {
+        if (this.id != 'nuevo' && this.id != null) {
             this.vehiculo = this.vehiculoService.obtenerUnVehiculo(this.id);
             this.vehiculo.subscribe(function (vehiculo) {
                 _this.vehiculoForm = _this.fb.group({
@@ -3011,7 +3177,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
     };
     CrearVehiculoComponent.prototype.guardarVehiculo = function () {
         var _this = this;
-        if (this.id == 'nuevo') {
+        if (this.id == 'nuevo' || this.id == null) {
             this.vehiculoService.crearVehiculo(this.vehiculoForm.value).then(function (vehiculo) { _this.vehiculoForm.reset(); }, function (error) { console.log(error); });
         }
         else {
@@ -3139,12 +3305,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ng-select/ng-select */ "./node_modules/@ng-select/ng-select/esm5/ng-select.js");
 /* harmony import */ var _consultar_vehiculo_consultar_vehiculo_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./consultar-vehiculo/consultar-vehiculo.component */ "./src/app/layout/vehiculo/consultar-vehiculo/consultar-vehiculo.component.ts");
 /* harmony import */ var _informacion_vehiculo_informacion_vehiculo_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./informacion-vehiculo/informacion-vehiculo.component */ "./src/app/layout/vehiculo/informacion-vehiculo/informacion-vehiculo.component.ts");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -3165,7 +3333,8 @@ var VehiculoModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"],
                 _shared__WEBPACK_IMPORTED_MODULE_5__["PageHeaderModule"],
                 _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_6__["NgSelectModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"],
+                angular_datatables__WEBPACK_IMPORTED_MODULE_9__["DataTablesModule"]
             ],
             exports: [_crear_vehiculo_crear_vehiculo_component__WEBPACK_IMPORTED_MODULE_3__["CrearVehiculoComponent"]],
             declarations: [_crear_vehiculo_crear_vehiculo_component__WEBPACK_IMPORTED_MODULE_3__["CrearVehiculoComponent"], _consultar_vehiculo_consultar_vehiculo_component__WEBPACK_IMPORTED_MODULE_7__["ConsultarVehiculoComponent"], _informacion_vehiculo_informacion_vehiculo_component__WEBPACK_IMPORTED_MODULE_8__["InformacionVehiculoComponent"]]
@@ -3294,6 +3463,9 @@ var PersonaService = /** @class */ (function () {
     };
     PersonaService.prototype.modificarPersona = function (id, persona) {
         return this.empresa.collection('personas').doc(id).update(persona);
+    };
+    PersonaService.prototype.eliminarPersona = function (idPersona) {
+        return this.empresa.collection('personas').doc(idPersona).delete();
     };
     PersonaService.prototype.obtenerPersonas = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));

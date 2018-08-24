@@ -38,7 +38,7 @@ export class CrearVehiculoComponent implements OnInit {
 
     this.id = this.route.snapshot.paramMap.get('id');
 
-    if (this.id != 'nuevo') {
+    if (this.id != 'nuevo' && this.id!=null) {
       this.vehiculo = this.vehiculoService.obtenerUnVehiculo(this.id);
       this.vehiculo.subscribe(vehiculo=>{
         this.vehiculoForm = this.fb.group({
@@ -63,7 +63,7 @@ export class CrearVehiculoComponent implements OnInit {
   ngOnInit() {
   }
   guardarVehiculo(){
-    if (this.id=='nuevo') {
+    if (this.id=='nuevo' || this.id==null) {
       this.vehiculoService.crearVehiculo(this.vehiculoForm.value).then(vehiculo=>{this.vehiculoForm.reset()}, error=>{console.log(error)})
     } else {
       this.vehiculoService.modificarVehiculo(this.id, this.vehiculoForm.value).then(res=>{

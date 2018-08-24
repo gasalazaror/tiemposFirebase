@@ -12,6 +12,10 @@ import { PersonaModule } from '../persona/persona.module';
 import { VehiculoModule } from '../vehiculo/vehiculo.module';
 import { ServicioModule } from '../servicio/servicio.module';
 import { OperacionComponent } from './operacion/operacion.component';
+import { DataTablesModule } from 'angular-datatables';
+import { OrdenTrabajoComponent } from './orden-trabajo.component';
+import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
+
 
 @NgModule({
   imports: [
@@ -24,8 +28,9 @@ import { OperacionComponent } from './operacion/operacion.component';
     NgbModule.forRoot(),
     PersonaModule,
     VehiculoModule,
-    ServicioModule
+    ServicioModule,
+    DataTablesModule
   ],
-  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent]
+  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent]
 })
 export class OrdenTrabajoModule { }

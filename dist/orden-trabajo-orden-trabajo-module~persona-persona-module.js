@@ -1,155 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~persona-persona-module"],{
 
-/***/ "./node_modules/angular-datatables/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/angular-datatables/index.js ***!
-  \**************************************************/
-/*! exports provided: DataTableDirective, DataTablesModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/angular-datatables.directive */ "./node_modules/angular-datatables/src/angular-datatables.directive.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DataTableDirective", function() { return _src_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_0__["DataTableDirective"]; });
-
-/* harmony import */ var _src_angular_datatables_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/angular-datatables.module */ "./node_modules/angular-datatables/src/angular-datatables.module.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DataTablesModule", function() { return _src_angular_datatables_module__WEBPACK_IMPORTED_MODULE_1__["DataTablesModule"]; });
-
-/**
- * @license
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
- */
-
-
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/angular-datatables/src/angular-datatables.directive.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/angular-datatables/src/angular-datatables.directive.js ***!
-  \*****************************************************************************/
-/*! exports provided: DataTableDirective */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataTableDirective", function() { return DataTableDirective; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/**
- * @license
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
- */
-
-
-var DataTableDirective = /** @class */ (function () {
-    function DataTableDirective(el) {
-        this.el = el;
-        /**
-           * The DataTable option you pass to configure your table.
-           */
-        this.dtOptions = {};
-    }
-    DataTableDirective.prototype.ngOnInit = function () {
-        var _this = this;
-        if (this.dtTrigger) {
-            this.dtTrigger.subscribe(function () {
-                _this.displayTable();
-            });
-        }
-        else {
-            this.displayTable();
-        }
-    };
-    DataTableDirective.prototype.ngOnDestroy = function () {
-        if (this.dtTrigger) {
-            this.dtTrigger.unsubscribe();
-        }
-        if (this.dt) {
-            this.dt.destroy(true);
-        }
-    };
-    DataTableDirective.prototype.displayTable = function () {
-        var _this = this;
-        this.dtInstance = new Promise(function (resolve, reject) {
-            Promise.resolve(_this.dtOptions).then(function (dtOptions) {
-                // Using setTimeout as a "hack" to be "part" of NgZone
-                setTimeout(function () {
-                    _this.dt = $(_this.el.nativeElement).DataTable(dtOptions);
-                    resolve(_this.dt);
-                });
-            });
-        });
-    };
-    DataTableDirective.decorators = [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
-                    selector: '[datatable]'
-                },] },
-    ];
-    /** @nocollapse */
-    DataTableDirective.ctorParameters = function () { return [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], },
-    ]; };
-    DataTableDirective.propDecorators = {
-        "dtOptions": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
-        "dtTrigger": [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] },],
-    };
-    return DataTableDirective;
-}());
-
-//# sourceMappingURL=angular-datatables.directive.js.map
-
-/***/ }),
-
-/***/ "./node_modules/angular-datatables/src/angular-datatables.module.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/angular-datatables/src/angular-datatables.module.js ***!
-  \**************************************************************************/
-/*! exports provided: DataTablesModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataTablesModule", function() { return DataTablesModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_datatables_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./angular-datatables.directive */ "./node_modules/angular-datatables/src/angular-datatables.directive.js");
-/**
- * @license
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://raw.githubusercontent.com/l-lin/angular-datatables/master/LICENSE
- */
-
-
-
-var DataTablesModule = /** @class */ (function () {
-    function DataTablesModule() {
-    }
-    DataTablesModule.forRoot = function () {
-        return {
-            ngModule: DataTablesModule
-        };
-    };
-    DataTablesModule.decorators = [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
-                    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
-                    declarations: [_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_2__["DataTableDirective"]],
-                    exports: [_angular_datatables_directive__WEBPACK_IMPORTED_MODULE_2__["DataTableDirective"]]
-                },] },
-    ];
-    return DataTablesModule;
-}());
-
-//# sourceMappingURL=angular-datatables.module.js.map
-
-/***/ }),
-
 /***/ "./src/app/layout/persona/app-routing.module.ts":
 /*!******************************************************!*\
   !*** ./src/app/layout/persona/app-routing.module.ts ***!
@@ -213,7 +63,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n      \r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n\r\n      \r\n\r\n      \r\n          <table class=\"table table-bordered\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <a href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                  <button class=\"btn btn-danger btn-sm\" (click)=\"eliminarPersona(persona)\"><i class=\"fa fa-trash\"></i></button>\r\n                </td>\r\n                <td>{{persona.data.tipo | uppercase}}</td>\r\n                <td>{{persona.data.cedula | uppercase}}</td>\r\n                <td><a href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre | uppercase}}</a></td>\r\n                <td>{{persona.data.direccion | uppercase}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -306,6 +156,19 @@ var ConsultarPersonaComponent = /** @class */ (function () {
             pagingType: 'full_numbers'
         };
     };
+    ConsultarPersonaComponent.prototype.eliminarPersona = function (persona) {
+        console.log(persona);
+        var confirmacion = confirm("¿Está seguro que desea eliminar a la persona: " + persona.data.nombre);
+        if (confirmacion) {
+            this.personaService.eliminarPersona(persona.id).then(function (persona) {
+                alert('Persona eliminada correctamente');
+            }, function (err) {
+                alert('Existió un error al eliminar a la persona');
+            });
+        }
+        else {
+        }
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
         __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
@@ -396,7 +259,7 @@ var CrearPersonaComponent = /** @class */ (function () {
             empleado: [false]
         });
         this.id = this.route.snapshot.paramMap.get('id');
-        if (this.id != 'nuevo') {
+        if (this.id != 'nuevo' && this.id != null) {
             this.persona = this.personaService.obtenerUnaPersona(this.id);
             this.persona.subscribe(function (persona) {
                 _this.personaForm = _this.fb.group({
@@ -417,7 +280,7 @@ var CrearPersonaComponent = /** @class */ (function () {
     };
     CrearPersonaComponent.prototype.guardarPersona = function () {
         var _this = this;
-        if (this.id == 'nuevo') {
+        if (this.id == 'nuevo' || this.id == null) {
             this.personaService.crearPersona(this.personaForm.value).then(function (persona) {
                 alert('Persona guardada correctamente');
                 _this.personaForm.reset();
@@ -456,7 +319,7 @@ var CrearPersonaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Información persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Información\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <table class=\"table table-sm table-bordered\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>Tipo</th>\r\n                <td>{{ (persona | async)?.tipo }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Cédula / RUC</th>\r\n                <td>{{ (persona | async)?.cedula }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Nombre / Razón social</th>\r\n                <td>{{ (persona | async)?.nombre }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Dirección</th>\r\n                <td>{{ (persona | async)?.direccion }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Correo</th>\r\n                <td>{{ (persona | async)?.correo }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Teléfono</th>\r\n                <td>{{ (persona | async)?.telefono }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Roles</th>\r\n                <td>\r\n                  <p *ngIf=\"(persona | async)?.cliente\">Cliente</p>\r\n                  <p *ngIf=\"(persona | async)?.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n\r\n    </div>\r\n\r\n    <div *ngIf=\"(persona | async)?.empleado\" class=\"col-md-6\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Información de usuario\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <button *ngIf=\"!(persona | async)?.usuario \" (click)=\"generarUsuario(persona)\" class=\"btn btn-primary\">Generar usuario</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Información persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Información\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <table class=\"table table-sm table-bordered\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>Tipo</th>\r\n                <td>{{ (persona | async)?.tipo }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Cédula / RUC</th>\r\n                <td>{{ (persona | async)?.cedula }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Nombre / Razón social</th>\r\n                <td>{{ (persona | async)?.nombre }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Dirección</th>\r\n                <td>{{ (persona | async)?.direccion }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Correo</th>\r\n                <td>{{ (persona | async)?.correo }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Teléfono</th>\r\n                <td>{{ (persona | async)?.telefono }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Roles</th>\r\n                <td>\r\n                  <p *ngIf=\"(persona | async)?.cliente\">Cliente</p>\r\n                  <p *ngIf=\"(persona | async)?.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n\r\n    </div>\r\n\r\n    <div *ngIf=\"(persona | async)?.empleado\" class=\"col-md-6\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Opciones de usuario de usuario\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <button *ngIf=\"!(personaq)?.usuario \" (click)=\"generarUsuario(persona)\" class=\"btn btn-primary\">Generar usuario</button>\r\n          <button *ngIf=\"(personaq)?.usuario \" (click)=\"enviarCorreoRecuperacion(personaq)\" class=\"btn btn-link\">Enviar correo de recuperación de contraseña</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -509,6 +372,7 @@ var InformacionPersonaComponent = /** @class */ (function () {
         this.personaService = personaService;
         this.auth = auth;
         this.db = db;
+        this.error = '';
         this.id = this.route.snapshot.paramMap.get('id');
         this.persona = this.personaService.obtenerUnaPersona(this.id);
         this.persona.subscribe(function (res) {
@@ -523,13 +387,45 @@ var InformacionPersonaComponent = /** @class */ (function () {
         console.log(this.personaq);
         this.auth.auth.createUserWithEmailAndPassword(this.personaq.correo, this.personaq.cedula)
             .then(function (ususario) {
-            _this.db.collection('usuario').doc(_this.auth.auth.currentUser.uid).set({ empresa: _this.empresa.ref, nombre: _this.personaq.nombre, id: _this.auth.auth.currentUser.uid });
-            _this.empresa.collection('personas').doc(_this.id).update({ usuario: _this.auth.auth.currentUser.uid });
-            // console.log(this.auth.auth.currentUser.sendEmailVerification())
-            console.log(ususario);
+            var id = _this.db.createId();
+            _this.user = _this.db.doc('usuario/' + _this.auth.auth.currentUser.uid);
+            _this.db.collection('empresaUsuario').doc(id).set({ empresa: _this.empresa.ref, usuario: _this.user.ref, correo: _this.personaq.correo, tipo: 'usuario' })
+                .then(function (user) {
+                console.log(user);
+                _this.empresa.collection('personas').doc(_this.id).update({ usuario: _this.auth.auth.currentUser.uid });
+                alert('usuario');
+            });
         }, function (err) {
-            _this.db.collection('usuario').doc(_this.auth.auth.currentUser.uid).set({ empresa: _this.empresa.ref, nombre: _this.personaq.nombre, id: _this.auth.auth.currentUser.uid });
-            _this.empresa.collection('personas').doc(_this.id).update({ usuario: _this.auth.auth.currentUser.uid });
+            console.log(_this.auth.auth.currentUser.uid);
+            _this.auth.user.subscribe(function (res) {
+                console.log(res);
+            });
+            _this.user = _this.db.doc('usuario/' + _this.auth.auth.currentUser.uid);
+            _this.db.collection('empresaUsuario', function (query) { return query.where('empresa', '==', _this.empresa.ref).where('email', '==', _this.personaq.correo); }).valueChanges().subscribe(function (res) {
+                if (res.length == 0) {
+                    var id = _this.db.createId();
+                    _this.db.collection('empresaUsuario').doc(id).set({ empresa: _this.empresa.ref, usuario: _this.user.ref, tipo: 'usuario' })
+                        .then(function (user) {
+                        _this.empresa.collection('personas').doc(_this.id).update({ usuario: _this.auth.auth.currentUser.uid });
+                        alert('usuario');
+                    });
+                }
+                else {
+                    console.log('Ya existe un usuario con el correo electrónico ingresado');
+                    _this.error = 'Ya existe un usuario con el correo electrónico ingresado';
+                }
+            });
+            console.log(err);
+            //   this.db.collection('usuario').doc(this.auth.auth.currentUser.uid).set({empresa:this.empresa.ref, nombre: this.personaq.nombre,  id: this.auth.auth.currentUser.uid});
+            //    
+        });
+    };
+    InformacionPersonaComponent.prototype.enviarCorreoRecuperacion = function (persona) {
+        console.log(persona);
+        this.auth.auth.sendPasswordResetEmail(persona.correo).then(function (email) {
+            alert('Se envió un email de recuperación correctamente');
+        }, function (error) {
+            alert('Existió un error al enviar el email de recuperación');
         });
     };
     InformacionPersonaComponent = __decorate([

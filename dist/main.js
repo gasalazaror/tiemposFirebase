@@ -18,7 +18,7 @@ var map = {
 	],
 	"./bs-component/bs-component.module": [
 		"./src/app/layout/bs-component/bs-component.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
 		"common",
 		"bs-component-bs-component-module"
@@ -36,7 +36,7 @@ var map = {
 	],
 	"./dashboard/dashboard.module": [
 		"./src/app/layout/dashboard/dashboard.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
 		"common",
 		"dashboard-dashboard-module"
@@ -53,14 +53,14 @@ var map = {
 	],
 	"./layout/layout.module": [
 		"./src/app/layout/layout.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
 		"common",
 		"layout-layout-module"
 	],
 	"./login/login.module": [
 		"./src/app/login/login.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"common",
 		"login-login-module"
 	],
@@ -70,7 +70,7 @@ var map = {
 	],
 	"./orden-trabajo/orden-trabajo.module": [
 		"./src/app/layout/orden-trabajo/orden-trabajo.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
 		"orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module",
@@ -80,10 +80,16 @@ var map = {
 	],
 	"./persona/persona.module": [
 		"./src/app/layout/persona/persona.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module",
 		"common",
 		"persona-persona-module"
+	],
+	"./recuperacion/recuperacion.module": [
+		"./src/app/recuperacion/recuperacion.module.ts",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
+		"common",
+		"recuperacion-recuperacion-module"
 	],
 	"./reporte/reporte.module": [
 		"./src/app/layout/reporte/reporte.module.ts",
@@ -97,7 +103,7 @@ var map = {
 	],
 	"./servicio/servicio.module": [
 		"./src/app/layout/servicio/servicio.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden~c759a047",
 		"orden-trabajo-orden-trabajo-module~servicio-servicio-module",
 		"common",
@@ -115,9 +121,15 @@ var map = {
 	],
 	"./vehiculo/vehiculo.module": [
 		"./src/app/layout/vehiculo/vehiculo.module.ts",
-		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~3e2a2d6f",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
 		"orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module",
 		"common"
+	],
+	"./verificacion/verificacion.module": [
+		"./src/app/verificacion/verificacion.module.ts",
+		"bs-component-bs-component-module~dashboard-dashboard-module~layout-layout-module~login-login-module~~2a93accf",
+		"common",
+		"verificacion-verificacion-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -167,6 +179,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var routes = [
     { path: '', loadChildren: './layout/layout.module#LayoutModule', canActivate: [_shared__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
+    { path: 'verificacion', loadChildren: './verificacion/verificacion.module#VerificacionModule' },
+    { path: 'recuperacion', loadChildren: './recuperacion/recuperacion.module#RecuperacionModule' },
     { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
     { path: 'error', loadChildren: './server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: './access-denied/access-denied.module#AccessDeniedModule' },
@@ -358,6 +372,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -369,20 +384,36 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var AuthGuard = /** @class */ (function () {
-    function AuthGuard(router) {
+    function AuthGuard(router, afAuth) {
         this.router = router;
+        this.afAuth = afAuth;
     }
     AuthGuard.prototype.canActivate = function () {
         if (localStorage.getItem('isLoggedin')) {
+            this.comprobarUsuario();
             return true;
         }
         this.router.navigate(['/login']);
         return false;
     };
+    AuthGuard.prototype.comprobarUsuario = function () {
+        this.afAuth.auth.onAuthStateChanged(function (res) {
+            if (res) {
+                if (res.emailVerified) {
+                }
+                else {
+                }
+            }
+            else {
+                //   this.router.navigate(['/login']);
+            }
+        });
+    };
     AuthGuard = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], angularfire2_auth__WEBPACK_IMPORTED_MODULE_2__["AngularFireAuth"]])
     ], AuthGuard);
     return AuthGuard;
 }());
@@ -463,7 +494,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-xl-12\">\r\n        <h2 class=\"page-header\">\r\n            {{heading}}\r\n        </h2>\r\n        <ol class=\"breadcrumb\">\r\n            <li class=\"breadcrumb-item\">\r\n                <i class=\"fa fa-dashboard\"></i> <a href=\"Javascript:void(0)\" [routerLink]=\"['/dashboard']\">Dashboard</a>\r\n            </li>\r\n            <li class=\"breadcrumb-item active\"><i class=\"fa {{icon}}\"></i> {{heading}}</li>\r\n        </ol>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-xl-12\">\r\n        <h2 class=\"page-header\">\r\n            {{heading}}\r\n        </h2>\r\n        <!-- <ol class=\"breadcrumb\">\r\n            <li class=\"breadcrumb-item\">\r\n                <i class=\"fa fa-dashboard\"></i> <a href=\"Javascript:void(0)\" [routerLink]=\"['/dashboard']\">Dashboard</a>\r\n            </li>\r\n            <li class=\"breadcrumb-item active\"><i class=\"fa {{icon}}\"></i> {{heading}}</li>\r\n        </ol> -->\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 

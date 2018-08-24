@@ -1,26 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { routerTransition } from '../../../router.animations';
 import { Observable } from 'rxjs';
 import { OrdenService } from '../../../servicios/orden/orden.service';
 
 @Component({
-  selector: 'app-operacion',
-  templateUrl: './operacion.component.html',
-  styleUrls: ['./operacion.component.scss'],
+  selector: 'app-mis-ordenes',
+  templateUrl: './mis-ordenes.component.html',
+  styleUrls: ['./mis-ordenes.component.scss'],
   animations: [routerTransition()]
 })
-export class OperacionComponent implements OnInit {
+export class MisOrdenesComponent implements OnInit {
 
   ordenes: Observable<any[]>;
   tareas: any
+  usuarioid:any
 
-  constructor(private ordenService: OrdenService) {
-
-  }
+  constructor(private afAuth: AngularFireAuth, private ordenService: OrdenService) {
+    this.usuarioid=''
+   }
 
   ngOnInit() {
     this.obtenerOrdenes()
+    this.afAuth.user.subscribe(res=>{
+      this.usuarioid = res.uid
+    })
+    
   }
+
   obtenerOrdenes() {
     this.ordenes = this.ordenService.obtenerOrdenes();
 
@@ -54,4 +61,5 @@ export class OperacionComponent implements OnInit {
     })
 
   }
+
 }

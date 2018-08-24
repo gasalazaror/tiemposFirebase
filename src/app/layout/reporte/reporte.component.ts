@@ -51,21 +51,21 @@ export class ReporteComponent implements OnInit {
               servicio.pausas.forEach(pausa => {
                 var fecha1 = moment(pausa.horaInicio.seconds, 'X');
                 var fecha2 = moment(pausa.horaFin.seconds, 'X');
-                var diff = fecha2.diff(fecha1, 's');
-                pausas += diff
+                var diff2 = fecha2.diff(fecha1, 's');
+                pausas += diff2
               });
               
             }
 
-            console.log(servicio.leadTimesec)
-            console.log(pausas)
+            console.log('leadtime '+servicio.leadTimesec)
+            console.log('pausas '+pausas)
        
 
           
             
             var tiempoReal  =  servicio.leadTimesec - pausas
             
-            servicio.tiempoReal = moment.utc((tiempoReal * 60) * 1000).format('HH:mm:ss');
+            servicio.tiempoReal = moment.utc((tiempoReal) * 1000).format('HH:mm:ss');
 
             const eficiencia = ((servicio.tiempoEstandar*60)/tiempoReal)*100
 

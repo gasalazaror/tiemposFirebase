@@ -8,7 +8,7 @@
       <div class="card mb-3">
         <div class="card-header">Ordenes de trabajo</div>
         <div class="card-body table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
             <thead>
               <tr>
                   <th></th>
@@ -27,16 +27,14 @@
                         <i class="fa fa-eye"></i>
                       </a>
                      
-                      
-                      <button class="btn btn-sm btn-danger">
-                        <i class="fa fa-trash"></i>
-                      </button>
+                   
                     </td>
     
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'hh:mm a'}}</td>
                 <td>{{orden.data.cliente.cedula}}</td>
                 <td>{{orden.data.cliente.nombre}}</td>
+               
                 <td>
                   {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
 

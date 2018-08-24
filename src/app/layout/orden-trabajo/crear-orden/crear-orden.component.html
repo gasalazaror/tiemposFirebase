@@ -11,11 +11,19 @@
             <div class="col">
               <label for="">Cliente:</label>
               <form class="form" [formGroup]="ClienteForm" (ngSubmit)="seleccionarPersona()">
-                <div class="">
-                  <ng-select class="form-control" style="font-size: 14px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
-                    [items]="personas | async" bindLabel="data.nombre" formControlName="persona">
-                  </ng-select>
+                <div class="row">
+                  <div class="col-md-10 col-sm-10 col-xs-10">
+                    <ng-select class="form-control" style="font-size: 14px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
+                      [items]="personas | async" bindLabel="data.nombre" formControlName="persona">
+                    </ng-select>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <button class="btn btn-white disabled"><i class="fa fa-search"></i></button>
+                  </div>
+
+
                 </div>
+
               </form>
             </div>
             <div *ngIf="">
@@ -48,10 +56,19 @@
             <div class="col">
               <label for="">Vehículo:</label>
               <form class="form" [formGroup]="VehiculoForm" (ngSubmit)="seleccionarPersona()">
-                <div class=""  >
-                  <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarVehiculo()" class="form-control" [items]="vehiculos | async"  
-                  bindLabel="data.placa" formControlName="vehiculo" >
-                  </ng-select>
+                <div class="row">
+                  <div class="col-md-10 col-sm-10 col-xs-10">
+                    <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarVehiculo()" class="form-control" [items]="vehiculos | async"
+                      bindLabel="data.placa" formControlName="vehiculo">
+                    </ng-select>
+                  </div>
+
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="">
+                      <button class="btn btn-white disabled"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+
                 </div>
               </form>
             </div>
@@ -93,12 +110,23 @@
           <div class="row">
             Servicios disponibles:
             <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
-              <div class="">
-                <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
-                  bindLabel="data.descripcion" formControlName="servicio">
-                </ng-select>
+              <div class="row">
+                <div class="col-md-8">
+                  <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
+                    bindLabel="data.descripcion" formControlName="servicio">
+                  </ng-select>
+                </div>
+                <div class="col-md-2">
+                  <div class="">
+                    <button class="btn btn-white disabled"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+
               </div>
             </form>
+            <button class="btn btn-primary " (click)="open(contentServicio)">
+              <i class="fa fa-plus"></i> Nuevo
+            </button>
           </div>
           <hr>
           <p>
@@ -127,7 +155,8 @@
           </table>
           <hr>
 
-          <button [disabled]="serviciosSeleccionados.length==0 || ClienteForm.persona=={} || VehiculoForm.vehiculo=={}" class="btn btn-primary" (click)="guardarOrden()">Guardar</button>
+          <button [disabled]="serviciosSeleccionados.length==0 || ClienteForm.persona=={} || VehiculoForm.vehiculo=={}" class="btn btn-primary"
+            (click)="guardarOrden()">Guardar</button>
         </div>
       </div>
     </div>
@@ -155,7 +184,9 @@
   <div class="modal-footer">
   </div>
 </ng-template>
-<ng-template #content3 let-c="close" let-d="dismiss">
+
+
+<ng-template #contentServicio let-c="close" let-d="dismiss">
   <div class="modal-header">
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>

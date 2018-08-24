@@ -7,6 +7,7 @@ import { PageHeaderModule } from '../../shared';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ConsultarVehiculoComponent } from './consultar-vehiculo/consultar-vehiculo.component';
 import { InformacionVehiculoComponent } from './informacion-vehiculo/informacion-vehiculo.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { InformacionVehiculoComponent } from './informacion-vehiculo/informacion
     ReactiveFormsModule,
     PageHeaderModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule
   ],
   exports:[CrearVehiculoComponent],
   declarations: [CrearVehiculoComponent, ConsultarVehiculoComponent, InformacionVehiculoComponent]

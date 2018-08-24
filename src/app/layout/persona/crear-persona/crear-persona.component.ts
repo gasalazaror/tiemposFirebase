@@ -27,7 +27,8 @@ export class CrearPersonaComponent implements OnInit {
     telefono: ['', [Validators.required]],
     correo: ['', [Validators.required, Validators.email]],
     cliente: [false],
-    empleado: [false]
+    empleado: [false],
+    roles: {Administrador: false, Asesor: false, Operador: false}
   })
 
   constructor(private fb: FormBuilder, private personaService: PersonaService, private route: ActivatedRoute, ) {
@@ -62,8 +63,7 @@ export class CrearPersonaComponent implements OnInit {
   }
 
   guardarPersona() {
-
-    if (this.id == 'nuevo') {
+    if (this.id == 'nuevo' ||  this.id==null) {
       this.personaService.crearPersona(this.personaForm.value).then(persona => {
         alert('Persona guardada correctamente')
         this.personaForm.reset()
@@ -77,12 +77,5 @@ export class CrearPersonaComponent implements OnInit {
         alert('Existió un error al modificar la persona')
       })
     }
-
-
-
-
   }
-
-
-
 }
