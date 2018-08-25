@@ -1,58 +1,138 @@
-<!-- <div class="login-page" [@routerTransition]>
-    <div class="row justify-content-md-center">
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Landing Page - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Custom fonts for this template -->
+    <!-- <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"> -->
+
+    <!-- Custom styles for this template -->
+    <!--     <link href="css/landing-page.min.css" rel="stylesheet"> -->
+
+</head>
+
+<body>
+
+   
+
+    <!-- Masthead -->
+    <div class="row">
+        <div class="col-md-8">
+            <header class="masthead text-white text-center">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-9 mx-auto">
+                            <h1 class="mb-5">Software para el control de tiempos</h1>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+        </div>
         <div class="col-md-4">
-            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>Control de tiempos</h1>
-            <div class="form-content">
-                <div class="form-group">
-                    <input autofocus type="text" [(ngModel)]="usuario.email" class="form-control input-underline input-lg" id="1" placeholder="Email">
-                </div>
-                <div class="form-group">
-                    <input type="password" [(ngModel)]="usuario.password" class="form-control input-underline input-lg" id="2" placeholder="Password">
-                </div>
+            <div class="form-signin">
+              
+
+
+                <img src="assets/images/kanban.jpeg" width="100%" alt=""><br><br><br>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" autofocus type="text" [(ngModel)]="usuario.email" class="form-control" placeholder="Correo electrónico"
+                    required autofocus> 
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" type="password" [(ngModel)]="usuario.password" class="form-control" placeholder="Contraseña"
+                    required>
                 <div *ngIf="error!=''" class="alert alert-danger" role="alert">
                     <strong>Error: </strong> {{error}}
                 </div>
+
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="onLoggedin2()">Iniciar sesión</button>
+                <a href="/recuperacion">¿No puede acceder a su cuenta?</a>
+
+
+                <div *ngIf="listaEmpresas.length>0">
+                    <hr> Empresas:
+                    <select *ngIf="listaEmpresas.length>0" [(ngModel)]="empresaSeleccionada" class="form-control" (change)="seleccionarEmpresa()">
+                        <option value="">Seleccionar...</option>
+                        <option *ngFor="let empresa of listaEmpresas" value="{{empresa.path}}">{{empresa.nombre}}</option>
+                    </select>
+                </div>
             </div>
-
-            <select *ngIf="listaEmpresas.length>0" class="form-control">
-                <option value="">Seleccionar...</option>
-                <option *ngFor="let empresa of listaEmpresas">{{empresa.nombre}}</option>
-            </select>
-            <br>
-            <button class="btn rounded-btn" (click)="onLoggedin2()">Iniciar sesión</button>
         </div>
     </div>
-</div> -->
-
-<body class="text-center">
-    <div class="form-signin">
-        <img class="mb-4" src="assets/images/kanban.jpeg" alt="" width="100%">
 
 
-        <h1 class="h3 mb-3 font-weight-normal">Control de tiempo</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" autofocus type="text" [(ngModel)]="usuario.email" class="form-control" placeholder="Email address"
-            required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" type="password" [(ngModel)]="usuario.password" class="form-control" placeholder="Password"
-            required>
-        <div *ngIf="error!=''" class="alert alert-danger" role="alert">
-            <strong>Error: </strong> {{error}}
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="footer bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item">
+                            <a href="#">About</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="#">Contact</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="#">Terms of Use</a>
+                        </li>
+                        <li class="list-inline-item">&sdot;</li>
+                        <li class="list-inline-item">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2018. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item mr-3">
+                            <a href="https://www.facebook.com/Kanban-Technologies-400018097072474/">
+                                <i class="fa fa-facebook fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item mr-3">
+                            <a href="#">
+                                <i class="fa fa-twitter fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <i class="fa fa-instagram fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+    </footer>
 
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="onLoggedin2()">Iniciar sesión</button>
-        <a href="/recuperacion">¿No puede acceder a su cuenta?</a>
-
-
-        <div *ngIf="listaEmpresas.length>0">
-            <hr> Empresas:
-            <select *ngIf="listaEmpresas.length>0" [(ngModel)]="empresaSeleccionada" class="form-control" (change)="seleccionarEmpresa()">
-                <option value="">Seleccionar...</option>
-                <option *ngFor="let empresa of listaEmpresas" value="{{empresa.path}}">{{empresa.nombre}}</option>
-            </select>
-        </div>
-    </div>
+    <!-- Bootstrap core JavaScript -->
+    <!-- <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
 </body>
+
+</html>

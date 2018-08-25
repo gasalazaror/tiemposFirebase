@@ -9,47 +9,59 @@
             <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="staticEmail2" class="">Estado</label>
 
-                            <select class="form-control" formControlName="estado" name="" id="">
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="staticEmail2" class="">Estado</label>
+
+                                    <select class="form-control form-control-sm" formControlName="estado" name="" id="">
+                                        <option value="Activo">Activo</option>
+                                        <option value="Inactivo">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="staticEmail2" class="">Tipo</label>
+
+                                    <select class="form-control form-control-sm" formControlName="tipo" name="" id="">
+                                        <option value="Natural">Natural</option>
+                                        <option value="Juridica">Juridica</option>
+                                        <option value="Sin Ruc">Sin Ruc</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="staticEmail2" class="">Tipo</label>
 
-                            <select class="form-control" formControlName="tipo" name="" id="">
-                                <option value="Natural">Natural</option>
-                                <option value="Juridica">Juridica</option>
-                                <option value="Sin Ruc">Sin Ruc</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
+
+                        <div class="form-group form-group-sm">
                             <label for="inputPassword2" class="">Cédula / RUC</label>
-                            <input autofocus type="text" class="form-control" formControlName="cedula" id="inputPassword2" placeholder="Cédula o RUC">
+                            <input autofocus type="text" class="form-control form-control-sm" formControlName="cedula" id="inputPassword2" placeholder="Cédula o RUC">
                         </div>
 
                         <div class="form-group ">
                             <label for="inputPassword2" class="">Nombre</label>
-                            <input type="text" class="form-control" formControlName="nombre" id="inputPassword2" placeholder="Nombre">
+                            <input type="text" class="form-control form-control-sm" formControlName="nombre" id="inputPassword2" placeholder="Nombre">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword2" class="">Dirección</label>
+                            <textarea class="form-control form-control-sm" formControlName="direccion" cols="30" rows="4" placeholder="Dirección"></textarea>
+     
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="inputPassword2" class="">Dirección</label>
-                            <input type="text" class="form-control" formControlName="direccion" id="inputPassword2" placeholder="Dirección">
-                        </div>
+
                         <div class="form-group">
                             <label for="inputPassword2" class="">Teléfono</label>
-                            <input type="text" class="form-control" formControlName="telefono" id="inputPassword2" placeholder="Teléfono">
+                            <input type="text" class="form-control form-control-sm" formControlName="telefono" id="inputPassword2" placeholder="Teléfono">
                         </div>
 
                         <div class="form-group">
                             <label for="inputPassword2" class="">Correo</label>
-                            <input type="text" class="form-control" formControlName="correo" id="inputPassword2" placeholder="Correo">
+                            <input type="text" class="form-control form-control-sm" formControlName="correo" id="inputPassword2" placeholder="Correo">
                         </div>
                         <div class="form-group">
                             <label>Roles de la persona en la empresa</label>
