@@ -1,0 +1,130 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Detalle orden'" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="card">
+    <div class="card-header">
+      Información de la orden de trabajo
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-sm table-bordered">
+
+            <tbody>
+              <tr>
+                <th>Fecha </th>
+                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+              </tr>
+
+              <tr>
+                <th>ID Cliente</th>
+                <td>{{ (orden | async)?.cliente.cedula }}</td>
+              </tr>
+
+              <tr>
+                <th>Nombre cliente</th>
+                <td>{{ (orden | async)?.cliente.nombre }}</td>
+              </tr>
+              <tr>
+                <th>Vehículo</th>
+                <td>{{ (orden | async)?.vehiculo.placa }} - {{ (orden | async)?.vehiculo.marca }} - {{ (orden | async)?.vehiculo.modelo
+                  }}
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-header">
+      Operaciones
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-responsive-sm table-sm">
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Descripcioón</th>
+            <th>T.E. (min)</th>
+            <th>Estado</th>
+            <th>Operador asignado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let servicio of servicios let index = index">
+            <td>{{servicio.descripcion}}</td>
+            <td>{{servicio.detalle}}</td>
+            <td>{{servicio.tiempoEstandar}}</td>
+            <td>
+              {{servicio.estado}}
+              <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" > <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
+            </td>
+            <td>{{servicio.operador.data.nombre}}</td>
+            <td>
+              <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-primary btn-sm">
+                <i class="fa fa-play"></i>
+
+              </button>
+
+              <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-primary btn-sm">
+                <i class="fa fa-pause"></i>
+              </button>
+
+              <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" class="btn btn-primary btn-sm">
+                <i class="fa fa-stop"></i>
+              </button>
+              <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-primary btn-sm">
+                <i class="fa fa-play"></i>
+              </button>
+            </td>
+
+          </tr>
+
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5>Pausar operación</h5>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Servicio: </strong>{{servicioSeleccionado.descripcion}}</p>
+      <p><strong>Motivo pausa:</strong> 
+        <select [(ngModel)]="pausa.motivo">
+          <option value="">Seleccionar un motivo...</option>
+          <option value="FALTA DE AUTORIZACIÓN">FALTA DE AUTORIZACIÓN</option>
+          <option value="FALTA DE REPUESTOS">FALTA DE REPUESTOS</option>
+          <option value="TRABAJOS DE TERCEROS">TRABAJOS DE TERCEROS</option>
+          <option value="OTRO TRABAJO">OTRO TRABAJO</option>
+          <option value="BREAK">BREAK</option>
+          <option value="ALMUERZO">ALMUERZO</option>
+          <option value="FINALIZACIÓN DE JORNADA LABORAL">FINALIZACIÓN DE JORNADA LABORAL</option>
+        </select></p>
+
+        <p><strong>Observación:</strong> <input [(ngModel)]="pausa.observacion" type="text"></p>
+        <p><button [disabled]="pausa.motivo==''" class="btn btn-primary" (click)="pausar()">Guardar</button></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+    </div>
+  </ng-template>
+
+
+
+
+
+</div>

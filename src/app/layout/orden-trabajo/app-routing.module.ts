@@ -6,6 +6,7 @@ import { ConsultarOrdenComponent } from './consultar-orden/consultar-orden.compo
 import { InformacionOrdenComponent } from './informacion-orden/informacion-orden.component';
 import { OperacionComponent } from './operacion/operacion.component';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
+import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orden.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'informacionorden/:id',
     component: InformacionOrdenComponent
+  },
+  {
+    path: 'detalleorden/:id',
+    component: DetalleOrdenComponent
   },
   {
     path: 'operaciones',

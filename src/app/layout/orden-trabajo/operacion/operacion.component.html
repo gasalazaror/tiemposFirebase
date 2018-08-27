@@ -1,111 +1,61 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Operaciones'" [icon]="'fa-edit'"></app-page-header>
-
-  <div class="row">
-    <div class="col col-xl-12 col-lg-12">
-
-
-      <div class="card mb-4">
-        <div class="card-header">Ordenes de trabajo</div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-
-              <div class="card-body">
-                <p><strong>Estado</strong></p>
-                <div class="row">
-                  <div class="col" class="table-success" style="width: 15px"></div>
-                  <div class="col">POR FACTURAR</div>
-                </div>
-
-                <div class="row">
-                  <div class="col" class="table-warning" style="width: 15px"></div>
-                  <div class="col">EN PRODUCCIÓN</div>
-                </div>
-
-                <div class="row">
-                  <div class="col" class="table-danger" style="width: 15px"></div>
-                  <div class="col">CITA/RECEPCIÓN-EN ESPERA</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <br><br>
-            <a target="_blank" class="btn btn-primary" href="https://kanban-mobil.firebaseapp.com/">Ir a operaciones</a>
-          </div>
-
-        </div>
-        <div class="card-body table-responsive">
-
-          <table class="table table-bordered table-sm table-responsive-sm">
-            <thead>
-
-              <tr>
-
-                <th>Cliente</th>
-                <th>Vehículo</th>
-                <th>Servicio</th>
-                <th>T. estandar</th>
-                <th>Estado</th>
-                <th>Operador</th>
-
-
-
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let servicio of tareas " [class.table-warning]="servicio.servicio.estado=='EN PRODUCCIÓN' || servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'"
-                [class.table-danger]="servicio.servicio.estado=='CITA/RECEPCION' || servicio.servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
-                [class.table-success]="servicio.servicio.estado=='POR FACTURAR'">
-
-                <td>
-                  {{servicio.cliente.nombre}}
-                </td>
-                <td>
-                  {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}
-                </td>
-                <td>
-                  {{servicio.servicio.descripcion}}
-                </td>
-                <td>
-                  {{servicio.servicio.tiempoEstandar}} minutos
-                </td>
-                <td>
-                  {{servicio.servicio.estado}}
-                  <div *ngIf="servicio.servicio.estado=='EN PRODUCCIÓN - PAUSADO'">
-           
-                    <p><strong>Motivo: </strong>{{servicio.servicio.motivo}}</p>
-                  </div>
+    <app-page-header [heading]="'Ordenes de trabajo'" [icon]="'fa-edit'"></app-page-header>
+  
+    <div class="row">
+      <div class="col col-xl-12 col-lg-12">
+  
+  
+        <div class="card mb-3">
+          <div class="card-header">Ordenes de trabajo</div>
+          <div class="card-body table-responsive">
+            <table class="table table-bordered" datatable id="example-datatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                    <th></th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>ID Cliente</th>
+                  <th>Nombre del cliente</th>
+                  <th>Vehículo</th>
+            
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let orden of ordenes | async">
+                    <td>
+                        <a href="/orden/detalleorden/{{orden.id}}" class="btn btn-sm btn-primary">
+                          <i class="fa fa-eye"></i>
+                        </a>
+                       
+                     
+                      </td>
+      
+                  <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
+                  <td>{{(orden.data.fecha.seconds)*1000 | date : 'hh:mm a'}}</td>
+                  <td>{{orden.data.cliente.cedula}}</td>
+                  <td>{{orden.data.cliente.nombre}}</td>
                  
-                </td>
-
-                <td>
-                  {{servicio.servicio.operador.data.nombre}}
-                </td>
-
-
-              </tr>
-            </tbody>
-          </table>
-
-
-
-
-
-
-
-
-
+                  <td>
+                    {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
+  
+                  </td>
+  
+                
+                 
+  
+                </tr>
+  
+  
+  
+              </tbody>
+            </table>
+          </div>
         </div>
+  
       </div>
-
     </div>
+  
+  
+  
+  
   </div>
-
-
-
-
-</div>

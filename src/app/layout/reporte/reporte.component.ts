@@ -3,6 +3,8 @@ import { routerTransition } from '../../router.animations';
 import { Observable } from 'rxjs';
 import { OrdenService } from '../../servicios/orden/orden.service';
 import * as moment from 'moment';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-reporte',
@@ -11,6 +13,16 @@ import * as moment from 'moment';
   animations: [routerTransition()]
 })
 export class ReporteComponent implements OnInit {
+
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings =  {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    autoWidth: true,
+   responsive: true,
+
+  };
+  dtTrigger: Subject<any> = new Subject();
 
   ordenes: Observable<any[]>;
   tareas: any[]
@@ -72,7 +84,7 @@ export class ReporteComponent implements OnInit {
             servicio.eficiencia = eficiencia.toFixed(2)
 
             this.tareas.push({ cliente: element.data.cliente, servicio: servicio, vehiculo: element.data.vehiculo })
-
+          
 
           }
 
@@ -80,6 +92,9 @@ export class ReporteComponent implements OnInit {
 
 
       });
+
+      $('#example-datatable').DataTable().destroy();
+      this.dtTrigger.next();
     })
   }
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { OrdenService } from '../../../servicios/orden/orden.service';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-operacion',
@@ -10,9 +11,18 @@ import { OrdenService } from '../../../servicios/orden/orden.service';
   animations: [routerTransition()]
 })
 export class OperacionComponent implements OnInit {
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings= this.dtOptions = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    autoWidth: true,
+
+  };;
+  dtTrigger: Subject<any> = new Subject();
 
   ordenes: Observable<any[]>;
-  tareas: any
+
 
   constructor(private ordenService: OrdenService) {
 
@@ -21,37 +31,16 @@ export class OperacionComponent implements OnInit {
   ngOnInit() {
     this.obtenerOrdenes()
   }
+
   obtenerOrdenes() {
-    this.ordenes = this.ordenService.obtenerOrdenes();
+    
+    this.ordenes =this.ordenService.obtenerOrdenes();
 
-    this.ordenes.subscribe(res => {
-      this.tareas = []
-      res.forEach(element => {
-        element.data.servicios.forEach(servicio => {
-
-
-          if (!servicio.operador) {
-            servicio.operador = { data: { nombre: '' } }
-          }
-
-          const motivo = ''
-          if (servicio.pausas) {
-            servicio.pausas.forEach(pausa => {
-              if (pausa.id == servicio.pausaActual) {
-                servicio.motivo = pausa.motivo.motivo
-              }
-            });
-          }
-
-
-          this.tareas.push({ cliente: element.data.cliente, servicio: servicio, vehiculo: element.data.vehiculo })
-
-
-        });
-        console.log(this.tareas)
-
-      });
+    this.ordenes.subscribe(res=>{
+      $('#example-datatable').DataTable().destroy();
+      this.dtTrigger.next();
     })
-
+  
   }
+
 }
