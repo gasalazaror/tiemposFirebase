@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Observable } from 'rxjs';
 import { PersonaService } from '../../../servicios/persona.service';
@@ -11,50 +11,46 @@ import { Subject } from 'rxjs';
   styleUrls: ['./consultar-persona.component.scss'],
   animations: [routerTransition()]
 })
-export class ConsultarPersonaComponent implements OnInit {
+export class ConsultarPersonaComponent implements  OnInit {
   @ViewChild(DataTableDirective)
   personas: Observable<any[]>;
+  personasq:any[]
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings =  {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    autoWidth: true,
+   responsive: true,
+
+  };
   dtTrigger: Subject<any> = new Subject();
 
   constructor(private personaService: PersonaService) {
   }
 
+
   ngOnInit() {
-    this.obtenerPersonas()
+   this.obtenerPersonas()
 
   }
 
   obtenerPersonas() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      autoWidth: true,
-
-    };
+ 
     this.personas = this.personaService.obtenerPersonas()
     this.personas.subscribe(res => {
-
-      if (this.dtElement) {
-        console.log(true)
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          // Destroy the table first
-          dtInstance.destroy();
-          // Call the dtTrigger to rerender again
-          this.dtTrigger.next();
-        });
-      } else {
-        console.log(false)
-        this.dtTrigger.next();
-      }
-
-
+      $('#example-datatable').DataTable().destroy();
+      this.dtTrigger.next();
     })
   }
 
+  
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
   rerender(): void {
-    console.log(this.dtTrigger.next)
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -62,7 +58,6 @@ export class ConsultarPersonaComponent implements OnInit {
       this.dtTrigger.next();
     });
   }
-
   llenarTabla() {
     this.dtOptions = {
       pagingType: 'full_numbers'

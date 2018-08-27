@@ -50,7 +50,7 @@ export class InformacionPersonaComponent implements OnInit {
       .then(ususario => {
         const id = this.db.createId()
         this.user = this.db.doc('usuario/'+this.auth.auth.currentUser.uid);
-        this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, usuario: this.user.ref, correo: this.personaq.correo, tipo: 'usuario'})
+        this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, correo: this.personaq.correo, tipo: 'usuario'})
         .then(user=>{
           console.log(user)
           this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
@@ -76,7 +76,7 @@ export class InformacionPersonaComponent implements OnInit {
      
           if (res.length==0) {
             const id = this.db.createId()
-            this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, usuario: this.user.ref, tipo: 'usuario'})
+            this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, correo: this.personaq.correo, tipo: 'usuario'})
             .then(user=>{
           
               this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
@@ -100,6 +100,10 @@ export class InformacionPersonaComponent implements OnInit {
     },error=>{
       alert('Existió un error al enviar el email de recuperación')
     })
+  }
+
+  modificarRoles(){
+    this.personaService.modificarPersona(this.id, {roles: this.personaq.roles})
   }
 
 

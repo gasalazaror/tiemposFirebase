@@ -14,7 +14,12 @@ import { Subject } from 'rxjs';
 export class ConsultarOrdenComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings= this.dtOptions = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    autoWidth: true,
+
+  };;
   dtTrigger: Subject<any> = new Subject();
 
   ordenes: Observable<any[]>;
@@ -27,15 +32,11 @@ export class ConsultarOrdenComponent implements OnInit {
   }
 
   obtenerOrdenes() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      autoWidth: true,
-
-    };
+    
     this.ordenes =this.ordenService.obtenerOrdenes();
 
     this.ordenes.subscribe(res=>{
+      $('#example-datatable').DataTable().destroy();
       this.dtTrigger.next();
     })
   

@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
                 this.error = ''
                 this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
                 this.empresas = this.db.collection('empresaUsuario',
-                    query => query.where('usuario', '==', this.itemDoc.ref).where('tipo', '==', 'usuario')).valueChanges()
+                    query => query.where('correo', '==', this.usuario.email).where('tipo', '==', 'usuario')).valueChanges()
                 this.empresas.subscribe(res => {
                     this.listaEmpresas = []
                     res.forEach(elemento => {

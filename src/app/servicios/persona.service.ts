@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { query } from '../../../node_modules/@angular/core/src/render3/query';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class PersonaService {
   personas: Observable<any[]>;
   persona: Observable<any[]>;
 
-  constructor(private readonly afs: AngularFirestore) {
+  constructor(private readonly afs: AngularFirestore, private afAuth: AngularFireAuth) {
     this.personasCollection = afs.collection('persona');
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
 
@@ -80,5 +81,9 @@ export class PersonaService {
 
   obtenerUnaPersona(id) {
     return this.empresa.collection('personas').doc(id).valueChanges()
+  }
+
+  obtenerUsuario(){
+    return this.afAuth.user
   }
 }

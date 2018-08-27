@@ -57,11 +57,41 @@
     <div *ngIf="(persona | async)?.empleado" class="col-md-6">
       <div class="card">
         <div class="card-header">
-          Opciones de usuario de usuario
+          Opciones de usuario
         </div>
         <div class="card-body">
-          <button *ngIf="!(personaq)?.usuario " (click)="generarUsuario(persona)" class="btn btn-primary">Generar usuario</button>
-          <button *ngIf="(personaq)?.usuario " (click)="enviarCorreoRecuperacion(personaq)" class="btn btn-link">Enviar correo de recuperación de contraseña</button>
+
+          <p>Roles del usuario en la empresa</p>
+          <input [checked]="personaq.roles.Administrador" (change)="modificarRoles()" [(ngModel)]="personaq.roles.Administrador" class="form-check-input"
+            type="checkbox" value="1" id="rol1">
+          <label class="form-check-label" for="rol1">
+            Administrador
+          </label>
+          <br>
+
+          <input [checked]="personaq.roles.Operador" [(ngModel)]="personaq.roles.Operador" (change)="modificarRoles()" class="form-check-input" type="checkbox"
+            value="2" id="rol2">
+          <label class="form-check-label" for="rol2">
+            Operador
+          </label>
+          <br>
+
+
+
+
+
+          <input [checked]="personaq.roles.Asesor" [(ngModel)]="personaq.roles.Asesor" (change)="modificarRoles()" class="form-check-input"
+            type="checkbox" value="3" id="rol3">
+          <label class="form-check-label" for="rol3">
+            Asesor de servicio
+          </label>
+          <br>
+          <br>
+
+
+          <button *ngIf="!(personaq)?.usuario " (click)="generarUsuario(persona)" class="btn btn-primary btn-sm">Generar
+            usuario</button>
+
         </div>
       </div>
     </div>

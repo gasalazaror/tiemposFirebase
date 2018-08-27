@@ -17,7 +17,12 @@ export class ConsultarVehiculoComponent implements OnInit {
 
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    autoWidth: true,
+
+  };
   dtTrigger: Subject<any> = new Subject();
   
   vehiculos: Observable<any[]>;
@@ -30,15 +35,9 @@ export class ConsultarVehiculoComponent implements OnInit {
   }
 
   obtenerVehiculos() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      autoWidth: true,
-
-    };
-
     this.vehiculos =this.vehiculoService.obtenerVehiculos();
-    this.vehiculos.subscribe(res=>{
+    this.vehiculos.subscribe(res => {
+      $('#example-datatable').DataTable().destroy();
       this.dtTrigger.next();
     })
   }

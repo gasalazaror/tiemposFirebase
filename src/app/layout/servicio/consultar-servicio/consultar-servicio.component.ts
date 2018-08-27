@@ -15,27 +15,30 @@ import { Subject } from 'rxjs';
 export class ConsultarServicioComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    autoWidth: true,
+
+  };
   dtTrigger: Subject<any> = new Subject();
 
   servicios: Observable<any[]>;
 
-  constructor(private servicioService: ServicioService) { }
+  constructor(private servicioService: ServicioService) {
+    this.obtenerServicios()
+   }
 
   ngOnInit() {
-    this.obtenerServicios()
+
   }
 
   obtenerServicios() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      autoWidth: true,
-
-    };
+  
     this.servicios = this.servicioService.obtenerServicios()
 
     this.servicios.subscribe(res => {
+      $('#example-datatable').DataTable().destroy();
       this.dtTrigger.next();
     })
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { PersonaService } from '../../../servicios/persona.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -10,14 +12,22 @@ import { TranslateService } from '@ngx-translate/core';
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
 
-    usuario: any = localStorage.getItem('usuario')
+    usuario: Observable<any>
+    user:any
 
-    constructor(private translate: TranslateService, public router: Router) {
-
+    constructor(private translate: TranslateService, public router: Router, public personaService: PersonaService) {
+        this.user=''
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
         this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de|zh-CHS/) ? browserLang : 'en');
+
+        this.usuario = this.personaService.obtenerUsuario()
+
+        this.usuario.subscribe(res=>{
+            console.log(res.email)
+            this.user = res.email
+        })
 
         this.router.events.subscribe(val => {
             if (
