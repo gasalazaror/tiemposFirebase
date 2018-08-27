@@ -61,6 +61,7 @@ export class ReporteComponent implements OnInit {
 
             if (servicio.pausas) {
               servicio.pausas.forEach(pausa => {
+                console.log(pausa)
                 var fecha1 = moment(pausa.horaInicio.seconds, 'X');
                 var fecha2 = moment(pausa.horaFin.seconds, 'X');
                 var diff2 = fecha2.diff(fecha1, 's');

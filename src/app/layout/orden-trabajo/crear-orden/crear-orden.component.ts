@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { ServicioService } from '../../../servicios/servicio/servicio.service';
 import { OrdenService } from '../../../servicios/orden/orden.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-orden',
@@ -25,7 +26,10 @@ export class CrearOrdenComponent implements OnInit {
   closeResult: string;
   vehiculos: Observable<any[]>;
   servicios: Observable<any[]>;
+  ultimaOrden: Observable<any[]>;
+  numeroOrden: number = 0;
   serviciosSeleccionados: any[];
+
 
 
   ClienteForm = this.fb.group({
@@ -44,6 +48,7 @@ export class CrearOrdenComponent implements OnInit {
     private personaService: PersonaService,
     private fb: FormBuilder,
     private modalService: NgbModal,
+    public router: Router,
     private vehiculoService: VehiculoService,
     private servicioService: ServicioService,
     private ordenService: OrdenService
@@ -52,6 +57,12 @@ export class CrearOrdenComponent implements OnInit {
 
     this.vehiculos = this.vehiculoService.obtenerVehiculos()
     this.serviciosSeleccionados = []
+
+    this.ultimaOrden = this.ordenService.obtenerUltimaOrden();
+
+    this.ultimaOrden.subscribe(res=>{
+      this.numeroOrden = res[0].numero
+    })
 
   }
 
@@ -110,14 +121,19 @@ export class CrearOrdenComponent implements OnInit {
       
 
       var orden = {
+        numero: this.numeroOrden+1,
         cliente: cliente,
         vehiculo: vehiculo,
         servicios: servicios,
         fecha: new Date()
       }
-      this.ordenService.crearOrden(orden, servicios)
+     const id =  this.ordenService.crearOrden(orden, servicios)
+     
+     this.reiniciar()
 
-      this.reiniciar()
+     this.router.navigate(['/orden/informacionorden/'+id]);
+
+    
 
     } 
   }

@@ -7,6 +7,7 @@
           Información de la orden de trabajo
         </div>
         <div class="card-body" style="font-size: 14px">
+          <p> <strong>Número: </strong>{{numeroOrden+1}}</p>
           <div class="row">
             <div class="col">
               <label for="">Cliente:</label>
@@ -131,10 +132,11 @@
           <hr>
           <p>
             <strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>
-          <table class="table table-bordered table-sm">
+          <table class="table table-bordered table-responsive-sm table-sm">
             <thead>
               <tr>
                 <th></th>
+                <th scope="col">Código</th>
                 <th scope="col">Servicio</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Tiempo estandar</th>
@@ -147,6 +149,7 @@
                     <i class="fa fa-trash"></i>
                   </button>
                 </td>
+                <td *ngIf="servicio.data">{{servicio.data.codigo}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.descripcion}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.detalle}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.tiempoEstandar}} minutos</td>

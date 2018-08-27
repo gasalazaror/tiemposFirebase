@@ -1,61 +1,63 @@
 <div [@routerTransition]>
-    <app-page-header [heading]="'Ordenes de trabajo'" [icon]="'fa-edit'"></app-page-header>
-  
-    <div class="row">
-      <div class="col col-xl-12 col-lg-12">
-  
-  
-        <div class="card mb-3">
-          <div class="card-header">Ordenes de trabajo</div>
-          <div class="card-body table-responsive">
-            <table class="table table-bordered" datatable id="example-datatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-              <thead>
-                <tr>
-                    <th></th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>ID Cliente</th>
-                  <th>Nombre del cliente</th>
-                  <th>Vehículo</th>
-            
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let orden of ordenes | async">
-                    <td>
-                        <a href="/orden/detalleorden/{{orden.id}}" class="btn btn-sm btn-primary">
-                          <i class="fa fa-eye"></i>
-                        </a>
-                       
-                     
-                      </td>
-      
-                  <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
-                  <td>{{(orden.data.fecha.seconds)*1000 | date : 'hh:mm a'}}</td>
-                  <td>{{orden.data.cliente.cedula}}</td>
-                  <td>{{orden.data.cliente.nombre}}</td>
-                 
-                  <td>
-                    {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
-  
-                  </td>
-  
-                
-                 
-  
-                </tr>
-  
-  
-  
-              </tbody>
-            </table>
-          </div>
+  <app-page-header [heading]="'Ordenes de trabajo'" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+
+
+      <div class="card mb-3">
+        <div class="card-header">Ordenes de trabajo</div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered" datatable id="example-datatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+              <tr>
+                <th></th>
+                <th>No.</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>ID Cliente</th>
+                <th>Nombre del cliente</th>
+                <th>Vehículo</th>
+               
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let orden of ordenes | async">
+                <td>
+                  <a href="/orden/detalleorden/{{orden.id}}" class="btn btn-sm btn-primary">
+                    <i class="fa fa-eye"></i>
+                  </a>
+
+
+                </td>
+                <td>{{orden.data.numero}}</td>
+                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
+                <td>{{(orden.data.fecha.seconds)*1000 | date : 'hh:mm a'}}</td>
+                <td>{{orden.data.cliente.cedula}}</td>
+                <td>{{orden.data.cliente.nombre}}</td>
+
+                <td>
+                  {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
+
+                </td>
+
+
+
+
+              </tr>
+
+
+
+            </tbody>
+          </table>
         </div>
-  
       </div>
+
     </div>
-  
-  
-  
-  
   </div>
+
+
+
+
+</div>

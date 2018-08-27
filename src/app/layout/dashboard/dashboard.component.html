@@ -1,22 +1,76 @@
 <div [@routerTransition]>
     <h2 class="text-muted">Control de tiempos
-   
+
     </h2>
     <div class="row">
-            <div class="col-xl-3 col-lg-6">
-                <app-stat [bgClass]="'primary'" [icon]="'fa-user'" [count]="26" [label]="'Clientes!'"></app-stat>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card text-white bg-primary">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-xs-3">
+                            <i class="fa fa-user fa-5x"></i>
+                        </div>
+                        <div class="col col-xs-9 text-right">
+                            <div class="d-block huge">{{numeroPersonas}}</div>
+                            <div class="d-block">Clientes</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-link text-white" href="/persona/consultarpersona">Ver detalles</a>
+                    <a href="/persona/crearpersona/nuevo" class="float-right card-inverse">
+                        <span><i class="fa fa-plus-circle text-white"></i></span>
+                    </a>
+                </div>
             </div>
-            <div class="col-xl-3 col-lg-6">
-                <app-stat [bgClass]="'danger'" [icon]="'fa-support'" [count]="13" [label]="'Vehíc!'"></app-stat>
-            </div> 
-            <div class="col-xl-3 col-lg-6">
-                <app-stat [bgClass]="'warning'" [icon]="'fa-tasks'" [count]="12" [label]="'Tareas!'"></app-stat>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-                <app-stat [bgClass]="'success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'Ordenes!'"></app-stat>
-            </div>
-       
+
         </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card text-white bg-danger">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-xs-3">
+                            <i class="fa fa-support fa-5x"></i>
+                        </div>
+                        <div class="col col-xs-9 text-right">
+                            <div class="d-block huge">{{numeroVehiculos}}</div>
+                            <div class="d-block">Vehículos</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-link text-white" href="/vehiculo/consultarvehiculo">Ver detalles</a>
+                    <a href="/vehiculo/crearvehiculo/nuevo" class="float-right card-inverse">
+                        <span><i class="fa fa-plus-circle text-white"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-6">
+            <div class="card text-white bg-success">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col col-xs-3">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col col-xs-9 text-right">
+                            <div class="d-block huge">{{numeroOrdenes}}</div>
+                            <div class="d-block">Ordenes de trabajo</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-link text-white" href="/orden/consultarorden">Ver detalles</a>
+                    <a href="/orden/crearorden/nuevo" class="float-right card-inverse">
+                        <span><i class="fa fa-plus-circle text-white"></i></span>
+                    </a>
+                </div>
+            </div>
+  
+        </div>
+
+    </div>
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -31,7 +85,7 @@
             </ngb-carousel>
         </div>
     </div>
-    
+
     <hr />
 
 </div>

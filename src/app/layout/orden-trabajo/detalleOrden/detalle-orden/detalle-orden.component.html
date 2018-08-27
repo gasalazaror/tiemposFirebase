@@ -12,6 +12,12 @@
 
             <tbody>
               <tr>
+                <th>Número </th>
+                <td>{{ (orden | async)?.numero }}</td>
+              </tr>
+
+
+              <tr>
                 <th>Fecha </th>
                 <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
               </tr>
@@ -46,51 +52,130 @@
       Operaciones
     </div>
     <div class="card-body">
-      <table class="table table-bordered table-responsive-sm table-sm">
-        <thead>
-          <tr>
-            <th>Servicio</th>
-            <th>Descripcioón</th>
-            <th>T.E. (min)</th>
-            <th>Estado</th>
-            <th>Operador asignado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let servicio of servicios let index = index">
-            <td>{{servicio.descripcion}}</td>
-            <td>{{servicio.detalle}}</td>
-            <td>{{servicio.tiempoEstandar}}</td>
-            <td>
-              {{servicio.estado}}
-              <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" > <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
-            </td>
-            <td>{{servicio.operador.data.nombre}}</td>
-            <td>
-              <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-primary btn-sm">
-                <i class="fa fa-play"></i>
-
-              </button>
-
-              <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-primary btn-sm">
-                <i class="fa fa-pause"></i>
-              </button>
-
-              <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" class="btn btn-primary btn-sm">
-                <i class="fa fa-stop"></i>
-              </button>
-              <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-primary btn-sm">
-                <i class="fa fa-play"></i>
-              </button>
-            </td>
-
-          </tr>
 
 
 
-        </tbody>
-      </table>
+
+      <ngb-tabset>
+        <ngb-tab title="Operaciones">
+          <ng-template ngbTabContent>
+            <table class="table table-bordered table-responsive-sm table-sm">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Servicio</th>
+           
+                  <th>T.E. (min)</th>
+                  <th>Estado</th>
+                  <th>Operador asignado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let servicio of servicios let index = index">
+                  <td>{{servicio.codigo}}</td>
+                  <td>{{servicio.descripcion}}</td>
+              
+                  <td>{{servicio.tiempoEstandar}}</td>
+                  <td>
+                    {{servicio.estado}}
+                    <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
+                  </td>
+                  <td>
+                    <p *ngIf="servicio.operador">{{servicio.operador.data.nombre}}</p>
+                  </td>
+                  <td>
+                    <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-primary btn-sm">
+                      <i class="fa fa-play"></i>
+
+                    </button>
+
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-primary btn-sm">
+                      <i class="fa fa-pause"></i>
+                    </button>
+
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" class="btn btn-primary btn-sm">
+                      <i class="fa fa-stop"></i>
+                    </button>
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-primary btn-sm">
+                      <i class="fa fa-play"></i>
+                    </button>
+
+                    <button *ngIf="servicio.estado=='POR FACTURAR'" (click)="open2(content2, index)" class="btn btn-primary btn-sm">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </td>
+
+                </tr>
+
+
+
+              </tbody>
+            </table>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle><b>Resumen</b></ng-template>
+          <ng-template ngbTabContent>
+
+            
+            
+              <hr>
+
+              <table id="example-datatable" class="table table-bordered table-responsive-sm table-sm">
+                  <thead>
+                     <tr>
+                     <th>Código</th>
+                      <th>Servicio</th>
+                      <th>Operador</th>
+                      <th>Tiempo Estandar</th>
+                      <th>Lead Time</th>
+                      <th>Tiempo Real</th>
+                      <th>Eficiencia</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let servicio of servicios " 
+                    [class.table-success]="servicio.eficiencia>=100" 
+                    [class.table-warning]="servicio.eficiencia>=80 && servicio.eficiencia<100"
+                      [class.table-danger]="servicio.eficiencia<80"
+                      >
+                      <td>
+                          {{servicio.codigo}}
+                        </td>
+                      <td>
+                        {{servicio.descripcion}}
+                      </td>
+                      <td>
+                        {{servicio.operador.data.nombre}}
+                      </td>
+                      <td>
+                        {{servicio.tiempoEstandarFor}}
+                      </td>
+                      <td>
+                        {{servicio.leadTime}}
+                      </td>
+                      <td>
+                        {{servicio.tiempoReal}}
+                      </td>
+                      <td>
+                        {{servicio.eficiencia}}%
+                      </td>
+                     </tr>
+                  </tbody>
+                </table>
+
+          </ng-template>
+        </ngb-tab>
+
+      </ngb-tabset>
+
+
+
+
+
+
+
     </div>
   </div>
 
@@ -103,7 +188,7 @@
     </div>
     <div class="modal-body">
       <p><strong>Servicio: </strong>{{servicioSeleccionado.descripcion}}</p>
-      <p><strong>Motivo pausa:</strong> 
+      <p><strong>Motivo pausa:</strong>
         <select [(ngModel)]="pausa.motivo">
           <option value="">Seleccionar un motivo...</option>
           <option value="FALTA DE AUTORIZACIÓN">FALTA DE AUTORIZACIÓN</option>
@@ -115,8 +200,107 @@
           <option value="FINALIZACIÓN DE JORNADA LABORAL">FINALIZACIÓN DE JORNADA LABORAL</option>
         </select></p>
 
-        <p><strong>Observación:</strong> <input [(ngModel)]="pausa.observacion" type="text"></p>
-        <p><button [disabled]="pausa.motivo==''" class="btn btn-primary" (click)="pausar()">Guardar</button></p>
+      <p><strong>Observación:</strong> <input [(ngModel)]="pausa.observacion" type="text"></p>
+      <p><button [disabled]="pausa.motivo==''" class="btn btn-primary" (click)="pausar(); c('Close click')">Guardar</button></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
+    </div>
+  </ng-template>
+
+  <ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5>Detalle de la operación</h5>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="card">
+        <div class="card-header">información</div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-bordered table-sm">
+                <tr>
+                  <th>Servicio:</th>
+                  <td>{{servicioSeleccionado.descripcion}}</td>
+                </tr>
+
+                <tr>
+                  <th>Operador:</th>
+                  <td>{{servicioSeleccionado.operador.data.nombre}}</td>
+                </tr>
+
+                <tr>
+                  <th>Hora Inicio </th>
+                  <td>{{ servicioSeleccionado.horaInicio.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                </tr>
+                <tr>
+                  <th>Hora Fin </th>
+                  <td>{{ servicioSeleccionado.horaFin.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                </tr>
+
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-bordered table-sm">
+
+                <tr>
+                  <th>Tiempo estandar</th>
+                  <td>{{ servicioSeleccionado.te}}</td>
+                </tr>
+                <tr>
+                  <th>LeadTime</th>
+                  <td>{{ servicioSeleccionado.leadTime}}</td>
+                </tr>
+                <tr>
+                  <th>Pausas</th>
+                  <td>{{ servicioSeleccionado.tiempoPausas}}</td>
+                </tr>
+                <tr>
+                  <th>Tiempo real</th>
+                  <td>{{ servicioSeleccionado.tiempoReal}}</td>
+                </tr>
+                <tr>
+                  <th>Eficiencia</th>
+                  <td>{{ servicioSeleccionado.eficiencia}}%</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="card">
+        <div class="card-header">
+          Pausas
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Hora inicio</th>
+                <th>Hora fin</th>
+                <th>Motivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pausa of servicioSeleccionado.pausas">
+                <td>{{ pausa.horaInicio.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                <td>{{ pausa.horaFin.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                <td>{{pausa.motivo.motivo}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>

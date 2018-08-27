@@ -16,6 +16,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { OrdenTrabajoComponent } from './orden-trabajo.component';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
 import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orden.component';
+import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
 
 
 @NgModule({
@@ -32,6 +33,6 @@ import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orde
     ServicioModule,
     DataTablesModule
   ],
-  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent]
+  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent]
 })
 export class OrdenTrabajoModule { }

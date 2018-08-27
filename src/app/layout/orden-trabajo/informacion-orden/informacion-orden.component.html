@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Información vehículo'" [icon]="'fa-edit'"></app-page-header>
+  <app-page-header [heading]="'Información Orden de trabajo'" [icon]="'fa-edit'"></app-page-header>
 
   <div class="card">
     <div class="card-header">
@@ -11,6 +11,10 @@
           <table class="table table-sm table-bordered">
 
             <tbody>
+              <tr>
+                <th>Número </th>
+                <td>{{ (orden | async)?.numero }}</td>
+              </tr>
               <tr>
                 <th>Fecha </th>
                 <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
@@ -46,11 +50,12 @@
       Servicios
     </div>
     <div class="card-body">
-      <table class="table table-bordered">
+      <table class="table table-bordered table-responsive-sm">
         <thead>
           <tr>
+            <th>Código</th>
             <th>Servicio</th>
-            <th>Descripcioón</th>
+            <th>Descripción</th>
             <th>Tiempo estandar</th>
             <th>Estado</th>
             <th>Operador asignado</th>
@@ -58,6 +63,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let servicio of servicios let index = index">
+              <td>{{servicio.codigo}}</td>
             <td>{{servicio.descripcion}}</td>
             <td>{{servicio.detalle}}</td>
             <td>{{servicio.tiempoEstandar}} minutos</td>
@@ -65,9 +71,17 @@
             <td>
 
               <div class="">
-                <ng-select class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 250px;"
-                  class="form-control" [items]="personas | async" bindLabel="data.nombre"  (change)="seleccionarPersona(servicio, index)">
-                </ng-select>
+                <div class="row">
+                  <div class="col-md-9">
+                    <ng-select class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 230px;" class="form-control"
+                      [items]="personas | async" bindLabel="data.nombre" (change)="seleccionarPersona(servicio, index)">
+                    </ng-select>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-white"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+
               </div>
 
             </td>

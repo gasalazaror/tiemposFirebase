@@ -46,8 +46,11 @@
                </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let servicio of tareas " [class.table-success]="servicio.servicio.eficiencia>=100" [class.table-warning]="servicio.servicio.eficiencia>=80 && servicio.servicio.eficiencia<100"
-                [class.table-danger]="servicio.servicio.eficiencia<80">
+              <tr *ngFor="let servicio of tareas " 
+              [class.table-success]="servicio.servicio.eficiencia>=100" 
+              [class.table-warning]="servicio.servicio.eficiencia>=80 && servicio.servicio.eficiencia<100"
+                [class.table-danger]="servicio.servicio.eficiencia<80"
+                >
                  <td>
                   {{servicio.cliente.nombre}}
                 </td>
