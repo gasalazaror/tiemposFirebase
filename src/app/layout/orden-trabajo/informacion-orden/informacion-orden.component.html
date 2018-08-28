@@ -17,7 +17,7 @@
               </tr>
               <tr>
                 <th>Fecha </th>
-                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
               </tr>
 
               <tr>
@@ -55,7 +55,6 @@
           <tr>
             <th>Código</th>
             <th>Servicio</th>
-            <th>Descripción</th>
             <th>Tiempo estandar</th>
             <th>Estado</th>
             <th>Operador asignado</th>
@@ -65,7 +64,6 @@
           <tr *ngFor="let servicio of servicios let index = index">
               <td>{{servicio.codigo}}</td>
             <td>{{servicio.descripcion}}</td>
-            <td>{{servicio.detalle}}</td>
             <td>{{servicio.tiempoEstandar}} minutos</td>
             <td>{{servicio.estado}}</td>
             <td>

@@ -35,6 +35,10 @@ export class VehiculoService {
     );
   }
 
+  eliminarVehiculo(idVehiculo) {
+    return this.empresa.collection('vehiculos').doc(idVehiculo).delete()
+  }
+
   obtenerUnVehiculo(id) {
     return this.empresa.collection('vehiculos').doc(id).valueChanges()
   }

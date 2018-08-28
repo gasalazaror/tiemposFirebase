@@ -10,7 +10,7 @@ import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orde
 
 const routes: Routes = [
   {
-    path: 'crearorden',
+    path: 'crearorden/:id',
     component: CrearOrdenComponent
   },
   {

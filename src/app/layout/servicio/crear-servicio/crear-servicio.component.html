@@ -12,13 +12,14 @@
           <div class="card">
             <div class="card-body">
               <div>
+                <p>Seleccionar una categoría</p>
                 <ul class="list-inline border">
                   <li class="list-inline-item" *ngFor="let categoria of categorias | async">
                     <button type="button" (click)="seleccionarCategoria(categoria)" class="btn btn-link">{{categoria.data.nombre}}</button>
                   </li>
                   <li class="list-inline-item">
                     <button class="btn btn-default btn-sm" (click)=agregarCategoria()>
-                      <i class="fa fa-plus"></i>
+                      <i class="fa fa-plus"></i> Agregar categoría
                     </button>
                   </li>
                 </ul>

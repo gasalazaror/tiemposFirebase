@@ -203,7 +203,7 @@ export class DetalleOrdenComponent implements OnInit {
 
   reanudarServicio(indice) {
 
-    const confirmacion = confirm("¿Está seguro que desea finalizar la tarea seleccionada?")
+    const confirmacion = confirm("¿Está seguro que desea reanudar la tarea seleccionada?")
     if (confirmacion) {
       this.servicios[indice].estado = 'EN PRODUCCIÓN'
       this.servicios[indice].pausas.forEach(pausa => {

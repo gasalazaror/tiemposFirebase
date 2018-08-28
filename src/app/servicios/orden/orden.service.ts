@@ -18,7 +18,15 @@ export class OrdenService {
     const id = this.afs.createId();
     this.empresa.collection('ordenes').doc(id).set(orden)
     return id
- 
+  }
+
+  modificarOrden(id, orden) {
+    this.empresa.collection('ordenes').doc(id).update(orden)
+    return id
+  }
+
+  agregarDetalle(){
+    
   }
 
   obtenerOrdenes() {

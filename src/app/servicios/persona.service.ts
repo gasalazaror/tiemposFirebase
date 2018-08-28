@@ -86,4 +86,9 @@ export class PersonaService {
   obtenerUsuario(){
     return this.afAuth.user
   }
+
+  obtenerEmpresa(){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa
+  }
 }

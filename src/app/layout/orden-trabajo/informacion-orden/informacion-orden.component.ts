@@ -46,7 +46,7 @@ export class InformacionOrdenComponent implements OnInit {
 
   seleccionarPersona(servicio, index){
 
-    console.log(this.servicios[index])
+
 
     this.servicios[index].operador = servicio.operador
     this.servicios[index].estado = 'EN ESPERA DE PRODUCCIÓN'

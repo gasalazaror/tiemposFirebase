@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { ServicioService } from '../../../servicios/servicio/servicio.service';
 import { OrdenService } from '../../../servicios/orden/orden.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-crear-orden',
@@ -29,6 +29,10 @@ export class CrearOrdenComponent implements OnInit {
   ultimaOrden: Observable<any[]>;
   numeroOrden: number = 0;
   serviciosSeleccionados: any[];
+
+  id: any
+  orden: Observable<any>;
+  serviciosRes: any;
 
 
 
@@ -51,18 +55,44 @@ export class CrearOrdenComponent implements OnInit {
     public router: Router,
     private vehiculoService: VehiculoService,
     private servicioService: ServicioService,
-    private ordenService: OrdenService
+    private ordenService: OrdenService,
+    private route: ActivatedRoute,
 
   ) {
-
-    this.vehiculos = this.vehiculoService.obtenerVehiculos()
+    this.id = this.route.snapshot.paramMap.get('id');
     this.serviciosSeleccionados = []
 
-    this.ultimaOrden = this.ordenService.obtenerUltimaOrden();
+    if (this.id != 'nuevo') {
+    
+      this.orden = this.ordenService.obtenerUnaOrden(this.id);
+      this.orden.subscribe(res => {
+        this.personaSeleccionada = {data: res.cliente};
+        this.vehiculoSeleccionado = {data: res.vehiculo}
+       
+        this.serviciosRes = res.servicios
+        this.serviciosSeleccionados = []
+        this.serviciosRes.forEach(element => {
+     
+          this.serviciosSeleccionados.push({ data: element })
+          this.numeroOrden = res.numero
+        });
 
-    this.ultimaOrden.subscribe(res=>{
-      this.numeroOrden = res[0].numero
-    })
+      })
+    } else {
+      this.ultimaOrden = this.ordenService.obtenerUltimaOrden();
+
+      this.ultimaOrden.subscribe(res => {
+        this.numeroOrden = res[0].numero+1
+      })
+
+    }
+
+
+
+
+    this.vehiculos = this.vehiculoService.obtenerVehiculos()
+  
+
 
   }
 
@@ -80,6 +110,7 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   seleccionarPersona() {
+    console.log(this.ClienteForm.value.persona)
     this.personaSeleccionada = this.ClienteForm.value.persona
     // this.VehiculoForm = this.fb.group({
     //   vehiculo: [{}, Validators.required]
@@ -89,66 +120,125 @@ export class CrearOrdenComponent implements OnInit {
 
   seleccionarServicio() {
     if (this.ServicioForm.value.servicio.data) {
+      this.ServicioForm.value.servicio.data.estado = 'CITA/RECEPCION'
       this.serviciosSeleccionados.push(this.ServicioForm.value.servicio)
     }
   }
 
   guardarOrden() {
-    var confirmacion = confirm("¿Está seguro que desea guardar la orden");
-    if (confirmacion) {
-      var vehiculo = {
-        placa: this.vehiculoSeleccionado.data.placa,
-        marca: this.vehiculoSeleccionado.data.marca,
-        modelo: this.vehiculoSeleccionado.data.modelo,
-        color: this.vehiculoSeleccionado.data.color,
-        numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
-        numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
+
+    if (this.id=='nuevo') {
+      var confirmacion = confirm("¿Está seguro que desea guardar la orden");
+      if (confirmacion) {
+        var vehiculo = {
+          placa: this.vehiculoSeleccionado.data.placa,
+          marca: this.vehiculoSeleccionado.data.marca,
+          modelo: this.vehiculoSeleccionado.data.modelo,
+          color: this.vehiculoSeleccionado.data.color,
+          numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
+          numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
+        }
+  
+        var cliente = {
+          cedula: this.personaSeleccionada.data.cedula,
+          nombre: this.personaSeleccionada.data.nombre,
+          direccion: this.personaSeleccionada.data.direccion,
+          telefono: this.personaSeleccionada.data.telefono,
+          correo: this.personaSeleccionada.data.correo
+        }
+  
+        var servicios = []
+  
+        this.serviciosSeleccionados.forEach(servicio => {
+          if(!servicio.data.operador){
+            servicio.data.operador = {id:'', data:{}}
+          }
+          servicios.push({operador: servicio.data.operador, codigo: servicio.data.codigo,estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
+        });
+  
+  
+        var orden = {
+          numero: this.numeroOrden,
+          cliente: cliente,
+          vehiculo: vehiculo,
+          servicios: servicios,
+          fecha: new Date()
+        }
+        const id = this.ordenService.crearOrden(orden, servicios)
+  
+        this.reiniciar()
+  
+        this.router.navigate(['/orden/informacionorden/' + id]);
+  
+  
+  
       }
+    } else {
 
-      var cliente = {
-        cedula: this.personaSeleccionada.data.cedula,
-        nombre: this.personaSeleccionada.data.nombre,
-        direccion: this.personaSeleccionada.data.direccion,
-        telefono: this.personaSeleccionada.data.direccion,
-        correo: this.personaSeleccionada.data.correo
+      var confirmacion = confirm("¿Está seguro que desea modificar la orden");
+      if (confirmacion) {
+        var vehiculo = {
+          placa: this.vehiculoSeleccionado.data.placa,
+          marca: this.vehiculoSeleccionado.data.marca,
+          modelo: this.vehiculoSeleccionado.data.modelo,
+          color: this.vehiculoSeleccionado.data.color,
+          numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
+          numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
+        }
+  
+        var cliente = {
+          cedula: this.personaSeleccionada.data.cedula,
+          nombre: this.personaSeleccionada.data.nombre,
+          direccion: this.personaSeleccionada.data.direccion,
+          telefono: this.personaSeleccionada.data.telefono,
+          correo: this.personaSeleccionada.data.correo
+        }
+  
+        var servicios = []
+
+        console.log(this.serviciosSeleccionados)
+  
+        this.serviciosSeleccionados.forEach(servicio => {
+          if(!servicio.data.operador){
+            servicio.data.operador = {id:'', data:{}}
+          }
+          servicios.push({ operador: servicio.data.operador, codigo: servicio.data.codigo, estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
+        });
+  
+  
+        var orden = {
+          numero: this.numeroOrden,
+          cliente: cliente,
+          vehiculo: vehiculo,
+          servicios: servicios,
+          fecha: new Date()
+        }
+     this.ordenService.modificarOrden(this.id, orden)
+  
+        this.reiniciar()
+  
+        this.router.navigate(['/orden/informacionorden/' + this.id]);
+  
+  
+  
       }
+    }
 
-      var servicios = []
 
-      this.serviciosSeleccionados.forEach(servicio => {
-        servicios.push({ codigo: servicio.data.codigo, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar, estado: 'CITA/RECEPCION' })
-      });
-      
 
-      var orden = {
-        numero: this.numeroOrden+1,
-        cliente: cliente,
-        vehiculo: vehiculo,
-        servicios: servicios,
-        fecha: new Date()
-      }
-     const id =  this.ordenService.crearOrden(orden, servicios)
-     
-     this.reiniciar()
-
-     this.router.navigate(['/orden/informacionorden/'+id]);
-
-    
-
-    } 
   }
 
-  reiniciar(){
-    this.personaSeleccionada=null
+  reiniciar() {
+    this.personaSeleccionada = null
     this.vehiculoSeleccionado = null
-    this.serviciosSeleccionados=[]
+    this.serviciosSeleccionados = []
 
     this.ClienteForm = this.fb.group({
       persona: [{}, Validators.required]
     })
-  
-    
-  
+
+
+
     this.VehiculoForm = this.fb.group({
       vehiculo: [{}, Validators.required]
     })

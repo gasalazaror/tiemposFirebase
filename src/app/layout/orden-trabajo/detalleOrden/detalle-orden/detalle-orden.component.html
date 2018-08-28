@@ -19,7 +19,7 @@
 
               <tr>
                 <th>Fecha </th>
-                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
               </tr>
 
               <tr>
@@ -236,11 +236,11 @@
 
                 <tr>
                   <th>Hora Inicio </th>
-                  <td>{{ servicioSeleccionado.horaInicio.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                  <td>{{ servicioSeleccionado.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
                 </tr>
                 <tr>
                   <th>Hora Fin </th>
-                  <td>{{ servicioSeleccionado.horaFin.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                  <td>{{ servicioSeleccionado.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
                 </tr>
 
               </table>
@@ -292,8 +292,8 @@
             </thead>
             <tbody>
               <tr *ngFor="let pausa of servicioSeleccionado.pausas">
-                <td>{{ pausa.horaInicio.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
-                <td>{{ pausa.horaFin.seconds*1000 | date : 'dd/MM/yyyy hh:mm a' }}</td>
+                <td>{{ pausa.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ pausa.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
                 <td>{{pausa.motivo.motivo}}</td>
               </tr>
             </tbody>

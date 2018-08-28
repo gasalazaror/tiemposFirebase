@@ -8,10 +8,6 @@
       <div class="card mb-3">
         <div class="card-header">Personas</div>
         <div class="card-body table-responsive">
-
-      
-
-      
           <table id="example-datatable" class="table table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
             <thead>
               <tr>
@@ -29,8 +25,11 @@
             <tbody>
               <tr *ngFor="let persona of personas | async">
                 <td>
-                  <a href="/persona/crearpersona/{{persona.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                  <button class="btn btn-danger btn-sm" (click)="eliminarPersona(persona)"><i class="fa fa-trash"></i></button>
+                  <div class="btn-group">
+                      <a href="/persona/crearpersona/{{persona.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                      <button class="btn btn-danger btn-sm" (click)="eliminarPersona(persona)"><i class="fa fa-trash"></i></button>
+                  </div>
+                  
                 </td>
                 <td>{{persona.data.tipo | uppercase}}</td>
                 <td>{{persona.data.cedula | uppercase}}</td>

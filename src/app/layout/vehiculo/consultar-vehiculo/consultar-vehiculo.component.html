@@ -24,7 +24,11 @@
               <tbody>
                 <tr *ngFor="let vehiculo of vehiculos | async">
                   <td>
-                    <a href="/vehiculo/crearvehiculo/{{vehiculo.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                    <div class="btn-group">
+                        <a href="/vehiculo/crearvehiculo/{{vehiculo.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                        <button class="btn btn-danger btn-sm" (click)="eliminarVehiculo(vehiculo)"><i class="fa fa-trash"></i></button>
+                    </div>
+                  
                   </td>
                   <td><a href="/vehiculo/informacionvehiculo/{{vehiculo.id}}">{{vehiculo.data.placa}}</a></td>
                   <td>{{vehiculo.data.marca}}</td>

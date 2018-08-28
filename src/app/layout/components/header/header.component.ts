@@ -13,7 +13,9 @@ export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
 
     usuario: Observable<any>
+    empresa: Observable<any>
     user:any
+    empresaq:any
 
     constructor(private translate: TranslateService, public router: Router, public personaService: PersonaService) {
         this.user=''
@@ -23,10 +25,14 @@ export class HeaderComponent implements OnInit {
         this.translate.use(browserLang.match(/en|fr|ur|es|it|fa|de|zh-CHS/) ? browserLang : 'en');
 
         this.usuario = this.personaService.obtenerUsuario()
+        this.empresa = this.personaService.obtenerEmpresa().valueChanges()
 
         this.usuario.subscribe(res=>{
             console.log(res.email)
             this.user = res.email
+        })
+        this.empresa.subscribe(res=>{
+            this.empresaq = res.nombre
         })
 
         this.router.events.subscribe(val => {
@@ -59,6 +65,7 @@ export class HeaderComponent implements OnInit {
 
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
+        localStorage.removeItem('empresa');
     }
 
     changeLang(language: string) {

@@ -5,7 +5,6 @@ import { PersonaService } from '../../../servicios/persona.service';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Alert } from 'selenium-webdriver';
 
 
 

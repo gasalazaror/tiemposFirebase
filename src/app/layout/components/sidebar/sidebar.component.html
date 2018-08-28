@@ -2,26 +2,26 @@
     <div class="list-group">
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;
-            <span>{{ 'Dashboard' | translate }}</span>
+            <span>Panel de control</span>
         </a>
 
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <i class="fa fa-user"></i>&nbsp;
-                <span>{{ 'Persona' | translate }}</span>
+                <span>Personas</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages'">
                 <ul class="submenu">
                     <li>
-                        <a [routerLink]="['/persona/crearpersona/nuevo']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/persona/crearpersona/nuevo']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Crear Persona' | translate }}</span>
+                            <span>Crear Persona</span>
                         </a>
                     </li>
                     <li>
-                        <a [routerLink]="['/persona/consultarpersona']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/persona/consultarpersona']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Consultar Persona' | translate }}</span>
+                            <span>Consultar persona</span>
                         </a>
                     </li>
                 </ul>
@@ -31,21 +31,21 @@
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages2')">
                 <i class="fa fa-car"></i>&nbsp;
-                <span>{{ 'Vehículos' | translate }}</span>
+                <span>Vehículos</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages2'">
                 <ul class="submenu">
                     <li>
 
-                        <a [routerLink]="['/vehiculo/crearvehiculo/nuevo']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/vehiculo/crearvehiculo/nuevo']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Crear Vehículo' | translate }}</span>
+                            <span>Crear vehículo</span>
                         </a>
                     </li>
                     <li>
-                        <a [routerLink]="['/vehiculo/consultarvehiculo']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/vehiculo/consultarvehiculo']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Consultar Vehículo' | translate }}</span>
+                            <span>Consultar vehículo</span>
                         </a>
                     </li>
                 </ul>
@@ -54,20 +54,20 @@
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages3')">
                 <i class="fa fa-wrench"></i>&nbsp;
-                <span>{{ 'Servicios' | translate }}</span>
+                <span>Servicios</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages3'">
                 <ul class="submenu">
                     <li>
-                        <a [routerLink]="['/servicio/crearservicio']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/servicio/crearservicio']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Crear Servicio' | translate }}</span>
+                            <span>Crear servicio</span>
                         </a>
                     </li>
                     <li>
-                        <a [routerLink]="['/servicio/consultarservicio']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/servicio/consultarservicio']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Consultar Servicio' | translate }}</span>
+                            <span>Consultar servicio</span>
                         </a>
                     </li>
                 </ul>
@@ -77,27 +77,27 @@
         <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages4')">
                 <i class="fa fa-file"></i>&nbsp;
-                <span>{{ 'Ordenes de trabajo' | translate }}</span>
+                <span>Ordenes de trabajo</span>
             </a>
             <li class="nested" [class.expand]="showMenu === 'pages4'">
                 <ul class="submenu">
                     <li>
-                        <a [routerLink]="['/orden/crearorden']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/orden/crearorden/nuevo']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Crear Orden de trabajo' | translate }}</span>
+                            <span>Crear orden de trabajo</span>
                         </a>
                     </li>
                     <li>
-                        <a [routerLink]="['/orden/consultarorden']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/orden/consultarorden']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Consultar Orden de trabajo' | translate }}</span>
+                            <span>Consultar orden de trabajo</span>
                         </a>
                     </li>
 
                     <li>
-                        <a [routerLink]="['/orden/operaciones']" [routerLinkActive]="['router-link-active']">
+                        <a class="nounderline" [routerLink]="['/orden/operaciones']" [routerLinkActive]="['router-link-active']">
                             <i class="fa fa-monument"></i>&nbsp;
-                            <span>{{ 'Operaciones' | translate }}</span>
+                            <span>Operaciones</span>
                         </a>
                     </li>
 
