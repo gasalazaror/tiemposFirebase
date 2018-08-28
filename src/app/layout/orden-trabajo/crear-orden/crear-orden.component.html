@@ -125,35 +125,13 @@
         <div class="card-body">
 
 
-          <table class="table table-sm table-responsive-sm table-bordered">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Servicio</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-               
-                    <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-             
-                </td>
-                <td>
-                  <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
-                    bindLabel="data.descripcion" formControlName="servicio">
-                  </ng-select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <button class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Agregar detalle</button>
+          
 
 
 
 
 
-          <!-- <div class="row">
+          <div class="row">
             Servicios disponibles:
             <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
               <div class="row">
@@ -206,9 +184,8 @@
           <hr>
 
           <button [disabled]="serviciosSeleccionados.length==0 || ClienteForm.persona=={} || VehiculoForm.vehiculo=={}" class="btn btn-primary"
-            (click)="guardarOrden()">Guardar</button> -->
-       
-          </div>
+            (click)="guardarOrden()">Guardar</button>
+        </div>
       </div>
     </div>
   </div>
