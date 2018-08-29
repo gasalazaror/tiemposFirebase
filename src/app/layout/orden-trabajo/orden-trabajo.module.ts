@@ -17,6 +17,8 @@ import { OrdenTrabajoComponent } from './orden-trabajo.component';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
 import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orden.component';
 import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
+import { FormatTimePipe } from '../../pipes/format-time.pipe';
+
 
 
 @NgModule({
@@ -33,6 +35,6 @@ import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
     ServicioModule,
     DataTablesModule
   ],
-  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent]
+  declarations: [CrearOrdenComponent,FormatTimePipe, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent]
 })
 export class OrdenTrabajoModule { }

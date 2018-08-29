@@ -42,6 +42,33 @@
             </tbody>
           </table>
         </div>
+
+        <div class="col-md-6">
+          <table class="table table-sm table-bordered">
+
+            <tbody>
+              <tr>
+                <th>Operaciones finalizadas </th>
+                <td>{{finalizadas}} de {{ servicios.length }}</td>
+              </tr>
+
+              <tr>
+                <th>Tiempo estandar</th>
+                <td>{{ tiempoEstandar*60 | formatTime }}</td>
+              </tr>
+
+              <tr>
+                <th>Tiempo Real</th>
+                <td>{{ tiempoReal | formatTime }}</td>
+              </tr>
+
+              <tr>
+                <th>Eficiencia</th>
+                <td>{{ ((tiempoEstandar*60)/tiempoReal).toFixed(2) }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -62,28 +89,18 @@
             <table class="table table-bordered table-responsive-sm table-sm">
               <thead>
                 <tr>
+                  <th>Acciones</th>
                   <th>Código</th>
                   <th>Servicio</th>
-           
+
                   <th>T.E. (min)</th>
                   <th>Estado</th>
                   <th>Operador asignado</th>
-                  <th>Acciones</th>
+
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let servicio of servicios let index = index">
-                  <td>{{servicio.codigo}}</td>
-                  <td>{{servicio.descripcion}}</td>
-              
-                  <td>{{servicio.tiempoEstandar}}</td>
-                  <td>
-                    {{servicio.estado}}
-                    <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
-                  </td>
-                  <td>
-                    <p *ngIf="servicio.operador">{{servicio.operador.data.nombre}}</p>
-                  </td>
                   <td>
                     <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-primary btn-sm">
                       <i class="fa fa-play"></i>
@@ -105,6 +122,18 @@
                       <i class="fa fa-eye"></i>
                     </button>
                   </td>
+                  <td>{{servicio.codigo}}</td>
+                  <td>{{servicio.descripcion}}</td>
+
+                  <td>{{servicio.tiempoEstandar*60 | formatTime}}</td>
+                  <td>
+                    {{servicio.estado}}
+                    <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
+                  </td>
+                  <td>
+                    <p *ngIf="servicio.operador">{{servicio.operador.data.nombre}}</p>
+                  </td>
+
 
                 </tr>
 
@@ -118,52 +147,53 @@
           <ng-template ngbTabTitle><b>Resumen</b></ng-template>
           <ng-template ngbTabContent>
 
-            
-            
-              <hr>
 
-              <table id="example-datatable" class="table table-bordered table-responsive-sm table-sm">
-                  <thead>
-                     <tr>
-                     <th>Código</th>
-                      <th>Servicio</th>
-                      <th>Operador</th>
-                      <th>Tiempo Estandar</th>
-                      <th>Lead Time</th>
-                      <th>Tiempo Real</th>
-                      <th>Eficiencia</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let servicio of servicios " 
-                    [class.table-success]="servicio.eficiencia>=100" 
-                    [class.table-warning]="servicio.eficiencia>=80 && servicio.eficiencia<100"
-                      [class.table-danger]="servicio.eficiencia<80"
-                      >
-                      <td>
-                          {{servicio.codigo}}
-                        </td>
-                      <td>
-                        {{servicio.descripcion}}
-                      </td>
-                      <td>
-                        {{servicio.operador.data.nombre}}
-                      </td>
-                      <td>
-                        {{servicio.tiempoEstandarFor}}
-                      </td>
-                      <td>
-                        {{servicio.leadTime}}
-                      </td>
-                      <td>
-                        {{servicio.tiempoReal}}
-                      </td>
-                      <td>
-                        {{servicio.eficiencia}}%
-                      </td>
-                     </tr>
-                  </tbody>
-                </table>
+
+            <hr>
+
+            <table id="example-datatable" class="table table-bordered table-responsive-sm table-sm">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Servicio</th>
+                  <th>Operador</th>
+                  <th>Tiempo Estandar</th>
+                  <th>Lead Time</th>
+                  <th>Tiempo Real</th>
+                  <th>Eficiencia</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <ng-container *ngFor="let servicio of servicios ">
+                  <tr *ngIf="servicio.estado=='POR FACTURAR'" [class.table-success]="servicio.eficiencia>=100" [class.table-warning]="servicio.eficiencia>=80 && servicio.eficiencia<100"
+                    [class.table-danger]="servicio.eficiencia<80">
+                    <td>
+                      {{servicio.codigo}}
+                    </td>
+                    <td>
+                      {{servicio.descripcion}}
+                    </td>
+                    <td>
+                      {{servicio.operador.data.nombre}}
+                    </td>
+                    <td>
+                      {{servicio.estadisticas.tiempoEstandar | formatTime}}
+                    </td>
+                    <td>
+                      {{servicio.estadisticas.leadTime}}
+                    </td>
+                    <td>
+                      {{servicio.estadisticas.tiempoReal}}
+                    </td>
+                    <td>
+                      {{servicio.estadisticas.eficiencia}}%
+                    </td>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
 
           </ng-template>
         </ngb-tab>
@@ -250,23 +280,23 @@
 
                 <tr>
                   <th>Tiempo estandar</th>
-                  <td>{{ servicioSeleccionado.te}}</td>
+                  <td>{{ servicioSeleccionado.estadisticas.tiempoEstandar | formatTime}}</td>
                 </tr>
                 <tr>
                   <th>LeadTime</th>
-                  <td>{{ servicioSeleccionado.leadTime}}</td>
+                  <td>{{ servicioSeleccionado.estadisticas.leadTime | formatTime}}</td>
                 </tr>
                 <tr>
                   <th>Pausas</th>
-                  <td>{{ servicioSeleccionado.tiempoPausas}}</td>
+                  <td>{{ servicioSeleccionado.estadisticas.pausas | formatTime}}</td>
                 </tr>
                 <tr>
                   <th>Tiempo real</th>
-                  <td>{{ servicioSeleccionado.tiempoReal}}</td>
+                  <td>{{ servicioSeleccionado.estadisticas.tiempoReal | formatTime}}</td>
                 </tr>
                 <tr>
                   <th>Eficiencia</th>
-                  <td>{{ servicioSeleccionado.eficiencia}}%</td>
+                  <td>{{ servicioSeleccionado.estadisticas.eficiencia }}%</td>
                 </tr>
               </table>
             </div>

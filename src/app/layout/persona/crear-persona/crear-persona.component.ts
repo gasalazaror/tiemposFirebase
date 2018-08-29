@@ -17,6 +17,10 @@ export class CrearPersonaComponent implements OnInit {
 
   id: any
   persona: Observable<any>;
+  personaGuardada: boolean= false;
+  existeCedula: boolean= false;
+  existeCorreo: boolean= false;
+  errorCedula:any=''
 
   personaForm = this.fb.group({
     estado: ['Activo', Validators.required],
@@ -63,19 +67,71 @@ export class CrearPersonaComponent implements OnInit {
   }
 
   guardarPersona() {
-    if (this.id == 'nuevo' ||  this.id==null) {
-      this.personaService.crearPersona(this.personaForm.value).then(persona => {
-        alert('Persona guardada correctamente')
-        this.personaForm.reset()
-      }, error => {
-        alert('Existió un error al guardar la persona')
-      })
-    } else {
-      this.personaService.modificarPersona(this.id, this.personaForm.value).then(persona => {
-        alert('Persona modificada correctamente')
-      }, error => {
-        alert('Existió un error al modificar la persona')
-      })
-    }
+
+    this.comprobarCedula()
+    this.comprobarCorreo()
+    // if (this.id == 'nuevo' ||  this.id==null) {
+    //   this.personaService.crearPersona(this.personaForm.value).then(persona => {
+ 
+    //     this.personaGuardada = true
+    //     this.personaForm.reset()
+    //   }, error => {
+    //     alert('Existió un error al guardar la persona')
+    //   })
+    // } else {
+    //   this.personaService.modificarPersona(this.id, this.personaForm.value).then(persona => {
+    //     alert('Persona modificada correctamente')
+    //   }, error => {
+    //     alert('Existió un error al modificar la persona')
+    //   })
+    // }
   }
+
+
+  comprobarCedula(){
+
+    this.personaService.comprobar('cedula',this.personaForm.value.cedula)
+    .subscribe(res=>{
+      console.log(res)
+      if(res.length>0){
+        this.errorCedula = 'Ya existe una persona con la Cédula/RUC ingresado'
+        this.existeCedula=true
+
+      }else{
+       this.errorCedula = ''
+        this.existeCedula=false
+      }
+    }, error=>{
+      console.log(error)
+    })
+   
+  
+  }
+
+
+
+  comprobarCorreo(){
+
+    this.personaService.comprobar('correo',this.personaForm.value.correo)
+    .subscribe(res=>{
+      if(res.length>0){
+       // this.error = 'Ya existe una persona con el correo ingresado'
+        this.existeCorreo=true
+
+      }else{
+        if (!this.existeCedula && this.existeCorreo) {
+         // this.error = ''
+        }
+        this.existeCorreo=false
+      }
+    }, error=>{
+      console.log(error)
+    })
+   
+  
+  }
+
+
+
+  
 }

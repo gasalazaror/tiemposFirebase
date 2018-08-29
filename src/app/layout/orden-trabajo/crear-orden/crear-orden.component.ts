@@ -202,7 +202,7 @@ export class CrearOrdenComponent implements OnInit {
           if(!servicio.data.operador){
             servicio.data.operador = {id:'', data:{}}
           }
-          servicios.push({ operador: servicio.data.operador, codigo: servicio.data.codigo, estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
+          servicios.push(servicio.data)
         });
   
   
@@ -245,7 +245,15 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   eliminarServicio(indice): void {
-    this.serviciosSeleccionados.splice(indice, 1)
+
+    const confirmacion = confirm('¿Está seguro que desea eliminar el servicio seleccionado?')
+
+    if (confirmacion) {
+      this.serviciosSeleccionados.splice(indice, 1)
+    } else {
+      
+    }
+   
   }
 
   seleccionarVehiculo() {

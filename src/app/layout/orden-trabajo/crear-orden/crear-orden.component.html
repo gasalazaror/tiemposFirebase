@@ -125,34 +125,42 @@
         <div class="card-body">
 
 
-          
+
 
 
 
 
 
           <div class="row">
-            Servicios disponibles:
-            <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
-              <div class="row">
-                <div class="col-md-8">
-                  <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
-                    bindLabel="data.descripcion" formControlName="servicio">
-                  </ng-select>
-                </div>
-                <div class="col-md-2">
-                  <div class="">
-                    <button class="btn btn-white disabled"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
 
-              </div>
-            </form>
-            <button class="btn btn-primary " (click)="open(contentServicio)">
-              <i class="fa fa-plus"></i> Nuevo
-            </button>
+
+            <div class="btn-group">
+              <p>Servicios disponibles:</p>
+              <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
+                <div class="row">
+                  <div class="col-md-8">
+                    <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
+                      bindLabel="data.descripcion" formControlName="servicio">
+                    </ng-select>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="">
+                      <button class="btn btn-white disabled"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+              <button class="btn btn-primary" (click)="open(contentServicio)">
+                <i class="fa fa-plus"></i>
+              </button>
+
+            </div>
+
+
           </div>
           <hr>
+
           <p>
             <strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>
           <table class="table table-bordered table-responsive-sm table-sm">

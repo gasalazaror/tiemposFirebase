@@ -25,6 +25,11 @@ export class OrdenService {
     return id
   }
 
+  eliminarOrden(id) {
+    return this.empresa.collection('ordenes').doc(id).delete()
+    
+  }
+
   agregarDetalle(){
     
   }

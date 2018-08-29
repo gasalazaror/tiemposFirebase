@@ -26,13 +26,13 @@
                 <td>
                   <div class="btn-group">
                     <a href="/orden/crearorden/{{orden.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                    <button disabled class="btn btn-danger btn-sm" (click)="eliminarVehiculo(orden)"><i class="fa fa-trash"></i></button>
+                    <button  class="btn btn-danger btn-sm" (click)="eliminarOrden(orden)"><i class="fa fa-trash"></i></button>
                   </div>
 
                 </td>
 
 
-                <td><a href="/orden/informacionorden/{{orden.id}}">{{orden.data.numero}}</a></td>
+                <td><a href="/orden/informacionorden/{{orden.id}}">Orden de trabajo No. {{orden.data.numero}}</a></td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>
                 <td>{{orden.data.cliente.cedula}}</td>

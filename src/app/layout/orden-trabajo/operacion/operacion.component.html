@@ -31,7 +31,7 @@
                       </div>
     
                     </td>
-                <td><a href="/orden/detalleorden/{{orden.id}}">{{orden.data.numero}}</a> </td>
+                <td><a href="/orden/detalleorden/{{orden.id}}">Orden de trabajo No. {{orden.data.numero}}</a> </td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>
                 <td>{{orden.data.cliente.cedula}}</td>

@@ -20,6 +20,13 @@ export class DetalleOrdenComponent implements OnInit {
 
   id: any
   orden: Observable<any>;
+  tiempoEstandar:number =0;
+  tiempoEstandarFor:any;
+
+  tiempoReal:number =0;
+  tiempoRealFor:any;
+
+  finalizadas:number=0
   servicios: any;
   newIndex: any
   closeResult: string;
@@ -40,53 +47,24 @@ export class DetalleOrdenComponent implements OnInit {
     this.orden = this.ordenService.obtenerUnaOrden(this.id);
     this.orden.subscribe(res => {
       this.servicios = res.servicios
+      this.tiempoEstandar = 0
+      this.finalizadas = 0
+      this.tiempoReal = 0
+      this.servicios.forEach(element => {
+        
 
-    this.servicios.forEach(servicio => {
-      if (servicio.estado == 'POR FACTURAR') {
-
-
-        var fecha1 = moment(servicio.horaInicio.seconds, 'X');
-        var fecha2 = moment(servicio.horaFin.seconds, 'X');
-        var diff = fecha2.diff(fecha1, 's');
-        servicio.leadTimesec = diff
-        const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
-        servicio.leadTime = leadTime
-        const formatted = moment.utc((servicio.tiempoEstandar * 60) * 1000).format('HH:mm:ss');
-        servicio.tiempoEstandarFor = formatted
-
-        var pausas = 0
-
-        if (servicio.pausas) {
-          servicio.pausas.forEach(pausa => {
-            console.log(pausa)
-            var fecha1 = moment(pausa.horaInicio.seconds, 'X');
-            var fecha2 = moment(pausa.horaFin.seconds, 'X');
-            var diff2 = fecha2.diff(fecha1, 's');
-            pausas += diff2
-          });
+        if (element.estado=='POR FACTURAR') {
+          this.finalizadas++
+          this.tiempoReal+= element.estadisticas.tiempoReal
+      
+        } else {
           
         }
+        this.tiempoEstandar += element.tiempoEstandar
 
-        console.log('leadtime '+servicio.leadTimesec)
-        console.log('pausas '+pausas)
-   
+      });
+       this.tiempoEstandarFor = moment.utc((this.tiempoEstandar*60) * 1000).format('HH:mm:ss');
 
-      
-        
-        var tiempoReal  =  servicio.leadTimesec - pausas
-        
-        servicio.tiempoReal = moment.utc((tiempoReal) * 1000).format('HH:mm:ss');
-
-        const eficiencia = ((servicio.tiempoEstandar*60)/tiempoReal)*100
-
-        servicio.eficiencia = eficiencia.toFixed(2)
-
-        this.servicios.push({ servicio: servicio,  })
-      
-
-      }
-    });
-  
 
     })
 
@@ -105,56 +83,26 @@ export class DetalleOrdenComponent implements OnInit {
     }
   }
 
-  finalizarServicio(index) {
-    const confirmacion = confirm("¿Está seguro que desea finalizar la tarea seleccionada?")
-    if (confirmacion) {
-      this.servicios[index].estado = 'POR FACTURAR'
-      this.servicios[index].horaFin = new Date()
-      this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
-    } else {
-    }
-  }
-
-  open(content, index) {
-    this.servicioSeleccionado = this.servicios[index]
-
-
-
-    // const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
-
-
-
-    this.newIndex = index
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-
-    });
-  }
-
-  open2(content, index) {
-    this.servicioSeleccionado = this.servicios[index]
-
+  calcularEstadisticas(index) {
     //tiempo estandar
-
-    this.servicioSeleccionado.te = moment.utc((this.servicioSeleccionado.tiempoEstandar * 60) * 1000).format('HH:mm:ss');
-
-    //leadtime
-    var fecha1 = moment(this.servicioSeleccionado.horaInicio.seconds, 'X');
-    var fecha2 = moment(this.servicioSeleccionado.horaFin.seconds, 'X');
+    const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
+    const tiempoEstandarSec = this.servicios[index].tiempoEstandar * 60
+    //leadtim
+    var fecha1 = moment(this.servicios[index].horaInicio.seconds, 'X');
+    var fecha2 = moment(this.servicios[index].horaFin.seconds, 'X');
     var diff = fecha2.diff(fecha1, 's');
     var lead = fecha2.diff(fecha1, 's')
-    this.servicioSeleccionado.leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
+    const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
 
     //pausas
 
     var pausas = 0
 
-    if (this.servicioSeleccionado.pausas) {
+    if (this.servicios[index].pausas) {
 
 
-      this.servicioSeleccionado.pausas.forEach(pausa => {
-   
+      this.servicios[index].pausas.forEach(pausa => {
+
         var fecha1 = moment(pausa.horaInicio.seconds, 'X');
         var fecha2 = moment(pausa.horaFin.seconds, 'X');
         var diff2 = fecha2.diff(fecha1, 's');
@@ -166,19 +114,71 @@ export class DetalleOrdenComponent implements OnInit {
 
     }
 
-    this.servicioSeleccionado.tiempoPausas = moment.utc(pausas * 1000).format('HH:mm:ss');
+    const pausasTime = moment.utc(pausas * 1000).format('HH:mm:ss');
+
+
 
 
     //tiempo real
-    const real  = lead-pausas
-    this.servicioSeleccionado.tiempoReal = moment.utc(real * 1000).format('HH:mm:ss');
+    const real = lead - pausas
+    var tiempoReal = moment.utc(real * 1000).format('HH:mm:ss');
 
 
-    const eficiencia = ((this.servicioSeleccionado.tiempoEstandar*60)/real)*100
+    const eficiencia = (((this.servicios[index].tiempoEstandar * 60) / real) * 100).toFixed(2)
 
-    this.servicioSeleccionado.eficiencia = eficiencia.toFixed(2)
+    return {
+      eficiencia: eficiencia,
+      tiempoReal: real,
+      pausas: pausas,
+      leadTime: lead,
+      tiempoEstandar: tiempoEstandarSec
+    }
+
+  }
 
 
+
+  finalizarServicio(index) {
+
+
+
+    const confirmacion = confirm("¿Está seguro que desea finalizar la tarea seleccionada?")
+    if (confirmacion) {
+      this.servicios[index].estado = 'POR FACTURAR'
+      this.servicios[index].horaFin = new Date()
+
+
+      this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res => {
+
+        this.servicios[index].estadisticas = this.calcularEstadisticas(index)
+        this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
+      })
+
+
+
+
+    } else {
+
+    }
+
+
+
+
+  }
+
+  open(content, index) {
+    this.servicioSeleccionado = this.servicios[index]
+    // const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
+    this.newIndex = index
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+
+    });
+  }
+
+  open2(content, index) {
+    this.servicioSeleccionado = this.servicios[index]
 
     this.newIndex = index
     this.modalService.open(content, { size: 'lg' }).result.then((result) => {

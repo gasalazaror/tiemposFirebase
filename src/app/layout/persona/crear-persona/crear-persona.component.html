@@ -1,7 +1,10 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Crear persona'" [icon]="'fa-edit'"></app-page-header>
-
+    <div *ngIf="errorCedula!=''" class="alert alert-danger" role="alert">
+      Error:  {{errorCedula}}
+    </div>
     <div class="card">
+
         <div class="card-header">
             Información de la persona
         </div>
@@ -49,7 +52,7 @@
                         <div class="form-group">
                             <label for="inputPassword2" class="">Dirección</label>
                             <textarea class="form-control form-control-sm" formControlName="direccion" cols="30" rows="4" placeholder="Dirección"></textarea>
-     
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -77,7 +80,13 @@
                             </div>
 
                         </div>
-                        <button [disabled]="!personaForm.valid" type="submit" class="btn btn-primary mb-2">Guardar Persona</button>
+
+
+
+                        <div *ngIf="personaGuardada" class="alert alert-success" role="alert">
+                            Persona guardada correctamente
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Guardar Persona</button>
 
 
 

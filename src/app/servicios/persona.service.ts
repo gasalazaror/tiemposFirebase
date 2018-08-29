@@ -16,6 +16,8 @@ export class PersonaService {
   personas: Observable<any[]>;
   persona: Observable<any[]>;
 
+
+
   constructor(private readonly afs: AngularFirestore, private afAuth: AngularFireAuth) {
     this.personasCollection = afs.collection('persona');
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
@@ -25,6 +27,12 @@ export class PersonaService {
   crearPersona(persona) {
     const id = this.afs.createId();
     return this.empresa.collection('personas').doc(id).set(persona);
+  }
+
+  comprobar(valor, campo){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+
+    return this.empresa.collection('personas', query=>query.where(valor, '==', campo)).valueChanges()
   }
 
   modificarPersona(id, persona) {

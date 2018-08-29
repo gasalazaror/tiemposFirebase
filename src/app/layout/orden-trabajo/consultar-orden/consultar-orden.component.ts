@@ -64,4 +64,14 @@ export class ConsultarOrdenComponent implements OnInit {
   
   }
 
+  eliminarOrden(orden){
+   const confirmacion = confirm("¿Está seguro que desea eliminar la orden seleccionada")
+   if (confirmacion) {
+     this.ordenService.eliminarOrden(orden.id)
+     alert('Orden eliminada correctamente')
+   } else {
+     
+   }
+  }
+
 }
