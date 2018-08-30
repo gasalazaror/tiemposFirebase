@@ -1,118 +1,118 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Crear orden de trabajo'" [icon]="'fa-edit'"></app-page-header>
+  <div class="alert alert-warning" role="alert">
+    Todos los campos marcados con <strong>(*)</strong> son obligatorios
+  </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          Información de la orden de trabajo: {{numeroOrden}}
-        </div>
-        <div class="card-body" style="font-size: 14px">
+
+      <h5>Orden de trabajo: {{numeroOrden}}</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Informacion del cliente <span style="color: red">*</span></div>
+
+            <div class="card-body">
+              <table class="table table-sm table-bordered">
+                <tr>
+                  <th>Buscar:</th>
+                  <td>
+
+                    <div class="btn-group">
+                      <form class="form" [formGroup]="ClienteForm" (ngSubmit)="seleccionarPersona()">
+                        <ng-select class="form-control" style="font-size: 14px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
+                          [items]="personas | async" bindLabel="data.nombre" formControlName="persona">
+                        </ng-select>
+                      </form>
+                      <button class="btn btn-white btn-sm" (click)="open(content)"><i class="fa fa-plus"></i></button>
+                    </div>
 
 
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">Informacion del cliente</div>
-
-                <div class="card-body">
-                  <table class="table table-sm table-bordered">
-                    <tr>
-                      <th>Buscar:</th>
-                      <td>
-
-                        <div class="btn-group">
-                          <form class="form" [formGroup]="ClienteForm" (ngSubmit)="seleccionarPersona()">
-                            <ng-select class="form-control" style="font-size: 14px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
-                              [items]="personas | async" bindLabel="data.nombre" formControlName="persona">
-                            </ng-select>
-                          </form>
-                          <button class="btn btn-white btn-sm" (click)="open(content)"><i class="fa fa-plus"></i></button>
-                        </div>
-
-
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Nombre:</th>
-                      <td>
-                        {{ (personaSeleccionada)?.data.nombre }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Cédula/RUC:</th>
-                      <td>{{ (personaSeleccionada)?.data.cedula }}</td>
-                    </tr>
-                    <tr>
-                      <th>Dirección:</th>
-                      <td>{{ (personaSeleccionada)?.data.direccion}}</td>
-                    </tr>
-                    <tr>
-                      <th>Teléfono:</th>
-                      <td>{{ (personaSeleccionada)?.data.telefono }}</td>
-                    </tr>
-                    <tr>
-                      <th>Correo:</th>
-                      <td>{{ (personaSeleccionada)?.data.correo }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">Información del vehiculo</div>
-                <div class="card-body">
-
-                  <table class="table table-sm table-bordered">
-                    <tr>
-                      <th>Buscar:</th>
-                      <td>
-                        <div class="btn-group">
-                          <form class="form" [formGroup]="VehiculoForm" (ngSubmit)="seleccionarPersona()">
-                            <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarVehiculo()" class="form-control" [items]="vehiculos | async"
-                              bindLabel="data.placa" formControlName="vehiculo">
-                            </ng-select>
-                          </form>
-                          <button class="btn btn-white btn-sm" (click)="open(content2)"><i class="fa fa-plus"></i></button>
-                        </div>
-
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Placa:</th>
-                      <td>
-                        {{ (vehiculoSeleccionado)?.data.placa | uppercase }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Marca:</th>
-                      <td>
-                        {{ (vehiculoSeleccionado)?.data.marca | uppercase }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Modelo:</th>
-                      <td>
-                        {{ (vehiculoSeleccionado)?.data.modelo | uppercase }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Color:</th>
-                      <td>
-                        {{ (vehiculoSeleccionado)?.data.color | uppercase }}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Nombre:</th>
+                  <td>
+                    {{ (personaSeleccionada)?.data.nombre }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Cédula/RUC:</th>
+                  <td>{{ (personaSeleccionada)?.data.cedula }}</td>
+                </tr>
+                <tr>
+                  <th>Dirección:</th>
+                  <td>{{ (personaSeleccionada)?.data.direccion}}</td>
+                </tr>
+                <tr>
+                  <th>Teléfono:</th>
+                  <td>{{ (personaSeleccionada)?.data.telefono }}</td>
+                </tr>
+                <tr>
+                  <th>Correo:</th>
+                  <td>{{ (personaSeleccionada)?.data.correo }}</td>
+                </tr>
+              </table>
             </div>
           </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Información del vehiculo <span style="color: red">*</span></div>
+            <div class="card-body">
 
+              <table class="table table-sm table-bordered">
+                <tr>
+                  <th>Buscar:</th>
+                  <td>
+                    <div class="btn-group">
+                      <form class="form" [formGroup]="VehiculoForm" (ngSubmit)="seleccionarPersona()">
+                        <ng-select class="form-control" autofocus style="width: 250px;" (change)="seleccionarVehiculo()" class="form-control" [items]="vehiculos | async"
+                          bindLabel="data.placa" formControlName="vehiculo">
+                        </ng-select>
+                      </form>
+                      <button class="btn btn-white btn-sm" (click)="open(content2)"><i class="fa fa-plus"></i></button>
+                    </div>
 
+                  </td>
+                </tr>
+                <tr>
+                  <th>ID/Placa:</th>
+                  <td>
+                    {{ (vehiculoSeleccionado)?.data.placa }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Marca:</th>
+                  <td>
+                    {{ (vehiculoSeleccionado)?.data.marca }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Modelo:</th>
+                  <td>
+                    {{ (vehiculoSeleccionado)?.data.modelo }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Color:</th>
+                  <td>
+                    {{ (vehiculoSeleccionado)?.data.color }}
+                  </td>
+                </tr>
 
+                <tr>
+                  <th>Motor:</th>
+                  <td>
+                    {{ (vehiculoSeleccionado)?.data.numeroMotor }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
   <br>
@@ -120,22 +120,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          Servicios
+          Registro de productos o servicios <span style="color: red">*</span>
         </div>
         <div class="card-body">
-
-
-
-
-
-
-
-
           <div class="row">
-
-
             <div class="btn-group">
-              <p>Servicios disponibles:</p>
+              <p>Escoja producto o servicio: &nbsp;&nbsp;</p>
               <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
                 <div class="row">
                   <div class="col-md-8">

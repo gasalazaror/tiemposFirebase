@@ -1,11 +1,17 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Crear persona'" [icon]="'fa-edit'"></app-page-header>
-    <div *ngIf="errorCedula!=''" class="alert alert-danger" role="alert">
-      Error:  {{errorCedula}}
-    </div>
-    <div class="card">
 
-        <div class="card-header">
+
+
+    <div *ngIf="!existePersona" class="alert alert-info" role="alert">
+        Persona no encontrada
+    </div>
+
+
+
+    <div *ngIf="existePersona" class="card">
+
+        <div class="card-header" >
             Información de la persona
         </div>
         <div class="card-body">
@@ -40,12 +46,12 @@
 
 
                         <div class="form-group form-group-sm">
-                            <label for="inputPassword2" class="">Cédula / RUC</label>
+                            <label for="inputPassword2" class="">Cédula / RUC <span style="color: red">*</span></label>
                             <input autofocus type="text" class="form-control form-control-sm" formControlName="cedula" id="inputPassword2" placeholder="Cédula o RUC">
                         </div>
 
                         <div class="form-group ">
-                            <label for="inputPassword2" class="">Nombre</label>
+                            <label for="inputPassword2" class="">Nombre <span style="color: red">*</span></label>
                             <input type="text" class="form-control form-control-sm" formControlName="nombre" id="inputPassword2" placeholder="Nombre">
                         </div>
 
@@ -63,7 +69,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="inputPassword2" class="">Correo</label>
+                            <label for="inputPassword2" class="">Correo <span style="color: red">*</span></label>
                             <input type="text" class="form-control form-control-sm" formControlName="correo" id="inputPassword2" placeholder="Correo">
                         </div>
                         <div class="form-group">
@@ -81,12 +87,13 @@
 
                         </div>
 
-
-
-                        <div *ngIf="personaGuardada" class="alert alert-success" role="alert">
-                            Persona guardada correctamente
+                        <div *ngIf="existePersona" class="alert alert-info" role="alert">
+                            Todos los campos marcados con <strong>(*)</strong> son obligatorios
                         </div>
+
+
                         <button type="submit" class="btn btn-primary mb-2">Guardar Persona</button>
+
 
 
 

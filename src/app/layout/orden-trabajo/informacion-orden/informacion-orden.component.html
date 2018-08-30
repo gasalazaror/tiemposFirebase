@@ -16,7 +16,7 @@
                 <td>{{ (orden | async)?.numero }}</td>
               </tr>
               <tr>
-                <th>Fecha </th>
+                <th>Fecha OT </th>
                 <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
               </tr>
 
@@ -47,10 +47,10 @@
 
   <div class="card">
     <div class="card-header">
-      Servicios
+      Asignación de operadores
     </div>
     <div class="card-body">
-      <table class="table table-bordered table-responsive-sm">
+      <table class="table  table-responsive-sm">
         <thead>
           <tr>
             <th>Código</th>
@@ -70,14 +70,10 @@
 
               <div class="">
                 <div class="row">
-                  <div class="col-md-9">
                     <ng-select class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 230px;" class="form-control"
                       [items]="personas | async" bindLabel="data.nombre" (change)="seleccionarPersona(servicio, index)">
                     </ng-select>
-                  </div>
-                  <div class="col-md-2">
-                    <button class="btn btn-white"><i class="fa fa-search"></i></button>
-                  </div>
+                 
                 </div>
 
               </div>

@@ -5,6 +5,7 @@ import { Validators } from '@angular/forms';
 import { PersonaService } from '../../../servicios/persona.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import swal from'sweetalert2';
 
 @Component({
   selector: 'app-crear-persona',
@@ -17,45 +18,55 @@ export class CrearPersonaComponent implements OnInit {
 
   id: any
   persona: Observable<any>;
-  personaGuardada: boolean= false;
-  existeCedula: boolean= false;
-  existeCorreo: boolean= false;
-  errorCedula:any=''
+
+  existePersona: boolean = false
 
   personaForm = this.fb.group({
     estado: ['Activo', Validators.required],
     tipo: ['Natural', Validators.required],
-    cedula: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
+    cedula: ['', [Validators.required]],
     nombre: ['', [Validators.required]],
-    direccion: ['', [Validators.required]],
-    telefono: ['', [Validators.required]],
+    direccion: ['', []],
+    telefono: ['', []],
     correo: ['', [Validators.required, Validators.email]],
     cliente: [false],
     empleado: [false],
-    roles: {Administrador: false, Asesor: false, Operador: false}
+    roles: { Administrador: false, Asesor: false, Operador: false }
   })
 
   constructor(private fb: FormBuilder, private personaService: PersonaService, private route: ActivatedRoute, ) {
 
     this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id != 'nuevo' && this.id!=null) {
-      this.persona = this.personaService.obtenerUnaPersona(this.id);
+    if (this.id != 'nuevo' && this.id != null) {
 
+
+      this.persona = this.personaService.obtenerUnaPersona(this.id);
       this.persona.subscribe(persona => {
-        this.personaForm = this.fb.group({
-          estado: ['Activo', Validators.required],
-          tipo: ['Natural', Validators.required],
-          cedula: [persona.cedula, [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
-          nombre: [persona.nombre, [Validators.required]],
-          direccion: [persona.direccion, [Validators.required]],
-          telefono: [persona.telefono, [Validators.required]],
-          correo: [persona.correo, [Validators.required, Validators.email]],
-          cliente: [persona.cliente],
-          empleado: [persona.empleado]
-        })
+
+        if (persona != null) {
+
+          this.existePersona = true
+          this.personaForm = this.fb.group({
+            estado: ['Activo', Validators.required],
+            tipo: ['Natural', Validators.required],
+            cedula: [persona.cedula, [Validators.required]],
+            nombre: [persona.nombre, [Validators.required]],
+            direccion: [persona.direccion, []],
+            telefono: [persona.telefono, []],
+            correo: [persona.correo, [Validators.required, Validators.email]],
+            cliente: [persona.cliente],
+            empleado: [persona.empleado]
+          })
+        } else {
+          this.existePersona = false
+
+        }
+
       })
 
 
+    } else {
+      this.existePersona = true
     }
 
 
@@ -68,70 +79,117 @@ export class CrearPersonaComponent implements OnInit {
 
   guardarPersona() {
 
-    this.comprobarCedula()
-    this.comprobarCorreo()
-    // if (this.id == 'nuevo' ||  this.id==null) {
-    //   this.personaService.crearPersona(this.personaForm.value).then(persona => {
+    if (this.id == 'nuevo' || this.id == null) {
+
+      if (this.personaForm.value.cedula.trim() == '') {
+      
+        swal( 'Existió un error','El número de Cédula/RUC es obligatorio', 'error');
+    
+      } else {
+     
+        this.personaForm.value.cedula = this.personaForm.value.cedula.trim()
+        if (this.personaForm.value.nombre.trim() == '') {
+          swal( 'Existió un error','El nombre es obligatorio', 'error');
+
+        } else {
+      
+          this.personaForm.value.nombre = this.personaForm.value.nombre.trim()
+          if (this.personaForm.value.correo.trim() == '') {
+            swal( 'Existió un error','El correo es obligatorio', 'error');
+          } else {
+     
+            this.personaForm.value.correo = this.personaForm.value.correo.trim()
+            if (!this.validarEmail(this.personaForm.value.correo.trim())) {
+              swal( 'Existió un error','El correo ingresado no tiene el formato correcto', 'error');
+            } else {
+         
+              //validación si existe cédula
+              this.personaService.comprobar('cedula', this.personaForm.value.cedula)
+                .subscribe(res => {
+                  if (res.length > 0) {
+
+                   
+                  } else {
+                    swal( 'Listo!','Persona guardada exitosamente', 'success');
  
-    //     this.personaGuardada = true
-    //     this.personaForm.reset()
-    //   }, error => {
-    //     alert('Existió un error al guardar la persona')
-    //   })
-    // } else {
-    //   this.personaService.modificarPersona(this.id, this.personaForm.value).then(persona => {
-    //     alert('Persona modificada correctamente')
-    //   }, error => {
-    //     alert('Existió un error al modificar la persona')
-    //   })
-    // }
-  }
+                    this.personaService.crearPersona(this.personaForm.value).then(res=>{
+                   
+                      this.personaForm = this.fb.group({
+                        estado: ['Activo', Validators.required],
+                        tipo: ['Natural', Validators.required],
+                        cedula: ['', [Validators.required]],
+                        nombre: ['', [Validators.required]],
+                        direccion: ['', []],
+                        telefono: ['', []],
+                        correo: ['', [Validators.required, Validators.email]],
+                        cliente: [false],
+                        empleado: [false],
+                        roles: { Administrador: false, Asesor: false, Operador: false }
+                      })
+                    })
+             
+            
+                   
+                  }
+                }, error => {
 
-
-  comprobarCedula(){
-
-    this.personaService.comprobar('cedula',this.personaForm.value.cedula)
-    .subscribe(res=>{
-      console.log(res)
-      if(res.length>0){
-        this.errorCedula = 'Ya existe una persona con la Cédula/RUC ingresado'
-        this.existeCedula=true
-
-      }else{
-       this.errorCedula = ''
-        this.existeCedula=false
-      }
-    }, error=>{
-      console.log(error)
-    })
-   
-  
-  }
-
-
-
-  comprobarCorreo(){
-
-    this.personaService.comprobar('correo',this.personaForm.value.correo)
-    .subscribe(res=>{
-      if(res.length>0){
-       // this.error = 'Ya existe una persona con el correo ingresado'
-        this.existeCorreo=true
-
-      }else{
-        if (!this.existeCedula && this.existeCorreo) {
-         // this.error = ''
+                })
+            }
+          }
         }
-        this.existeCorreo=false
+
       }
-    }, error=>{
-      console.log(error)
-    })
-   
+    } else {
+      if (this.personaForm.value.cedula.trim() == '') {
+        swal( 'Existió un error','El número de Cédula/RUC es obligatorio', 'error');
+      } else {
   
+        this.personaForm.value.cedula = this.personaForm.value.cedula.trim()
+        if (this.personaForm.value.nombre.trim() == '') {
+          swal( 'Existió un error','El nombre es obligatorio', 'error');
+         
+        } else {
+        
+          this.personaForm.value.nombre = this.personaForm.value.nombre.trim()
+          if (this.personaForm.value.correo.trim() == '') {
+            swal( 'Existió un error','El correo es obligatorio', 'error');
+         
+          } else {
+        
+            this.personaForm.value.correo = this.personaForm.value.correo.trim()
+            if (!this.validarEmail(this.personaForm.value.correo.trim())) {
+  
+              swal( 'Existió un error','El correo ingresado no tiene el formato correcto', 'error');
+        
+            } else {
+         
+        
+              this.personaService.modificarPersona(this.id, this.personaForm.value).then(persona => {
+            
+                swal( 'Listo!','Persona modificada exitosamente', 'success');
+              }, error => {
+                swal( 'Existió un error','Existió un error al modificar la persona', 'error');
+              })
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  validarEmail(email) {
+    var regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+    return regex.test(email)
+
   }
 
 
 
-  
+
+
+
+
+
+
 }

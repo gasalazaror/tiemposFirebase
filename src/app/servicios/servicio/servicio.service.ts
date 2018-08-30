@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { map } from 'rxjs/operators';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +29,18 @@ export class ServicioService {
 
   obtenerCategorias() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('categorias').snapshotChanges().pipe(
+    return this.empresa.collection('categorias', query=>query.orderBy('nombre')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
         return { id, data };
       }))
     );
+  }
+
+  obtenerUnaCategoria(categoria){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('categorias', query=>query.where('nombre','==',categoria)).valueChanges()
   }
 
  

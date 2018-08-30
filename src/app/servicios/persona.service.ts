@@ -32,7 +32,7 @@ export class PersonaService {
   comprobar(valor, campo){
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
 
-    return this.empresa.collection('personas', query=>query.where(valor, '==', campo)).valueChanges()
+    return this.empresa.collection('personas', query=>query.where(valor, '==', campo)).stateChanges()
   }
 
   modificarPersona(id, persona) {

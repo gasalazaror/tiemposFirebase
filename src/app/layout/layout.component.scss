@@ -16,11 +16,15 @@
     overflow-y: scroll;
     position: relative;
     overflow: hidden;
-    font-size: 14px
+    font-size: 14px;
+    
 }
 .collapsed {
     margin-left: 100px;
 }
+
+
+
 @media screen and (max-width: 992px) {
     .main-container {
         margin-left: 0px !important;
@@ -32,4 +36,8 @@
         margin-left: 0px !important;
     }
 }
+
+
+   
+
 

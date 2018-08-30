@@ -5,7 +5,7 @@ import { PersonaService } from '../../../servicios/persona.service';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-
+import swal from 'sweetalert2'
 
 
 
@@ -51,9 +51,9 @@ export class InformacionPersonaComponent implements OnInit {
         this.user = this.db.doc('usuario/'+this.auth.auth.currentUser.uid);
         this.db.collection('empresaUsuario').doc(id).set({empresa: this.empresa.ref, correo: this.personaq.correo, tipo: 'usuario'})
         .then(user=>{
-          console.log(user)
+          swal( 'Listo!','Persona guardada exitosamente', 'success');
           this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
-          alert('usuario')
+         
         })
 
 
@@ -79,7 +79,7 @@ export class InformacionPersonaComponent implements OnInit {
             .then(user=>{
           
               this.empresa.collection('personas').doc(this.id).update({usuario: this.auth.auth.currentUser.uid})
-              alert('usuario')
+              swal( 'Listo!','Usuario creado correctamente', 'success');
             })
           } else {
             console.log('Ya existe un usuario con el correo electrónico ingresado')
