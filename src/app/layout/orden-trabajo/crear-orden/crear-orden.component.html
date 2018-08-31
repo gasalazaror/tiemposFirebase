@@ -1,8 +1,6 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Crear orden de trabajo'" [icon]="'fa-edit'"></app-page-header>
-  <div class="alert alert-warning" role="alert">
-    Todos los campos marcados con <strong>(*)</strong> son obligatorios
-  </div>
+ 
   <div class="row">
     <div class="col-md-12">
 
@@ -127,19 +125,9 @@
             <div class="btn-group">
               <p>Escoja producto o servicio: &nbsp;&nbsp;</p>
               <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
-                <div class="row">
-                  <div class="col-md-8">
-                    <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
-                      bindLabel="data.descripcion" formControlName="servicio">
-                    </ng-select>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="">
-                      <button class="btn btn-white disabled"><i class="fa fa-search"></i></button>
-                    </div>
-                  </div>
-
-                </div>
+                  <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
+                  bindLabel="data.descripcion" formControlName="servicio">
+                </ng-select>
               </form>
               <button class="btn btn-primary" (click)="open(contentServicio)">
                 <i class="fa fa-plus"></i>
@@ -157,6 +145,7 @@
             <thead>
               <tr>
                 <th></th>
+                <th scope="col">Cantidad</th>
                 <th scope="col">Código</th>
                 <th scope="col">Servicio</th>
 
@@ -171,6 +160,7 @@
                     <i class="fa fa-trash"></i>
                   </button>
                 </td>
+                <td *ngIf="servicio.data"><input [disabled]="servicio.data.estado!='CITA/RECEPCION'" style="max-width: 60px" class="form-control" type="number" min="1" [(ngModel)]="servicio.data.cantidad"></td>
                 <td *ngIf="servicio.data">{{servicio.data.codigo}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.descripcion}}</td>
 

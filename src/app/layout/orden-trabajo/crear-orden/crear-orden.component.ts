@@ -120,7 +120,9 @@ export class CrearOrdenComponent implements OnInit {
 
   seleccionarServicio() {
     if (this.ServicioForm.value.servicio.data) {
+     
       this.ServicioForm.value.servicio.data.estado = 'CITA/RECEPCION'
+      this.ServicioForm.value.servicio.data.cantidad = 1
       this.serviciosSeleccionados.push(this.ServicioForm.value.servicio)
     }
   }
@@ -153,7 +155,7 @@ export class CrearOrdenComponent implements OnInit {
           if(!servicio.data.operador){
             servicio.data.operador = {id:'', data:{}}
           }
-          servicios.push({operador: servicio.data.operador, codigo: servicio.data.codigo,estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
+          servicios.push({cantidad: servicio.data.cantidad,operador: servicio.data.operador, codigo: servicio.data.codigo,estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
         });
   
   

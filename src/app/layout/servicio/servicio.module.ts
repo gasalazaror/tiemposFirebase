@@ -8,6 +8,7 @@ import { PageHeaderModule } from '../../shared';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 import { DataTablesModule } from 'angular-datatables';
+import { FormatTimePipe } from '../../pipes/format-time.pipe';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { DataTablesModule } from 'angular-datatables';
     NgbModule.forRoot(), 
     DataTablesModule
   ],
-  exports: [CrearServicioComponent],
-  declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent]
+  exports: [CrearServicioComponent, FormatTimePipe],
+  declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent, FormatTimePipe]
 })
 export class ServicioModule { }

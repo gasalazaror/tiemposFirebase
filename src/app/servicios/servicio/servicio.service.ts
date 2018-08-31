@@ -27,6 +27,16 @@ export class ServicioService {
     return this.empresa.collection('servicios').doc(id).update({ categoria: itemDoc.ref })
   }
 
+  eliminarServicio(servicio){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('servicios').doc(servicio.id).delete()
+  }
+
+  validarServicio(campo, valor){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+  return this.empresa.collection('servicios', query=> query.where(campo , '==', valor)).valueChanges()
+  }
+
   obtenerCategorias() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('categorias', query=>query.orderBy('nombre')).snapshotChanges().pipe(

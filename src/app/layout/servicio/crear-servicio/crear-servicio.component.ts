@@ -49,16 +49,16 @@ export class CrearServicioComponent implements OnInit {
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
       showLoaderOnConfirm: true,
-     
+
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
 
       if (result.value) {
-        
+
         var categoria = result.value.toUpperCase()
         swal({
           title: 'Está seguro?',
-          text: "Está seguro que deseas guardar la categoría: "+result.value.toUpperCase(),
+          text: "Está seguro que deseas guardar la categoría: " + result.value.toUpperCase(),
           type: 'question',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -68,18 +68,20 @@ export class CrearServicioComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
 
-            this.servicioService.obtenerUnaCategoria(categoria).subscribe(res=>{
-              if (res.length>0) {
-                swal( 'Existió un error!','Ya existe la categoría ingresada', 'error');
+            this.servicioService.obtenerUnaCategoria(categoria).subscribe(res => {
+              if (res.length > 0) {
+                swal('Existió un error!', 'Ya existe la categoría ingresada', 'error');
               } else {
-                this.servicioService.crearCategoria({ nombre: categoria}).then(res=>{
-                  swal( 'Listo!','Categoría guardada exitosamente', 'success');
+                swal('Listo!', 'Categoría guardada exitosamente', 'success');
+                this.servicioService.crearCategoria({ nombre: categoria }).then(res => {
+                 
+                 
                 })
-        
+
               }
             })
-    
-           
+
+
           }
         })
       }
@@ -94,14 +96,50 @@ export class CrearServicioComponent implements OnInit {
     this.categorias = this.servicioService.obtenerCategorias()
   }
 
-  guardarServicio() {
-    this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
-      .then(servicio => {
-        console.log(servicio)
-        this.servicioForm.reset()
-      }, error => {
+  guardarServicio1() {
 
+  }
+
+  guardarServicio() {
+
+    if (this.servicioForm.value.codigo == '') {
+      swal('Existió un error', 'El código es obligatorio', 'error');
+    } else if (this.servicioForm.value.descripcion == '') {
+      swal('Existió un error', 'El servicio es obligatorio', 'error');
+    }
+    else if (this.servicioForm.value.tiempoEstandar <= 0) {
+      swal('Existió un error', 'El tiempo estándar no puede ser negativo', 'error');
+    } else {
+      this.servicioService.validarServicio('codigo', this.servicioForm.value.codigo).subscribe(res => {
+        if (res.length > 0) {
+          swal('Existió un error', 'El código ingresado ya existe en la base de datos', 'error');
+        } else {
+          this.servicioService.validarServicio('descripcion', this.servicioForm.value.descripcion).subscribe(res => {
+            if (res.length > 0) {
+              swal('Existió un error', 'El servicio ingresado ya existe en la base de datos', 'error');
+            } else {
+              this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
+                .then(servicio => {
+                  swal( 'Listo!','Servicio guardado exitosamente', 'success');
+                  this.servicioForm = this.fb.group({
+                    codigo: ['', Validators.required],
+                    descripcion: ['', Validators.required],
+                    tiempoEstandar: ['', Validators.required],
+                    detalle: [''],
+                  })
+                }, error => {
+
+                  
+
+                })
+            }
+          })
+        }
       })
+    }
+
+
+
   }
 
 

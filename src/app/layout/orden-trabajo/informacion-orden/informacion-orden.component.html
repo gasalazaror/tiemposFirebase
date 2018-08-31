@@ -53,6 +53,7 @@
       <table class="table  table-responsive-sm">
         <thead>
           <tr>
+            <th>Cantidad</th>
             <th>Código</th>
             <th>Servicio</th>
             <th>Tiempo estandar</th>
@@ -62,9 +63,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let servicio of servicios let index = index">
-              <td>{{servicio.codigo}}</td>
+              <td>{{servicio.cantidad}}</td>  
+            <td>{{servicio.codigo}}</td>
             <td>{{servicio.descripcion}}</td>
-            <td>{{servicio.tiempoEstandar}} minutos</td>
+            <td>{{servicio.tiempoEstandar*servicio.cantidad*60 | formatTime}}</td>
             <td>{{servicio.estado}}</td>
             <td>
 

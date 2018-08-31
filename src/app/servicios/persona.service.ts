@@ -45,7 +45,7 @@ export class PersonaService {
 
   obtenerPersonas() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('personas').snapshotChanges().pipe(
+    return this.empresa.collection('personas', query=>query.orderBy('nombre')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;

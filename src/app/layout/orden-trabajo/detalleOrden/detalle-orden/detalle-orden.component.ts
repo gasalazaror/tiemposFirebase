@@ -86,14 +86,16 @@ export class DetalleOrdenComponent implements OnInit {
   calcularEstadisticas(index) {
     //tiempo estandar
     const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
-    const tiempoEstandarSec = this.servicios[index].tiempoEstandar * 60
+    const tiempoEstandarSec = (this.servicios[index].tiempoEstandar * 60)*this.servicios[index].cantidad
+
+    console.log(tiempoEstandarSec)
     //leadtim
     var fecha1 = moment(this.servicios[index].horaInicio.seconds, 'X');
     var fecha2 = moment(this.servicios[index].horaFin.seconds, 'X');
     var diff = fecha2.diff(fecha1, 's');
     var lead = fecha2.diff(fecha1, 's')
     const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
-
+    console.log(lead)
     //pausas
 
     var pausas = 0
@@ -114,6 +116,7 @@ export class DetalleOrdenComponent implements OnInit {
 
     }
 
+    console.log(pausas)
     const pausasTime = moment.utc(pausas * 1000).format('HH:mm:ss');
 
 
@@ -123,8 +126,10 @@ export class DetalleOrdenComponent implements OnInit {
     const real = lead - pausas
     var tiempoReal = moment.utc(real * 1000).format('HH:mm:ss');
 
-
+    console.log(real)
     const eficiencia = (((this.servicios[index].tiempoEstandar * 60) / real) * 100).toFixed(2)
+
+    console.log(eficiencia)
 
     return {
       eficiencia: eficiencia,
@@ -139,31 +144,16 @@ export class DetalleOrdenComponent implements OnInit {
 
 
   finalizarServicio(index) {
-
-
-
     const confirmacion = confirm("¿Está seguro que desea finalizar la tarea seleccionada?")
     if (confirmacion) {
       this.servicios[index].estado = 'POR FACTURAR'
       this.servicios[index].horaFin = new Date()
-
-
       this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res => {
-
         this.servicios[index].estadisticas = this.calcularEstadisticas(index)
         this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
       })
-
-
-
-
     } else {
-
     }
-
-
-
-
   }
 
   open(content, index) {

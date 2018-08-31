@@ -4,6 +4,7 @@ import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { Observable } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import swal from 'sweetalert2'
 
 
 
@@ -65,22 +66,31 @@ export class ConsultarVehiculoComponent implements OnInit {
   }
 
 
+ 
+
   eliminarVehiculo(vehiculo) {
- console.log(vehiculo)
-    var confirmacion = confirm("¿Está seguro que desea eliminar al vehículo: "+vehiculo.data.placa)
+    swal({
+      title: 'Está seguro?',
+      text: "¿Está seguro que desea eliminar el vehículo: "+vehiculo.data.placa+"?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+    this.vehiculoService.eliminarVehiculo(vehiculo.id).then(res=>{
+      swal(
+        'Eliminado!',
+        'El registro ha sido eliminado.',
+        'success'
+      )
+    })
+       
+      }
+    })
 
-    if (confirmacion) {
-
-
-      this.vehiculoService.eliminarVehiculo(vehiculo.id).then(vehiculo=>{
-    
-        alert('Vehículo eliminado correctamente')
-      },err=>{
-        alert('Existió un error al eliminar el vehículo')
-      })
-    } else {
-      
-    }
   }
 
 }

@@ -57,15 +57,7 @@
                 <td>{{ tiempoEstandar*60 | formatTime }}</td>
               </tr>
 
-              <tr>
-                <th>Tiempo Real</th>
-                <td>{{ tiempoReal | formatTime }}</td>
-              </tr>
-
-              <tr>
-                <th>Eficiencia</th>
-                <td>{{ ((tiempoEstandar*60)/tiempoReal).toFixed(2) }}%</td>
-              </tr>
+             
             </tbody>
           </table>
         </div>
@@ -90,10 +82,11 @@
               <thead>
                 <tr>
                   <th>Acciones</th>
+                  <th>Cantidad</th>
                   <th>Código</th>
                   <th>Servicio</th>
 
-                  <th>T.E. (min)</th>
+                  <th>T.E.</th>
                   <th>Estado</th>
                   <th>Operador asignado</th>
 
@@ -122,10 +115,11 @@
                       <i class="fa fa-eye"></i>
                     </button>
                   </td>
+                  <td>{{servicio.cantidad}}</td>
                   <td>{{servicio.codigo}}</td>
                   <td>{{servicio.descripcion}}</td>
 
-                  <td>{{servicio.tiempoEstandar*60 | formatTime}}</td>
+                  <td>{{servicio.tiempoEstandar*60*servicio.cantidad | formatTime}}</td>
                   <td>
                     {{servicio.estado}}
                     <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
@@ -154,6 +148,7 @@
             <table id="example-datatable" class="table table-bordered table-responsive-sm table-sm">
               <thead>
                 <tr>
+                  <th>Cantidad</th>
                   <th>Código</th>
                   <th>Servicio</th>
                   <th>Operador</th>
@@ -168,6 +163,7 @@
                 <ng-container *ngFor="let servicio of servicios ">
                   <tr *ngIf="servicio.estado=='POR FACTURAR'" [class.table-success]="servicio.eficiencia>=100" [class.table-warning]="servicio.eficiencia>=80 && servicio.eficiencia<100"
                     [class.table-danger]="servicio.eficiencia<80">
+                   <td>{{servicio.cantidad}}</td>
                     <td>
                       {{servicio.codigo}}
                     </td>

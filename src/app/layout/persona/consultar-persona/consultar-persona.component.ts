@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PersonaService } from '../../../servicios/persona.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import swal from 'sweetalert2'
 
 @Component({
   selector: 'app-consultar-persona',
@@ -86,18 +87,36 @@ export class ConsultarPersonaComponent implements  OnInit {
     };
   }
 
-  eliminarPersona(persona) {
-    console.log(persona)
-    var confirmacion = confirm("¿Está seguro que desea eliminar a la persona: "+persona.data.nombre)
+ 
 
-    if (confirmacion) {
-      this.personaService.eliminarPersona(persona.id).then(persona=>{
-        alert('Persona eliminada correctamente')
-      },err=>{
-        alert('Existió un error al eliminar a la persona')
-      })
-    } else {
-      
-    }
+
+  eliminarPersona(persona) {
+
+
+    swal({
+      title: 'Está seguro?',
+      text: "¿Está seguro que desea eliminar la persona: "+persona.data.nombre+"?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        
+    this.personaService.eliminarPersona(persona.id).then(res=>{
+
+      swal(
+        'Eliminado!',
+        'El registro ha sido eliminado.',
+        'success'
+      )
+    })
+       
+      }
+    })
+
   }
 }

@@ -14,7 +14,7 @@
                 <th>Código</th>
                 <th>Servicio</th>
                 <th>Tiempo estandar</th>
-                <th>Categoría</th>
+            
               </tr>
             </thead>
             <tbody>
@@ -23,17 +23,17 @@
                 <td>
                   <div class="btn-group">
                       <a  href="/vehiculo/crearvehiculo/{{servicio.id}}" class="btn btn-primary btn-sm disabled"><i class="fa fa-pencil"></i></a>
-                      <button disabled class="btn btn-danger btn-sm" (click)="eliminarVehiculo(servicio)"><i class="fa fa-trash"></i></button>
+                      <button  class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio)"><i class="fa fa-trash"></i></button>
                   </div>
                    
                 </td>
             
-                <td>{{servicio.data.codigo | uppercase}}</td>
+                <td>{{servicio.data.codigo}}</td>
                 <td>
-                    {{servicio.data.descripcion | uppercase}}
+                    {{servicio.data.descripcion}}
                 </td>
-                <td>{{servicio.data.tiempoEstandar}} minutos</td>
-                <td></td>
+                <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>
+            
 
               </tr>
 

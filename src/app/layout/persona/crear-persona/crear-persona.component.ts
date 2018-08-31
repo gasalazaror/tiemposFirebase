@@ -107,7 +107,7 @@ export class CrearPersonaComponent implements OnInit {
               this.personaService.comprobar('cedula', this.personaForm.value.cedula)
                 .subscribe(res => {
                   if (res.length > 0) {
-
+                    swal( 'Existió un error','El número de cédula ingresado ya existen en la base de datos', 'error');
                    
                   } else {
                     swal( 'Listo!','Persona guardada exitosamente', 'success');

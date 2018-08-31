@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ServicioService } from '../../../servicios/servicio/servicio.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import swal from 'sweetalert2'
 
 
 @Component({
@@ -49,20 +50,50 @@ export class ConsultarServicioComponent implements OnInit {
 
   constructor(private servicioService: ServicioService) {
     this.obtenerServicios()
-   }
+  }
 
   ngOnInit() {
 
   }
 
   obtenerServicios() {
-  
+
     this.servicios = this.servicioService.obtenerServicios()
 
     this.servicios.subscribe(res => {
       $('#example-datatable').DataTable().destroy();
       this.dtTrigger.next();
     })
+  }
+
+  eliminarServicio(servicio) {
+
+
+    swal({
+      title: 'Está seguro?',
+      text: "¿Está seguro que desea eliminar el servicio: "+servicio.data.descripcion+"?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        
+    this.servicioService.eliminarServicio(servicio).then(res=>{
+
+      swal(
+        'Eliminado!',
+        'El registro ha sido eliminado.',
+        'success'
+      )
+    })
+       
+      }
+    })
+
   }
 
 }

@@ -33,8 +33,9 @@ import { FormatTimePipe } from '../../pipes/format-time.pipe';
     PersonaModule,
     VehiculoModule,
     ServicioModule,
-    DataTablesModule
+    DataTablesModule,
+    ServicioModule
   ],
-  declarations: [CrearOrdenComponent,FormatTimePipe, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent]
+  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent]
 })
 export class OrdenTrabajoModule { }
