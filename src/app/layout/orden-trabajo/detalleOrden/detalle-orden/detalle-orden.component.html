@@ -52,10 +52,7 @@
                 <td>{{finalizadas}} de {{ servicios.length }}</td>
               </tr>
 
-              <tr>
-                <th>Tiempo estandar</th>
-                <td>{{ tiempoEstandar*60 | formatTime }}</td>
-              </tr>
+             
 
              
             </tbody>
@@ -152,7 +149,7 @@
                   <th>Código</th>
                   <th>Servicio</th>
                   <th>Operador</th>
-                  <th>Tiempo Estandar</th>
+                  <th>Tiempo Estándar</th>
                   <th>Lead Time</th>
                   <th>Tiempo Real</th>
                   <th>Eficiencia</th>
@@ -177,10 +174,10 @@
                       {{servicio.estadisticas.tiempoEstandar | formatTime}}
                     </td>
                     <td>
-                      {{servicio.estadisticas.leadTime}}
+                      {{servicio.estadisticas.leadTime | formatTime}}
                     </td>
                     <td>
-                      {{servicio.estadisticas.tiempoReal}}
+                      {{servicio.estadisticas.tiempoReal | formatTime}}
                     </td>
                     <td>
                       {{servicio.estadisticas.eficiencia}}%
@@ -275,7 +272,7 @@
               <table class="table table-bordered table-sm">
 
                 <tr>
-                  <th>Tiempo estandar</th>
+                  <th>Tiempo estándar</th>
                   <td>{{ servicioSeleccionado.estadisticas.tiempoEstandar | formatTime}}</td>
                 </tr>
                 <tr>

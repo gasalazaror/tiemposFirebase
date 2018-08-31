@@ -54,17 +54,10 @@ export class DetalleOrdenComponent implements OnInit {
       this.servicios.forEach(element => {
 
 
-        if (element.estado == 'POR FACTURAR') {
-          this.finalizadas++
-          this.tiempoReal += element.estadisticas.tiempoReal
-
-        } else {
-
-        }
-        this.tiempoEstandar += element.tiempoEstandar
+       
 
       });
-      this.tiempoEstandarFor = moment.utc((this.tiempoEstandar * 60) * 1000).format('HH:mm:ss');
+
 
 
     })
@@ -106,6 +99,9 @@ export class DetalleOrdenComponent implements OnInit {
   }
 
   calcularEstadisticas(index) {
+    console.log('ESTADISTICAS')
+    console.log(this.servicios[index])
+
     //tiempo estandar
     const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
     const tiempoEstandarSec = (this.servicios[index].tiempoEstandar * 60) * this.servicios[index].cantidad
@@ -181,6 +177,7 @@ export class DetalleOrdenComponent implements OnInit {
         this.servicios[index].estado = 'POR FACTURAR'
       this.servicios[index].horaFin = new Date()
       this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res => {
+
         this.servicios[index].estadisticas = this.calcularEstadisticas(index)
         this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res=>{
           swal(
@@ -189,6 +186,7 @@ export class DetalleOrdenComponent implements OnInit {
             'success'
           )
         })
+        
       })
 
       }
