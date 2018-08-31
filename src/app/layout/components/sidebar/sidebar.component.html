@@ -94,12 +94,6 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a class="nounderline" [routerLink]="['/orden/operaciones']" [routerLinkActive]="['router-link-active']">
-                            <i class="fa fa-monument"></i>&nbsp;
-                            <span>Operaciones</span>
-                        </a>
-                    </li>
 
                   
                 </ul>
@@ -200,6 +194,6 @@
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
-        <span>{{ 'Collapse Sidebar' | translate }}</span>
+        <span>Ocultar Menú</span>
     </div>
 </nav>

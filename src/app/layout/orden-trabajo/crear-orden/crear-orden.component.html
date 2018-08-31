@@ -4,7 +4,9 @@
   <div class="row">
     <div class="col-md-12">
 
-      <h5>Orden de trabajo: {{numeroOrden}}</h5>
+      <hr>
+      <h5>OT-{{numeroOrden | anadirCeros:5}}</h5>
+      <hr>
       <div class="row">
         <div class="col-md-6">
           <div class="card">
@@ -129,7 +131,7 @@
                   bindLabel="data.descripcion" formControlName="servicio">
                 </ng-select>
               </form>
-              <button class="btn btn-primary" (click)="open(contentServicio)">
+              <button class="btn btn-white btn-sm" (click)="open(contentServicio)">
                 <i class="fa fa-plus"></i>
               </button>
 
@@ -156,22 +158,22 @@
             <tbody>
               <tr *ngFor="let servicio of serviciosSeleccionados;let i = index">
                 <td>
-                  <button [disabled]="servicio.data.estado!='CITA/RECEPCION'" (click)="eliminarServicio(i)" type="button" class="btn btn-danger btn-sm">
+                  <button [disabled]="servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="eliminarServicio(i)" type="button" class="btn btn-danger btn-sm">
                     <i class="fa fa-trash"></i>
                   </button>
                 </td>
-                <td *ngIf="servicio.data"><input [disabled]="servicio.data.estado!='CITA/RECEPCION'" style="max-width: 60px" class="form-control" type="number" min="1" [(ngModel)]="servicio.data.cantidad"></td>
+                <td *ngIf="servicio.data"><input [disabled]="servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'" style="max-width: 60px" class="form-control" type="number" min="1" [(ngModel)]="servicio.data.cantidad"></td>
                 <td *ngIf="servicio.data">{{servicio.data.codigo}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.descripcion}}</td>
 
-                <td *ngIf="servicio.data">{{servicio.data.tiempoEstandar}} minutos</td>
+                <td *ngIf="servicio.data">{{servicio.data.tiempoEstandar*60 | formatTime}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.estado}}</td>
               </tr>
             </tbody>
           </table>
           <hr>
 
-          <button [disabled]="serviciosSeleccionados.length==0 || ClienteForm.persona=={} || VehiculoForm.vehiculo=={}" class="btn btn-primary"
+          <button  class="btn btn-primary"
             (click)="guardarOrden()">Guardar</button>
         </div>
       </div>

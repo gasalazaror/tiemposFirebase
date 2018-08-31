@@ -13,7 +13,7 @@
             <tbody>
               <tr>
                 <th>Número </th>
-                <td>{{ (orden | async)?.numero }}</td>
+                <td>OT-{{(orden | async)?.numero | anadirCeros:5}}</td>
               </tr>
               <tr>
                 <th>Fecha OT </th>
@@ -53,6 +53,7 @@
       <table class="table  table-responsive-sm">
         <thead>
           <tr>
+            <th></th>
             <th>Cantidad</th>
             <th>Código</th>
             <th>Servicio</th>
@@ -63,7 +64,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let servicio of servicios let index = index">
-              <td>{{servicio.cantidad}}</td>  
+            <td>
+              <button [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'" title="Guardar cambios" class="btn btn-sm btn-primary" (click)="seleccionarPersona(servicio, index)"><i class="fa fa-floppy-o "></i></button>
+            </td>
+            <td>{{servicio.cantidad}}</td>
             <td>{{servicio.codigo}}</td>
             <td>{{servicio.descripcion}}</td>
             <td>{{servicio.tiempoEstandar*servicio.cantidad*60 | formatTime}}</td>
@@ -72,10 +76,10 @@
 
               <div class="">
                 <div class="row">
-                    <ng-select class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 230px;" class="form-control"
-                      [items]="personas | async" bindLabel="data.nombre" (change)="seleccionarPersona(servicio, index)">
-                    </ng-select>
-                 
+                  <ng-select [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'"  class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 230px;" class="form-control"
+                    [items]="personas | async" bindLabel="data.nombre">
+                  </ng-select>
+
                 </div>
 
               </div>

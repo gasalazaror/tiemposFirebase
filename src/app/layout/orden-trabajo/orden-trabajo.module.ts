@@ -18,6 +18,7 @@ import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
 import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orden.component';
 import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
 import { FormatTimePipe } from '../../pipes/format-time.pipe';
+import { AnadirCerosPipe } from '../../pipes/anadir-ceros.pipe';
 
 
 
@@ -36,6 +37,6 @@ import { FormatTimePipe } from '../../pipes/format-time.pipe';
     DataTablesModule,
     ServicioModule
   ],
-  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent]
+  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent, AnadirCerosPipe]
 })
 export class OrdenTrabajoModule { }

@@ -108,7 +108,7 @@ export class CrearServicioComponent implements OnInit {
       swal('Existió un error', 'El servicio es obligatorio', 'error');
     }
     else if (this.servicioForm.value.tiempoEstandar <= 0) {
-      swal('Existió un error', 'El tiempo estándar no puede ser negativo', 'error');
+      swal('Existió un error', 'El tiempo estándar no puede ser negativo o nulo', 'error');
     } else {
       this.servicioService.validarServicio('codigo', this.servicioForm.value.codigo).subscribe(res => {
         if (res.length > 0) {

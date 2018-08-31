@@ -9,6 +9,7 @@ import { routerTransition } from '../../../../router.animations';
 import * as moment from 'moment';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import swal from 'sweetalert2'
 
 @Component({
   selector: 'app-detalle-orden',
@@ -20,13 +21,13 @@ export class DetalleOrdenComponent implements OnInit {
 
   id: any
   orden: Observable<any>;
-  tiempoEstandar:number =0;
-  tiempoEstandarFor:any;
+  tiempoEstandar: number = 0;
+  tiempoEstandarFor: any;
 
-  tiempoReal:number =0;
-  tiempoRealFor:any;
+  tiempoReal: number = 0;
+  tiempoRealFor: any;
 
-  finalizadas:number=0
+  finalizadas: number = 0
   servicios: any;
   newIndex: any
   closeResult: string;
@@ -51,19 +52,19 @@ export class DetalleOrdenComponent implements OnInit {
       this.finalizadas = 0
       this.tiempoReal = 0
       this.servicios.forEach(element => {
-        
 
-        if (element.estado=='POR FACTURAR') {
+
+        if (element.estado == 'POR FACTURAR') {
           this.finalizadas++
-          this.tiempoReal+= element.estadisticas.tiempoReal
-      
+          this.tiempoReal += element.estadisticas.tiempoReal
+
         } else {
-          
+
         }
         this.tiempoEstandar += element.tiempoEstandar
 
       });
-       this.tiempoEstandarFor = moment.utc((this.tiempoEstandar*60) * 1000).format('HH:mm:ss');
+      this.tiempoEstandarFor = moment.utc((this.tiempoEstandar * 60) * 1000).format('HH:mm:ss');
 
 
     })
@@ -74,19 +75,40 @@ export class DetalleOrdenComponent implements OnInit {
   }
 
   iniciarServicio(index) {
-    const confirmacion = confirm("¿Está seguro que desea iniciar la tarea seleccionada?")
-    if (confirmacion) {
-      this.servicios[index].estado = 'EN PRODUCCIÓN'
-      this.servicios[index].horaInicio = new Date()
-      this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
-    } else {
-    }
+
+    swal({
+      title: 'Está seguro?',
+      text: "Desea inicia la tarea seleccionada!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, iniciar!'
+    }).then((result) => {
+      if (result.value) {
+        this.servicios[index].estado = 'EN PRODUCCIÓN'
+        this.servicios[index].horaInicio = new Date()
+        this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
+          .then(res => {
+            swal(
+              'Listo!',
+              'La tarea ha sido iniciada',
+              'success'
+            )
+          })
+
+      }
+    })
+
+
+
   }
 
   calcularEstadisticas(index) {
     //tiempo estandar
     const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
-    const tiempoEstandarSec = (this.servicios[index].tiempoEstandar * 60)*this.servicios[index].cantidad
+    const tiempoEstandarSec = (this.servicios[index].tiempoEstandar * 60) * this.servicios[index].cantidad
 
     console.log(tiempoEstandarSec)
     //leadtim
@@ -144,16 +166,38 @@ export class DetalleOrdenComponent implements OnInit {
 
 
   finalizarServicio(index) {
-    const confirmacion = confirm("¿Está seguro que desea finalizar la tarea seleccionada?")
-    if (confirmacion) {
-      this.servicios[index].estado = 'POR FACTURAR'
+
+    swal({
+      title: 'Está seguro?',
+      text: "Desea finalizar la tarea seleccionada?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, finalizar!'
+    }).then((result) => {
+      if (result.value) {
+        this.servicios[index].estado = 'POR FACTURAR'
       this.servicios[index].horaFin = new Date()
       this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res => {
         this.servicios[index].estadisticas = this.calcularEstadisticas(index)
-        this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
+        this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res=>{
+          swal(
+            'Listo!',
+            'La tarea ha sido finalizada',
+            'success'
+          )
+        })
       })
-    } else {
-    }
+
+      }
+    })
+
+
+
+
+   
   }
 
   open(content, index) {
@@ -179,30 +223,82 @@ export class DetalleOrdenComponent implements OnInit {
   }
 
   pausar() {
+
+
+
+
     const id = this.db.createId()
 
     if (!this.servicios[this.newIndex].pausas) {
       this.servicios[this.newIndex].pausas = []
     }
-    this.servicios[this.newIndex].estado = 'EN PRODUCCIÓN - PAUSADO'
-    this.servicios[this.newIndex].pausaActual = id
-    this.servicios[this.newIndex].motivoPausa = this.pausa.motivo
-    this.servicios[this.newIndex].pausas.push({ horaInicio: new Date(), motivo: this.pausa, id: id })
-    this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
+
+
+    swal({
+      title: 'Está seguro?',
+      text: "Desea pausar la tarea seleccionada!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, pausar!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.servicios[this.newIndex].estado = 'EN PRODUCCIÓN - PAUSADO'
+        this.servicios[this.newIndex].pausaActual = id
+        this.servicios[this.newIndex].motivoPausa = this.pausa.motivo
+        this.servicios[this.newIndex].pausas.push({ horaInicio: new Date(), motivo: this.pausa, id: id })
+        this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
+          .then(res => {
+            swal(
+              'Listo!',
+              'La tarea ha sido pausada',
+              'success'
+            )
+          })
+
+      }
+    })
+
+
   }
 
   reanudarServicio(indice) {
 
-    const confirmacion = confirm("¿Está seguro que desea reanudar la tarea seleccionada?")
-    if (confirmacion) {
-      this.servicios[indice].estado = 'EN PRODUCCIÓN'
-      this.servicios[indice].pausas.forEach(pausa => {
-        if (pausa.id == this.servicios[indice].pausaActual) {
-          pausa.horaFin = new Date()
-        }
-      });
-      this.ordenService.modificarServicio(this.id, { servicios: this.servicios })
-    }
+
+    swal({
+      title: 'Está seguro?',
+      text: "Desea reanudar la tarea seleccionada?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, reanudar!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.servicios[indice].estado = 'EN PRODUCCIÓN'
+        this.servicios[indice].pausas.forEach(pausa => {
+          if (pausa.id == this.servicios[indice].pausaActual) {
+            pausa.horaFin = new Date()
+          }
+        });
+        this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res => {
+          swal(
+            'Listo!',
+            'La tarea ha sido reanudada',
+            'success'
+          )
+        })
+
+
+      }
+    })
+
+
 
   }
 

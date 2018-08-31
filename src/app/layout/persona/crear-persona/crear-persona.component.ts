@@ -102,38 +102,44 @@ export class CrearPersonaComponent implements OnInit {
             if (!this.validarEmail(this.personaForm.value.correo.trim())) {
               swal( 'Existió un error','El correo ingresado no tiene el formato correcto', 'error');
             } else {
-         
-              //validación si existe cédula
+              
+              if (!this.personaForm.value.cliente && !this.personaForm.value.empleado) {
+                swal( 'Existió un error','Debe seleccionar al menos un rol', 'error')
+              } else {
+                 //validación si existe cédula
               this.personaService.comprobar('cedula', this.personaForm.value.cedula)
-                .subscribe(res => {
-                  if (res.length > 0) {
-                    swal( 'Existió un error','El número de cédula ingresado ya existen en la base de datos', 'error');
-                   
-                  } else {
-                    swal( 'Listo!','Persona guardada exitosamente', 'success');
- 
-                    this.personaService.crearPersona(this.personaForm.value).then(res=>{
-                   
-                      this.personaForm = this.fb.group({
-                        estado: ['Activo', Validators.required],
-                        tipo: ['Natural', Validators.required],
-                        cedula: ['', [Validators.required]],
-                        nombre: ['', [Validators.required]],
-                        direccion: ['', []],
-                        telefono: ['', []],
-                        correo: ['', [Validators.required, Validators.email]],
-                        cliente: [false],
-                        empleado: [false],
-                        roles: { Administrador: false, Asesor: false, Operador: false }
-                      })
-                    })
-             
-            
-                   
-                  }
-                }, error => {
+              .subscribe(res => {
+                if (res.length > 0) {
+                  swal( 'Existió un error','El número de cédula ingresado ya existen en la base de datos', 'error');
+                 
+                } else {
+                  
 
-                })
+                  this.personaService.crearPersona(this.personaForm.value).then(res=>{
+                    swal( 'Listo!','Persona guardada exitosamente', 'success');
+                    this.personaForm = this.fb.group({
+                      estado: ['Activo', Validators.required],
+                      tipo: ['Natural', Validators.required],
+                      cedula: ['', [Validators.required]],
+                      nombre: ['', [Validators.required]],
+                      direccion: ['', []],
+                      telefono: ['', []],
+                      correo: ['', [Validators.required, Validators.email]],
+                      cliente: [false],
+                      empleado: [false],
+                      roles: { Administrador: false, Asesor: false, Operador: false }
+                    })
+                  })
+           
+          
+                 
+                }
+              }, error => {
+
+              })
+                
+              }
+             
             }
           }
         }
@@ -162,14 +168,20 @@ export class CrearPersonaComponent implements OnInit {
               swal( 'Existió un error','El correo ingresado no tiene el formato correcto', 'error');
         
             } else {
+
+              if(!this.personaForm.value.cliente && !this.personaForm.value.empleado){
+                swal( 'Existió un error','Debe seleccionar al menos un rol', 'error')
+              }else{
+                this.personaService.modificarPersona(this.id, this.personaForm.value).then(persona => {
+            
+                  swal( 'Listo!','Persona modificada exitosamente', 'success');
+                }, error => {
+                  swal( 'Existió un error','Existió un error al modificar la persona', 'error');
+                })
+              }
          
         
-              this.personaService.modificarPersona(this.id, this.personaForm.value).then(persona => {
-            
-                swal( 'Listo!','Persona modificada exitosamente', 'success');
-              }, error => {
-                swal( 'Existió un error','Existió un error al modificar la persona', 'error');
-              })
+              
             }
           }
         }

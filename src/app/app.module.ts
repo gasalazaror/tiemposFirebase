@@ -18,6 +18,7 @@ import { FormatTimePipe } from './pipes/format-time.pipe';
 
 
 
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development

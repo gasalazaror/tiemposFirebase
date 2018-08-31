@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { OrdenService } from '../../../servicios/orden/orden.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import swal from 'sweetalert2'
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 @Component({
   selector: 'app-consultar-orden',
@@ -47,7 +50,9 @@ export class ConsultarOrdenComponent implements OnInit {
   ordenes: Observable<any[]>;
 
 
-  constructor(private ordenService: OrdenService) { }
+  constructor(private ordenService: OrdenService, private aFaut: AngularFireAuth) {
+    
+   }
 
   ngOnInit() {
     this.obtenerOrdenes()
@@ -58,6 +63,8 @@ export class ConsultarOrdenComponent implements OnInit {
     this.ordenes =this.ordenService.obtenerOrdenes();
 
     this.ordenes.subscribe(res=>{
+      console.log(res)
+      
       $('#example-datatable').DataTable().destroy();
       this.dtTrigger.next();
     })
@@ -65,13 +72,33 @@ export class ConsultarOrdenComponent implements OnInit {
   }
 
   eliminarOrden(orden){
-   const confirmacion = confirm("¿Está seguro que desea eliminar la orden seleccionada")
-   if (confirmacion) {
-     this.ordenService.eliminarOrden(orden.id)
-     alert('Orden eliminada correctamente')
-   } else {
-     
-   }
+    swal({
+      title: 'Está seguro?',
+      text: "Está seguro que desea eliminar la orden seleccionada",
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.ordenService.eliminarOrden(orden.id).then(res=>{
+        
+          swal(
+            'Listo!',
+            'Orden de trabajo eliminada correctamente.',
+            'success'
+          )
+        })
+       
+       
+      }
+    })
+
+
+ 
   }
 
 }

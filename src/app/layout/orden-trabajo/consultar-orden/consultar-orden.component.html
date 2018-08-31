@@ -12,12 +12,13 @@
             <thead>
               <tr>
                 <th></th>
-                <th>No.</th>
+                <th>No. OT</th>
                 <th>Fecha OT</th>
                 <th>Hora</th>
                 <th>ID Cliente</th>
                 <th>Nombre del cliente</th>
-                <th>Vehículo</th>
+                <th>ID/Placa</th>
+     
 
               </tr>
             </thead>
@@ -25,23 +26,26 @@
               <tr *ngFor="let orden of ordenes | async">
                 <td>
                   <div class="btn-group">
-                    <a href="/orden/crearorden/{{orden.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                    <button  class="btn btn-danger btn-sm" (click)="eliminarOrden(orden)"><i class="fa fa-trash"></i></button>
+                    <a title="Editar Orden de trabajo" href="/orden/crearorden/{{orden.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                    <button title="Eliminar orden de trabajo"  class="btn btn-danger btn-sm" (click)="eliminarOrden(orden)"><i class="fa fa-trash"></i></button>
+                    <a title="Operaciones" href="/orden/detalleorden/{{orden.id}}" class="btn btn-success btn-sm"><i class="fa fa-clock-o"></i></a>
                   </div>
 
                 </td>
 
 
-                <td><a href="/orden/informacionorden/{{orden.id}}">Orden de trabajo No. {{orden.data.numero}}</a></td>
+                <td><a href="/orden/informacionorden/{{orden.id}}">OT-{{orden.data.numero | anadirCeros:5}}</a></td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>
                 <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>
                 <td>{{orden.data.cliente.cedula}}</td>
                 <td>{{orden.data.cliente.nombre}}</td>
 
                 <td>
-                  {{orden.data.vehiculo.placa}} - {{orden.data.vehiculo.marca}} - {{orden.data.vehiculo.modelo}}
+                  {{orden.data.vehiculo.placa}}
 
                 </td>
+
+                
 
 
 

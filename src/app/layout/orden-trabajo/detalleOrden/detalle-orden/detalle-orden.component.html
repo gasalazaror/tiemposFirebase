@@ -12,8 +12,8 @@
 
             <tbody>
               <tr>
-                <th>Número </th>
-                <td>{{ (orden | async)?.numero }}</td>
+                <th>No. OT </th>
+                <td>OT-{{(orden | async)?.numero | anadirCeros:5}}</td>
               </tr>
 
 
@@ -95,19 +95,19 @@
               <tbody>
                 <tr *ngFor="let servicio of servicios let index = index">
                   <td>
-                    <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-primary btn-sm">
+                    <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm" title="Iniciar">
                       <i class="fa fa-play"></i>
 
                     </button>
 
-                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-primary btn-sm">
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-warning btn-sm" title="Pausar">
                       <i class="fa fa-pause"></i>
                     </button>
 
-                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" class="btn btn-primary btn-sm">
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" title="Detener" class="btn btn-danger btn-sm">
                       <i class="fa fa-stop"></i>
                     </button>
-                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-primary btn-sm">
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-success btn-sm text-white" title="Reanudar">
                       <i class="fa fa-play"></i>
                     </button>
 

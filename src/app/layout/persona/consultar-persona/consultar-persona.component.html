@@ -26,15 +26,15 @@
               <tr *ngFor="let persona of personas | async">
                 <td>
                   <div class="btn-group">
-                      <a href="/persona/crearpersona/{{persona.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                      <button class="btn btn-danger btn-sm" (click)="eliminarPersona(persona)"><i class="fa fa-trash"></i></button>
+                      <a title="Editar persona" href="/persona/crearpersona/{{persona.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                      <button title="Eliminar persona" class="btn btn-danger btn-sm" (click)="eliminarPersona(persona)"><i class="fa fa-trash"></i></button>
                   </div>
                   
                 </td>
-                <td>{{persona.data.tipo | uppercase}}</td>
-                <td>{{persona.data.cedula | uppercase}}</td>
-                <td><a href="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre | uppercase}}</a></td>
-                <td>{{persona.data.direccion | uppercase}}</td>
+                <td>{{persona.data.tipo}}</td>
+                <td>{{persona.data.cedula }}</td>
+                <td><a href="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre}}</a></td>
+                <td>{{persona.data.direccion}}</td>
                 <td>{{persona.data.correo }}</td>
                 <td>{{persona.data.telefono}}</td>
                 <td>

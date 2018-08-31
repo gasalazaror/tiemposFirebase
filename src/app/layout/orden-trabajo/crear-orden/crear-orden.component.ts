@@ -9,6 +9,7 @@ import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { ServicioService } from '../../../servicios/servicio/servicio.service';
 import { OrdenService } from '../../../servicios/orden/orden.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert2'
 
 @Component({
   selector: 'app-crear-orden',
@@ -92,9 +93,12 @@ export class CrearOrdenComponent implements OnInit {
 
     this.vehiculos = this.vehiculoService.obtenerVehiculos()
   
-
+ 
 
   }
+
+  
+
 
   ngOnInit() {
     this.obtenerPersonas()
@@ -110,7 +114,7 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   seleccionarPersona() {
-    console.log(this.ClienteForm.value.persona)
+  
     this.personaSeleccionada = this.ClienteForm.value.persona
     // this.VehiculoForm = this.fb.group({
     //   vehiculo: [{}, Validators.required]
@@ -129,103 +133,155 @@ export class CrearOrdenComponent implements OnInit {
 
   guardarOrden() {
 
-    if (this.id=='nuevo') {
-      var confirmacion = confirm("¿Está seguro que desea guardar la orden");
-      if (confirmacion) {
-        var vehiculo = {
-          placa: this.vehiculoSeleccionado.data.placa,
-          marca: this.vehiculoSeleccionado.data.marca,
-          modelo: this.vehiculoSeleccionado.data.modelo,
-          color: this.vehiculoSeleccionado.data.color,
-          numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
-          numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
-        }
-  
-        var cliente = {
-          cedula: this.personaSeleccionada.data.cedula,
-          nombre: this.personaSeleccionada.data.nombre,
-          direccion: this.personaSeleccionada.data.direccion,
-          telefono: this.personaSeleccionada.data.telefono,
-          correo: this.personaSeleccionada.data.correo
-        }
-  
-        var servicios = []
-  
-        this.serviciosSeleccionados.forEach(servicio => {
-          if(!servicio.data.operador){
-            servicio.data.operador = {id:'', data:{}}
-          }
-          servicios.push({cantidad: servicio.data.cantidad,operador: servicio.data.operador, codigo: servicio.data.codigo,estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
-        });
-  
-  
-        var orden = {
-          numero: this.numeroOrden,
-          cliente: cliente,
-          vehiculo: vehiculo,
-          servicios: servicios,
-          fecha: new Date()
-        }
-        const id = this.ordenService.crearOrden(orden, servicios)
-  
-        this.reiniciar()
-  
-        this.router.navigate(['/orden/informacionorden/' + id]);
-  
-  
-  
-      }
-    } else {
+    if (!this.personaSeleccionada) {
+      swal('Existió un error!', 'Debe seleccionar un cliente', 'error')
+    
+    } else if(!this.vehiculoSeleccionado){
+      swal('Existió un error!', 'Debe seleccionar un vehículo', 'error')
+    }else if(this.serviciosSeleccionados.length<=0){
+      swal('Existió un error!', 'Debe seleccionar al menos un servicio', 'error')
+    }else{
+      if (this.id=='nuevo') {
 
-      var confirmacion = confirm("¿Está seguro que desea modificar la orden");
-      if (confirmacion) {
-        var vehiculo = {
-          placa: this.vehiculoSeleccionado.data.placa,
-          marca: this.vehiculoSeleccionado.data.marca,
-          modelo: this.vehiculoSeleccionado.data.modelo,
-          color: this.vehiculoSeleccionado.data.color,
-          numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
-          numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
-        }
-  
-        var cliente = {
-          cedula: this.personaSeleccionada.data.cedula,
-          nombre: this.personaSeleccionada.data.nombre,
-          direccion: this.personaSeleccionada.data.direccion,
-          telefono: this.personaSeleccionada.data.telefono,
-          correo: this.personaSeleccionada.data.correo
-        }
-  
-        var servicios = []
-
-        console.log(this.serviciosSeleccionados)
-  
-        this.serviciosSeleccionados.forEach(servicio => {
-          if(!servicio.data.operador){
-            servicio.data.operador = {id:'', data:{}}
+        swal({
+          title: 'Está seguro?',
+          text: "Está seguro que desea guardar la Orden de Trabajo",
+          type: 'question',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, guardar!'
+        }).then((result) => {
+          if (result.value) {
+     var vehiculo = {
+            placa: this.vehiculoSeleccionado.data.placa,
+            marca: this.vehiculoSeleccionado.data.marca,
+            modelo: this.vehiculoSeleccionado.data.modelo,
+            color: this.vehiculoSeleccionado.data.color,
+            numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
+            numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
           }
-          servicios.push(servicio.data)
-        });
+    
+          var cliente = {
+            cedula: this.personaSeleccionada.data.cedula,
+            nombre: this.personaSeleccionada.data.nombre,
+            direccion: this.personaSeleccionada.data.direccion,
+            telefono: this.personaSeleccionada.data.telefono,
+            correo: this.personaSeleccionada.data.correo
+          }
+    
+          var servicios = []
+    
+          this.serviciosSeleccionados.forEach(servicio => {
+            if(!servicio.data.operador){
+              servicio.data.operador = {id:'', data:{}}
+            }
+            servicios.push({cantidad: servicio.data.cantidad,operador: servicio.data.operador, codigo: servicio.data.codigo,estado: servicio.data.estado, descripcion: servicio.data.descripcion, detalle: servicio.data.detalle, tiempoEstandar: servicio.data.tiempoEstandar})
+          });
+    
+    
+          var orden = {
+            numero: this.numeroOrden,
+            cliente: cliente,
+            vehiculo: vehiculo,
+            servicios: servicios,
+            fecha: new Date()
+          }
+          const id = this.ordenService.crearOrden(orden, servicios)
+    
+          this.reiniciar()
+          swal(
+            'Listo!',
+            'Orden de Trabajo creada exitosamente.',
+            'success'
+          )
+    
+          this.router.navigate(['/orden/informacionorden/' + id]);
+    
+    
+          
+           
+           
+          }
+        })
+
+
+
+      } else {
+
+
+        swal({
+          title: 'Está seguro?',
+          text: "Está seguro que desea modifica la Orden de Trabajo",
+          type: 'question',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar!'
+        }).then((result) => {
+          if (result.value) {
+            var vehiculo = {
+              placa: this.vehiculoSeleccionado.data.placa,
+              marca: this.vehiculoSeleccionado.data.marca,
+              modelo: this.vehiculoSeleccionado.data.modelo,
+              color: this.vehiculoSeleccionado.data.color,
+              numeroMotor: this.vehiculoSeleccionado.data.numeroMotor,
+              numeroChasis: this.vehiculoSeleccionado.data.numeroChasis
+            }
+      
+            var cliente = {
+              cedula: this.personaSeleccionada.data.cedula,
+              nombre: this.personaSeleccionada.data.nombre,
+              direccion: this.personaSeleccionada.data.direccion,
+              telefono: this.personaSeleccionada.data.telefono,
+              correo: this.personaSeleccionada.data.correo
+            }
+      
+            var servicios = []
+    
+            console.log(this.serviciosSeleccionados)
+      
+            this.serviciosSeleccionados.forEach(servicio => {
+              if(!servicio.data.operador){
+                servicio.data.operador = {id:'', data:{}}
+              }
+              servicios.push(servicio.data)
+            });
+      
+      
+            var orden = {
+              numero: this.numeroOrden,
+              cliente: cliente,
+              vehiculo: vehiculo,
+              servicios: servicios,
+              fecha: new Date()
+            }
+         this.ordenService.modificarOrden(this.id, orden)
+      
+            this.reiniciar()
+
+            swal(
+              'Listo!',
+              'Orden de Trabajo modificada exitosamente.',
+              'success'
+            )
+      
+            this.router.navigate(['/orden/informacionorden/' + this.id]);
+      
+            
+           
+           
+          }
+        })
   
-  
-        var orden = {
-          numero: this.numeroOrden,
-          cliente: cliente,
-          vehiculo: vehiculo,
-          servicios: servicios,
-          fecha: new Date()
-        }
-     this.ordenService.modificarOrden(this.id, orden)
-  
-        this.reiniciar()
-  
-        this.router.navigate(['/orden/informacionorden/' + this.id]);
-  
-  
-  
+       
       }
+  
     }
 
+   
 
 
   }
@@ -248,13 +304,28 @@ export class CrearOrdenComponent implements OnInit {
 
   eliminarServicio(indice): void {
 
-    const confirmacion = confirm('¿Está seguro que desea eliminar el servicio seleccionado?')
+    swal({
+      title: 'Esta seguro?',
+      text: "Está seguro que desea eliminar el servicio seleccionado",
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.value) {
+        this.serviciosSeleccionados.splice(indice, 1)
+        swal(
+          'Listo!',
+          'Servicio eliminado correctamente',
+          'success'
+        )
+      }
+    })
 
-    if (confirmacion) {
-      this.serviciosSeleccionados.splice(indice, 1)
-    } else {
-      
-    }
+   
+    
    
   }
 
