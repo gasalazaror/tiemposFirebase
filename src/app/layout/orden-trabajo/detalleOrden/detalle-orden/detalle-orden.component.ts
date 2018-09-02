@@ -53,6 +53,11 @@ export class DetalleOrdenComponent implements OnInit {
       this.tiempoReal = 0
       this.servicios.forEach(element => {
 
+        this.tiempoEstandar+= element.tiempoEstandar*element.cantidad*60
+        if(element.estado=="POR FACTURAR"){
+          
+          this.finalizadas++;
+        }
 
        
 
@@ -71,7 +76,7 @@ export class DetalleOrdenComponent implements OnInit {
 
     swal({
       title: 'Está seguro?',
-      text: "Desea inicia la tarea seleccionada!",
+      text: "Desea inicia la operación seleccionada!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -86,7 +91,7 @@ export class DetalleOrdenComponent implements OnInit {
           .then(res => {
             swal(
               'Listo!',
-              'La tarea ha sido iniciada',
+              'La operación ha sido iniciada',
               'success'
             )
           })
@@ -106,37 +111,26 @@ export class DetalleOrdenComponent implements OnInit {
     const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
     const tiempoEstandarSec = (this.servicios[index].tiempoEstandar * 60) * this.servicios[index].cantidad
 
-    console.log(tiempoEstandarSec)
+
     //leadtim
     var fecha1 = moment(this.servicios[index].horaInicio.seconds, 'X');
     var fecha2 = moment(this.servicios[index].horaFin.seconds, 'X');
     var diff = fecha2.diff(fecha1, 's');
     var lead = fecha2.diff(fecha1, 's')
     const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
-    console.log(lead)
+
     //pausas
 
     var pausas = 0
 
     if (this.servicios[index].pausas) {
-
-
       this.servicios[index].pausas.forEach(pausa => {
-
         var fecha1 = moment(pausa.horaInicio.seconds, 'X');
         var fecha2 = moment(pausa.horaFin.seconds, 'X');
         var diff2 = fecha2.diff(fecha1, 's');
         pausas += diff2
-
       });
-
-    } else {
-
-    }
-
-    console.log(pausas)
-    const pausasTime = moment.utc(pausas * 1000).format('HH:mm:ss');
-
+    } 
 
 
 
@@ -145,7 +139,7 @@ export class DetalleOrdenComponent implements OnInit {
     var tiempoReal = moment.utc(real * 1000).format('HH:mm:ss');
 
     console.log(real)
-    const eficiencia = (((this.servicios[index].tiempoEstandar * 60) / real) * 100).toFixed(2)
+    const eficiencia = (((tiempoEstandarSec) / real) * 100).toFixed(2)
 
     console.log(eficiencia)
 
@@ -165,7 +159,7 @@ export class DetalleOrdenComponent implements OnInit {
 
     swal({
       title: 'Está seguro?',
-      text: "Desea finalizar la tarea seleccionada?",
+      text: "Desea finalizar la operación seleccionada?",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -182,7 +176,7 @@ export class DetalleOrdenComponent implements OnInit {
         this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res=>{
           swal(
             'Listo!',
-            'La tarea ha sido finalizada',
+            'La operación ha sido finalizada',
             'success'
           )
         })
@@ -234,7 +228,7 @@ export class DetalleOrdenComponent implements OnInit {
 
     swal({
       title: 'Está seguro?',
-      text: "Desea pausar la tarea seleccionada!",
+      text: "Desea pausar la operación seleccionada!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -252,7 +246,7 @@ export class DetalleOrdenComponent implements OnInit {
           .then(res => {
             swal(
               'Listo!',
-              'La tarea ha sido pausada',
+              'La operación ha sido pausada',
               'success'
             )
           })
@@ -268,7 +262,7 @@ export class DetalleOrdenComponent implements OnInit {
 
     swal({
       title: 'Está seguro?',
-      text: "Desea reanudar la tarea seleccionada?",
+      text: "Desea reanudar la operación seleccionada?",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -287,7 +281,7 @@ export class DetalleOrdenComponent implements OnInit {
         this.ordenService.modificarServicio(this.id, { servicios: this.servicios }).then(res => {
           swal(
             'Listo!',
-            'La tarea ha sido reanudada',
+            'La operación ha sido reanudada',
             'success'
           )
         })
