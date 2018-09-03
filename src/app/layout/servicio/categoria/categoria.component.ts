@@ -149,10 +149,10 @@ export class CategoriaComponent implements OnInit {
 
       if (result.value) {
 
-        var categoria = result.value.toUpperCase()
+        var categoria = result.value
         swal({
           title: 'Está seguro?',
-          text: "Está seguro que deseas guardar la categoría: " + result.value.toUpperCase(),
+          text: "Está seguro que deseas guardar la categoría: " + result.value,
           type: 'question',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
