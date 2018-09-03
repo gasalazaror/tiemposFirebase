@@ -8,7 +8,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <table class="table table-sm table-bordered">
+          <table class="table table-sm table-bordered" >
 
             <tbody>
               <tr>
@@ -26,13 +26,12 @@
               </tr>
 
               <tr>
-                <th>Nombre cliente</th>
+                <th>Nombre Cliente</th>
                 <td>{{ (orden | async)?.cliente.nombre }}</td>
               </tr>
               <tr>
-                <th>Vehículo</th>
-                <td>{{ (orden | async)?.vehiculo.placa }} - {{ (orden | async)?.vehiculo.marca }} - {{ (orden | async)?.vehiculo.modelo
-                  }}
+                <th>ID/Placa</th>
+                <td>{{ (orden | async)?.vehiculo.placa }}
                 </td>
               </tr>
 

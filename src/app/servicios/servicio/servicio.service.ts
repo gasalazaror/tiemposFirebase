@@ -15,8 +15,14 @@ export class ServicioService {
   }
 
   crearCategoria(categoria) {
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     const id = this.afs.createId();
     return this.empresa.collection('categorias').doc(id).set(categoria)
+  }
+
+  modificarCategoria(id, categoria) {
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('categorias').doc(id).update(categoria)
   }
 
   crearServicio(categoria, servicio) {
@@ -53,6 +59,11 @@ export class ServicioService {
     return this.empresa.collection('categorias', query=>query.where('nombre','==',categoria)).valueChanges()
   }
 
+  eliminarCategoria(idCategoria){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('categorias').doc(idCategoria).delete();
+  }
+
  
 
   obtenerServicios() {
@@ -67,6 +78,8 @@ export class ServicioService {
       }))
     );
   }
+
+ 
 
   crearVehiculo(persona, vehiculo) {
     const itemDoc = this.afs.doc('personas/' + persona)

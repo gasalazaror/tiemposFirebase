@@ -6,26 +6,25 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          Seleccionar categoría
+          Manejo de categorías y subcategorías
         </div>
         <div class="card-body">
           <div class="card">
             <div class="card-body">
               <div>
-                <p>Manejo de categorías y subcategorías</p>
+                <p>Seleccionar una categoría</p>
 
                 <div class="row">
                   <div class="col-md-12">
                     <ul class="list-inline border">
                       <li class="list-inline-item" *ngFor="let categoria of categorias | async">
-                        <button type="button" (click)="seleccionarCategoria(categoria)" class="btn btn-link">{{categoria.data.nombre}}</button>
+                        <button title="Seleccionar categoría" type="button" (click)="seleccionarCategoria(categoria)" class="btn btn-link">{{categoria.data.nombre}}</button>
                       </li>
                       <li class="list-inline-item">
-                        <button class="btn btn-default btn-sm" (click)=agregarCategoria()>
-                          <i class="fa fa-plus"></i> Agregar categoría
-                        </button>
+                   
                       </li>
                     </ul>
+                    <a href="/servicio/categorias" class="btn btn-sm btn-primary">Administrador de categorías</a>
                   </div>
                  
                 </div>
@@ -47,8 +46,7 @@
         
           <div class="btn-group">
               <h5 *ngIf="categoriaSeleccionada">
-                  <button class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
-                  <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+
                   <strong>Categoría: </strong>{{categoriaSeleccionada.data.nombre}}</h5>
 
                  
@@ -83,7 +81,7 @@
 
 
 
-            <button type="submit"  class="btn btn-primary mb-2">Guardar</button>
+            <button title="Guardar Servicio" type="submit"  class="btn btn-primary mb-2">Guardar Servicio</button>
           </form>
 
         </div>

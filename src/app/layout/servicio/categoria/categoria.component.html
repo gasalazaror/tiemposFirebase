@@ -1,0 +1,36 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Manejo de categorías'" [icon]="'fa-edit'"></app-page-header>
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header">Categorías</div>
+        <div class="card-body table-responsive">
+          <table id="example-datatable"  class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Categoría</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let categoria of categorias | async">
+                <td>
+                  <div class="btn-group">
+                    <button class="btn btn-primary btn-sm disabled" (click)="modificarCategoria(categoria)" > <i class="fa fa-pencil"></i> </button>
+                      <button title="Eliminar Servicio"  class="btn btn-danger btn-sm" (click)="eliminarCategoria(categoria)" (click)="eliminarServicio(categoria)"><i class="fa fa-trash"></i></button>
+                  </div>
+                </td>
+                <td>
+                    {{categoria.data.nombre}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <button class="btn btn-primary" (click)="agregarCategoria()"><i class="fa fa-plus"></i> Agregar elemento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

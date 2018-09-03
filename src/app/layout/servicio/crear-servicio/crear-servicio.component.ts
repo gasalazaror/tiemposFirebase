@@ -86,10 +86,6 @@ export class CrearServicioComponent implements OnInit {
         })
       }
     })
-
-
-
-
   }
 
   obtenerCategorias() {

@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 import { DataTablesModule } from 'angular-datatables';
 import { FormatTimePipe } from '../../pipes/format-time.pipe';
+import { CategoriaComponent } from './categoria/categoria.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,6 @@ import { FormatTimePipe } from '../../pipes/format-time.pipe';
     DataTablesModule
   ],
   exports: [CrearServicioComponent, FormatTimePipe],
-  declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent, FormatTimePipe]
+  declarations: [CrearServicioComponent, ConsultarServicioComponent, InformacionServicioComponent, FormatTimePipe, CategoriaComponent]
 })
 export class ServicioModule { }
