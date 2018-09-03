@@ -8,7 +8,7 @@ import { CategoriaComponent } from './categoria/categoria.component';
 
 const routes: Routes = [
   {
-    path: 'crearservicio',
+    path: 'crearservicio/:id',
     component: CrearServicioComponent
   },
   {

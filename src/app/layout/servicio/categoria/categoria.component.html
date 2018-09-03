@@ -16,8 +16,8 @@
               <tr *ngFor="let categoria of categorias | async">
                 <td>
                   <div class="btn-group">
-                    <button class="btn btn-primary btn-sm disabled" (click)="modificarCategoria(categoria)" > <i class="fa fa-pencil"></i> </button>
-                      <button title="Eliminar Servicio"  class="btn btn-danger btn-sm" (click)="eliminarCategoria(categoria)" (click)="eliminarServicio(categoria)"><i class="fa fa-trash"></i></button>
+                    <button title="Editar Categoría " class="btn btn-primary btn-sm" (click)="modificarCategoria(categoria)" > <i class="fa fa-pencil"></i> </button>
+                      <button title="Eliminar Categoría"  class="btn btn-danger btn-sm" (click)="eliminarCategoria(categoria)" (click)="eliminarServicio(categoria)"><i class="fa fa-trash"></i></button>
                   </div>
                 </td>
                 <td>

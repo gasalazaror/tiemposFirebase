@@ -10,7 +10,7 @@ export class ServicioService {
 
   private empresa: AngularFirestoreDocument;
 
-  constructor(private readonly afs: AngularFirestore) { 
+  constructor(private readonly afs: AngularFirestore) {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
   }
 
@@ -18,6 +18,14 @@ export class ServicioService {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     const id = this.afs.createId();
     return this.empresa.collection('categorias').doc(id).set(categoria)
+  }
+  obtenerUnServicio(id) {
+    return this.empresa.collection('servicios').doc(id).valueChanges()
+  }
+
+  obtenerCategoria(id) {
+    console.log('dssdsdsd '+id)
+    return this.empresa.collection('categorias').doc(id).valueChanges()
   }
 
   modificarCategoria(id, categoria) {
@@ -33,19 +41,19 @@ export class ServicioService {
     return this.empresa.collection('servicios').doc(id).update({ categoria: itemDoc.ref })
   }
 
-  eliminarServicio(servicio){
+  eliminarServicio(servicio) {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('servicios').doc(servicio.id).delete()
   }
 
-  validarServicio(campo, valor){
+  validarServicio(campo, valor) {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-  return this.empresa.collection('servicios', query=> query.where(campo , '==', valor)).valueChanges()
+    return this.empresa.collection('servicios', query => query.where(campo, '==', valor)).valueChanges()
   }
 
   obtenerCategorias() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('categorias', query=>query.orderBy('nombre')).snapshotChanges().pipe(
+    return this.empresa.collection('categorias', query => query.orderBy('nombre')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
@@ -54,17 +62,17 @@ export class ServicioService {
     );
   }
 
-  obtenerUnaCategoria(categoria){
+  obtenerUnaCategoria(categoria) {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('categorias', query=>query.where('nombre','==',categoria)).valueChanges()
+    return this.empresa.collection('categorias', query => query.where('nombre', '==', categoria)).valueChanges()
   }
 
-  eliminarCategoria(idCategoria){
+  eliminarCategoria(idCategoria) {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('categorias').doc(idCategoria).delete();
   }
 
- 
+
 
   obtenerServicios() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
@@ -79,7 +87,7 @@ export class ServicioService {
     );
   }
 
- 
+
 
   crearVehiculo(persona, vehiculo) {
     const itemDoc = this.afs.doc('personas/' + persona)

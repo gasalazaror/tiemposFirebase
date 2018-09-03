@@ -18,6 +18,7 @@ export class CrearPersonaComponent implements OnInit {
 
   id: any
   persona: Observable<any>;
+  categoria: Observable<any>;
 
   existePersona: boolean = false
 
@@ -42,6 +43,7 @@ export class CrearPersonaComponent implements OnInit {
 
       this.persona = this.personaService.obtenerUnaPersona(this.id);
       this.persona.subscribe(persona => {
+        
 
         if (persona != null) {
 

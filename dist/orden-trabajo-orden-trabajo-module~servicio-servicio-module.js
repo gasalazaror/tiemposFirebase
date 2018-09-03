@@ -15,12 +15,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crear_servicio_crear_servicio_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crear-servicio/crear-servicio.component */ "./src/app/layout/servicio/crear-servicio/crear-servicio.component.ts");
 /* harmony import */ var _consultar_servicio_consultar_servicio_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./consultar-servicio/consultar-servicio.component */ "./src/app/layout/servicio/consultar-servicio/consultar-servicio.component.ts");
 /* harmony import */ var _informacion_servicio_informacion_servicio_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./informacion-servicio/informacion-servicio.component */ "./src/app/layout/servicio/informacion-servicio/informacion-servicio.component.ts");
+/* harmony import */ var _categoria_categoria_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./categoria/categoria.component */ "./src/app/layout/servicio/categoria/categoria.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -38,6 +40,10 @@ var routes = [
     {
         path: 'informacionservicio/:id',
         component: _informacion_servicio_informacion_servicio_component__WEBPACK_IMPORTED_MODULE_4__["InformacionServicioComponent"]
+    },
+    {
+        path: 'categorias',
+        component: _categoria_categoria_component__WEBPACK_IMPORTED_MODULE_5__["CategoriaComponent"]
     }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -56,6 +62,212 @@ var AppRoutingModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/layout/servicio/categoria/categoria.component.html":
+/*!********************************************************************!*\
+  !*** ./src/app/layout/servicio/categoria/categoria.component.html ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div [@routerTransition]>\n  <app-page-header [heading]=\"'Gestión de categorías'\" [icon]=\"'fa-edit'\"></app-page-header>\n  <div class=\"row\">\n    <div class=\"col col-xl-12 col-lg-12\">\n      <div class=\"card mb-3\">\n        <div class=\"card-header\">Categorías</div>\n        <div class=\"card-body table-responsive\">\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\n            <thead>\n              <tr>\n                <th></th>\n                <th>Categoría</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let categoria of categorias | async\">\n                <td>\n                  <div class=\"btn-group\">\n                    <button class=\"btn btn-primary btn-sm disabled\" (click)=\"modificarCategoria(categoria)\" > <i class=\"fa fa-pencil\"></i> </button>\n                      <button title=\"Eliminar Servicio\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarCategoria(categoria)\" (click)=\"eliminarServicio(categoria)\"><i class=\"fa fa-trash\"></i></button>\n                  </div>\n                </td>\n                <td>\n                    {{categoria.data.nombre}}\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br>\n          <button class=\"btn btn-primary\" (click)=\"agregarCategoria()\"><i class=\"fa fa-plus\"></i> Agregar elemento</button>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/layout/servicio/categoria/categoria.component.scss":
+/*!********************************************************************!*\
+  !*** ./src/app/layout/servicio/categoria/categoria.component.scss ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/layout/servicio/categoria/categoria.component.ts":
+/*!******************************************************************!*\
+  !*** ./src/app/layout/servicio/categoria/categoria.component.ts ***!
+  \******************************************************************/
+/*! exports provided: CategoriaComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriaComponent", function() { return CategoriaComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _router_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router.animations */ "./src/app/router.animations.ts");
+/* harmony import */ var _servicios_servicio_servicio_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../servicios/servicio/servicio.service */ "./src/app/servicios/servicio/servicio.service.ts");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var CategoriaComponent = /** @class */ (function () {
+    function CategoriaComponent(servicioService) {
+        this.servicioService = servicioService;
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 5,
+            autoWidth: true,
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ elementos",
+                info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+                infoEmpty: "Mostrando ningún elemento.",
+                infoFiltered: "(filtrado _MAX_ elementos total)",
+                infoPostFix: "",
+                loadingRecords: "Cargando registros...",
+                zeroRecords: "No se encontraron registros",
+                emptyTable: "No hay datos disponibles en la tabla",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                },
+                aria: {
+                    sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+                    sortDescending: ": Activar para ordenar la tabla en orden descendente"
+                }
+            }
+        };
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        this.obtenerServicios();
+    }
+    CategoriaComponent.prototype.ngOnInit = function () {
+    };
+    CategoriaComponent.prototype.obtenerServicios = function () {
+        var _this = this;
+        this.categorias = this.servicioService.obtenerCategorias();
+        this.categorias.subscribe(function (res) {
+            $('#example-datatable').DataTable().destroy();
+            _this.dtTrigger.next();
+        });
+    };
+    CategoriaComponent.prototype.eliminarCategoria = function (categoria) {
+        var _this = this;
+        sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()({
+            title: 'Está seguro?',
+            text: "Desea eliminar la categoría: " + categoria.data.nombre,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Si, eliminar!'
+        }).then(function (result) {
+            if (result.value) {
+                _this.servicioService.eliminarCategoria(categoria.id);
+                sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Listo!', 'La categoría ha sido eliminada.', 'success');
+            }
+        });
+    };
+    CategoriaComponent.prototype.modificarCategoria = function (categoria) {
+        var _this = this;
+        sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()({
+            title: 'Ingrese el nombre de la categoría',
+            input: 'text',
+            inputValue: categoria.data.nombre,
+            inputAttributes: {
+                autocapitalize: 'on'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: function () { return !sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a.isLoading(); }
+        }).then(function (result) {
+            if (result.value) {
+                var categoriaInput = result.value;
+                sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()({
+                    title: 'Está seguro?',
+                    text: "Está seguro que deseas guardar la categoría: " + result.value,
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Si!'
+                }).then(function (result) {
+                    if (result.value) {
+                        _this.servicioService.modificarCategoria(categoria.id, { nombre: categoriaInput }).then(function (res) {
+                            sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Listo!', 'Categoría guardada exitosamente', 'success');
+                        });
+                    }
+                });
+            }
+        });
+    };
+    CategoriaComponent.prototype.agregarCategoria = function () {
+        var _this = this;
+        sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()({
+            title: 'Ingrese el nombre de la categoría',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'on'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: function () { return !sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a.isLoading(); }
+        }).then(function (result) {
+            if (result.value) {
+                var categoria = result.value;
+                sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()({
+                    title: 'Está seguro?',
+                    text: "Está seguro que deseas guardar la categoría: " + result.value,
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Si!'
+                }).then(function (result) {
+                    if (result.value) {
+                        _this.servicioService.crearCategoria({ nombre: categoria }).then(function (res) {
+                            sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Listo!', 'Categoría guardada exitosamente', 'success');
+                        });
+                    }
+                });
+            }
+        });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"]),
+        __metadata("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"])
+    ], CategoriaComponent.prototype, "dtElement", void 0);
+    CategoriaComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-categoria',
+            template: __webpack_require__(/*! ./categoria.component.html */ "./src/app/layout/servicio/categoria/categoria.component.html"),
+            styles: [__webpack_require__(/*! ./categoria.component.scss */ "./src/app/layout/servicio/categoria/categoria.component.scss")],
+            animations: [Object(_router_animations__WEBPACK_IMPORTED_MODULE_1__["routerTransition"])()]
+        }),
+        __metadata("design:paramtypes", [_servicios_servicio_servicio_service__WEBPACK_IMPORTED_MODULE_2__["ServicioService"]])
+    ], CategoriaComponent);
+    return CategoriaComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/layout/servicio/consultar-servicio/consultar-servicio.component.html":
 /*!**************************************************************************************!*\
   !*** ./src/app/layout/servicio/consultar-servicio/consultar-servicio.component.html ***!
@@ -63,7 +275,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar servicio'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Servicios</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Código</th>\r\n                <th>Servicio</th>\r\n                <th>Tiempo estándar</th>\r\n            \r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of servicios | async\">\r\n\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                      <a  href=\"/vehiculo/crearvehiculo/{{servicio.id}}\" class=\"btn btn-primary btn-sm disabled\"><i class=\"fa fa-pencil\"></i></a>\r\n                      <button  class=\"btn btn-danger btn-sm\" (click)=\"eliminarServicio(servicio)\"><i class=\"fa fa-trash\"></i></button>\r\n                  </div>\r\n                   \r\n                </td>\r\n            \r\n                <td>{{servicio.data.codigo}}</td>\r\n                <td>\r\n                    {{servicio.data.descripcion}}\r\n                </td>\r\n                <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>\r\n            \r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n        \r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar servicio'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Servicios</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Código</th>\r\n                <th>Servicio</th>\r\n                <th>Tiempo estándar</th>\r\n            \r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of servicios | async\">\r\n\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                      <a title=\"Editar Servicio\"  href=\"/vehiculo/crearvehiculo/{{servicio.id}}\" class=\"btn btn-primary btn-sm disabled\"><i class=\"fa fa-pencil\"></i></a>\r\n                      <button title=\"Eliminar Servicio\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarServicio(servicio)\"><i class=\"fa fa-trash\"></i></button>\r\n                  </div>\r\n                   \r\n                </td>\r\n            \r\n                <td>{{servicio.data.codigo}}</td>\r\n                <td>\r\n                    {{servicio.data.descripcion}}\r\n                </td>\r\n                <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>\r\n            \r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n        \r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -199,7 +411,7 @@ var ConsultarServicioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear servicio'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row container\">\r\n    <div class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Seleccionar categoría\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"card\">\r\n            <div class=\"card-body\">\r\n              <div>\r\n                <p>Manejo de categorías y subcategorías</p>\r\n\r\n                <div class=\"row\">\r\n                  <div class=\"col-md-12\">\r\n                    <ul class=\"list-inline border\">\r\n                      <li class=\"list-inline-item\" *ngFor=\"let categoria of categorias | async\">\r\n                        <button type=\"button\" (click)=\"seleccionarCategoria(categoria)\" class=\"btn btn-link\">{{categoria.data.nombre}}</button>\r\n                      </li>\r\n                      <li class=\"list-inline-item\">\r\n                        <button class=\"btn btn-default btn-sm\" (click)=agregarCategoria()>\r\n                          <i class=\"fa fa-plus\"></i> Agregar categoría\r\n                        </button>\r\n                      </li>\r\n                    </ul>\r\n                  </div>\r\n                 \r\n                </div>\r\n\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"categoriaSeleccionada\" class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Generación de productos o servicios\r\n        </div>\r\n        <div class=\"card-body\">\r\n\r\n        \r\n          <div class=\"btn-group\">\r\n              <h5 *ngIf=\"categoriaSeleccionada\">\r\n                  <button class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></button>\r\n                  <button class=\"btn btn-danger btn-sm\"><i class=\"fa fa-trash\"></i></button>&nbsp;&nbsp;\r\n                  <strong>Categoría: </strong>{{categoriaSeleccionada.data.nombre}}</h5>\r\n\r\n                 \r\n        \r\n          </div>\r\n          <br>\r\n          <br><br>\r\n\r\n         \r\n          <form class=\"form-inline\" [formGroup]=\"servicioForm\" (ngSubmit)=\"guardarServicio()\">\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Código <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"14\" formControlName=\"codigo\" style=\"max-width: 150px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Servicio <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"text\" maxlength=\"40\" formControlName=\"descripcion\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-3\">\r\n              <label for=\"staticEmail2\" class=\"\">Tiempo estándar(min) <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"number\" formControlName=\"tiempoEstandar\" style=\"max-width: 100px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Detalle &nbsp; &nbsp; &nbsp; &nbsp;</label>\r\n\r\n              <textarea formControlName=\"detalle\" maxlength=\"50\" cols=\"26\" class=\"form-control\"></textarea>\r\n            </div>\r\n\r\n\r\n\r\n            <button type=\"submit\"  class=\"btn btn-primary mb-2\">Guardar</button>\r\n          </form>\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear servicio'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row container\">\r\n    <div class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Manejo de categorías y subcategorías\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"card\">\r\n            <div class=\"card-body\">\r\n              <div>\r\n                <p>Seleccionar una categoría</p>\r\n\r\n                <div class=\"row\">\r\n                  <div class=\"col-md-12\">\r\n                    <ul class=\"list-inline border\">\r\n                      <li class=\"list-inline-item\" *ngFor=\"let categoria of categorias | async\">\r\n                        <button title=\"Seleccionar categoría\" type=\"button\" (click)=\"seleccionarCategoria(categoria)\" class=\"btn btn-link\">{{categoria.data.nombre}}</button>\r\n                      </li>\r\n                      <li class=\"list-inline-item\">\r\n                   \r\n                      </li>\r\n                    </ul>\r\n                    <a href=\"/servicio/categorias\" class=\"btn btn-sm btn-primary\">Gestión de categorías</a>\r\n                  </div>\r\n                 \r\n                </div>\r\n\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"categoriaSeleccionada\" class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Generación de productos o servicios\r\n        </div>\r\n        <div class=\"card-body\">\r\n\r\n        \r\n          <div class=\"btn-group\">\r\n              <h5 *ngIf=\"categoriaSeleccionada\">\r\n\r\n                  <strong>Categoría: </strong>{{categoriaSeleccionada.data.nombre}}</h5>\r\n\r\n                 \r\n        \r\n          </div>\r\n          <br>\r\n          <br><br>\r\n\r\n         \r\n          <form class=\"form-inline\" [formGroup]=\"servicioForm\" (ngSubmit)=\"guardarServicio()\">\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Código <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"14\" formControlName=\"codigo\" style=\"max-width: 150px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Servicio <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"text\" maxlength=\"40\" formControlName=\"descripcion\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-3\">\r\n              <label for=\"staticEmail2\" class=\"\">Tiempo estándar(min) <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"number\" formControlName=\"tiempoEstandar\" style=\"max-width: 100px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Detalle &nbsp; &nbsp; &nbsp; &nbsp;</label>\r\n\r\n              <textarea formControlName=\"detalle\" maxlength=\"50\" cols=\"26\" class=\"form-control\"></textarea>\r\n            </div>\r\n\r\n\r\n\r\n            <button title=\"Guardar Servicio\" type=\"submit\"  class=\"btn btn-primary mb-2\">Guardar Servicio</button>\r\n          </form>\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -448,12 +660,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
 /* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
 /* harmony import */ var _pipes_format_time_pipe__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../pipes/format-time.pipe */ "./src/app/pipes/format-time.pipe.ts");
+/* harmony import */ var _categoria_categoria_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./categoria/categoria.component */ "./src/app/layout/servicio/categoria/categoria.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -480,7 +694,7 @@ var ServicioModule = /** @class */ (function () {
                 angular_datatables__WEBPACK_IMPORTED_MODULE_9__["DataTablesModule"]
             ],
             exports: [_crear_servicio_crear_servicio_component__WEBPACK_IMPORTED_MODULE_2__["CrearServicioComponent"], _pipes_format_time_pipe__WEBPACK_IMPORTED_MODULE_10__["FormatTimePipe"]],
-            declarations: [_crear_servicio_crear_servicio_component__WEBPACK_IMPORTED_MODULE_2__["CrearServicioComponent"], _consultar_servicio_consultar_servicio_component__WEBPACK_IMPORTED_MODULE_3__["ConsultarServicioComponent"], _informacion_servicio_informacion_servicio_component__WEBPACK_IMPORTED_MODULE_4__["InformacionServicioComponent"], _pipes_format_time_pipe__WEBPACK_IMPORTED_MODULE_10__["FormatTimePipe"]]
+            declarations: [_crear_servicio_crear_servicio_component__WEBPACK_IMPORTED_MODULE_2__["CrearServicioComponent"], _consultar_servicio_consultar_servicio_component__WEBPACK_IMPORTED_MODULE_3__["ConsultarServicioComponent"], _informacion_servicio_informacion_servicio_component__WEBPACK_IMPORTED_MODULE_4__["InformacionServicioComponent"], _pipes_format_time_pipe__WEBPACK_IMPORTED_MODULE_10__["FormatTimePipe"], _categoria_categoria_component__WEBPACK_IMPORTED_MODULE_11__["CategoriaComponent"]]
         })
     ], ServicioModule);
     return ServicioModule;
@@ -560,8 +774,13 @@ var ServicioService = /** @class */ (function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     }
     ServicioService.prototype.crearCategoria = function (categoria) {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         var id = this.afs.createId();
         return this.empresa.collection('categorias').doc(id).set(categoria);
+    };
+    ServicioService.prototype.modificarCategoria = function (id, categoria) {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('categorias').doc(id).update(categoria);
     };
     ServicioService.prototype.crearServicio = function (categoria, servicio) {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
@@ -589,6 +808,10 @@ var ServicioService = /** @class */ (function () {
     ServicioService.prototype.obtenerUnaCategoria = function (categoria) {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('categorias', function (query) { return query.where('nombre', '==', categoria); }).valueChanges();
+    };
+    ServicioService.prototype.eliminarCategoria = function (idCategoria) {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('categorias').doc(idCategoria).delete();
     };
     ServicioService.prototype.obtenerServicios = function () {
         var _this = this;

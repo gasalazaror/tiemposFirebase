@@ -43,8 +43,8 @@ var map = {
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~servicio-servicio-module~vehiculo-vehiculo~1ef8069c",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
 		"orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module",
-		"orden-trabajo-orden-trabajo-module~persona-persona-module",
 		"orden-trabajo-orden-trabajo-module~servicio-servicio-module",
+		"orden-trabajo-orden-trabajo-module~persona-persona-module",
 		"common",
 		"orden-trabajo-orden-trabajo-module"
 	],
