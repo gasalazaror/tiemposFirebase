@@ -59,8 +59,8 @@ export class CategoriaComponent implements OnInit {
     this.categorias = this.servicioService.obtenerCategorias()
 
     this.categorias.subscribe(res => {
-      $('#example-datatable').DataTable().destroy();
-      this.dtTrigger.next();
+    //  $('#example-datatable').DataTable().destroy();
+    //  this.dtTrigger.next();
     })
   }
 

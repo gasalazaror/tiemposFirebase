@@ -27,37 +27,41 @@ export class CrearServicioComponent implements OnInit {
     detalle: [''],
   })
   constructor(
-    public servicioService: ServicioService, 
+    public servicioService: ServicioService,
     private fb: FormBuilder,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute) {
 
-      this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id != 'nuevo' && this.id != null) {
       this.servicio = this.servicioService.obtenerUnServicio(this.id);
 
       this.servicio.subscribe(servicio => {
         var path: String = servicio.categoria.path;
         var path2 = path.split('/')
-        
+
         this.categoria = this.servicioService.obtenerCategoria(path2[1])
 
-        this.categoria.subscribe(res=>{
+        this.categoria.subscribe(res => {
           console.log('categoria')
           console.log(res)
+          this.categoriaSeleccionada = { id: path2[1], data: res }
         })
-       
-        
+
+
 
         console.log(servicio.categoria.path)
         this.servicioForm = this.fb.group({
           codigo: [servicio.codigo, Validators.required],
           descripcion: [servicio.descripcion, Validators.required],
           tiempoEstandar: [servicio.tiempoEstandar, Validators.required],
-          detalle: [servicio.detalle,''],
+          detalle: [servicio.detalle, ''],
         })
       })
-
-
     }
+
+
+
+  }
   ngOnInit() {
     this.obtenerCategorias()
   }
@@ -114,41 +118,64 @@ export class CrearServicioComponent implements OnInit {
   }
 
   guardarServicio() {
-    if (this.servicioForm.value.codigo == '') {
-      swal('Existió un error', 'El código es obligatorio', 'error');
-    } else if (this.servicioForm.value.descripcion == '') {
-      swal('Existió un error', 'El servicio es obligatorio', 'error');
-    }
-    else if (this.servicioForm.value.tiempoEstandar <= 0) {
-      swal('Existió un error', 'El tiempo estándar no puede ser negativo o nulo', 'error');
-    } else {
-      this.servicioService.validarServicio('codigo', this.servicioForm.value.codigo).subscribe(res => {
-        if (res.length > 0) {
-          swal('Existió un error', 'El código ingresado ya existe en la base de datos', 'error');
-        } else {
-          this.servicioService.validarServicio('descripcion', this.servicioForm.value.descripcion).subscribe(res => {
-            if (res.length > 0) {
-              swal('Existió un error', 'El servicio ingresado ya existe en la base de datos', 'error');
-            } else {
-              this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
-                .then(servicio => {
-                  swal( 'Listo!','Servicio guardado exitosamente', 'success');
-                  this.servicioForm = this.fb.group({
-                    codigo: ['', Validators.required],
-                    descripcion: ['', Validators.required],
-                    tiempoEstandar: ['', Validators.required],
-                    detalle: [''],
-                  })
-                }, error => {
 
-                  
 
-                })
-            }
-          })
-        }
-      })
+    if (this.id != 'nuevo' && this.id != null) {
+
+      this.servicioService.modificarServicio(this.id,this.categoriaSeleccionada.id, this.servicioForm.value)
+        .then(servicio => {
+          swal('Listo!', 'Servicio modificado exitosamente', 'success');
+        
+        }, error => {
+
+
+
+        })
+
+    }else{
+      if (this.servicioForm.value.codigo == '') {
+        swal('Existió un error', 'El código es obligatorio', 'error');
+      } else if (this.servicioForm.value.descripcion == '') {
+        swal('Existió un error', 'El servicio es obligatorio', 'error');
+      }
+      else if (this.servicioForm.value.tiempoEstandar <= 0) {
+        swal('Existió un error', 'El tiempo estándar no puede ser negativo o nulo', 'error');
+      } else {
+        this.servicioService.validarServicio('codigo', this.servicioForm.value.codigo).subscribe(res => {
+          if (res.length > 0) {
+            swal('Existió un error', 'El código ingresado ya existe en la base de datos', 'error');
+          } else {
+            this.servicioService.validarServicio('descripcion', this.servicioForm.value.descripcion).subscribe(res => {
+              if (res.length > 0) {
+                swal('Existió un error', 'El servicio ingresado ya existe en la base de datos', 'error');
+              } else {
+
+                this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
+                    .then(servicio => {
+                      swal('Listo!', 'Servicio guardado exitosamente', 'success');
+                      this.servicioForm = this.fb.group({
+                        codigo: ['', Validators.required],
+                        descripcion: ['', Validators.required],
+                        tiempoEstandar: ['', Validators.required],
+                        detalle: [''],
+                      })
+                    }, error => {
+  
+  
+  
+                    })
+  
+  
+  
+  
+              }
+            })
+          }
+        })
+      }
     }
+
+    
 
 
 

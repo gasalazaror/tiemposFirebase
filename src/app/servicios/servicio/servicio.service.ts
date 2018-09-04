@@ -24,7 +24,7 @@ export class ServicioService {
   }
 
   obtenerCategoria(id) {
-    console.log('dssdsdsd '+id)
+ 
     return this.empresa.collection('categorias').doc(id).valueChanges()
   }
 
@@ -34,10 +34,19 @@ export class ServicioService {
   }
 
   crearServicio(categoria, servicio) {
+    
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     const itemDoc = this.afs.doc('categorias/' + categoria)
     const id = this.afs.createId();
     this.empresa.collection('servicios').doc(id).set(servicio)
+    return this.empresa.collection('servicios').doc(id).update({ categoria: itemDoc.ref })
+  }
+
+  modificarServicio(id, categoria, servicio) {
+    
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    const itemDoc = this.afs.doc('categorias/' + categoria)
+    this.empresa.collection('servicios').doc(id).update(servicio)
     return this.empresa.collection('servicios').doc(id).update({ categoria: itemDoc.ref })
   }
 
