@@ -5,6 +5,8 @@ import { OrdenService } from '../../servicios/orden/orden.service';
 import * as moment from 'moment';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { PersonaService } from '../../servicios/persona.service';
+import { ServicioService } from '../../servicios/servicio/servicio.service';
 
 @Component({
   selector: 'app-reporte',
@@ -14,88 +16,67 @@ import { Subject } from 'rxjs';
 })
 export class ReporteComponent implements OnInit {
 
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings =  {
-    pagingType: 'full_numbers',
-    pageLength: 5,
-    autoWidth: true,
-   responsive: true,
-
-  };
-  dtTrigger: Subject<any> = new Subject();
-
-  ordenes: Observable<any[]>;
-  tareas: any[]
-
-  constructor(private ordenService: OrdenService) {
+  filtro: String = "1"
+  fechaInicio: Date = new Date
+  ordenes: Observable<any>
+  ordenSeleccionada: any= ""
 
 
+  operadores: Observable<any>
+  servicios: Observable<any>
+  filtroTiempo: any = { inicio: this.convertir(Date.now()), iniciohora: '00:00', fin: this.convertir(Date.now()), finhora: '23:59' }
+  operaciones: Observable<any>
 
 
-    this.tareas = []
+  constructor(private ordenService: OrdenService, private personaService: PersonaService, private servicioService: ServicioService) {
+    this.ordenes = ordenService.obtenerOrdenes();
+    this.operadores = personaService.obtenerUsuarios()
+    this.servicios = servicioService.obtenerServicios()
+
+  }
+
+  convertir(fecha) {
+    var local = new Date(fecha);
+    local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
   }
 
   ngOnInit() {
-    this.obtenerOrdenes()
+
   }
+
   obtenerOrdenes() {
-    this.ordenes = this.ordenService.obtenerOrdenes();
 
-    this.ordenes.subscribe(res => {
-      this.tareas = []
-      res.forEach(element => {
-        element.data.servicios.forEach(servicio => {
-          if (servicio.estado == 'POR FACTURAR') {
-
-
-            var fecha1 = moment(servicio.horaInicio.seconds, 'X');
-            var fecha2 = moment(servicio.horaFin.seconds, 'X');
-            var diff = fecha2.diff(fecha1, 's');
-            servicio.leadTimesec = diff
-            const leadTime = moment.utc(diff * 1000).format('HH:mm:ss');
-            servicio.leadTime = leadTime
-            const formatted = moment.utc((servicio.tiempoEstandar * 60) * 1000).format('HH:mm:ss');
-            servicio.tiempoEstandarFor = formatted
-
-            var pausas = 0
-
-            if (servicio.pausas) {
-              servicio.pausas.forEach(pausa => {
-                console.log(pausa)
-                var fecha1 = moment(pausa.horaInicio.seconds, 'X');
-                var fecha2 = moment(pausa.horaFin.seconds, 'X');
-                var diff2 = fecha2.diff(fecha1, 's');
-                pausas += diff2
-              });
-              
-            }
-
-            console.log('leadtime '+servicio.leadTimesec)
-            console.log('pausas '+pausas)
-       
-
-          
-            
-            var tiempoReal  =  servicio.leadTimesec - pausas
-            
-            servicio.tiempoReal = moment.utc((tiempoReal) * 1000).format('HH:mm:ss');
-
-            const eficiencia = ((servicio.tiempoEstandar*60)/tiempoReal)*100
-
-            servicio.eficiencia = eficiencia.toFixed(2)
-
-            this.tareas.push({ cliente: element.data.cliente, servicio: servicio, vehiculo: element.data.vehiculo })
-          
-
-          }
-
-        });
-
-
-      });
-
-      $('#example-datatable').DataTable().destroy();
-      this.dtTrigger.next();
-    })
   }
+
+  buscar() {
+    switch (this.filtro) {
+      case "1":
+        this.buscarPorOrden()
+        break;
+      case "2":
+        this.buscarPorOperador()
+        break;
+      case "3":
+      this.buscarPorServicio()
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  buscarPorOrden() {
+    console.log('orden')
+    console.log(this.ordenSeleccionada)
+  }
+
+  buscarPorOperador() {
+    console.log('operador')
+  }
+
+  buscarPorServicio() {
+    console.log('servicio')
+  }
+
 }

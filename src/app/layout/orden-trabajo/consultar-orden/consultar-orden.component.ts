@@ -17,7 +17,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class ConsultarOrdenComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings= this.dtOptions = {
+  dtOptions: DataTables.Settings = this.dtOptions = {
     pagingType: 'full_numbers',
     pageLength: 5,
     autoWidth: true,
@@ -51,27 +51,47 @@ export class ConsultarOrdenComponent implements OnInit {
 
 
   constructor(private ordenService: OrdenService, private aFaut: AngularFireAuth) {
-    
-   }
+
+  }
 
   ngOnInit() {
     this.obtenerOrdenes()
   }
 
-  obtenerOrdenes() {
-    
-    this.ordenes =this.ordenService.obtenerOrdenes();
+  print(orden) {
+    let printContents, popupWin;
+    printContents = document.getElementById('print-section').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>Print tab</title>
+          <style>
+          //........Customized style.......
+          </style>
+        </head>
+    <body onload="window.print();window.close()">${printContents}</body>
+      </html>`
+    );
+    popupWin.document.close();
 
-    this.ordenes.subscribe(res=>{
+  }
+
+  obtenerOrdenes() {
+
+    this.ordenes = this.ordenService.obtenerOrdenes();
+
+    this.ordenes.subscribe(res => {
       console.log(res)
-      
+
       $('#example-datatable').DataTable().destroy();
       this.dtTrigger.next();
     })
-  
+
   }
 
-  eliminarOrden(orden){
+  eliminarOrden(orden) {
     swal({
       title: 'Está seguro?',
       text: "Está seguro que desea eliminar la orden seleccionada",
@@ -84,21 +104,21 @@ export class ConsultarOrdenComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        this.ordenService.eliminarOrden(orden.id).then(res=>{
-        
+        this.ordenService.eliminarOrden(orden.id).then(res => {
+
           swal(
             'Listo!',
             'Orden de trabajo eliminada correctamente.',
             'success'
           )
         })
-       
-       
+
+
       }
     })
 
 
- 
+
   }
 
 }

@@ -1,85 +1,90 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Reportes'" [icon]="'fa-edit'"></app-page-header>
-   <div class="row">
+  <div class="row">
     <div class="col col-xl-12 col-lg-12">
-       <div class="card mb-3">
-        <div class="card-header">Reportes</div>
-         <div class="card-body ">
-           <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                
-                    <div class="card-body">
-                      <p><strong>Eficiencia</strong></p>
-                      <div class="row">
-                        <div class="col" class="table-success" style="width: 15px"></div>
-                        <div class="col">Muy buena</div>
-                      </div>
-      
-                      <div class="row">
-                        <div class="col" class="table-warning" style="width: 15px"></div>
-                        <div class="col">Buena</div>
-                      </div>
-      
-                      <div class="row">
-                        <div class="col" class="table-danger" style="width: 15px"></div>
-                        <div class="col">Regular</div>
-                      </div>
+      <div class="card mb-3">
+        <div class="card-header">Filtros de búsqueda</div>
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-sm table-bordered">
+                <tr>
+                  <td>
+                    <div class="radio">
+                      <label><input type="radio" [(ngModel)]="filtro" value="1">Por Orden de Tabajo</label>
                     </div>
-                  </div>
+                  </td>
+                  <td>
+                    <select class="form-control" [(ngModel)]="ordenSeleccionada" *ngIf="filtro=='1'">
+                      <option value="">Seleccionar...</option>
+                      <option *ngFor="let orden of ordenes | async" value="{{orden.id}}">OT-{{orden.data.numero | anadirCeros:5}}</option>
+                    </select>
+
+                  
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="radio">
+
+                      <label><input type="radio" [(ngModel)]="filtro" value="2">Por Operador</label>
+                    </div>
+                  </td>
+                  <td>
+                    <select class="form-control" *ngIf="filtro=='2'">
+                      <option>Seleccionar...</option>
+                      <option *ngFor="let operador of operadores | async">{{operador.data.nombre}}</option>
+                    </select>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="radio">
+                      <label><input type="radio" [(ngModel)]="filtro" value="3">Por Servicio</label>
+                    </div>
+                  </td>
+                  <td>
+                    <select class="form-control" *ngIf="filtro=='3'">
+                      <option>Seleccionar...</option>
+                      <option *ngFor="let servicio of servicios | async">{{servicio.data.descripcion}}</option>
+                    </select>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Desde:</td>
+                  <td>
+                    <div class="btn-group">
+                      <input [disabled]="filtro=='1'" type="date" [(ngModel)]="filtroTiempo.inicio" class="form-control"> <input type="time" [disabled]="filtro=='1'" [(ngModel)]="filtroTiempo.iniciohora"
+                        class="form-control">
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                    <td>Hasta:</td>
+                    <td>
+                      <div class="btn-group">
+                        <input [disabled]="filtro=='1'" type="date" [(ngModel)]="filtroTiempo.fin" class="form-control"> <input [disabled]="filtro=='1'" type="time" [(ngModel)]="filtroTiempo.finhora"
+                          class="form-control">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <button (click)="buscar()" class="btn btn-primary">Buscar</button>
+                    </td>
+                  </tr>
+              </table>
             </div>
-            
-           
+            <div class="col-md-6"></div>
           </div>
-           <br>
-           <table id="example-datatable" class="table table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-            <thead>
-               <tr>
-                 <th>Cliente</th>
-                <th>Vehículo</th>
-                <th>Servicio</th>
-                <th>Operador</th>
-                <th>Tiempo Estandar</th>
-                <th>Lead Time</th>
-                <th>Tiempo Real</th>
-                <th>Eficiencia</th>
-               </tr>
-            </thead>
-            <tbody>
-              <tr  *ngFor="let servicio of tareas " 
-              [class.table-success]="servicio.servicio.eficiencia>=100" 
-              [class.table-warning]="servicio.servicio.eficiencia>=80 && servicio.servicio.eficiencia<100"
-                [class.table-danger]="servicio.servicio.eficiencia<80"
-                >
-                 <td>
-                  {{servicio.cliente.nombre}}
-                </td>
-                <td>
-                  {{servicio.vehiculo.placa}} - {{servicio.vehiculo.marca}} - {{servicio.vehiculo.modelo}}
-                </td>
-                <td>
-                  {{servicio.servicio.descripcion}}
-                </td>
-                <td>
-                  {{servicio.servicio.operador.data.nombre}}
-                </td>
-                <td>
-                  {{servicio.servicio.tiempoEstandarFor}}
-                </td>
-                <td>
-                  {{servicio.servicio.leadTime}}
-                </td>
-                <td>
-                  {{servicio.servicio.tiempoReal}}
-                </td>
-                <td>
-                  {{servicio.servicio.eficiencia}}%
-                </td>
-               </tr>
-            </tbody>
-          </table>
-         </div>
+
+
+        </div>
       </div>
-     </div>
+    </div>
   </div>
- </div> 
+</div>

@@ -37,6 +37,7 @@ import { AnadirCerosPipe } from '../../pipes/anadir-ceros.pipe';
     DataTablesModule,
     ServicioModule
   ],
+  exports:[AnadirCerosPipe],
   declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent, AnadirCerosPipe]
 })
 export class OrdenTrabajoModule { }
