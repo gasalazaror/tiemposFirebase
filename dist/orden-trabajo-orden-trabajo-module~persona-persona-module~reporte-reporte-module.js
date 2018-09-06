@@ -63,7 +63,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table id=\"example-datatable\" class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas | async\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                      <a title=\"Editar persona\" href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                      <button title=\"Eliminar persona\" class=\"btn btn-danger btn-sm\" (click)=\"eliminarPersona(persona)\"><i class=\"fa fa-trash\"></i></button>\r\n                  </div>\r\n                  \r\n                </td>\r\n                <td>{{persona.data.tipo}}</td>\r\n                <td>{{persona.data.cedula }}</td>\r\n                <td><a title=\"Ver información\" href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre}}</a></td>\r\n                <td>{{persona.data.direccion}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar persona'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Personas</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table id=\"example-datatable\" class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Tipo</th>\r\n                <th>Cédula</th>\r\n                <th>Nombre</th>\r\n                <th>Dirección</th>\r\n                <th>Correo</th>\r\n                <th>Teléfono</th>\r\n                <th>Roles</th>\r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let persona of personas\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                      <a title=\"Editar persona\" href=\"/persona/crearpersona/{{persona.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                      <button title=\"Eliminar persona\" class=\"btn btn-danger btn-sm\" (click)=\"eliminarPersona(persona)\"><i class=\"fa fa-trash\"></i></button>\r\n                  </div>\r\n                  \r\n                </td>\r\n                <td>{{persona.data.tipo}}</td>\r\n                <td>{{persona.data.cedula }}</td>\r\n                <td><a title=\"Ver información\" href=\"/persona/informacionpersona/{{persona.id}}\">{{persona.data.nombre}}</a></td>\r\n                <td>{{persona.data.direccion}}</td>\r\n                <td>{{persona.data.correo }}</td>\r\n                <td>{{persona.data.telefono}}</td>\r\n                <td>\r\n                  <p *ngIf=\"persona.data.cliente\">Cliente</p>\r\n                  <p *ngIf=\"persona.data.empleado\">Empleado</p>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -90,9 +90,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConsultarPersonaComponent", function() { return ConsultarPersonaComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _router_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router.animations */ "./src/app/router.animations.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../servicios/persona.service */ "./src/app/servicios/persona.service.ts");
-/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var _servicios_persona_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../servicios/persona.service */ "./src/app/servicios/persona.service.ts");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -104,7 +104,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -142,16 +141,14 @@ var ConsultarPersonaComponent = /** @class */ (function () {
                 }
             }
         };
-        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
     }
     ConsultarPersonaComponent.prototype.ngOnInit = function () {
-        this.obtenerPersonas();
-    };
-    ConsultarPersonaComponent.prototype.obtenerPersonas = function () {
         var _this = this;
-        this.personas = this.personaService.obtenerPersonas();
-        this.personas.subscribe(function (res) {
+        this.personaService.obtenerPersonas()
+            .subscribe(function (res) {
             $('#example-datatable').DataTable().destroy();
+            _this.personas = res;
             _this.dtTrigger.next();
         });
     };
@@ -186,15 +183,14 @@ var ConsultarPersonaComponent = /** @class */ (function () {
             cancelButtonText: 'Cancelar'
         }).then(function (result) {
             if (result.value) {
-                _this.personaService.eliminarPersona(persona.id).then(function (res) {
-                    sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Eliminado!', 'El registro ha sido eliminado.', 'success');
-                });
+                _this.personaService.eliminarPersona(persona.id);
+                sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Eliminado!', 'El registro ha sido eliminado.', 'success');
             }
         });
     };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
-        __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"]),
+        __metadata("design:type", Array)
     ], ConsultarPersonaComponent.prototype, "personas", void 0);
     ConsultarPersonaComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -203,7 +199,7 @@ var ConsultarPersonaComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./consultar-persona.component.scss */ "./src/app/layout/persona/consultar-persona/consultar-persona.component.scss")],
             animations: [Object(_router_animations__WEBPACK_IMPORTED_MODULE_1__["routerTransition"])()]
         }),
-        __metadata("design:paramtypes", [_servicios_persona_service__WEBPACK_IMPORTED_MODULE_3__["PersonaService"]])
+        __metadata("design:paramtypes", [_servicios_persona_service__WEBPACK_IMPORTED_MODULE_2__["PersonaService"]])
     ], ConsultarPersonaComponent);
     return ConsultarPersonaComponent;
 }());
@@ -341,30 +337,20 @@ var CrearPersonaComponent = /** @class */ (function () {
                                 sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Existió un error', 'Debe seleccionar al menos un rol', 'error');
                             }
                             else {
-                                //validación si existe cédula
-                                this.personaService.comprobar('cedula', this.personaForm.value.cedula)
-                                    .subscribe(function (res) {
-                                    if (res.length > 0) {
-                                        sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Existió un error', 'El número de cédula ingresado ya existen en la base de datos', 'error');
-                                    }
-                                    else {
-                                        _this.personaService.crearPersona(_this.personaForm.value).then(function (res) {
-                                            sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Listo!', 'Persona guardada exitosamente', 'success');
-                                            _this.personaForm = _this.fb.group({
-                                                estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-                                                tipo: ['Natural', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-                                                cedula: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
-                                                nombre: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
-                                                direccion: ['', []],
-                                                telefono: ['', []],
-                                                correo: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]],
-                                                cliente: [false],
-                                                empleado: [false],
-                                                roles: { Administrador: false, Asesor: false, Operador: false }
-                                            });
-                                        });
-                                    }
-                                }, function (error) {
+                                this.personaService.crearPersona(this.personaForm.value).then(function (res) {
+                                    sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()('Listo!', 'Persona guardada exitosamente', 'success');
+                                    _this.personaForm = _this.fb.group({
+                                        estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+                                        tipo: ['Natural', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+                                        cedula: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
+                                        nombre: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
+                                        direccion: ['', []],
+                                        telefono: ['', []],
+                                        correo: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]],
+                                        cliente: [false],
+                                        empleado: [false],
+                                        roles: { Administrador: false, Asesor: false, Operador: false }
+                                    });
                                 });
                             }
                         }

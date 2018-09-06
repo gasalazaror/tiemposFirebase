@@ -81,7 +81,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar ordenes de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table  class=\"table \" datatable id=\"example-datatable\" [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>No. OT</th>\r\n                <th>Fecha OT</th>\r\n                <th>Hora</th>\r\n                <th>ID Cliente</th>\r\n                <th>Nombre del cliente</th>\r\n                <th>ID/Placa</th>\r\n     \r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let orden of ordenes | async\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                    <a title=\"Editar Orden de trabajo\" href=\"/orden/crearorden/{{orden.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                    <button title=\"Eliminar Orden de Trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarOrden(orden)\"><i class=\"fa fa-trash\"></i></button>\r\n                    <a title=\"Operaciones\" href=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                   \r\n                  </div>\r\n\r\n                </td>\r\n\r\n\r\n                <td><a href=\"/orden/informacionorden/{{orden.id}}\">OT-{{orden.data.numero | anadirCeros:5}}</a></td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>\r\n                <td>{{orden.data.cliente.cedula}}</td>\r\n                <td>{{orden.data.cliente.nombre}}</td>\r\n\r\n                <td>\r\n                  {{orden.data.vehiculo.placa}}\r\n\r\n                </td>\r\n\r\n                \r\n\r\n\r\n\r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n         \r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar ordenes de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table  class=\"table \" datatable id=\"example-datatable\" [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>No. OT</th>\r\n                <th>Fecha OT</th>\r\n                <th>Hora</th>\r\n                <th>ID Cliente</th>\r\n                <th>Nombre del cliente</th>\r\n                <th>ID/Placa</th>\r\n     \r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let orden of ordenes\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                    <a title=\"Editar Orden de trabajo\" href=\"/orden/crearorden/{{orden.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                    <button title=\"Eliminar Orden de Trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarOrden(orden)\"><i class=\"fa fa-trash\"></i></button>\r\n                    <a title=\"Operaciones\" href=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                   \r\n                  </div>\r\n\r\n                </td>\r\n\r\n\r\n                <td><a href=\"/orden/informacionorden/{{orden.id}}\">OT-{{orden.data.numero | anadirCeros:5}}</a></td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>\r\n                <td>{{orden.data.cliente.cedula}}</td>\r\n                <td>{{orden.data.cliente.nombre}}</td>\r\n\r\n                <td>\r\n                  {{orden.data.vehiculo.placa}}\r\n\r\n                </td>\r\n\r\n                \r\n\r\n\r\n\r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n         \r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -162,6 +162,7 @@ var ConsultarOrdenComponent = /** @class */ (function () {
             }
         };
         this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        this.ordenes = [];
     }
     ;
     ConsultarOrdenComponent.prototype.ngOnInit = function () {
@@ -177,10 +178,10 @@ var ConsultarOrdenComponent = /** @class */ (function () {
     };
     ConsultarOrdenComponent.prototype.obtenerOrdenes = function () {
         var _this = this;
-        this.ordenes = this.ordenService.obtenerOrdenes();
-        this.ordenes.subscribe(function (res) {
-            console.log(res);
+        this.ordenService.obtenerOrdenes()
+            .subscribe(function (res) {
             $('#example-datatable').DataTable().destroy();
+            _this.ordenes = res;
             _this.dtTrigger.next();
         });
     };
@@ -1288,13 +1289,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mis_ordenes_mis_ordenes_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./mis-ordenes/mis-ordenes.component */ "./src/app/layout/orden-trabajo/mis-ordenes/mis-ordenes.component.ts");
 /* harmony import */ var _detalleOrden_detalle_orden_detalle_orden_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./detalleOrden/detalle-orden/detalle-orden.component */ "./src/app/layout/orden-trabajo/detalleOrden/detalle-orden/detalle-orden.component.ts");
 /* harmony import */ var _detalle_tarea_detalle_tarea_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./detalle-tarea/detalle-tarea.component */ "./src/app/layout/orden-trabajo/detalle-tarea/detalle-tarea.component.ts");
-/* harmony import */ var _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../pipes/anadir-ceros.pipe */ "./src/app/pipes/anadir-ceros.pipe.ts");
+/* harmony import */ var _pipes_format_time_pipe__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../pipes/format-time.pipe */ "./src/app/pipes/format-time.pipe.ts");
+/* harmony import */ var _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../pipes/anadir-ceros.pipe */ "./src/app/pipes/anadir-ceros.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1334,8 +1337,8 @@ var OrdenTrabajoModule = /** @class */ (function () {
                 angular_datatables__WEBPACK_IMPORTED_MODULE_14__["DataTablesModule"],
                 _servicio_servicio_module__WEBPACK_IMPORTED_MODULE_12__["ServicioModule"]
             ],
-            exports: [_pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_19__["AnadirCerosPipe"]],
-            declarations: [_crear_orden_crear_orden_component__WEBPACK_IMPORTED_MODULE_3__["CrearOrdenComponent"], _consultar_orden_consultar_orden_component__WEBPACK_IMPORTED_MODULE_4__["ConsultarOrdenComponent"], _informacion_orden_informacion_orden_component__WEBPACK_IMPORTED_MODULE_5__["InformacionOrdenComponent"], _operacion_operacion_component__WEBPACK_IMPORTED_MODULE_13__["OperacionComponent"], _orden_trabajo_component__WEBPACK_IMPORTED_MODULE_15__["OrdenTrabajoComponent"], _mis_ordenes_mis_ordenes_component__WEBPACK_IMPORTED_MODULE_16__["MisOrdenesComponent"], _detalleOrden_detalle_orden_detalle_orden_component__WEBPACK_IMPORTED_MODULE_17__["DetalleOrdenComponent"], _detalle_tarea_detalle_tarea_component__WEBPACK_IMPORTED_MODULE_18__["DetalleTareaComponent"], _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_19__["AnadirCerosPipe"]]
+            exports: [_pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_20__["AnadirCerosPipe"], _pipes_format_time_pipe__WEBPACK_IMPORTED_MODULE_19__["FormatTimePipe"]],
+            declarations: [_crear_orden_crear_orden_component__WEBPACK_IMPORTED_MODULE_3__["CrearOrdenComponent"], _consultar_orden_consultar_orden_component__WEBPACK_IMPORTED_MODULE_4__["ConsultarOrdenComponent"], _informacion_orden_informacion_orden_component__WEBPACK_IMPORTED_MODULE_5__["InformacionOrdenComponent"], _operacion_operacion_component__WEBPACK_IMPORTED_MODULE_13__["OperacionComponent"], _orden_trabajo_component__WEBPACK_IMPORTED_MODULE_15__["OrdenTrabajoComponent"], _mis_ordenes_mis_ordenes_component__WEBPACK_IMPORTED_MODULE_16__["MisOrdenesComponent"], _detalleOrden_detalle_orden_detalle_orden_component__WEBPACK_IMPORTED_MODULE_17__["DetalleOrdenComponent"], _detalle_tarea_detalle_tarea_component__WEBPACK_IMPORTED_MODULE_18__["DetalleTareaComponent"], _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_20__["AnadirCerosPipe"]]
         })
     ], OrdenTrabajoModule);
     return OrdenTrabajoModule;
@@ -1367,6 +1370,9 @@ var AnadirCerosPipe = /** @class */ (function () {
     function AnadirCerosPipe() {
     }
     AnadirCerosPipe.prototype.transform = function (number, width) {
+        if (!number) {
+            return 0;
+        }
         var numberOutput = Math.abs(number); /* Valor absoluto del número */
         var length = number.toString().length; /* Largo del número */
         var zero = "0"; /* String de cero */
