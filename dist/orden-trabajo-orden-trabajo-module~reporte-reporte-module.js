@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~reporte-reporte-module"],{
 
 /***/ "./src/app/layout/orden-trabajo/app-routing.module.ts":
 /*!************************************************************!*\
@@ -81,7 +81,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar ordenes de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table  class=\"table \" datatable id=\"example-datatable\" [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>No. OT</th>\r\n                <th>Fecha OT</th>\r\n                <th>Hora</th>\r\n                <th>ID Cliente</th>\r\n                <th>Nombre del cliente</th>\r\n                <th>ID/Placa</th>\r\n     \r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let orden of ordenes | async\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                    <a title=\"Editar Orden de trabajo\" href=\"/orden/crearorden/{{orden.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                    <button title=\"Eliminar orden de trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarOrden(orden)\"><i class=\"fa fa-trash\"></i></button>\r\n                    <a title=\"Operaciones\" href=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                  </div>\r\n\r\n                </td>\r\n\r\n\r\n                <td><a href=\"/orden/informacionorden/{{orden.id}}\">OT-{{orden.data.numero | anadirCeros:5}}</a></td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>\r\n                <td>{{orden.data.cliente.cedula}}</td>\r\n                <td>{{orden.data.cliente.nombre}}</td>\r\n\r\n                <td>\r\n                  {{orden.data.vehiculo.placa}}\r\n\r\n                </td>\r\n\r\n                \r\n\r\n\r\n\r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar ordenes de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table  class=\"table \" datatable id=\"example-datatable\" [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>No. OT</th>\r\n                <th>Fecha OT</th>\r\n                <th>Hora</th>\r\n                <th>ID Cliente</th>\r\n                <th>Nombre del cliente</th>\r\n                <th>ID/Placa</th>\r\n     \r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let orden of ordenes | async\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                    <a title=\"Editar Orden de trabajo\" href=\"/orden/crearorden/{{orden.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                    <button title=\"Eliminar Orden de Trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarOrden(orden)\"><i class=\"fa fa-trash\"></i></button>\r\n                    <a title=\"Operaciones\" href=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                   \r\n                  </div>\r\n\r\n                </td>\r\n\r\n\r\n                <td><a href=\"/orden/informacionorden/{{orden.id}}\">OT-{{orden.data.numero | anadirCeros:5}}</a></td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>\r\n                <td>{{orden.data.cliente.cedula}}</td>\r\n                <td>{{orden.data.cliente.nombre}}</td>\r\n\r\n                <td>\r\n                  {{orden.data.vehiculo.placa}}\r\n\r\n                </td>\r\n\r\n                \r\n\r\n\r\n\r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n         \r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -166,6 +166,14 @@ var ConsultarOrdenComponent = /** @class */ (function () {
     ;
     ConsultarOrdenComponent.prototype.ngOnInit = function () {
         this.obtenerOrdenes();
+    };
+    ConsultarOrdenComponent.prototype.print = function (orden) {
+        var printContents, popupWin;
+        printContents = document.getElementById('print-section').innerHTML;
+        popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+        popupWin.document.open();
+        popupWin.document.write("\n      <html>\n        <head>\n          <title>Print tab</title>\n          <style>\n          //........Customized style.......\n          </style>\n        </head>\n    <body onload=\"window.print();window.close()\">" + printContents + "</body>\n      </html>");
+        popupWin.document.close();
     };
     ConsultarOrdenComponent.prototype.obtenerOrdenes = function () {
         var _this = this;
@@ -1326,6 +1334,7 @@ var OrdenTrabajoModule = /** @class */ (function () {
                 angular_datatables__WEBPACK_IMPORTED_MODULE_14__["DataTablesModule"],
                 _servicio_servicio_module__WEBPACK_IMPORTED_MODULE_12__["ServicioModule"]
             ],
+            exports: [_pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_19__["AnadirCerosPipe"]],
             declarations: [_crear_orden_crear_orden_component__WEBPACK_IMPORTED_MODULE_3__["CrearOrdenComponent"], _consultar_orden_consultar_orden_component__WEBPACK_IMPORTED_MODULE_4__["ConsultarOrdenComponent"], _informacion_orden_informacion_orden_component__WEBPACK_IMPORTED_MODULE_5__["InformacionOrdenComponent"], _operacion_operacion_component__WEBPACK_IMPORTED_MODULE_13__["OperacionComponent"], _orden_trabajo_component__WEBPACK_IMPORTED_MODULE_15__["OrdenTrabajoComponent"], _mis_ordenes_mis_ordenes_component__WEBPACK_IMPORTED_MODULE_16__["MisOrdenesComponent"], _detalleOrden_detalle_orden_detalle_orden_component__WEBPACK_IMPORTED_MODULE_17__["DetalleOrdenComponent"], _detalle_tarea_detalle_tarea_component__WEBPACK_IMPORTED_MODULE_18__["DetalleTareaComponent"], _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_19__["AnadirCerosPipe"]]
         })
     ], OrdenTrabajoModule);
@@ -1388,7 +1397,89 @@ var AnadirCerosPipe = /** @class */ (function () {
 
 
 
+/***/ }),
+
+/***/ "./src/app/servicios/orden/orden.service.ts":
+/*!**************************************************!*\
+  !*** ./src/app/servicios/orden/orden.service.ts ***!
+  \**************************************************/
+/*! exports provided: OrdenService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrdenService", function() { return OrdenService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var OrdenService = /** @class */ (function () {
+    function OrdenService(afs) {
+        this.afs = afs;
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    }
+    OrdenService.prototype.crearOrden = function (orden, servicios) {
+        var id = this.afs.createId();
+        this.empresa.collection('ordenes').doc(id).set(orden);
+        return id;
+    };
+    OrdenService.prototype.modificarOrden = function (id, orden) {
+        this.empresa.collection('ordenes').doc(id).update(orden);
+        return id;
+    };
+    OrdenService.prototype.eliminarOrden = function (id) {
+        return this.empresa.collection('ordenes').doc(id).delete();
+    };
+    OrdenService.prototype.agregarDetalle = function () {
+    };
+    OrdenService.prototype.obtenerOrdenes = function () {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('ordenes', function (query) { return query.orderBy('numero', 'desc'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    OrdenService.prototype.obtenerUltimaOrden = function () {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('ordenes', function (query) { return query.orderBy('numero', 'desc').limit(1); }).valueChanges();
+    };
+    OrdenService.prototype.obtenerUnaOrden = function (id) {
+        return this.empresa.collection('ordenes').doc(id).valueChanges();
+    };
+    OrdenService.prototype.obtenerServicios = function (id) {
+        return this.empresa.collection('ordenes').doc(id).collection('ordenServicios').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    OrdenService.prototype.modificarServicio = function (orden, datos) {
+        return this.empresa.collection('ordenes').doc(orden).update(datos);
+    };
+    OrdenService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"]])
+    ], OrdenService);
+    return OrdenService;
+}());
+
+
+
 /***/ })
 
 }]);
-//# sourceMappingURL=orden-trabajo-orden-trabajo-module.js.map
+//# sourceMappingURL=orden-trabajo-orden-trabajo-module~reporte-reporte-module.js.map

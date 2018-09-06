@@ -6,6 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AnadirCerosPipe implements PipeTransform {
 
   transform(number: number, width: number): any {
+
+    if(!number){
+        return 0
+    }
+
+   
     var numberOutput = Math.abs(number); /* Valor absoluto del número */
     var length = number.toString().length; /* Largo del número */ 
     var zero = "0"; /* String de cero */  

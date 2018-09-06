@@ -14,8 +14,8 @@ import swal from 'sweetalert2'
 })
 export class ConsultarPersonaComponent implements  OnInit {
   @ViewChild(DataTableDirective)
-  personas: Observable<any[]>;
-  personasq:any[]
+
+  personas:any[]
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings =  {
     pagingType: 'full_numbers',
@@ -53,19 +53,16 @@ export class ConsultarPersonaComponent implements  OnInit {
 
 
   ngOnInit() {
-   this.obtenerPersonas()
-
-  }
-
-  obtenerPersonas() {
- 
-    this.personas = this.personaService.obtenerPersonas()
-    this.personas.subscribe(res => {
+    this.personaService.obtenerPersonas()
+    .subscribe(res => {
       $('#example-datatable').DataTable().destroy();
+      this.personas = res
       this.dtTrigger.next();
     })
+
   }
 
+  
   
 
   ngOnDestroy(): void {
@@ -106,16 +103,8 @@ export class ConsultarPersonaComponent implements  OnInit {
       if (result.value) {
 
         
-    this.personaService.eliminarPersona(persona.id).then(res=>{
-
-      swal(
-        'Eliminado!',
-        'El registro ha sido eliminado.',
-        'success'
-      )
-    })
-       
-      }
+    this.personaService.eliminarPersona(persona.id)
+    swal('Eliminado!','El registro ha sido eliminado.','success')}
     })
 
   }

@@ -47,7 +47,7 @@ export class ConsultarOrdenComponent implements OnInit {
   };;
   dtTrigger: Subject<any> = new Subject();
 
-  ordenes: Observable<any[]>;
+  ordenes: any[] = [];
 
 
   constructor(private ordenService: OrdenService, private aFaut: AngularFireAuth) {
@@ -80,14 +80,12 @@ export class ConsultarOrdenComponent implements OnInit {
 
   obtenerOrdenes() {
 
-    this.ordenes = this.ordenService.obtenerOrdenes();
-
-    this.ordenes.subscribe(res => {
-      console.log(res)
-
-      $('#example-datatable').DataTable().destroy();
-      this.dtTrigger.next();
-    })
+    this.ordenService.obtenerOrdenes()
+      .subscribe(res => {
+        $('#example-datatable').DataTable().destroy();
+        this.ordenes = res
+        this.dtTrigger.next();
+      })
 
   }
 

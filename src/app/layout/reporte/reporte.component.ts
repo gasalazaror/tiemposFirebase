@@ -7,6 +7,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { PersonaService } from '../../servicios/persona.service';
 import { ServicioService } from '../../servicios/servicio/servicio.service';
+import swal from 'sweetalert2'
 
 @Component({
   selector: 'app-reporte',
@@ -20,6 +21,9 @@ export class ReporteComponent implements OnInit {
   fechaInicio: Date = new Date
   ordenes: Observable<any>
   ordenSeleccionada: any= ""
+  tareas: any[] = []
+
+  orden: Observable<any>
 
 
   operadores: Observable<any>
@@ -67,8 +71,15 @@ export class ReporteComponent implements OnInit {
   }
 
   buscarPorOrden() {
-    console.log('orden')
-    console.log(this.ordenSeleccionada)
+  
+    if(this.ordenSeleccionada!=''){
+      this.buscarTareasPorOrden(this.ordenSeleccionada)
+    
+    }else{
+      
+      swal('Existió un error','Seleccione una Orden de Trabajo para continuar','error')
+    }
+    
   }
 
   buscarPorOperador() {
@@ -77,6 +88,17 @@ export class ReporteComponent implements OnInit {
 
   buscarPorServicio() {
     console.log('servicio')
+  }
+
+
+
+  buscarTareasPorOrden(idOrden){
+   this.orden = this.ordenService.obtenerUnaOrden(idOrden)
+   this.orden.subscribe(res=>{
+
+    console.log(res)
+   })
+ 
   }
 
 }

@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module"],{
 
 /***/ "./node_modules/@ng-select/ng-select/esm5/ng-select.js":
 /*!*************************************************************!*\
@@ -3447,4 +3447,4 @@ var VehiculoService = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=orden-trabajo-orden-trabajo-module~vehiculo-vehiculo-module.js.map
+//# sourceMappingURL=orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module.js.map

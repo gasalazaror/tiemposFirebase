@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~persona-persona-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module"],{
 
 /***/ "./src/app/layout/persona/app-routing.module.ts":
 /*!******************************************************!*\
@@ -627,4 +627,4 @@ var PersonaModule = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=orden-trabajo-orden-trabajo-module~persona-persona-module.js.map
+//# sourceMappingURL=orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module.js.map

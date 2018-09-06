@@ -48,7 +48,7 @@ export class ConsultarVehiculoComponent implements OnInit {
   };
   dtTrigger: Subject<any> = new Subject();
   
-  vehiculos: Observable<any[]>;
+  vehiculos:any[] = [];
 
   constructor(private vehiculoService: VehiculoService) { 
     this.obtenerVehiculos()
@@ -58,9 +58,10 @@ export class ConsultarVehiculoComponent implements OnInit {
   }
 
   obtenerVehiculos() {
-    this.vehiculos =this.vehiculoService.obtenerVehiculos();
-    this.vehiculos.subscribe(res => {
+    this.vehiculoService.obtenerVehiculos()
+    .subscribe(res => {
       $('#example-datatable').DataTable().destroy();
+      this.vehiculos = res
       this.dtTrigger.next();
     })
   }

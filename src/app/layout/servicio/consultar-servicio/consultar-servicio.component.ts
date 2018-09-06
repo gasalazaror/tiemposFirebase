@@ -46,7 +46,7 @@ export class ConsultarServicioComponent implements OnInit {
   };
   dtTrigger: Subject<any> = new Subject();
 
-  servicios: Observable<any[]>;
+  servicios: any[]=[];
 
   constructor(private servicioService: ServicioService) {
     this.obtenerServicios()
@@ -58,10 +58,10 @@ export class ConsultarServicioComponent implements OnInit {
 
   obtenerServicios() {
 
-    this.servicios = this.servicioService.obtenerServicios()
-
-    this.servicios.subscribe(res => {
+    this.servicioService.obtenerServicios()
+    .subscribe(res => {
       $('#example-datatable').DataTable().destroy();
+      this.servicios = res
       this.dtTrigger.next();
     })
   }

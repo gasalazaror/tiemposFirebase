@@ -42,8 +42,7 @@ export class CrearServicioComponent implements OnInit {
         this.categoria = this.servicioService.obtenerCategoria(path2[1])
 
         this.categoria.subscribe(res => {
-          console.log('categoria')
-          console.log(res)
+       
           this.categoriaSeleccionada = { id: path2[1], data: res }
         })
 
@@ -141,36 +140,19 @@ export class CrearServicioComponent implements OnInit {
       else if (this.servicioForm.value.tiempoEstandar <= 0) {
         swal('Existió un error', 'El tiempo estándar no puede ser negativo o nulo', 'error');
       } else {
-        this.servicioService.validarServicio('codigo', this.servicioForm.value.codigo).subscribe(res => {
-          if (res.length > 0) {
-            swal('Existió un error', 'El código ingresado ya existe en la base de datos', 'error');
-          } else {
-            this.servicioService.validarServicio('descripcion', this.servicioForm.value.descripcion).subscribe(res => {
-              if (res.length > 0) {
-                swal('Existió un error', 'El servicio ingresado ya existe en la base de datos', 'error');
-              } else {
+        this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
+        .then(servicio => {
+          swal('Listo!', 'Servicio guardado exitosamente', 'success');
+          this.servicioForm = this.fb.group({
+            codigo: ['', Validators.required],
+            descripcion: ['', Validators.required],
+            tiempoEstandar: ['', Validators.required],
+            detalle: [''],
+          })
+        }, error => {
 
-                this.servicioService.crearServicio(this.categoriaSeleccionada.id, this.servicioForm.value)
-                    .then(servicio => {
-                      swal('Listo!', 'Servicio guardado exitosamente', 'success');
-                      this.servicioForm = this.fb.group({
-                        codigo: ['', Validators.required],
-                        descripcion: ['', Validators.required],
-                        tiempoEstandar: ['', Validators.required],
-                        detalle: [''],
-                      })
-                    }, error => {
-  
-  
-  
-                    })
-  
-  
-  
-  
-              }
-            })
-          }
+
+
         })
       }
     }

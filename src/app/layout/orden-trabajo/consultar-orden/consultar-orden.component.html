@@ -23,7 +23,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let orden of ordenes | async">
+              <tr *ngFor="let orden of ordenes">
                 <td>
                   <div class="btn-group">
                     <a title="Editar Orden de trabajo" href="/orden/crearorden/{{orden.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
