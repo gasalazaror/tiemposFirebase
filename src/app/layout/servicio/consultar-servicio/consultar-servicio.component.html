@@ -14,6 +14,7 @@
                 <th>Código</th>
                 <th>Servicio</th>
                 <th>Tiempo estándar</th>
+                <th>Categoría</th>
             
               </tr>
             </thead>
@@ -33,6 +34,7 @@
                     {{servicio.data.descripcion}}
                 </td>
                 <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>
+                <td>{{(servicio.cat)}}</td>
             
 
               </tr>

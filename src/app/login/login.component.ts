@@ -5,6 +5,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 
+import { FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
+
 
 @Component({
     selector: 'app-login',
@@ -22,7 +25,13 @@ export class LoginComponent implements OnInit {
     error: any
     empresaSeleccionada: any
 
-    constructor(public router: Router, public afAuth: AngularFireAuth, public db: AngularFirestore) {
+    personaForm = this.fb.group({
+        email: ['', Validators.required],
+        password: ['', Validators.required],
+       
+      })
+
+    constructor(private fb: FormBuilder,public router: Router, public afAuth: AngularFireAuth, public db: AngularFirestore) {
         this.error = ''
         this.listaEmpresas = []
         this.empresaSeleccionada = ''
@@ -57,13 +66,13 @@ export class LoginComponent implements OnInit {
             
         // })
 
-        this.afAuth.auth.signInWithEmailAndPassword(this.usuario.email, this.usuario.password)
+        this.afAuth.auth.signInWithEmailAndPassword(this.personaForm.value.email, this.personaForm.value.password)
         .then((usuario: any) => {
             if (usuario.user.emailVerified) {
                 this.error = ''
                 this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
                 this.empresas = this.db.collection('empresaUsuario',
-                    query => query.where('correo', '==', this.usuario.email).where('tipo', '==', 'usuario')).valueChanges()
+                    query => query.where('correo', '==', this.personaForm.value.email).where('tipo', '==', 'usuario')).valueChanges()
                 this.empresas.subscribe(res => {
                     this.listaEmpresas = []
                     res.forEach(elemento => {
@@ -83,14 +92,14 @@ export class LoginComponent implements OnInit {
 
         }, error => {
             this.error = error.message
-            console.log(error)
+        
         })
 
 
     }
 
     seleccionarEmpresa() {
-        console.log(this.empresaSeleccionada)
+
 
          localStorage.setItem('empresa', this.empresaSeleccionada);
          localStorage.setItem('isLoggedin', 'true');

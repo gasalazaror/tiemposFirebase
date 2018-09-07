@@ -48,6 +48,8 @@ export class ConsultarServicioComponent implements OnInit {
 
   servicios: any[]=[];
 
+  
+
   constructor(private servicioService: ServicioService) {
     this.obtenerServicios()
   }
@@ -59,9 +61,23 @@ export class ConsultarServicioComponent implements OnInit {
   obtenerServicios() {
 
     this.servicioService.obtenerServicios()
-    .subscribe(res => {
+    .subscribe((res:any) => {
+     
+    
       $('#example-datatable').DataTable().destroy();
       this.servicios = res
+
+      this.servicios.forEach(servicio => {
+ 
+        servicio.ref.subscribe(res=>{
+          servicio.cat = res.nombre
+        })
+ 
+       
+      });
+ 
+
+      
       this.dtTrigger.next();
     })
   }
