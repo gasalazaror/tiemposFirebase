@@ -53,12 +53,13 @@
         <thead>
           <tr>
             <th></th>
+            <th>Operador asignado</th>
             <th>Cantidad</th>
             <th>Código</th>
             <th>Servicio</th>
             <th>Tiempo estándar</th>
             <th>Estado</th>
-            <th>Operador asignado</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -66,12 +67,7 @@
             <td>
               <button [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'" title="Guardar cambios" class="btn btn-sm btn-primary" (click)="seleccionarPersona(servicio, index)"><i class="fa fa-floppy-o "></i></button>
             </td>
-            <td>{{servicio.cantidad}}</td>
-            <td>{{servicio.codigo}}</td>
-            <td>{{servicio.descripcion}}</td>
-            <td>{{servicio.tiempoEstandar*servicio.cantidad*60 | formatTime}}</td>
-            <td>{{servicio.estado}}</td>
-            <td>
+             <td>
 
               <div class="">
                 <div class="row">
@@ -84,6 +80,12 @@
               </div>
 
             </td>
+            <td>{{servicio.cantidad}}</td>
+            <td>{{servicio.codigo}}</td>
+            <td>{{servicio.descripcion}}</td>
+            <td>{{servicio.tiempoEstandar*servicio.cantidad*60 | formatTime}}</td>
+            <td>{{servicio.estado}}</td>
+           
 
           </tr>
 

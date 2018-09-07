@@ -20,10 +20,10 @@ export class ReporteComponent implements OnInit {
   filtro: String = "1"
   fechaInicio: Date = new Date
   ordenes: Observable<any>
-  ordenSeleccionada: any= ""
+  ordenSeleccionada: any = ""
   tareas: any[] = []
 
-  orden: Observable<any>
+  orden: any[] = []
 
 
   operadores: Observable<any>
@@ -62,7 +62,7 @@ export class ReporteComponent implements OnInit {
         this.buscarPorOperador()
         break;
       case "3":
-      this.buscarPorServicio()
+        this.buscarPorServicio()
         break;
 
       default:
@@ -71,15 +71,15 @@ export class ReporteComponent implements OnInit {
   }
 
   buscarPorOrden() {
-  
-    if(this.ordenSeleccionada!=''){
+
+    if (this.ordenSeleccionada != '') {
       this.buscarTareasPorOrden(this.ordenSeleccionada)
-    
-    }else{
-      
-      swal('Existió un error','Seleccione una Orden de Trabajo para continuar','error')
+
+    } else {
+
+      swal('Existió un error', 'Seleccione una Orden de Trabajo para continuar', 'error')
     }
-    
+
   }
 
   buscarPorOperador() {
@@ -92,13 +92,37 @@ export class ReporteComponent implements OnInit {
 
 
 
-  buscarTareasPorOrden(idOrden){
-   this.orden = this.ordenService.obtenerUnaOrden(idOrden)
-   this.orden.subscribe(res=>{
+  buscarTareasPorOrden(idOrden) {
+    this.ordenService.obtenerUnaOrden(idOrden)
+      .subscribe((res: any) => {
+       
 
-    console.log(res)
-   })
- 
+        var totalTiempoEstandar = 0;
+        var totalTiempoReal = 0;
+        var finalizadas = 0;
+
+
+        res.servicios.forEach(servicio => {
+
+          if(servicio.estado=='POR FACTURAR'){
+            finalizadas++
+            totalTiempoReal += servicio.estadisticas.tiempoReal;
+          }
+         totalTiempoEstandar+= servicio.cantidad*servicio.tiempoEstandar*60;
+        });
+
+        var eficiencia  =  0 
+        if(totalTiempoReal!=0){
+         eficiencia =  totalTiempoEstandar/totalTiempoReal*100
+        }else{
+          eficiencia = 100
+        }
+        res.estadisticas= {tiempoEstandar : totalTiempoEstandar, tiempoReal: totalTiempoReal, finalizadas: finalizadas, eficiencia: eficiencia.toFixed(2)}
+        this.orden = res
+     
+
+      })
+
   }
 
 }
