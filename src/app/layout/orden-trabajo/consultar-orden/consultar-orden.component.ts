@@ -8,6 +8,7 @@ import swal from 'sweetalert2'
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as jsPdf from 'jspdf'
 import { ReporteService } from '../../../servicios/reporte/reporte.service';
+import { PersonaService } from '../../../servicios/persona.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { ReporteService } from '../../../servicios/reporte/reporte.service';
 export class ConsultarOrdenComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  user: any = ''
   dtOptions: DataTables.Settings = this.dtOptions = {
     pagingType: 'full_numbers',
     pageLength: 5,
@@ -52,16 +54,20 @@ export class ConsultarOrdenComponent implements OnInit {
   ordenes: any[] = [];
 
 
-  constructor(private ordenService: OrdenService, private aFaut: AngularFireAuth, private reporteService: ReporteService) {
+  constructor(private personaService: PersonaService, private ordenService: OrdenService, private aFaut: AngularFireAuth, private reporteService: ReporteService) {
 
   }
 
   ngOnInit() {
     this.obtenerOrdenes()
+
+    this.personaService.obtenerUsuario().subscribe(res => {
+      this.user = res
+    })
   }
 
   print(orden) {
- 
+
 
   }
 
@@ -70,41 +76,57 @@ export class ConsultarOrdenComponent implements OnInit {
     this.ordenService.obtenerOrdenes()
       .subscribe(res => {
         $('#example-datatable').DataTable().destroy();
+
+
+
         this.ordenes = res
+        this.ordenes.forEach(orden => {
+          orden.esUsuario == false
+
+          orden.data.servicios.forEach(servicio => {
+  
+
+            if (servicio.operador.data.correo == this.user.email) {
+              orden.esUsuario = true
+            }
+          });
+
+     
+        });
         this.dtTrigger.next();
       })
 
   }
 
-  imprimirOrden(orden){
+  imprimirOrden(orden) {
     var pdf = new jsPdf('p', 'pt', 'letter');
     var source = $('#imprimir')[0];
 
     var specialElementHandlers = {
-        '#bypassme': function (element, renderer) {
-            return true
-        }
+      '#bypassme': function (element, renderer) {
+        return true
+      }
     };
-     var margins = {
-        top: 80,
-        bottom: 60,
-        left: 40,
-        width: 522
+    var margins = {
+      top: 80,
+      bottom: 60,
+      left: 40,
+      width: 522
     };
 
     pdf.fromHTML(
-        source, 
-        margins.left, // x coord
-        margins.top, { // y coord
-            'width': margins.width, 
-            'elementHandlers': specialElementHandlers
-        },
+      source,
+      margins.left, // x coord
+      margins.top, { // y coord
+        'width': margins.width,
+        'elementHandlers': specialElementHandlers
+      },
 
-        function (dispose) {
-            pdf.save('Prueba.pdf');
-        }, margins
+      function (dispose) {
+        pdf.save('Prueba.pdf');
+      }, margins
     );
-  
+
   }
 
   eliminarOrden(orden) {

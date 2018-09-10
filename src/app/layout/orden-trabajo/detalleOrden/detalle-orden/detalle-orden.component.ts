@@ -10,6 +10,8 @@ import * as moment from 'moment';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2'
+import { PersonaService } from '../../../../servicios/persona.service';
+
 
 @Component({
   selector: 'app-detalle-orden',
@@ -23,7 +25,7 @@ export class DetalleOrdenComponent implements OnInit {
   orden: Observable<any>;
   tiempoEstandar: number = 0;
   tiempoEstandarFor: any;
-
+  user:any=''
   tiempoReal: number = 0;
   tiempoRealFor: any;
 
@@ -41,6 +43,7 @@ export class DetalleOrdenComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private modalService: NgbModal,
     private ordenService: OrdenService,
+    private personaService: PersonaService,
     private db: AngularFirestore) {
 
     this.servicios = []
@@ -70,6 +73,10 @@ export class DetalleOrdenComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.personaService.obtenerUsuario().subscribe(res=>{
+    this.user = res
+    })
   }
 
   iniciarServicio(index) {

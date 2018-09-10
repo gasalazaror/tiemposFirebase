@@ -156,7 +156,7 @@ var LoginComponent = /** @class */ (function () {
                 _this.router.navigate(['/recuperacion']);
             }
         }, function (error) {
-            _this.error = error.message;
+            _this.error = 'Correo o contraseña incorrectos';
         });
     };
     LoginComponent.prototype.seleccionarEmpresa = function () {

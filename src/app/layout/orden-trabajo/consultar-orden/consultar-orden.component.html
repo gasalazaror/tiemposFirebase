@@ -29,7 +29,7 @@
                     <a title="Editar Orden de trabajo" routerLink="/orden/crearorden/{{orden.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                     <button title="Eliminar Orden de Trabajo"  class="btn btn-danger btn-sm" (click)="eliminarOrden(orden)"><i class="fa fa-trash"></i></button>
 
-                    <a title="Operaciones" routerLink="/orden/detalleorden/{{orden.id}}" class="btn btn-success btn-sm"><i class="fa fa-clock-o"></i></a>
+                    <a *ngIf="orden.esUsuario" title="Operaciones" routerLink="/orden/detalleorden/{{orden.id}}" class="btn btn-success btn-sm"><i class="fa fa-clock-o"></i></a>
                    
                   </div>
 

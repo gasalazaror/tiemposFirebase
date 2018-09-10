@@ -125,7 +125,7 @@
         <div class="card-body">
           <div class="row">
             <div class="btn-group">
-              <p>Escoja producto o servicio: &nbsp;&nbsp;</p>
+              <p>Seleccione productos o servicios: &nbsp;&nbsp;</p>
               <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
                   <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
                   bindLabel="data.descripcion" formControlName="servicio">

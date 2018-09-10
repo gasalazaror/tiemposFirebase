@@ -51,11 +51,11 @@
 
                     <img src="assets/images/kanban.png" width="100%" alt=""><br><br><br>
                     <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" autofocus type="text"  formControlName="email" class="form-control" placeholder="Correo electrónico"
-                        required autofocus>
+                    <input type="email" id="inputEmail" autofocus type="text" formControlName="email" class="form-control"
+                        placeholder="Correo electrónico" required autofocus>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" type="password"  formControlName="password" class="form-control" placeholder="Contraseña"
-                        required>
+                    <input type="password" id="inputPassword" type="password" formControlName="password" class="form-control"
+                        placeholder="Contraseña" required>
                     <div *ngIf="error!=''" class="alert alert-danger" role="alert">
                         <strong>Error: </strong> {{error}}
                     </div>
@@ -66,7 +66,8 @@
 
                 <div *ngIf="listaEmpresas.length>0">
                     <hr> Empresas:
-                    <select *ngIf="listaEmpresas.length>0" [(ngModel)]="empresaSeleccionada" class="form-control" (change)="seleccionarEmpresa()">
+                    <select *ngIf="listaEmpresas.length>0" [(ngModel)]="empresaSeleccionada" class="form-control"
+                        (change)="seleccionarEmpresa()">
                         <option value="">Seleccionar...</option>
                         <option *ngFor="let empresa of listaEmpresas" value="{{empresa.path}}">{{empresa.nombre}}</option>
                     </select>
@@ -95,7 +96,8 @@
                         <li class="list-inline-item">&sdot;</li>
 
                     </ul>
-                    <p class="text-muted small mb-4 mb-lg-0">&copy; Kanban Technologies 2018. Todos los derechos reservados.</p>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; Kanban Technologies 2018. Todos los derechos
+                        reservados.</p>
                 </div>
                 <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                     <ul class="list-inline mb-0">
@@ -104,6 +106,17 @@
                                 <i class="fa fa-facebook fa-2x fa-fw"></i>
                             </a>
                         </li>
+                        <li class="list-inline-item mr-3">
+                            <a href="https://www.linkedin.com/in/kanban-technologies-21ab76166/">
+                                <i class="fa fa-linkedin   fa-2x fa-fw"></i>
+                            </a>
+                        </li>
+
+                        <li class="list-inline-item mr-3">
+                                <a href="https://twitter.com/KaizenMkt1">
+                                    <i class="fa fa-twitter   fa-2x fa-fw"></i>
+                                </a>
+                            </li>
 
                     </ul>
                 </div>

@@ -15,8 +15,8 @@
                 <th>No. OT </th>
                 <td>
 
-                  <a href="orden/informacionorden/{{id}}">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>
-                  <a href="orden/crearorden/{{id}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                  <a routerLink="orden/informacionorden/{{id}}">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>
+                  <a routerLink="orden/crearorden/{{id}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                 </td>
               </tr>
 
@@ -123,26 +123,30 @@
                   <tbody>
                     <tr *ngFor="let servicio of servicios let index = index" [class.table-danger]="servicio.estado=='CITA/RECEPCION'" [class.table-warning]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
                       [class.table-primary]="servicio.estado=='EN PRODUCCIÓN'" [class.table-success]="servicio.estado=='POR FACTURAR'"
-                      [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO'">
+                      [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'">
                       <td>
-                        <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm"
-                          title="Iniciar">
-                          <i class="fa fa-play"></i>
 
-                        </button>
-
-                        <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-warning btn-sm" title="Pausar">
-                          <i class="fa fa-pause"></i>
-                        </button>
-
-                        <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" title="Detener" class="btn btn-danger btn-sm">
-                          <i class="fa fa-stop"></i>
-                        </button>
-                        <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-success btn-sm text-white"
-                          title="Reanudar">
-                          <i class="fa fa-play"></i>
-                        </button>
-
+                        <div *ngIf="servicio.operador.data.correo == user.email">
+                            <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm"
+                            title="Iniciar">
+                            <i class="fa fa-play"></i>
+  
+                          </button>
+  
+                          <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-warning btn-sm" title="Pausar">
+                            <i class="fa fa-pause"></i>
+                          </button>
+  
+                          <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" title="Detener" class="btn btn-danger btn-sm">
+                            <i class="fa fa-stop"></i>
+                          </button>
+                          <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-success btn-sm text-white"
+                            title="Reanudar">
+                            <i class="fa fa-play"></i>
+                          </button>
+  
+                        </div>
+                       
                         <button *ngIf="servicio.estado=='POR FACTURAR'" (click)="open2(content2, index)" class="btn btn-primary btn-sm">
                           <i class="fa fa-eye"></i>
                         </button>
