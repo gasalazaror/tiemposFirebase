@@ -83,7 +83,12 @@ export class CrearOrdenComponent implements OnInit {
       this.ultimaOrden = this.ordenService.obtenerUltimaOrden();
 
       this.ultimaOrden.subscribe(res => {
-        this.numeroOrden = res[0].numero+1
+        if(res[0]){
+          this.numeroOrden = res[0].numero+1
+        }else{
+          this.numeroOrden = 1
+        }
+      
       })
 
     }

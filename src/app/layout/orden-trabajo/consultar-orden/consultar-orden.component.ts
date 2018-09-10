@@ -6,6 +6,8 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2'
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as jsPdf from 'jspdf'
+import { ReporteService } from '../../../servicios/reporte/reporte.service';
 
 
 @Component({
@@ -50,7 +52,7 @@ export class ConsultarOrdenComponent implements OnInit {
   ordenes: any[] = [];
 
 
-  constructor(private ordenService: OrdenService, private aFaut: AngularFireAuth) {
+  constructor(private ordenService: OrdenService, private aFaut: AngularFireAuth, private reporteService: ReporteService) {
 
   }
 
@@ -59,22 +61,7 @@ export class ConsultarOrdenComponent implements OnInit {
   }
 
   print(orden) {
-    let printContents, popupWin;
-    printContents = document.getElementById('print-section').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
-    popupWin.document.write(`
-      <html>
-        <head>
-          <title>Print tab</title>
-          <style>
-          //........Customized style.......
-          </style>
-        </head>
-    <body onload="window.print();window.close()">${printContents}</body>
-      </html>`
-    );
-    popupWin.document.close();
+ 
 
   }
 
@@ -87,6 +74,37 @@ export class ConsultarOrdenComponent implements OnInit {
         this.dtTrigger.next();
       })
 
+  }
+
+  imprimirOrden(orden){
+    var pdf = new jsPdf('p', 'pt', 'letter');
+    var source = $('#imprimir')[0];
+
+    var specialElementHandlers = {
+        '#bypassme': function (element, renderer) {
+            return true
+        }
+    };
+     var margins = {
+        top: 80,
+        bottom: 60,
+        left: 40,
+        width: 522
+    };
+
+    pdf.fromHTML(
+        source, 
+        margins.left, // x coord
+        margins.top, { // y coord
+            'width': margins.width, 
+            'elementHandlers': specialElementHandlers
+        },
+
+        function (dispose) {
+            pdf.save('Prueba.pdf');
+        }, margins
+    );
+  
   }
 
   eliminarOrden(orden) {
