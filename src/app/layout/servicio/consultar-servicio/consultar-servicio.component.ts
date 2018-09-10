@@ -66,18 +66,6 @@ export class ConsultarServicioComponent implements OnInit {
     
       $('#example-datatable').DataTable().destroy();
       this.servicios = res
-
-      this.servicios.forEach(servicio => {
- 
-        servicio.ref.subscribe(res=>{
-          servicio.cat = res.nombre
-        })
- 
-       
-      });
- 
-
-      
       this.dtTrigger.next();
     })
   }

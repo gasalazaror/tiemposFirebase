@@ -14,7 +14,7 @@
                 <th>Código</th>
                 <th>Servicio</th>
                 <th>Tiempo estándar</th>
-                <th>Categoría</th>
+
             
               </tr>
             </thead>
@@ -23,7 +23,7 @@
 
                 <td>
                   <div class="btn-group">
-                      <a title="Editar Servicio"  href="/servicio/crearservicio/{{servicio.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                      <a title="Editar Servicio"  routerLink="/servicio/crearservicio/{{servicio.id}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                       <button title="Eliminar Servicio"  class="btn btn-danger btn-sm" (click)="eliminarServicio(servicio)"><i class="fa fa-trash"></i></button>
                   </div>
                    
@@ -34,7 +34,7 @@
                     {{servicio.data.descripcion}}
                 </td>
                 <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>
-                <td>{{(servicio.cat)}}</td>
+              
             
 
               </tr>

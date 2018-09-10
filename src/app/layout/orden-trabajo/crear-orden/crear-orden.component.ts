@@ -213,13 +213,13 @@ export class CrearOrdenComponent implements OnInit {
 
         swal({
           title: 'Está seguro?',
-          text: "Está seguro que desea modifica la Orden de Trabajo",
+          text: "Está seguro que desea modificar la Orden de Trabajo",
           type: 'question',
           showCancelButton: true,
           cancelButtonText: 'Cancelar',
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, eliminar!'
+          confirmButtonText: 'Si, modificar!'
         }).then((result) => {
           if (result.value) {
             var vehiculo = {

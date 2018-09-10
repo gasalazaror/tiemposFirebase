@@ -89,22 +89,7 @@ export class ServicioService {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
-        const uid = a.payload.doc.ref.id
-        const parten = data.categoria
-        console.log(parten)
-    
-       
-
-        
-
-        var ref2: AngularFirestoreDocument;
-        ref2 = this.empresa.collection('categorias').doc(parten.id)
-
-        const ref = ref2.valueChanges() 
-        
-      
-     
-        return { id, data, ref };
+        return { id, data };
       }))
     );
   }
