@@ -1,5 +1,2553 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["orden-trabajo-orden-trabajo-module~reporte-reporte-module"],{
 
+/***/ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * jsPDF AutoTable plugin v2.3.5
+ * Copyright (c) 2014 Simon Bengtsson, https://github.com/simonbengtsson/jsPDF-AutoTable 
+ * 
+ * Licensed under the MIT License.
+ * http://opensource.org/licenses/mit-license
+ * 
+ * * /if (typeof window === 'object') window.jspdfAutoTableVersion = '2.3.5';/*
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.min.js"));
+	else { var i, a; }
+})(window, function(__WEBPACK_EXTERNAL_MODULE__18__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+/**
+ * Ratio between font size and font height. The number comes from jspdf's source code
+ */
+exports.FONT_ROW_RATIO = 1.15;
+var models_1 = __webpack_require__(4);
+var table = null;
+var assign = __webpack_require__(5);
+var entries = __webpack_require__(19);
+/**
+ * Styles for the themes (overriding the default styles)
+ */
+exports.getTheme = function (name) {
+    var themes = {
+        'striped': {
+            table: { fillColor: 255, textColor: 80, fontStyle: 'normal' },
+            header: { textColor: 255, fillColor: [41, 128, 185], fontStyle: 'bold' },
+            body: {},
+            alternateRow: { fillColor: 245 }
+        },
+        'grid': {
+            table: { fillColor: 255, textColor: 80, fontStyle: 'normal', lineWidth: 0.1 },
+            header: { textColor: 255, fillColor: [26, 188, 156], fontStyle: 'bold', lineWidth: 0 },
+            body: {},
+            alternateRow: {}
+        },
+        'plain': {
+            header: { fontStyle: 'bold' }
+        }
+    };
+    return themes[name];
+};
+function getDefaults() {
+    var scaleFactor = Config.scaleFactor();
+    return {
+        // Styling
+        theme: 'striped',
+        styles: {},
+        headerStyles: {},
+        bodyStyles: {},
+        alternateRowStyles: {},
+        columnStyles: {},
+        // Properties
+        startY: false,
+        margin: 40 / scaleFactor,
+        pageBreak: 'auto',
+        tableWidth: 'auto',
+        showHeader: 'everyPage',
+        tableLineWidth: 0,
+        tableLineColor: 200,
+        // Hooks
+        createdHeaderCell: function (cell, data) { },
+        createdCell: function (cell, data) { },
+        drawHeaderRow: function (row, data) { },
+        drawRow: function (row, data) { },
+        drawHeaderCell: function (cell, data) { },
+        drawCell: function (cell, data) { },
+        addPageContent: function (data) { }
+    };
+}
+exports.getDefaults = getDefaults;
+// Base style for all themes
+function defaultStyles() {
+    var scaleFactor = Config.scaleFactor();
+    return {
+        font: "helvetica",
+        fontStyle: 'normal',
+        overflow: 'ellipsize',
+        fillColor: false,
+        textColor: 20,
+        halign: 'left',
+        valign: 'top',
+        fontSize: 10,
+        cellPadding: 5 / scaleFactor,
+        lineColor: 200,
+        lineWidth: 0 / scaleFactor,
+        columnWidth: 'auto'
+    };
+}
+var Config = /** @class */ (function () {
+    function Config() {
+    }
+    Config.pageSize = function () {
+        var pageSize = table.doc.internal.pageSize;
+        // JSPDF 1.4 uses get functions instead of properties on pageSize
+        if (pageSize.width == null) {
+            pageSize = {
+                width: pageSize.getWidth(),
+                height: pageSize.getHeight()
+            };
+        }
+        return pageSize;
+    };
+    Config.applyUserStyles = function () {
+        Config.applyStyles(table.userStyles);
+    };
+    Config.createTable = function (doc) {
+        table = new models_1.Table(doc);
+        return table;
+    };
+    Config.tableInstance = function () {
+        return table;
+    };
+    Config.scaleFactor = function () {
+        return table.doc.internal.scaleFactor;
+    };
+    Config.hooksData = function (additionalData) {
+        if (additionalData === void 0) { additionalData = {}; }
+        return assign({
+            pageCount: table.pageCount,
+            settings: table.settings,
+            table: table,
+            doc: table.doc,
+            cursor: table.cursor
+        }, additionalData || {});
+    };
+    Config.initSettings = function (table, allOptions) {
+        var _loop_1 = function (styleProp) {
+            var styles = allOptions.map(function (opts) { return opts[styleProp] || {}; });
+            table.styles[styleProp] = assign.apply(void 0, [{}].concat(styles));
+        };
+        // Merge styles one level deeper
+        for (var _i = 0, _a = Object.keys(table.styles); _i < _a.length; _i++) {
+            var styleProp = _a[_i];
+            _loop_1(styleProp);
+        }
+        // Append event handlers instead of replacing them
+        for (var _b = 0, _c = entries(table.hooks); _b < _c.length; _b++) {
+            var _d = _c[_b], hookName = _d[0], list = _d[1];
+            for (var _e = 0, allOptions_1 = allOptions; _e < allOptions_1.length; _e++) {
+                var opts = allOptions_1[_e];
+                if (opts && opts[hookName]) {
+                    list.push(opts[hookName]);
+                }
+            }
+        }
+        // Merge all other options one level
+        table.settings = assign.apply(void 0, [getDefaults()].concat(allOptions));
+    };
+    // This is messy, only keep array and number format the next major version
+    Config.marginOrPadding = function (value, defaultValue) {
+        var newValue = {};
+        if (Array.isArray(value)) {
+            if (value.length >= 4) {
+                newValue = { 'top': value[0], 'right': value[1], 'bottom': value[2], 'left': value[3] };
+            }
+            else if (value.length === 3) {
+                newValue = { 'top': value[0], 'right': value[1], 'bottom': value[2], 'left': value[1] };
+            }
+            else if (value.length === 2) {
+                newValue = { 'top': value[0], 'right': value[1], 'bottom': value[0], 'left': value[1] };
+            }
+            else if (value.length === 1) {
+                value = value[0];
+            }
+            else {
+                value = defaultValue;
+            }
+        }
+        else if (typeof value === 'object') {
+            if (value['vertical']) {
+                value['top'] = value['vertical'];
+                value['bottom'] = value['vertical'];
+            }
+            else if (value['horizontal']) {
+                value['right'] = value['horizontal'];
+                value['left'] = value['horizontal'];
+            }
+            for (var _i = 0, _a = ['top', 'right', 'bottom', 'left']; _i < _a.length; _i++) {
+                var side = _a[_i];
+                newValue[side] = value[side] || value[side] === 0 ? value[side] : defaultValue;
+            }
+        }
+        if (typeof value === 'number') {
+            newValue = { 'top': value, 'right': value, 'bottom': value, 'left': value };
+        }
+        return newValue;
+    };
+    Config.styles = function (styles) {
+        styles = Array.isArray(styles) ? styles : [styles];
+        return assign.apply(void 0, [defaultStyles()].concat(styles));
+    };
+    Config.applyStyles = function (styles) {
+        var doc = table.doc;
+        var styleModifiers = {
+            fillColor: doc.setFillColor,
+            textColor: doc.setTextColor,
+            fontStyle: doc.setFontStyle,
+            lineColor: doc.setDrawColor,
+            lineWidth: doc.setLineWidth,
+            font: doc.setFont,
+            fontSize: doc.setFontSize
+        };
+        Object.keys(styleModifiers).forEach(function (name) {
+            var style = styles[name];
+            var modifier = styleModifiers[name];
+            if (typeof style !== 'undefined') {
+                if (Array.isArray(style)) {
+                    modifier.apply(this, style);
+                }
+                else {
+                    modifier(style);
+                }
+            }
+        });
+    };
+    return Config;
+}());
+exports.Config = Config;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fnToStr = Function.prototype.toString;
+
+var constructorRegex = /^\s*class /;
+var isES6ClassFn = function isES6ClassFn(value) {
+	try {
+		var fnStr = fnToStr.call(value);
+		var singleStripped = fnStr.replace(/\/\/.*\n/g, '');
+		var multiStripped = singleStripped.replace(/\/\*[.\s\S]*\*\//g, '');
+		var spaceStripped = multiStripped.replace(/\n/mg, ' ').replace(/ {2}/g, ' ');
+		return constructorRegex.test(spaceStripped);
+	} catch (e) {
+		return false; // not a function
+	}
+};
+
+var tryFunctionObject = function tryFunctionObject(value) {
+	try {
+		if (isES6ClassFn(value)) { return false; }
+		fnToStr.call(value);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
+var toStr = Object.prototype.toString;
+var fnClass = '[object Function]';
+var genClass = '[object GeneratorFunction]';
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+
+module.exports = function isCallable(value) {
+	if (!value) { return false; }
+	if (typeof value !== 'function' && typeof value !== 'object') { return false; }
+	if (hasToStringTag) { return tryFunctionObject(value); }
+	if (isES6ClassFn(value)) { return false; }
+	var strClass = toStr.call(value);
+	return strClass === fnClass || strClass === genClass;
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var implementation = __webpack_require__(29);
+
+module.exports = Function.prototype.bind || implementation;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var config_1 = __webpack_require__(0);
+var painter_1 = __webpack_require__(16);
+function getStringWidth(text, styles) {
+    var k = config_1.Config.scaleFactor();
+    var fontSize = styles.fontSize / k;
+    config_1.Config.applyStyles(styles);
+    text = Array.isArray(text) ? text : [text];
+    var maxWidth = 0;
+    text.forEach(function (line) {
+        var width = config_1.Config.tableInstance().doc.getStringUnitWidth(line);
+        if (width > maxWidth) {
+            maxWidth = width;
+        }
+    });
+    var precision = 10000 * k;
+    maxWidth = Math.floor(maxWidth * precision) / precision;
+    return maxWidth * fontSize;
+}
+exports.getStringWidth = getStringWidth;
+/**
+ * Ellipsize the text to fit in the width
+ */
+function ellipsize(text, width, styles, ellipsizeStr) {
+    if (ellipsizeStr === void 0) { ellipsizeStr = '...'; }
+    if (Array.isArray(text)) {
+        var value_1 = [];
+        text.forEach(function (str, i) {
+            value_1[i] = ellipsize(str, width, styles, ellipsizeStr);
+        });
+        return value_1;
+    }
+    var precision = 10000 * config_1.Config.scaleFactor();
+    width = Math.ceil(width * precision) / precision;
+    if (width >= getStringWidth(text, styles)) {
+        return text;
+    }
+    while (width < getStringWidth(text + ellipsizeStr, styles)) {
+        if (text.length <= 1) {
+            break;
+        }
+        text = text.substring(0, text.length - 1);
+    }
+    return text.trim() + ellipsizeStr;
+}
+exports.ellipsize = ellipsize;
+function addTableBorder() {
+    var table = config_1.Config.tableInstance();
+    var styles = { lineWidth: table.settings.tableLineWidth, lineColor: table.settings.tableLineColor };
+    config_1.Config.applyStyles(styles);
+    var fs = getFillStyle(styles);
+    if (fs) {
+        table.doc.rect(table.pageStartX, table.pageStartY, table.width, table.cursor.y - table.pageStartY, fs);
+    }
+}
+exports.addTableBorder = addTableBorder;
+function addPage() {
+    var table = config_1.Config.tableInstance();
+    table.finalY = table.cursor.y;
+    // Add user content just before adding new page ensure it will 
+    // be drawn above other things on the page
+    addContentHooks();
+    addTableBorder();
+    nextPage(table.doc);
+    table.pageCount++;
+    table.cursor = { x: table.margin('left'), y: table.margin('top') };
+    table.pageStartX = table.cursor.x;
+    table.pageStartY = table.cursor.y;
+    if (table.settings.showHeader === true || table.settings.showHeader === 'everyPage') {
+        painter_1.printRow(table.headerRow, table.hooks.drawHeaderRow, table.hooks.drawHeaderCell);
+    }
+}
+exports.addPage = addPage;
+function addContentHooks() {
+    for (var _i = 0, _a = config_1.Config.tableInstance().hooks.addPageContent; _i < _a.length; _i++) {
+        var hook = _a[_i];
+        config_1.Config.applyUserStyles();
+        hook(config_1.Config.hooksData());
+    }
+    config_1.Config.applyUserStyles();
+}
+exports.addContentHooks = addContentHooks;
+function getFillStyle(styles) {
+    var drawLine = styles.lineWidth > 0;
+    var drawBackground = styles.fillColor || styles.fillColor === 0;
+    if (drawLine && drawBackground) {
+        return 'DF'; // Fill then stroke
+    }
+    else if (drawLine) {
+        return 'S'; // Only stroke (transparent background)
+    }
+    else if (drawBackground) {
+        return 'F'; // Only fill, no stroke
+    }
+    else {
+        return false;
+    }
+}
+exports.getFillStyle = getFillStyle;
+function nextPage(doc) {
+    var current = doc.internal.getCurrentPageInfo().pageNumber;
+    doc.setPage(current + 1);
+    var newCurrent = doc.internal.getCurrentPageInfo().pageNumber;
+    if (newCurrent === current) {
+        doc.addPage();
+    }
+}
+exports.nextPage = nextPage;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var config_1 = __webpack_require__(0);
+exports.table = {};
+var Table = /** @class */ (function () {
+    function Table(doc) {
+        this.height = 0;
+        this.width = 0;
+        this.contentWidth = 0;
+        this.preferredWidth = 0;
+        this.rows = [];
+        this.columns = [];
+        this.headerRow = null;
+        this.pageCount = 1;
+        this.hooks = {
+            createdHeaderCell: [],
+            createdCell: [],
+            drawHeaderRow: [],
+            drawRow: [],
+            drawHeaderCell: [],
+            drawCell: [],
+            addPageContent: []
+        };
+        this.styles = {
+            styles: {},
+            headerStyles: {},
+            bodyStyles: {},
+            alternateRowStyles: {},
+            columnStyles: {}
+        };
+        this.doc = doc;
+        this.userStyles = {
+            textColor: 30,
+            fontSize: doc.internal.getFontSize(),
+            fontStyle: doc.internal.getFont().fontStyle
+        };
+    }
+    Table.prototype.margin = function (side) {
+        return config_1.Config.marginOrPadding(this.settings.margin, config_1.getDefaults().margin)[side];
+    };
+    return Table;
+}());
+exports.Table = Table;
+var Row = /** @class */ (function () {
+    function Row(raw, index) {
+        this.cells = {};
+        this.spansMultiplePages = false;
+        this.pageCount = 1;
+        this.height = 0;
+        this.y = 0;
+        this.maxLineCount = 1;
+        this.raw = raw;
+        this.index = index;
+    }
+    return Row;
+}());
+exports.Row = Row;
+var Cell = /** @class */ (function () {
+    function Cell(raw) {
+        this.styles = {};
+        this.text = '';
+        this.contentWidth = 0;
+        this.textPos = {};
+        this.height = 0;
+        this.width = 0;
+        this.x = 0;
+        this.y = 0;
+        this.raw = raw;
+    }
+    Cell.prototype.padding = function (name) {
+        var padding = config_1.Config.marginOrPadding(this.styles.cellPadding, config_1.Config.styles([]).cellPadding);
+        if (name === 'vertical') {
+            return padding.top + padding.bottom;
+        }
+        else if (name === 'horizontal') {
+            return padding.left + padding.right;
+        }
+        else {
+            return padding[name];
+        }
+    };
+    return Cell;
+}());
+exports.Cell = Cell;
+var Column = /** @class */ (function () {
+    function Column(dataKey, index) {
+        this.options = {};
+        this.contentWidth = 0;
+        this.preferredWidth = 0;
+        this.widthStyle = 'auto';
+        this.width = 0;
+        this.x = 0;
+        this.dataKey = dataKey;
+        this.index = index;
+    }
+    return Column;
+}());
+exports.Column = Column;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var keys = __webpack_require__(20);
+var foreach = __webpack_require__(22);
+var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
+
+var toStr = Object.prototype.toString;
+
+var isFunction = function (fn) {
+	return typeof fn === 'function' && toStr.call(fn) === '[object Function]';
+};
+
+var arePropertyDescriptorsSupported = function () {
+	var obj = {};
+	try {
+		Object.defineProperty(obj, 'x', { enumerable: false, value: obj });
+        /* eslint-disable no-unused-vars, no-restricted-syntax */
+        for (var _ in obj) { return false; }
+        /* eslint-enable no-unused-vars, no-restricted-syntax */
+		return obj.x === obj;
+	} catch (e) { /* this is IE 8. */
+		return false;
+	}
+};
+var supportsDescriptors = Object.defineProperty && arePropertyDescriptorsSupported();
+
+var defineProperty = function (object, name, value, predicate) {
+	if (name in object && (!isFunction(predicate) || !predicate())) {
+		return;
+	}
+	if (supportsDescriptors) {
+		Object.defineProperty(object, name, {
+			configurable: true,
+			enumerable: false,
+			value: value,
+			writable: true
+		});
+	} else {
+		object[name] = value;
+	}
+};
+
+var defineProperties = function (object, map) {
+	var predicates = arguments.length > 2 ? arguments[2] : {};
+	var props = keys(map);
+	if (hasSymbols) {
+		props = props.concat(Object.getOwnPropertySymbols(map));
+	}
+	foreach(props, function (name) {
+		defineProperty(object, name, map[name], predicates[name]);
+	});
+};
+
+defineProperties.supportsDescriptors = !!supportsDescriptors;
+
+module.exports = defineProperties;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var ES = __webpack_require__(23);
+var has = __webpack_require__(14);
+var bind = __webpack_require__(2);
+var isEnumerable = bind.call(Function.call, Object.prototype.propertyIsEnumerable);
+
+module.exports = function entries(O) {
+	var obj = ES.RequireObjectCoercible(O);
+	var entrys = [];
+	for (var key in obj) {
+		if (has(obj, key) && isEnumerable(obj, key)) {
+			entrys.push([key, obj[key]]);
+		}
+	}
+	return entrys;
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+module.exports = Number.isNaN || function isNaN(a) {
+	return a !== a;
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+var $isNaN = Number.isNaN || function (a) { return a !== a; };
+
+module.exports = Number.isFinite || function (x) { return typeof x === 'number' && !$isNaN(x) && x !== Infinity && x !== -Infinity; };
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+var has = Object.prototype.hasOwnProperty;
+module.exports = Object.assign || function assign(target, source) {
+	for (var key in source) {
+		if (has.call(source, key)) {
+			target[key] = source[key];
+		}
+	}
+	return target;
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports = function sign(number) {
+	return number >= 0 ? 1 : -1;
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = function mod(number, modulo) {
+	var remain = number % modulo;
+	return Math.floor(remain >= 0 ? remain : remain + modulo);
+};
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = function isPrimitive(value) {
+	return value === null || (typeof value !== 'function' && typeof value !== 'object');
+};
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var bind = __webpack_require__(2);
+
+module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var implementation = __webpack_require__(7);
+
+module.exports = function getPolyfill() {
+	return typeof Object.entries === 'function' ? Object.entries : implementation;
+};
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var config_1 = __webpack_require__(0);
+var common_1 = __webpack_require__(3);
+function printFullRow(row, drawRowHooks, drawCellHooks) {
+    var remainingRowHeight = 0;
+    var remainingTexts = {};
+    var table = config_1.Config.tableInstance();
+    if (!canFitOnPage(row.height)) {
+        if (row.maxLineCount <= 1) {
+            common_1.addPage();
+        }
+        else {
+            // Modify the row to fit the current page and calculate text and height of partial row
+            row.spansMultiplePages = true;
+            var pageHeight = config_1.Config.pageSize().height;
+            var maxCellHeight = 0;
+            for (var j = 0; j < table.columns.length; j++) {
+                var col = table.columns[j];
+                var cell = row.cells[col.dataKey];
+                var fontHeight = cell.styles.fontSize / config_1.Config.scaleFactor() * config_1.FONT_ROW_RATIO;
+                var vPadding = cell.padding('vertical');
+                var remainingPageSpace = pageHeight - table.cursor.y - table.margin('bottom');
+                var remainingLineCount = Math.floor((remainingPageSpace - vPadding) / fontHeight);
+                // Splice with negative values results in unexpected results, therefore eliminate
+                // scenarios where less than one line is remaining, but are shown
+                if (remainingLineCount < 0) {
+                    remainingLineCount = 0;
+                }
+                if (Array.isArray(cell.text) && cell.text.length > remainingLineCount) {
+                    var remainingLines = cell.text.splice(remainingLineCount, cell.text.length);
+                    remainingTexts[col.dataKey] = remainingLines;
+                    var cellHeight = cell.text.length * fontHeight + vPadding;
+                    if (cellHeight > maxCellHeight) {
+                        maxCellHeight = cellHeight;
+                    }
+                    var rCellHeight = remainingLines.length * fontHeight + vPadding;
+                    if (rCellHeight > remainingRowHeight) {
+                        remainingRowHeight = rCellHeight;
+                    }
+                }
+            }
+            // Reset row height since text are now removed
+            row.height = maxCellHeight;
+        }
+    }
+    printRow(row, drawRowHooks, drawCellHooks);
+    // Parts of the row is now printed. Time for adding a new page, prune 
+    // the text and start over
+    if (Object.keys(remainingTexts).length > 0) {
+        for (var j = 0; j < table.columns.length; j++) {
+            var col = table.columns[j];
+            var cell = row.cells[col.dataKey];
+            cell.text = remainingTexts[col.dataKey] || '';
+        }
+        common_1.addPage();
+        row.pageCount++;
+        row.height = remainingRowHeight;
+        printFullRow(row, drawRowHooks, drawCellHooks);
+    }
+}
+exports.printFullRow = printFullRow;
+function printRow(row, drawRowHooks, drawCellHooks) {
+    var table = config_1.Config.tableInstance();
+    row.y = table.cursor.y;
+    for (var _i = 0, drawRowHooks_1 = drawRowHooks; _i < drawRowHooks_1.length; _i++) {
+        var hook = drawRowHooks_1[_i];
+        if (hook(row, config_1.Config.hooksData({ row: row, addPage: common_1.addPage })) === false) {
+            return;
+        }
+    }
+    table.cursor.x = table.margin('left');
+    for (var i = 0; i < table.columns.length; i++) {
+        var column = table.columns[i];
+        var cell = row.cells[column.dataKey];
+        if (!cell) {
+            continue;
+        }
+        config_1.Config.applyStyles(cell.styles);
+        cell.x = table.cursor.x;
+        cell.y = table.cursor.y;
+        cell.height = row.height;
+        cell.width = column.width;
+        if (cell.styles.valign === 'top') {
+            cell.textPos.y = table.cursor.y + cell.padding('top');
+        }
+        else if (cell.styles.valign === 'bottom') {
+            cell.textPos.y = table.cursor.y + row.height - cell.padding('bottom');
+        }
+        else {
+            cell.textPos.y = table.cursor.y + row.height / 2;
+        }
+        if (cell.styles.halign === 'right') {
+            cell.textPos.x = cell.x + cell.width - cell.padding('right');
+        }
+        else if (cell.styles.halign === 'center') {
+            cell.textPos.x = cell.x + cell.width / 2;
+        }
+        else {
+            cell.textPos.x = cell.x + cell.padding('left');
+        }
+        var shouldDrawCell = true;
+        var data = config_1.Config.hooksData({ column: column, row: row, addPage: common_1.addPage });
+        for (var _a = 0, drawCellHooks_1 = drawCellHooks; _a < drawCellHooks_1.length; _a++) {
+            var hook = drawCellHooks_1[_a];
+            if (hook(cell, data) === false) {
+                shouldDrawCell = false;
+            }
+        }
+        if (shouldDrawCell) {
+            var fillStyle = common_1.getFillStyle(cell.styles);
+            if (fillStyle) {
+                table.doc.rect(cell.x, cell.y, cell.width, cell.height, fillStyle);
+            }
+            table.doc.autoTableText(cell.text, cell.textPos.x, cell.textPos.y, {
+                halign: cell.styles.halign,
+                valign: cell.styles.valign
+            });
+        }
+        table.cursor.x += cell.width;
+    }
+    table.cursor.y += row.height;
+}
+exports.printRow = printRow;
+function canFitOnPage(rowHeight) {
+    var table = config_1.Config.tableInstance();
+    var pos = rowHeight + table.cursor.y + table.margin('bottom');
+    return pos < config_1.Config.pageSize().height;
+}
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var jsPDF = __webpack_require__(18);
+var config_1 = __webpack_require__(0);
+var common_1 = __webpack_require__(3);
+var painter_1 = __webpack_require__(16);
+var calculator_1 = __webpack_require__(34);
+var creator_1 = __webpack_require__(35);
+/**
+ * Create a table from a set of rows and columns.
+ *
+ * @param {Object[]|String[]} headers Either as an array of objects or array of strings
+ * @param {Object[][]|String[][]} data Either as an array of objects or array of strings
+ * @param {Object} [tableOptions={}] Options that will override the default ones
+ */
+jsPDF.API.autoTable = function (headers, data, tableOptions) {
+    if (tableOptions === void 0) { tableOptions = {}; }
+    this.autoTableState = this.autoTableState || {};
+    jsPDF.autoTableState = jsPDF.autoTableState || {};
+    var allOptions = [jsPDF.autoTableState.defaults || {}, this.autoTableState.defaults || {}, tableOptions || {}];
+    creator_1.validateInput(headers, data, allOptions);
+    var table = config_1.Config.createTable(this);
+    config_1.Config.initSettings(table, allOptions);
+    var settings = table.settings;
+    // Create the table model with its columns, rows and cells
+    creator_1.createModels(headers, data);
+    settings.margin = config_1.Config.marginOrPadding(settings.margin, config_1.getDefaults().margin);
+    calculator_1.calculateWidths(this, config_1.Config.pageSize().width);
+    table.cursor = {
+        x: table.margin('left'),
+        y: settings.startY === false ? table.margin('top') : settings.startY
+    };
+    var minTableBottomPos = settings.startY + table.margin('bottom') + table.headerRow.height;
+    if (settings.pageBreak === 'avoid') {
+        minTableBottomPos += table.height;
+    }
+    var pageHeight = config_1.Config.pageSize().height;
+    if ((settings.pageBreak === 'always' && settings.startY !== false) ||
+        (settings.startY !== false && minTableBottomPos > pageHeight)) {
+        common_1.nextPage(table.doc);
+        table.cursor.y = table.margin('top');
+    }
+    table.pageStartX = table.cursor.x;
+    table.pageStartY = table.cursor.y;
+    config_1.Config.applyUserStyles();
+    if (settings.showHeader === true || settings.showHeader === 'firstPage' || settings.showHeader === 'everyPage') {
+        painter_1.printRow(table.headerRow, table.hooks.drawHeaderRow, table.hooks.drawHeaderCell);
+    }
+    config_1.Config.applyUserStyles();
+    table.rows.forEach(function (row) {
+        painter_1.printFullRow(row, table.hooks.drawRow, table.hooks.drawCell);
+    });
+    common_1.addTableBorder();
+    // Don't call global and document addPageContent more than once for each page
+    var pageNumber = this.internal.getCurrentPageInfo().pageNumber;
+    if (this.autoTableState.addPageHookPages && this.autoTableState.addPageHookPages[pageNumber]) {
+        if (typeof tableOptions['addPageContent'] === 'function') {
+            tableOptions['addPageContent'](config_1.Config.hooksData());
+        }
+    }
+    else {
+        if (!this.autoTableState.addPageHookPages)
+            this.autoTableState.addPageHookPages = {};
+        this.autoTableState.addPageHookPages[pageNumber] = true;
+        common_1.addContentHooks();
+    }
+    table.finalY = table.cursor.y;
+    this.autoTable.previous = table;
+    config_1.Config.applyUserStyles();
+    return this;
+};
+// Enables doc.autoTable.previous.finalY || 40;
+jsPDF.API.autoTable.previous = false;
+jsPDF.API.autoTableSetDefaults = function (defaults) {
+    if (!this.autoTableState)
+        this.autoTableState = {};
+    if (defaults && typeof defaults === 'object') {
+        this.autoTableState.defaults = defaults;
+    }
+    else {
+        delete this.autoTableState.defaults;
+    }
+    return this;
+};
+jsPDF.autoTableSetDefaults = function (defaults) {
+    if (!jsPDF.autoTableState)
+        jsPDF.autoTableState = {};
+    if (defaults && typeof defaults === 'object') {
+        this.autoTableState.defaults = defaults;
+    }
+    else {
+        delete this.autoTableState.defaults;
+    }
+    jsPDF.autoTableState.defaults = defaults;
+};
+/**
+ * Parses an html table
+ *
+ * @param tableElem Html table element
+ * @param includeHiddenElements If to include hidden rows and columns (defaults to false)
+ * @returns Object Object with two properties, columns and rows
+ */
+jsPDF.API.autoTableHtmlToJson = function (tableElem, includeHiddenElements) {
+    includeHiddenElements = includeHiddenElements || false;
+    if (!tableElem || !(tableElem instanceof HTMLTableElement)) {
+        console.error("A HTMLTableElement has to be sent to autoTableHtmlToJson");
+        return null;
+    }
+    var columns = {}, rows = [];
+    var header = tableElem.rows[0];
+    for (var i = 0; i < header.cells.length; i++) {
+        var cell = header.cells[i];
+        var style = window.getComputedStyle(cell);
+        if (includeHiddenElements || style.display !== 'none') {
+            columns[i] = cell;
+        }
+    }
+    var _loop_1 = function (i) {
+        var tableRow = tableElem.rows[i];
+        var style = window.getComputedStyle(tableRow);
+        if (includeHiddenElements || style.display !== 'none') {
+            var rowData_1 = [];
+            Object.keys(columns).forEach(function (key) {
+                var cell = tableRow.cells[key];
+                rowData_1.push(cell);
+            });
+            rows.push(rowData_1);
+        }
+    };
+    for (var i = 1; i < tableElem.rows.length; i++) {
+        _loop_1(i);
+    }
+    var values = Object.keys(columns).map(function (key) { return columns[key]; });
+    return { columns: values, rows: rows, data: rows };
+};
+/**
+ * Improved text function with halign and valign support
+ * Inspiration from: http://stackoverflow.com/questions/28327510/align-text-right-using-jspdf/28433113#28433113
+ */
+jsPDF.API.autoTableText = function (text, x, y, styles) {
+    if (typeof x !== 'number' || typeof y !== 'number') {
+        console.error('The x and y parameters are required. Missing for the text: ', text);
+    }
+    var k = this.internal.scaleFactor;
+    var fontSize = this.internal.getFontSize() / k;
+    var splitRegex = /\r\n|\r|\n/g;
+    var splitText = null;
+    var lineCount = 1;
+    if (styles.valign === 'middle' || styles.valign === 'bottom' || styles.halign === 'center' || styles.halign === 'right') {
+        splitText = typeof text === 'string' ? text.split(splitRegex) : text;
+        lineCount = splitText.length || 1;
+    }
+    // Align the top
+    y += fontSize * (2 - config_1.FONT_ROW_RATIO);
+    if (styles.valign === 'middle')
+        y -= (lineCount / 2) * fontSize * config_1.FONT_ROW_RATIO;
+    else if (styles.valign === 'bottom')
+        y -= lineCount * fontSize * config_1.FONT_ROW_RATIO;
+    if (styles.halign === 'center' || styles.halign === 'right') {
+        var alignSize = fontSize;
+        if (styles.halign === 'center')
+            alignSize *= 0.5;
+        if (lineCount >= 1) {
+            for (var iLine = 0; iLine < splitText.length; iLine++) {
+                this.text(splitText[iLine], x - this.getStringUnitWidth(splitText[iLine]) * alignSize, y);
+                y += fontSize;
+            }
+            return this;
+        }
+        x -= this.getStringUnitWidth(text) * alignSize;
+    }
+    this.text(text, x, y);
+    return this;
+};
+/**
+ * @deprecated Use doc.autoTable.previous.finalY instead
+ */
+jsPDF.API.autoTableEndPosY = function () {
+    var prev = this.autoTable.previous;
+    if (prev.cursor && typeof prev.cursor.y === 'number') {
+        return prev.cursor.y;
+    }
+    else {
+        return 0;
+    }
+};
+/**
+ * @deprecated Use jsPDF.autoTableSetDefaults({addPageContent: function() {}}) instead
+ */
+jsPDF.API.autoTableAddPageContent = function (hook) {
+    if (!jsPDF.API.autoTable.globalDefaults) {
+        jsPDF.API.autoTable.globalDefaults = {};
+    }
+    jsPDF.API.autoTable.globalDefaults.addPageContent = hook;
+    return this;
+};
+/**
+ * @deprecated Use data.addPage in hooks instead
+ */
+jsPDF.API.autoTableAddPage = function () {
+    common_1.addPage();
+    return this;
+};
+
+
+jsPDF.API.textAlign = function(txt, options, x, y) {
+    options = options || {};
+    // Use the options align property to specify desired text alignment
+    // Param x will be ignored if desired text alignment is 'center'.
+    // Usage of options can easily extend the function to apply different text
+    // styles and sizes
+
+    // Get current font size
+    var fontSize = this.internal.getFontSize();
+
+    // Get page width
+    var pageWidth = this.internal.pageSize.width;
+
+    // Get the actual text's width
+    // You multiply the unit width of your string by your font size and divide
+    // by the internal scale factor. The division is necessary
+    // for the case where you use units other than 'pt' in the constructor
+    // of jsPDF.
+
+    var txtWidth = this.getStringUnitWidth(txt) * fontSize / this.internal.scaleFactor;
+
+    if (options.align === "center") {
+
+            // Calculate text's x coordinate
+            x = (pageWidth - txtWidth) / 2;
+
+    } else if (options.align === "centerAtX") { // center on X value
+
+            x = x - (txtWidth / 2);
+
+    } else if (options.align === "right") {
+
+            x = x - txtWidth;
+    }
+
+    // Draw text at x,y
+    this.text(txt, x, y);
+};
+/*
+API.textWidth = function(txt) {
+    var fontSize = this.internal.getFontSize();
+    return this.getStringUnitWidth(txt)*fontSize / this.internal.scaleFactor;
+};
+*/
+
+jsPDF.API.getLineHeight = function(txt) {
+    return this.internal.getLineHeight();
+};
+
+
+
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__18__;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var define = __webpack_require__(6);
+
+var implementation = __webpack_require__(7);
+var getPolyfill = __webpack_require__(15);
+var shim = __webpack_require__(33);
+
+var polyfill = getPolyfill();
+
+define(polyfill, {
+	getPolyfill: getPolyfill,
+	implementation: implementation,
+	shim: shim
+});
+
+module.exports = polyfill;
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// modified from https://github.com/es-shims/es5-shim
+var has = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+var slice = Array.prototype.slice;
+var isArgs = __webpack_require__(21);
+var isEnumerable = Object.prototype.propertyIsEnumerable;
+var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
+var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
+var dontEnums = [
+	'toString',
+	'toLocaleString',
+	'valueOf',
+	'hasOwnProperty',
+	'isPrototypeOf',
+	'propertyIsEnumerable',
+	'constructor'
+];
+var equalsConstructorPrototype = function (o) {
+	var ctor = o.constructor;
+	return ctor && ctor.prototype === o;
+};
+var excludedKeys = {
+	$console: true,
+	$external: true,
+	$frame: true,
+	$frameElement: true,
+	$frames: true,
+	$innerHeight: true,
+	$innerWidth: true,
+	$outerHeight: true,
+	$outerWidth: true,
+	$pageXOffset: true,
+	$pageYOffset: true,
+	$parent: true,
+	$scrollLeft: true,
+	$scrollTop: true,
+	$scrollX: true,
+	$scrollY: true,
+	$self: true,
+	$webkitIndexedDB: true,
+	$webkitStorageInfo: true,
+	$window: true
+};
+var hasAutomationEqualityBug = (function () {
+	/* global window */
+	if (typeof window === 'undefined') { return false; }
+	for (var k in window) {
+		try {
+			if (!excludedKeys['$' + k] && has.call(window, k) && window[k] !== null && typeof window[k] === 'object') {
+				try {
+					equalsConstructorPrototype(window[k]);
+				} catch (e) {
+					return true;
+				}
+			}
+		} catch (e) {
+			return true;
+		}
+	}
+	return false;
+}());
+var equalsConstructorPrototypeIfNotBuggy = function (o) {
+	/* global window */
+	if (typeof window === 'undefined' || !hasAutomationEqualityBug) {
+		return equalsConstructorPrototype(o);
+	}
+	try {
+		return equalsConstructorPrototype(o);
+	} catch (e) {
+		return false;
+	}
+};
+
+var keysShim = function keys(object) {
+	var isObject = object !== null && typeof object === 'object';
+	var isFunction = toStr.call(object) === '[object Function]';
+	var isArguments = isArgs(object);
+	var isString = isObject && toStr.call(object) === '[object String]';
+	var theKeys = [];
+
+	if (!isObject && !isFunction && !isArguments) {
+		throw new TypeError('Object.keys called on a non-object');
+	}
+
+	var skipProto = hasProtoEnumBug && isFunction;
+	if (isString && object.length > 0 && !has.call(object, 0)) {
+		for (var i = 0; i < object.length; ++i) {
+			theKeys.push(String(i));
+		}
+	}
+
+	if (isArguments && object.length > 0) {
+		for (var j = 0; j < object.length; ++j) {
+			theKeys.push(String(j));
+		}
+	} else {
+		for (var name in object) {
+			if (!(skipProto && name === 'prototype') && has.call(object, name)) {
+				theKeys.push(String(name));
+			}
+		}
+	}
+
+	if (hasDontEnumBug) {
+		var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
+
+		for (var k = 0; k < dontEnums.length; ++k) {
+			if (!(skipConstructor && dontEnums[k] === 'constructor') && has.call(object, dontEnums[k])) {
+				theKeys.push(dontEnums[k]);
+			}
+		}
+	}
+	return theKeys;
+};
+
+keysShim.shim = function shimObjectKeys() {
+	if (Object.keys) {
+		var keysWorksWithArguments = (function () {
+			// Safari 5.0 bug
+			return (Object.keys(arguments) || '').length === 2;
+		}(1, 2));
+		if (!keysWorksWithArguments) {
+			var originalKeys = Object.keys;
+			Object.keys = function keys(object) {
+				if (isArgs(object)) {
+					return originalKeys(slice.call(object));
+				} else {
+					return originalKeys(object);
+				}
+			};
+		}
+	} else {
+		Object.keys = keysShim;
+	}
+	return Object.keys || keysShim;
+};
+
+module.exports = keysShim;
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toStr = Object.prototype.toString;
+
+module.exports = function isArguments(value) {
+	var str = toStr.call(value);
+	var isArgs = str === '[object Arguments]';
+	if (!isArgs) {
+		isArgs = str !== '[object Array]' &&
+			value !== null &&
+			typeof value === 'object' &&
+			typeof value.length === 'number' &&
+			value.length >= 0 &&
+			toStr.call(value.callee) === '[object Function]';
+	}
+	return isArgs;
+};
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+
+var hasOwn = Object.prototype.hasOwnProperty;
+var toString = Object.prototype.toString;
+
+module.exports = function forEach (obj, fn, ctx) {
+    if (toString.call(fn) !== '[object Function]') {
+        throw new TypeError('iterator must be a function');
+    }
+    var l = obj.length;
+    if (l === +l) {
+        for (var i = 0; i < l; i++) {
+            fn.call(ctx, obj[i], i, obj);
+        }
+    } else {
+        for (var k in obj) {
+            if (hasOwn.call(obj, k)) {
+                fn.call(ctx, obj[k], k, obj);
+            }
+        }
+    }
+};
+
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var ES6 = __webpack_require__(24);
+var assign = __webpack_require__(10);
+
+var ES7 = assign(ES6, {
+	// https://github.com/tc39/ecma262/pull/60
+	SameValueNonNumber: function SameValueNonNumber(x, y) {
+		if (typeof x === 'number' || typeof x !== typeof y) {
+			throw new TypeError('SameValueNonNumber requires two non-number values of the same type.');
+		}
+		return this.SameValue(x, y);
+	}
+});
+
+module.exports = ES7;
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toStr = Object.prototype.toString;
+var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol';
+var symbolToStr = hasSymbols ? Symbol.prototype.toString : toStr;
+
+var $isNaN = __webpack_require__(8);
+var $isFinite = __webpack_require__(9);
+var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
+
+var assign = __webpack_require__(10);
+var sign = __webpack_require__(11);
+var mod = __webpack_require__(12);
+var isPrimitive = __webpack_require__(25);
+var toPrimitive = __webpack_require__(26);
+var parseInteger = parseInt;
+var bind = __webpack_require__(2);
+var strSlice = bind.call(Function.call, String.prototype.slice);
+var isBinary = bind.call(Function.call, RegExp.prototype.test, /^0b[01]+$/i);
+var isOctal = bind.call(Function.call, RegExp.prototype.test, /^0o[0-7]+$/i);
+var nonWS = ['\u0085', '\u200b', '\ufffe'].join('');
+var nonWSregex = new RegExp('[' + nonWS + ']', 'g');
+var hasNonWS = bind.call(Function.call, RegExp.prototype.test, nonWSregex);
+var invalidHexLiteral = /^[-+]0x[0-9a-f]+$/i;
+var isInvalidHexLiteral = bind.call(Function.call, RegExp.prototype.test, invalidHexLiteral);
+
+// whitespace from: http://es5.github.io/#x15.5.4.20
+// implementation from https://github.com/es-shims/es5-shim/blob/v3.4.0/es5-shim.js#L1304-L1324
+var ws = [
+	'\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003',
+	'\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028',
+	'\u2029\uFEFF'
+].join('');
+var trimRegex = new RegExp('(^[' + ws + ']+)|([' + ws + ']+$)', 'g');
+var replace = bind.call(Function.call, String.prototype.replace);
+var trim = function (value) {
+	return replace(value, trimRegex, '');
+};
+
+var ES5 = __webpack_require__(30);
+
+var hasRegExpMatcher = __webpack_require__(32);
+
+// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-abstract-operations
+var ES6 = assign(assign({}, ES5), {
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-call-f-v-args
+	Call: function Call(F, V) {
+		var args = arguments.length > 2 ? arguments[2] : [];
+		if (!this.IsCallable(F)) {
+			throw new TypeError(F + ' is not a function');
+		}
+		return F.apply(V, args);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toprimitive
+	ToPrimitive: toPrimitive,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toboolean
+	// ToBoolean: ES5.ToBoolean,
+
+	// http://www.ecma-international.org/ecma-262/6.0/#sec-tonumber
+	ToNumber: function ToNumber(argument) {
+		var value = isPrimitive(argument) ? argument : toPrimitive(argument, 'number');
+		if (typeof value === 'symbol') {
+			throw new TypeError('Cannot convert a Symbol value to a number');
+		}
+		if (typeof value === 'string') {
+			if (isBinary(value)) {
+				return this.ToNumber(parseInteger(strSlice(value, 2), 2));
+			} else if (isOctal(value)) {
+				return this.ToNumber(parseInteger(strSlice(value, 2), 8));
+			} else if (hasNonWS(value) || isInvalidHexLiteral(value)) {
+				return NaN;
+			} else {
+				var trimmed = trim(value);
+				if (trimmed !== value) {
+					return this.ToNumber(trimmed);
+				}
+			}
+		}
+		return Number(value);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tointeger
+	// ToInteger: ES5.ToNumber,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toint32
+	// ToInt32: ES5.ToInt32,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32
+	// ToUint32: ES5.ToUint32,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toint16
+	ToInt16: function ToInt16(argument) {
+		var int16bit = this.ToUint16(argument);
+		return int16bit >= 0x8000 ? int16bit - 0x10000 : int16bit;
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint16
+	// ToUint16: ES5.ToUint16,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toint8
+	ToInt8: function ToInt8(argument) {
+		var int8bit = this.ToUint8(argument);
+		return int8bit >= 0x80 ? int8bit - 0x100 : int8bit;
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint8
+	ToUint8: function ToUint8(argument) {
+		var number = this.ToNumber(argument);
+		if ($isNaN(number) || number === 0 || !$isFinite(number)) { return 0; }
+		var posInt = sign(number) * Math.floor(Math.abs(number));
+		return mod(posInt, 0x100);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint8clamp
+	ToUint8Clamp: function ToUint8Clamp(argument) {
+		var number = this.ToNumber(argument);
+		if ($isNaN(number) || number <= 0) { return 0; }
+		if (number >= 0xFF) { return 0xFF; }
+		var f = Math.floor(argument);
+		if (f + 0.5 < number) { return f + 1; }
+		if (number < f + 0.5) { return f; }
+		if (f % 2 !== 0) { return f + 1; }
+		return f;
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring
+	ToString: function ToString(argument) {
+		if (typeof argument === 'symbol') {
+			throw new TypeError('Cannot convert a Symbol value to a string');
+		}
+		return String(argument);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toobject
+	ToObject: function ToObject(value) {
+		this.RequireObjectCoercible(value);
+		return Object(value);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-topropertykey
+	ToPropertyKey: function ToPropertyKey(argument) {
+		var key = this.ToPrimitive(argument, String);
+		return typeof key === 'symbol' ? symbolToStr.call(key) : this.ToString(key);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
+	ToLength: function ToLength(argument) {
+		var len = this.ToInteger(argument);
+		if (len <= 0) { return 0; } // includes converting -0 to +0
+		if (len > MAX_SAFE_INTEGER) { return MAX_SAFE_INTEGER; }
+		return len;
+	},
+
+	// http://www.ecma-international.org/ecma-262/6.0/#sec-canonicalnumericindexstring
+	CanonicalNumericIndexString: function CanonicalNumericIndexString(argument) {
+		if (toStr.call(argument) !== '[object String]') {
+			throw new TypeError('must be a string');
+		}
+		if (argument === '-0') { return -0; }
+		var n = this.ToNumber(argument);
+		if (this.SameValue(this.ToString(n), argument)) { return n; }
+		return void 0;
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-requireobjectcoercible
+	RequireObjectCoercible: ES5.CheckObjectCoercible,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isarray
+	IsArray: Array.isArray || function IsArray(argument) {
+		return toStr.call(argument) === '[object Array]';
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable
+	// IsCallable: ES5.IsCallable,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isconstructor
+	IsConstructor: function IsConstructor(argument) {
+		return typeof argument === 'function' && !!argument.prototype; // unfortunately there's no way to truly check this without try/catch `new argument`
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isextensible-o
+	IsExtensible: function IsExtensible(obj) {
+		if (!Object.preventExtensions) { return true; }
+		if (isPrimitive(obj)) {
+			return false;
+		}
+		return Object.isExtensible(obj);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isinteger
+	IsInteger: function IsInteger(argument) {
+		if (typeof argument !== 'number' || $isNaN(argument) || !$isFinite(argument)) {
+			return false;
+		}
+		var abs = Math.abs(argument);
+		return Math.floor(abs) === abs;
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ispropertykey
+	IsPropertyKey: function IsPropertyKey(argument) {
+		return typeof argument === 'string' || typeof argument === 'symbol';
+	},
+
+	// http://www.ecma-international.org/ecma-262/6.0/#sec-isregexp
+	IsRegExp: function IsRegExp(argument) {
+		if (!argument || typeof argument !== 'object') {
+			return false;
+		}
+		if (hasSymbols) {
+			var isRegExp = argument[Symbol.match];
+			if (typeof isRegExp !== 'undefined') {
+				return ES5.ToBoolean(isRegExp);
+			}
+		}
+		return hasRegExpMatcher(argument);
+	},
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevalue
+	// SameValue: ES5.SameValue,
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero
+	SameValueZero: function SameValueZero(x, y) {
+		return (x === y) || ($isNaN(x) && $isNaN(y));
+	},
+
+	/**
+	 * 7.3.2 GetV (V, P)
+	 * 1. Assert: IsPropertyKey(P) is true.
+	 * 2. Let O be ToObject(V).
+	 * 3. ReturnIfAbrupt(O).
+	 * 4. Return O.[[Get]](P, V).
+	 */
+	GetV: function GetV(V, P) {
+		// 7.3.2.1
+		if (!this.IsPropertyKey(P)) {
+			throw new TypeError('Assertion failed: IsPropertyKey(P) is not true');
+		}
+
+		// 7.3.2.2-3
+		var O = this.ToObject(V);
+
+		// 7.3.2.4
+		return O[P];
+	},
+
+	/**
+	 * 7.3.9 - http://www.ecma-international.org/ecma-262/6.0/#sec-getmethod
+	 * 1. Assert: IsPropertyKey(P) is true.
+	 * 2. Let func be GetV(O, P).
+	 * 3. ReturnIfAbrupt(func).
+	 * 4. If func is either undefined or null, return undefined.
+	 * 5. If IsCallable(func) is false, throw a TypeError exception.
+	 * 6. Return func.
+	 */
+	GetMethod: function GetMethod(O, P) {
+		// 7.3.9.1
+		if (!this.IsPropertyKey(P)) {
+			throw new TypeError('Assertion failed: IsPropertyKey(P) is not true');
+		}
+
+		// 7.3.9.2
+		var func = this.GetV(O, P);
+
+		// 7.3.9.4
+		if (func == null) {
+			return undefined;
+		}
+
+		// 7.3.9.5
+		if (!this.IsCallable(func)) {
+			throw new TypeError(P + 'is not a function');
+		}
+
+		// 7.3.9.6
+		return func;
+	},
+
+	/**
+	 * 7.3.1 Get (O, P) - http://www.ecma-international.org/ecma-262/6.0/#sec-get-o-p
+	 * 1. Assert: Type(O) is Object.
+	 * 2. Assert: IsPropertyKey(P) is true.
+	 * 3. Return O.[[Get]](P, O).
+	 */
+	Get: function Get(O, P) {
+		// 7.3.1.1
+		if (this.Type(O) !== 'Object') {
+			throw new TypeError('Assertion failed: Type(O) is not Object');
+		}
+		// 7.3.1.2
+		if (!this.IsPropertyKey(P)) {
+			throw new TypeError('Assertion failed: IsPropertyKey(P) is not true');
+		}
+		// 7.3.1.3
+		return O[P];
+	},
+
+	Type: function Type(x) {
+		if (typeof x === 'symbol') {
+			return 'Symbol';
+		}
+		return ES5.Type(x);
+	},
+
+	// http://www.ecma-international.org/ecma-262/6.0/#sec-speciesconstructor
+	SpeciesConstructor: function SpeciesConstructor(O, defaultConstructor) {
+		if (this.Type(O) !== 'Object') {
+			throw new TypeError('Assertion failed: Type(O) is not Object');
+		}
+		var C = O.constructor;
+		if (typeof C === 'undefined') {
+			return defaultConstructor;
+		}
+		if (this.Type(C) !== 'Object') {
+			throw new TypeError('O.constructor is not an Object');
+		}
+		var S = hasSymbols && Symbol.species ? C[Symbol.species] : undefined;
+		if (S == null) {
+			return defaultConstructor;
+		}
+		if (this.IsConstructor(S)) {
+			return S;
+		}
+		throw new TypeError('no constructor found');
+	}
+});
+
+delete ES6.CheckObjectCoercible; // renamed in ES6 to RequireObjectCoercible
+
+module.exports = ES6;
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = function isPrimitive(value) {
+	return value === null || (typeof value !== 'function' && typeof value !== 'object');
+};
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol';
+
+var isPrimitive = __webpack_require__(13);
+var isCallable = __webpack_require__(1);
+var isDate = __webpack_require__(27);
+var isSymbol = __webpack_require__(28);
+
+var ordinaryToPrimitive = function OrdinaryToPrimitive(O, hint) {
+	if (typeof O === 'undefined' || O === null) {
+		throw new TypeError('Cannot call method on ' + O);
+	}
+	if (typeof hint !== 'string' || (hint !== 'number' && hint !== 'string')) {
+		throw new TypeError('hint must be "string" or "number"');
+	}
+	var methodNames = hint === 'string' ? ['toString', 'valueOf'] : ['valueOf', 'toString'];
+	var method, result, i;
+	for (i = 0; i < methodNames.length; ++i) {
+		method = O[methodNames[i]];
+		if (isCallable(method)) {
+			result = method.call(O);
+			if (isPrimitive(result)) {
+				return result;
+			}
+		}
+	}
+	throw new TypeError('No default value');
+};
+
+var GetMethod = function GetMethod(O, P) {
+	var func = O[P];
+	if (func !== null && typeof func !== 'undefined') {
+		if (!isCallable(func)) {
+			throw new TypeError(func + ' returned for property ' + P + ' of object ' + O + ' is not a function');
+		}
+		return func;
+	}
+};
+
+// http://www.ecma-international.org/ecma-262/6.0/#sec-toprimitive
+module.exports = function ToPrimitive(input, PreferredType) {
+	if (isPrimitive(input)) {
+		return input;
+	}
+	var hint = 'default';
+	if (arguments.length > 1) {
+		if (PreferredType === String) {
+			hint = 'string';
+		} else if (PreferredType === Number) {
+			hint = 'number';
+		}
+	}
+
+	var exoticToPrim;
+	if (hasSymbols) {
+		if (Symbol.toPrimitive) {
+			exoticToPrim = GetMethod(input, Symbol.toPrimitive);
+		} else if (isSymbol(input)) {
+			exoticToPrim = Symbol.prototype.valueOf;
+		}
+	}
+	if (typeof exoticToPrim !== 'undefined') {
+		var result = exoticToPrim.call(input, hint);
+		if (isPrimitive(result)) {
+			return result;
+		}
+		throw new TypeError('unable to convert exotic object to primitive');
+	}
+	if (hint === 'default' && (isDate(input) || isSymbol(input))) {
+		hint = 'string';
+	}
+	return ordinaryToPrimitive(input, hint === 'default' ? 'number' : hint);
+};
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getDay = Date.prototype.getDay;
+var tryDateObject = function tryDateObject(value) {
+	try {
+		getDay.call(value);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
+
+var toStr = Object.prototype.toString;
+var dateClass = '[object Date]';
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+
+module.exports = function isDateObject(value) {
+	if (typeof value !== 'object' || value === null) { return false; }
+	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
+};
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toStr = Object.prototype.toString;
+var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
+
+if (hasSymbols) {
+	var symToStr = Symbol.prototype.toString;
+	var symStringRegex = /^Symbol\(.*\)$/;
+	var isSymbolObject = function isSymbolObject(value) {
+		if (typeof value.valueOf() !== 'symbol') { return false; }
+		return symStringRegex.test(symToStr.call(value));
+	};
+	module.exports = function isSymbol(value) {
+		if (typeof value === 'symbol') { return true; }
+		if (toStr.call(value) !== '[object Symbol]') { return false; }
+		try {
+			return isSymbolObject(value);
+		} catch (e) {
+			return false;
+		}
+	};
+} else {
+	module.exports = function isSymbol(value) {
+		// this environment does not support Symbols.
+		return false;
+	};
+}
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+var slice = Array.prototype.slice;
+var toStr = Object.prototype.toString;
+var funcType = '[object Function]';
+
+module.exports = function bind(that) {
+    var target = this;
+    if (typeof target !== 'function' || toStr.call(target) !== funcType) {
+        throw new TypeError(ERROR_MESSAGE + target);
+    }
+    var args = slice.call(arguments, 1);
+
+    var bound;
+    var binder = function () {
+        if (this instanceof bound) {
+            var result = target.apply(
+                this,
+                args.concat(slice.call(arguments))
+            );
+            if (Object(result) === result) {
+                return result;
+            }
+            return this;
+        } else {
+            return target.apply(
+                that,
+                args.concat(slice.call(arguments))
+            );
+        }
+    };
+
+    var boundLength = Math.max(0, target.length - args.length);
+    var boundArgs = [];
+    for (var i = 0; i < boundLength; i++) {
+        boundArgs.push('$' + i);
+    }
+
+    bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
+
+    if (target.prototype) {
+        var Empty = function Empty() {};
+        Empty.prototype = target.prototype;
+        bound.prototype = new Empty();
+        Empty.prototype = null;
+    }
+
+    return bound;
+};
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $isNaN = __webpack_require__(8);
+var $isFinite = __webpack_require__(9);
+
+var sign = __webpack_require__(11);
+var mod = __webpack_require__(12);
+
+var IsCallable = __webpack_require__(1);
+var toPrimitive = __webpack_require__(31);
+
+// https://es5.github.io/#x9
+var ES5 = {
+	ToPrimitive: toPrimitive,
+
+	ToBoolean: function ToBoolean(value) {
+		return Boolean(value);
+	},
+	ToNumber: function ToNumber(value) {
+		return Number(value);
+	},
+	ToInteger: function ToInteger(value) {
+		var number = this.ToNumber(value);
+		if ($isNaN(number)) { return 0; }
+		if (number === 0 || !$isFinite(number)) { return number; }
+		return sign(number) * Math.floor(Math.abs(number));
+	},
+	ToInt32: function ToInt32(x) {
+		return this.ToNumber(x) >> 0;
+	},
+	ToUint32: function ToUint32(x) {
+		return this.ToNumber(x) >>> 0;
+	},
+	ToUint16: function ToUint16(value) {
+		var number = this.ToNumber(value);
+		if ($isNaN(number) || number === 0 || !$isFinite(number)) { return 0; }
+		var posInt = sign(number) * Math.floor(Math.abs(number));
+		return mod(posInt, 0x10000);
+	},
+	ToString: function ToString(value) {
+		return String(value);
+	},
+	ToObject: function ToObject(value) {
+		this.CheckObjectCoercible(value);
+		return Object(value);
+	},
+	CheckObjectCoercible: function CheckObjectCoercible(value, optMessage) {
+		/* jshint eqnull:true */
+		if (value == null) {
+			throw new TypeError(optMessage || 'Cannot call method on ' + value);
+		}
+		return value;
+	},
+	IsCallable: IsCallable,
+	SameValue: function SameValue(x, y) {
+		if (x === y) { // 0 === -0, but they are not identical.
+			if (x === 0) { return 1 / x === 1 / y; }
+			return true;
+		}
+		return $isNaN(x) && $isNaN(y);
+	},
+
+	// http://www.ecma-international.org/ecma-262/5.1/#sec-8
+	Type: function Type(x) {
+		if (x === null) {
+			return 'Null';
+		}
+		if (typeof x === 'undefined') {
+			return 'Undefined';
+		}
+		if (typeof x === 'function' || typeof x === 'object') {
+			return 'Object';
+		}
+		if (typeof x === 'number') {
+			return 'Number';
+		}
+		if (typeof x === 'boolean') {
+			return 'Boolean';
+		}
+		if (typeof x === 'string') {
+			return 'String';
+		}
+	}
+};
+
+module.exports = ES5;
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toStr = Object.prototype.toString;
+
+var isPrimitive = __webpack_require__(13);
+
+var isCallable = __webpack_require__(1);
+
+// https://es5.github.io/#x8.12
+var ES5internalSlots = {
+	'[[DefaultValue]]': function (O, hint) {
+		var actualHint = hint || (toStr.call(O) === '[object Date]' ? String : Number);
+
+		if (actualHint === String || actualHint === Number) {
+			var methods = actualHint === String ? ['toString', 'valueOf'] : ['valueOf', 'toString'];
+			var value, i;
+			for (i = 0; i < methods.length; ++i) {
+				if (isCallable(O[methods[i]])) {
+					value = O[methods[i]]();
+					if (isPrimitive(value)) {
+						return value;
+					}
+				}
+			}
+			throw new TypeError('No default value');
+		}
+		throw new TypeError('invalid [[DefaultValue]] hint supplied');
+	}
+};
+
+// https://es5.github.io/#x9
+module.exports = function ToPrimitive(input, PreferredType) {
+	if (isPrimitive(input)) {
+		return input;
+	}
+	return ES5internalSlots['[[DefaultValue]]'](input, PreferredType);
+};
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var has = __webpack_require__(14);
+var regexExec = RegExp.prototype.exec;
+var gOPD = Object.getOwnPropertyDescriptor;
+
+var tryRegexExecCall = function tryRegexExec(value) {
+	try {
+		var lastIndex = value.lastIndex;
+		value.lastIndex = 0;
+
+		regexExec.call(value);
+		return true;
+	} catch (e) {
+		return false;
+	} finally {
+		value.lastIndex = lastIndex;
+	}
+};
+var toStr = Object.prototype.toString;
+var regexClass = '[object RegExp]';
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+
+module.exports = function isRegex(value) {
+	if (!value || typeof value !== 'object') {
+		return false;
+	}
+	if (!hasToStringTag) {
+		return toStr.call(value) === regexClass;
+	}
+
+	var descriptor = gOPD(value, 'lastIndex');
+	var hasLastIndexDataProperty = descriptor && has(descriptor, 'value');
+	if (!hasLastIndexDataProperty) {
+		return false;
+	}
+
+	return tryRegexExecCall(value);
+};
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getPolyfill = __webpack_require__(15);
+var define = __webpack_require__(6);
+
+module.exports = function shimEntries() {
+	var polyfill = getPolyfill();
+	define(Object, { entries: polyfill }, {
+		entries: function testEntries() {
+			return Object.entries !== polyfill;
+		}
+	});
+	return polyfill;
+};
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var config_1 = __webpack_require__(0);
+var common_1 = __webpack_require__(3);
+/**
+ * Calculate the column widths
+ */
+function calculateWidths(doc, pageWidth) {
+    var table = config_1.Config.tableInstance();
+    // Column and table content width
+    var fixedWidth = 0;
+    var autoWidth = 0;
+    var dynamicColumns = [];
+    table.columns.forEach(function (column) {
+        column.contentWidth = 0;
+        table.rows.concat(table.headerRow).forEach(function (row) {
+            var cell = row.cells[column.dataKey];
+            cell.contentWidth = cell.padding('horizontal') + common_1.getStringWidth(cell.text, cell.styles);
+            if (cell.contentWidth > column.contentWidth) {
+                column.contentWidth = cell.contentWidth;
+            }
+        });
+        table.contentWidth += column.contentWidth;
+        if (typeof column.widthStyle === 'number') {
+            column.preferredWidth = column.widthStyle;
+            fixedWidth += column.preferredWidth;
+            column.width = column.preferredWidth;
+        }
+        else if (column.widthStyle === 'wrap') {
+            column.preferredWidth = column.contentWidth;
+            fixedWidth += column.preferredWidth;
+            column.width = column.preferredWidth;
+        }
+        else {
+            column.preferredWidth = column.contentWidth;
+            autoWidth += column.contentWidth;
+            dynamicColumns.push(column);
+        }
+        table.preferredWidth += column.preferredWidth;
+    });
+    if (typeof table.settings.tableWidth === 'number') {
+        table.width = table.settings.tableWidth;
+    }
+    else if (table.settings.tableWidth === 'wrap') {
+        table.width = table.preferredWidth;
+    }
+    else {
+        table.width = pageWidth - table.margin('left') - table.margin('right');
+    }
+    distributeWidth(dynamicColumns, fixedWidth, autoWidth, 0);
+    // Row height, table height and text overflow
+    var all = table.rows.concat(table.headerRow);
+    all.forEach(function (row) {
+        table.columns.forEach(function (col) {
+            var cell = row.cells[col.dataKey];
+            config_1.Config.applyStyles(cell.styles);
+            var textSpace = col.width - cell.padding('horizontal');
+            var k = config_1.Config.scaleFactor();
+            if (cell.styles.overflow === 'linebreak') {
+                // Add one pt to textSpace to fix rounding error
+                try {
+                    cell.text = doc.splitTextToSize(cell.text, textSpace + 1 / k, { fontSize: cell.styles.fontSize });
+                }
+                catch (e) {
+                    if (e instanceof TypeError && Array.isArray(cell.text)) {
+                        cell.text = doc.splitTextToSize(cell.text.join(' '), textSpace + 1 / k, { fontSize: cell.styles.fontSize });
+                    }
+                    else {
+                        throw e;
+                    }
+                }
+            }
+            else if (cell.styles.overflow === 'ellipsize') {
+                cell.text = common_1.ellipsize(cell.text, textSpace, cell.styles);
+            }
+            else if (cell.styles.overflow === 'visible') {
+                // Do nothing
+            }
+            else if (cell.styles.overflow === 'hidden') {
+                cell.text = common_1.ellipsize(cell.text, textSpace, cell.styles, '');
+            }
+            else if (typeof cell.styles.overflow === 'function') {
+                cell.text = cell.styles.overflow(cell.text, textSpace);
+            }
+            else {
+                console.error("Unrecognized overflow type: " + cell.styles.overflow);
+            }
+            var lineCount = Array.isArray(cell.text) ? cell.text.length : 1;
+            var fontHeight = cell.styles.fontSize / k * config_1.FONT_ROW_RATIO;
+            cell.contentHeight = lineCount * fontHeight + cell.padding('vertical');
+            if (cell.contentHeight > row.height) {
+                row.height = cell.contentHeight;
+                row.maxLineCount = lineCount;
+            }
+        });
+        table.height += row.height;
+    });
+}
+exports.calculateWidths = calculateWidths;
+function distributeWidth(dynamicColumns, staticWidth, dynamicColumnsContentWidth, fairWidth) {
+    var table = config_1.Config.tableInstance();
+    var extraWidth = table.width - staticWidth - dynamicColumnsContentWidth;
+    for (var i = 0; i < dynamicColumns.length; i++) {
+        var col = dynamicColumns[i];
+        var ratio = col.contentWidth / dynamicColumnsContentWidth;
+        // A column turned out to be none dynamic, start over recursively
+        var isNoneDynamic = col.contentWidth + extraWidth * ratio < fairWidth;
+        if (extraWidth < 0 && isNoneDynamic) {
+            dynamicColumns.splice(i, 1);
+            dynamicColumnsContentWidth -= col.contentWidth;
+            col.width = fairWidth;
+            staticWidth += col.width;
+            distributeWidth(dynamicColumns, staticWidth, dynamicColumnsContentWidth, fairWidth);
+            break;
+        }
+        else {
+            col.width = col.contentWidth + extraWidth * ratio;
+        }
+    }
+}
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var models_1 = __webpack_require__(4);
+var config_1 = __webpack_require__(0);
+var assign = __webpack_require__(5);
+function validateInput(headers, data, allOptions) {
+    if (!headers || typeof headers !== 'object') {
+        console.error("The headers should be an object or array, is: " + typeof headers);
+    }
+    if (!data || typeof data !== 'object') {
+        console.error("The data should be an object or array, is: " + typeof data);
+    }
+    var _loop_1 = function (settings) {
+        if (settings && typeof settings !== 'object') {
+            console.error("The options parameter should be of type object, is: " + typeof settings);
+        }
+        if (typeof settings.extendWidth !== 'undefined') {
+            settings.tableWidth = settings.extendWidth ? 'auto' : 'wrap';
+            console.error("Use of deprecated option: extendWidth, use tableWidth instead.");
+        }
+        if (typeof settings.margins !== 'undefined') {
+            if (typeof settings.margin === 'undefined')
+                settings.margin = settings.margins;
+            console.error("Use of deprecated option: margins, use margin instead.");
+        }
+        if (typeof settings.afterPageContent !== 'undefined' || typeof settings.beforePageContent !== 'undefined' || typeof settings.afterPageAdd !== 'undefined') {
+            console.error("The afterPageContent, beforePageContent and afterPageAdd hooks are deprecated. Use addPageContent instead");
+            if (typeof settings.addPageContent === 'undefined') {
+                settings.addPageContent = function (data) {
+                    config_1.Config.applyUserStyles();
+                    if (settings.beforePageContent)
+                        settings.beforePageContent(data);
+                    config_1.Config.applyUserStyles();
+                    if (settings.afterPageContent)
+                        settings.afterPageContent(data);
+                    config_1.Config.applyUserStyles();
+                    if (settings.afterPageAdd && data.pageCount > 1) {
+                        data.afterPageAdd(data);
+                    }
+                    config_1.Config.applyUserStyles();
+                };
+            }
+        }
+        [['padding', 'cellPadding'], ['lineHeight', 'rowHeight'], 'fontSize', 'overflow'].forEach(function (o) {
+            var deprecatedOption = typeof o === 'string' ? o : o[0];
+            var style = typeof o === 'string' ? o : o[1];
+            if (typeof settings[deprecatedOption] !== 'undefined') {
+                if (typeof settings.styles[style] === 'undefined') {
+                    settings.styles[style] = settings[deprecatedOption];
+                }
+                console.error("Use of deprecated option: " + deprecatedOption + ", use the style " + style + " instead.");
+            }
+        });
+        for (var _i = 0, _a = ['styles', 'bodyStyles', 'headerStyles', 'columnStyles']; _i < _a.length; _i++) {
+            var styleProp = _a[_i];
+            if (settings[styleProp] && typeof settings[styleProp] !== 'object') {
+                console.error("The " + styleProp + " style should be of type object, is: " + typeof settings[styleProp]);
+            }
+            else if (settings[styleProp] && settings[styleProp].rowHeight) {
+                console.error("Use of deprecated style: rowHeight, use vertical cell padding instead");
+            }
+        }
+    };
+    for (var _i = 0, allOptions_1 = allOptions; _i < allOptions_1.length; _i++) {
+        var settings = allOptions_1[_i];
+        _loop_1(settings);
+    }
+}
+exports.validateInput = validateInput;
+/**
+ * Create models from the user input
+ *
+ * @param inputHeaders
+ * @param inputData
+ */
+function createModels(inputHeaders, inputData) {
+    var splitRegex = /\r\n|\r|\n/g;
+    var table = config_1.Config.tableInstance();
+    var settings = table.settings;
+    var theme = config_1.getTheme(settings.theme);
+    // Header row and columns
+    var headerRow = new models_1.Row(inputHeaders, -1);
+    headerRow.index = -1;
+    // Columns and header row
+    inputHeaders.forEach(function (rawColumn, index) {
+        var dataKey = index;
+        if (typeof rawColumn.dataKey !== 'undefined') {
+            dataKey = rawColumn.dataKey;
+        }
+        else if (typeof rawColumn.key !== 'undefined') {
+            console.error("Deprecation warning: Use dataKey instead of key");
+            dataKey = rawColumn.key; // deprecated since 2.x
+        }
+        var col = new models_1.Column(dataKey, index);
+        col.raw = rawColumn;
+        col.widthStyle = config_1.Config.styles([theme.table, theme.header, table.styles.styles, table.styles.columnStyles[col.dataKey] || {}]).columnWidth;
+        table.columns.push(col);
+        var cell = new models_1.Cell(rawColumn);
+        cell.styles = config_1.Config.styles([theme.table, theme.header, table.styles.styles, table.styles.headerStyles]);
+        if (cell.raw instanceof HTMLElement) {
+            cell.text = (cell.raw.innerText || '').trim();
+        }
+        else {
+            var text = typeof cell.raw === 'object' ? cell.raw.title : cell.raw;
+            // Stringify 0 and false, but not undefined
+            cell.text = typeof cell.raw !== 'undefined' ? '' + text : '';
+        }
+        cell.text = cell.text.split(splitRegex);
+        headerRow.cells[dataKey] = cell;
+        for (var _i = 0, _a = table.hooks.createdHeaderCell; _i < _a.length; _i++) {
+            var hook = _a[_i];
+            hook(cell, { cell: cell, column: col, row: headerRow, settings: settings });
+        }
+    });
+    table.headerRow = headerRow;
+    // Rows och cells
+    inputData.forEach(function (rawRow, i) {
+        var row = new models_1.Row(rawRow, i);
+        var rowStyles = i % 2 === 0 ? assign({}, theme.alternateRow, table.styles.alternateRowStyles) : {};
+        table.columns.forEach(function (column) {
+            var cell = new models_1.Cell(rawRow[column.dataKey]);
+            var colStyles = table.styles.columnStyles[column.dataKey] || {};
+            cell.styles = config_1.Config.styles([theme.table, theme.body, table.styles.styles, table.styles.bodyStyles, rowStyles, colStyles]);
+            if (cell.raw && cell.raw instanceof HTMLElement) {
+                cell.text = (cell.raw.innerText || '').trim();
+            }
+            else {
+                // Stringify 0 and false, but not undefined
+                cell.text = typeof cell.raw !== 'undefined' ? '' + cell.raw : '';
+            }
+            cell.text = cell.text.split(splitRegex);
+            row.cells[column.dataKey] = cell;
+            for (var _i = 0, _a = table.hooks.createdCell; _i < _a.length; _i++) {
+                var hook = _a[_i];
+                hook(cell, config_1.Config.hooksData({ cell: cell, column: column, row: row }));
+            }
+        });
+        table.rows.push(row);
+    });
+}
+exports.createModels = createModels;
+
+
+/***/ })
+/******/ ]);
+});
+
+/***/ }),
+
 /***/ "./node_modules/jspdf/dist/jspdf.min.js":
 /*!**********************************************!*\
   !*** ./node_modules/jspdf/dist/jspdf.min.js ***!
@@ -293,7 +2841,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar órdenes de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div  class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table   class=\"table \" datatable id=\"example-datatable\" [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>No. OT</th>\r\n                <th>Fecha OT</th>\r\n                <th>Hora</th>\r\n                <th>ID Cliente</th>\r\n                <th>Nombre del cliente</th>\r\n                <th>ID/Placa</th>\r\n     \r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let orden of ordenes\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                    <a title=\"Editar Orden de trabajo\" routerLink=\"/orden/crearorden/{{orden.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                    <button title=\"Eliminar Orden de Trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarOrden(orden)\"><i class=\"fa fa-trash\"></i></button>\r\n\r\n                    <a title=\"Operaciones\" routerLink=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                   \r\n                  </div>\r\n\r\n                </td>\r\n\r\n\r\n                <td><a routerLink=\"/orden/informacionorden/{{orden.id}}\">OT-{{orden.data.numero | anadirCeros:5}}</a></td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>\r\n                <td>{{orden.data.cliente.cedula}}</td>\r\n                <td>{{orden.data.cliente.nombre}}</td>\r\n\r\n                <td>\r\n                  {{orden.data.vehiculo.placa}}\r\n\r\n                </td>\r\n\r\n                \r\n\r\n\r\n\r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n         \r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar órdenes de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div  class=\"card-header\">Ordenes de trabajo</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table   class=\"table \" datatable id=\"example-datatable\" [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>No. OT</th>\r\n                <th>Fecha OT</th>\r\n                <th>Hora</th>\r\n                <th>ID Cliente</th>\r\n                <th>Nombre del cliente</th>\r\n                <th>ID/Placa</th>\r\n     \r\n\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let orden of ordenes\">\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                    <a title=\"Editar Orden de trabajo\" routerLink=\"/orden/crearorden/{{orden.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                    <button title=\"Eliminar Orden de Trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarOrden(orden)\"><i class=\"fa fa-trash\"></i></button>\r\n                    <!-- <button title=\"Eliminar Orden de Trabajo\"  class=\"btn btn-danger btn-sm\" (click)=\"print(orden)\"><i class=\"fa fa-print\"></i></button> -->\r\n                    <a  title=\"Operaciones\" routerLink=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                    <!-- <a *ngIf=\"orden.esUsuario\" title=\"Operaciones\" routerLink=\"/orden/detalleorden/{{orden.id}}\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-clock-o\"></i></a>\r\n                    -->\r\n                  </div>\r\n\r\n                </td>\r\n\r\n\r\n                <td><a routerLink=\"/orden/informacionorden/{{orden.id}}\">OT-{{orden.data.numero | anadirCeros:5}}</a></td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'dd/MM/yyyy'}}</td>\r\n                <td>{{(orden.data.fecha.seconds)*1000 | date : 'HH:mm'}}</td>\r\n                <td>{{orden.data.cliente.cedula}}</td>\r\n                <td>{{orden.data.cliente.nombre}}</td>\r\n\r\n                <td>\r\n                  {{orden.data.vehiculo.placa}}\r\n\r\n                </td>\r\n\r\n                \r\n\r\n\r\n\r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n         \r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -326,9 +2874,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
-/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.min.js");
-/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(jspdf__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _servicios_reporte_reporte_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../servicios/reporte/reporte.service */ "./src/app/servicios/reporte/reporte.service.ts");
+/* harmony import */ var _servicios_reporte_reporte_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../servicios/reporte/reporte.service */ "./src/app/servicios/reporte/reporte.service.ts");
+/* harmony import */ var _servicios_persona_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../servicios/persona.service */ "./src/app/servicios/persona.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -347,11 +2894,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+var jsPDF = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.min.js");
+__webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
 var ConsultarOrdenComponent = /** @class */ (function () {
-    function ConsultarOrdenComponent(ordenService, aFaut, reporteService) {
+    function ConsultarOrdenComponent(personaService, ordenService, aFaut, reporteService) {
+        this.personaService = personaService;
         this.ordenService = ordenService;
         this.aFaut = aFaut;
         this.reporteService = reporteService;
+        this.user = '';
         this.dtOptions = this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 5,
@@ -384,9 +2935,32 @@ var ConsultarOrdenComponent = /** @class */ (function () {
     }
     ;
     ConsultarOrdenComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.obtenerOrdenes();
+        this.personaService.obtenerUsuario().subscribe(function (res) {
+            _this.user = res;
+        });
     };
     ConsultarOrdenComponent.prototype.print = function (orden) {
+        this.reporteService.reporteCliente(orden);
+        //   var columns = ["Cantidad", "Producto servicio"]
+        //   var rows = []
+        //   orden.data.servicios.forEach(servicio => {
+        //     rows.push([servicio.cantidad, servicio.descripcion])
+        //   });
+        //   const doc = new jsPDF()
+        //   var rightStartCol1=400;
+        //   var rightStartCol2=480;
+        //   var InitialstartX=40;
+        //   var startX=40;
+        //   var InitialstartY=50;
+        //   var startY=0;
+        //   var lineHeights=12;
+        //   doc.textAlign('Cineto Telecomunicaciones', {align: "left"}, startX, startX);
+        //   doc.autoTable(columns, rows, {
+        //     margin: {top: 60},
+        // });
+        //   doc.save('ejemplo.pdf')
     };
     ConsultarOrdenComponent.prototype.obtenerOrdenes = function () {
         var _this = this;
@@ -394,11 +2968,19 @@ var ConsultarOrdenComponent = /** @class */ (function () {
             .subscribe(function (res) {
             $('#example-datatable').DataTable().destroy();
             _this.ordenes = res;
+            _this.ordenes.forEach(function (orden) {
+                orden.esUsuario == false;
+                orden.data.servicios.forEach(function (servicio) {
+                    if (servicio.operador.data.correo == _this.user.email) {
+                        orden.esUsuario = true;
+                    }
+                });
+            });
             _this.dtTrigger.next();
         });
     };
     ConsultarOrdenComponent.prototype.imprimirOrden = function (orden) {
-        var pdf = new jspdf__WEBPACK_IMPORTED_MODULE_7__('p', 'pt', 'letter');
+        var pdf = new jsPDF('p', 'pt', 'letter');
         var source = $('#imprimir')[0];
         var specialElementHandlers = {
             '#bypassme': function (element, renderer) {
@@ -449,7 +3031,7 @@ var ConsultarOrdenComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./consultar-orden.component.scss */ "./src/app/layout/orden-trabajo/consultar-orden/consultar-orden.component.scss")],
             animations: [Object(_router_animations__WEBPACK_IMPORTED_MODULE_1__["routerTransition"])()]
         }),
-        __metadata("design:paramtypes", [_servicios_orden_orden_service__WEBPACK_IMPORTED_MODULE_2__["OrdenService"], angularfire2_auth__WEBPACK_IMPORTED_MODULE_6__["AngularFireAuth"], _servicios_reporte_reporte_service__WEBPACK_IMPORTED_MODULE_8__["ReporteService"]])
+        __metadata("design:paramtypes", [_servicios_persona_service__WEBPACK_IMPORTED_MODULE_8__["PersonaService"], _servicios_orden_orden_service__WEBPACK_IMPORTED_MODULE_2__["OrdenService"], angularfire2_auth__WEBPACK_IMPORTED_MODULE_6__["AngularFireAuth"], _servicios_reporte_reporte_service__WEBPACK_IMPORTED_MODULE_7__["ReporteService"]])
     ], ConsultarOrdenComponent);
     return ConsultarOrdenComponent;
 }());
@@ -465,7 +3047,7 @@ var ConsultarOrdenComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear orden de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n \r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n      <hr>\r\n      <h5>OT-{{numeroOrden | anadirCeros:5}}</h5>\r\n      <hr>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n          <div class=\"card\">\r\n            <div class=\"card-header\">Informacion del cliente <span style=\"color: red\">*</span></div>\r\n\r\n            <div class=\"card-body\">\r\n              <table class=\"table table-sm table-bordered\">\r\n                <tr>\r\n                  <th>Buscar:</th>\r\n                  <td>\r\n\r\n                    <div class=\"btn-group\">\r\n                      <form class=\"form\" [formGroup]=\"ClienteForm\" (ngSubmit)=\"seleccionarPersona()\">\r\n                        <ng-select class=\"form-control\" style=\"font-size: 14px\" autofocus style=\"width: 250px;\" (change)=\"seleccionarPersona()\" class=\"form-control\"\r\n                          [items]=\"personas | async\" bindLabel=\"data.nombre\" formControlName=\"persona\">\r\n                        </ng-select>\r\n                      </form>\r\n                      <button class=\"btn btn-white btn-sm\" (click)=\"open(content)\"><i class=\"fa fa-plus\"></i></button>\r\n                    </div>\r\n\r\n\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Nombre:</th>\r\n                  <td>\r\n                    {{ (personaSeleccionada)?.data.nombre }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Cédula/RUC:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.cedula }}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Dirección:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.direccion}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Teléfono:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.telefono }}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Correo:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.correo }}</td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-6\">\r\n          <div class=\"card\">\r\n            <div class=\"card-header\">Información del vehículo <span style=\"color: red\">*</span></div>\r\n            <div class=\"card-body\">\r\n\r\n              <table class=\"table table-sm table-bordered\">\r\n                <tr>\r\n                  <th>Buscar:</th>\r\n                  <td>\r\n                    <div class=\"btn-group\">\r\n                      <form class=\"form\" [formGroup]=\"VehiculoForm\" (ngSubmit)=\"seleccionarPersona()\">\r\n                        <ng-select class=\"form-control\" autofocus style=\"width: 250px;\" (change)=\"seleccionarVehiculo()\" class=\"form-control\" [items]=\"vehiculos | async\"\r\n                          bindLabel=\"data.placa\" formControlName=\"vehiculo\">\r\n                        </ng-select>\r\n                      </form>\r\n                      <button class=\"btn btn-white btn-sm\" (click)=\"open(content2)\"><i class=\"fa fa-plus\"></i></button>\r\n                    </div>\r\n\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>ID/Placa:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.placa }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Marca:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.marca }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Modelo:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.modelo }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Color:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.color }}\r\n                  </td>\r\n                </tr>\r\n\r\n                <tr>\r\n                  <th>Motor:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.numeroMotor }}\r\n                  </td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n  <br>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Registro de productos o servicios <span style=\"color: red\">*</span>\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"row\">\r\n            <div class=\"btn-group\">\r\n              <p>Escoja producto o servicio: &nbsp;&nbsp;</p>\r\n              <form class=\"form\" [formGroup]=\"ServicioForm\" (ngSubmit)=\"seleccionarServicio()\">\r\n                  <ng-select class=\"form-control\" style=\"width: 250px;\" (change)=\"seleccionarServicio()\" class=\"form-control\" [items]=\"servicios | async\"\r\n                  bindLabel=\"data.descripcion\" formControlName=\"servicio\">\r\n                </ng-select>\r\n              </form>\r\n              <button class=\"btn btn-white btn-sm\" (click)=\"open(contentServicio)\">\r\n                <i class=\"fa fa-plus\"></i>\r\n              </button>\r\n\r\n            </div>\r\n\r\n\r\n          </div>\r\n          <hr>\r\n\r\n          <p>\r\n            <strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>\r\n          <table class=\"table table-bordered table-responsive-sm table-sm\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th scope=\"col\">Cantidad</th>\r\n                <th scope=\"col\">Código</th>\r\n                <th scope=\"col\">Servicio</th>\r\n\r\n                <th scope=\"col\">Tiempo estándar</th>\r\n                <th scope=\"col\">Estado</th>\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of serviciosSeleccionados;let i = index\">\r\n                <td>\r\n                  <button [disabled]=\"servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'\" (click)=\"eliminarServicio(i)\" type=\"button\" class=\"btn btn-danger btn-sm\">\r\n                    <i class=\"fa fa-trash\"></i>\r\n                  </button>\r\n                </td>\r\n                <td *ngIf=\"servicio.data\"><input [disabled]=\"servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'\" style=\"max-width: 60px\" class=\"form-control\" type=\"number\" min=\"1\" [(ngModel)]=\"servicio.data.cantidad\"></td>\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.codigo}}</td>\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.descripcion}}</td>\r\n\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.tiempoEstandar*60 | formatTime}}</td>\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.estado}}</td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n          <hr>\r\n\r\n          <button  class=\"btn btn-primary\"\r\n            (click)=\"guardarOrden()\">Guardar</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <app-crear-persona></app-crear-persona>\r\n  </div>\r\n</ng-template>\r\n<ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <app-crear-vehiculo [id]=\"nuevo\"></app-crear-vehiculo>\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n  </div>\r\n</ng-template>\r\n\r\n\r\n<ng-template #contentServicio let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <app-crear-servicio></app-crear-servicio>\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n  </div>\r\n</ng-template>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear orden de trabajo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n \r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n\r\n      <hr>\r\n      <h5>OT-{{numeroOrden | anadirCeros:5}}</h5>\r\n      <hr>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n          <div class=\"card\">\r\n            <div class=\"card-header\">Informacion del cliente <span style=\"color: red\">*</span></div>\r\n\r\n            <div class=\"card-body\">\r\n              <table class=\"table table-sm table-bordered\">\r\n                <tr>\r\n                  <th>Buscar:</th>\r\n                  <td>\r\n\r\n                    <div class=\"btn-group\">\r\n                      <form class=\"form\" [formGroup]=\"ClienteForm\" (ngSubmit)=\"seleccionarPersona()\">\r\n                        <ng-select class=\"form-control\" style=\"font-size: 14px\" autofocus style=\"width: 250px;\" (change)=\"seleccionarPersona()\" class=\"form-control\"\r\n                          [items]=\"personas | async\" bindLabel=\"data.nombre\" formControlName=\"persona\">\r\n                        </ng-select>\r\n                      </form>\r\n                      <button class=\"btn btn-white btn-sm\" (click)=\"open(content)\"><i class=\"fa fa-plus\"></i></button>\r\n                    </div>\r\n\r\n\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Nombre:</th>\r\n                  <td>\r\n                    {{ (personaSeleccionada)?.data.nombre }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Cédula/RUC:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.cedula }}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Dirección:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.direccion}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Teléfono:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.telefono }}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Correo:</th>\r\n                  <td>{{ (personaSeleccionada)?.data.correo }}</td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"col-md-6\">\r\n          <div class=\"card\">\r\n            <div class=\"card-header\">Información del vehículo <span style=\"color: red\">*</span></div>\r\n            <div class=\"card-body\">\r\n\r\n              <table class=\"table table-sm table-bordered\">\r\n                <tr>\r\n                  <th>Buscar:</th>\r\n                  <td>\r\n                    <div class=\"btn-group\">\r\n                      <form class=\"form\" [formGroup]=\"VehiculoForm\" (ngSubmit)=\"seleccionarPersona()\">\r\n                        <ng-select class=\"form-control\" autofocus style=\"width: 250px;\" (change)=\"seleccionarVehiculo()\" class=\"form-control\" [items]=\"vehiculos | async\"\r\n                          bindLabel=\"data.placa\" formControlName=\"vehiculo\">\r\n                        </ng-select>\r\n                      </form>\r\n                      <button class=\"btn btn-white btn-sm\" (click)=\"open(content2)\"><i class=\"fa fa-plus\"></i></button>\r\n                    </div>\r\n\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>ID/Placa:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.placa }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Marca:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.marca }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Modelo:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.modelo }}\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Color:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.color }}\r\n                  </td>\r\n                </tr>\r\n\r\n                <tr>\r\n                  <th>Motor:</th>\r\n                  <td>\r\n                    {{ (vehiculoSeleccionado)?.data.numeroMotor }}\r\n                  </td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n  <br>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Registro de productos o servicios <span style=\"color: red\">*</span>\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"row\">\r\n            <div class=\"btn-group\">\r\n              <p>Seleccione productos o servicios: &nbsp;&nbsp;</p>\r\n              <form class=\"form\" [formGroup]=\"ServicioForm\" (ngSubmit)=\"seleccionarServicio()\">\r\n                  <ng-select class=\"form-control\" style=\"width: 250px;\" (change)=\"seleccionarServicio()\" class=\"form-control\" [items]=\"servicios | async\"\r\n                  bindLabel=\"data.descripcion\" formControlName=\"servicio\">\r\n                </ng-select>\r\n              </form>\r\n              <button class=\"btn btn-white btn-sm\" (click)=\"open(contentServicio)\">\r\n                <i class=\"fa fa-plus\"></i>\r\n              </button>\r\n\r\n            </div>\r\n\r\n\r\n          </div>\r\n          <hr>\r\n\r\n          <p>\r\n            <strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>\r\n          <table class=\"table table-bordered table-responsive-sm table-sm\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th scope=\"col\">Cantidad</th>\r\n                <th scope=\"col\">Código</th>\r\n                <th scope=\"col\">Servicio</th>\r\n\r\n                <th scope=\"col\">Tiempo estándar</th>\r\n                <th scope=\"col\">Estado</th>\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of serviciosSeleccionados;let i = index\">\r\n                <td>\r\n                  <button [disabled]=\"servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'\" (click)=\"eliminarServicio(i)\" type=\"button\" class=\"btn btn-danger btn-sm\">\r\n                    <i class=\"fa fa-trash\"></i>\r\n                  </button>\r\n                </td>\r\n                <td *ngIf=\"servicio.data\"><input [disabled]=\"servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'\" style=\"max-width: 60px\" class=\"form-control\" type=\"number\" min=\"1\" [(ngModel)]=\"servicio.data.cantidad\"></td>\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.codigo}}</td>\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.descripcion}}</td>\r\n\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.tiempoEstandar*60 | formatTime}}</td>\r\n                <td *ngIf=\"servicio.data\">{{servicio.data.estado}}</td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n          <hr>\r\n\r\n          <button  class=\"btn btn-primary\"\r\n            (click)=\"guardarOrden()\">Guardar</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <app-crear-persona></app-crear-persona>\r\n  </div>\r\n</ng-template>\r\n<ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <app-crear-vehiculo [id]=\"nuevo\"></app-crear-vehiculo>\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n  </div>\r\n</ng-template>\r\n\r\n\r\n<ng-template #contentServicio let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <app-crear-servicio></app-crear-servicio>\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n  </div>\r\n</ng-template>"
 
 /***/ }),
 
@@ -837,7 +3419,7 @@ var DetalleTareaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Detalle orden'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">\r\n      Información de la orden de trabajo\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n          <table class=\"table table-sm table-bordered\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>No. OT </th>\r\n                <td>\r\n\r\n                  <a href=\"orden/informacionorden/{{id}}\">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>\r\n                  <a href=\"orden/crearorden/{{id}}\" class=\"btn btn-sm btn-primary\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n              <tr>\r\n                <th>Fecha OT </th>\r\n                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n              </tr>\r\n\r\n              <tr>\r\n                <th>ID Cliente</th>\r\n                <td>{{ (orden | async)?.cliente.cedula }}</td>\r\n              </tr>\r\n\r\n              <tr>\r\n                <th>Nombre cliente</th>\r\n                <td>{{ (orden | async)?.cliente.nombre }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Vehículo</th>\r\n                <td>{{ (orden | async)?.vehiculo.placa }} - {{ (orden | async)?.vehiculo.marca }} - {{ (orden | async)?.vehiculo.modelo\r\n                  }}\r\n                </td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n\r\n        <div class=\"col-md-6\">\r\n          <table class=\"table table-sm\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>Operaciones finalizadas </th>\r\n                <td>{{finalizadas}} de {{ servicios.length }}</td>\r\n              </tr>\r\n\r\n              <tr>\r\n                <th>Total Tiempo Estándar </th>\r\n                <td>{{tiempoEstandar | formatTime}}</td>\r\n              </tr>\r\n\r\n\r\n\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">\r\n      Operaciones\r\n    </div>\r\n    <div class=\"card-body\">\r\n\r\n\r\n\r\n\r\n      <ngb-tabset>\r\n        <ngb-tab title=\"Operaciones\">\r\n          <ng-template ngbTabContent>\r\n            <div class=\"card\">\r\n              <div class=\"card-body\">\r\n\r\n\r\n                <div class=\"btn-group\">\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-danger border\"></div>&nbsp;\r\n                  <p>CITA/RECEPCIÓN</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-warning  border\"></div>&nbsp;\r\n                  <p>EN ESPERA</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-primary\"></div>&nbsp;\r\n                  <p>EN PRODUCCIÓN</p>&nbsp;&nbsp;\r\n\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-success\"></div>&nbsp;\r\n                  <p>POR FACTURAR</p>&nbsp;&nbsp;\r\n                </div>\r\n\r\n\r\n\r\n                <table class=\"table table-bordered table-responsive-sm table-sm\">\r\n                  <thead>\r\n                    <tr>\r\n                      <th>Acciones</th>\r\n                      <th>Cantidad</th>\r\n                      <th>Código</th>\r\n                      <th>Servicio</th>\r\n\r\n                      <th>Tiempo estándar</th>\r\n                      <th>Estado</th>\r\n                      <th>Operador asignado</th>\r\n\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr *ngFor=\"let servicio of servicios let index = index\" [class.table-danger]=\"servicio.estado=='CITA/RECEPCION'\" [class.table-warning]=\"servicio.estado=='EN ESPERA DE PRODUCCIÓN'\"\r\n                      [class.table-primary]=\"servicio.estado=='EN PRODUCCIÓN'\" [class.table-success]=\"servicio.estado=='POR FACTURAR'\"\r\n                      [class.table-warning]=\"servicio.estado=='EN PRODUCCIÓN - PAUSADO'\">\r\n                      <td>\r\n                        <button *ngIf=\"servicio.estado=='EN ESPERA DE PRODUCCIÓN'\" (click)=\"iniciarServicio(index)\" class=\"btn btn-success btn-sm\"\r\n                          title=\"Iniciar\">\r\n                          <i class=\"fa fa-play\"></i>\r\n\r\n                        </button>\r\n\r\n                        <button *ngIf=\"servicio.estado=='EN PRODUCCIÓN'\" (click)=\"open(content, index)\" class=\"btn btn-warning btn-sm\" title=\"Pausar\">\r\n                          <i class=\"fa fa-pause\"></i>\r\n                        </button>\r\n\r\n                        <button *ngIf=\"servicio.estado=='EN PRODUCCIÓN'\" (click)=\"finalizarServicio(index)\" title=\"Detener\" class=\"btn btn-danger btn-sm\">\r\n                          <i class=\"fa fa-stop\"></i>\r\n                        </button>\r\n                        <button *ngIf=\"servicio.estado=='EN PRODUCCIÓN - PAUSADO'\" (click)=\"reanudarServicio(index)\" class=\"btn btn-success btn-sm text-white\"\r\n                          title=\"Reanudar\">\r\n                          <i class=\"fa fa-play\"></i>\r\n                        </button>\r\n\r\n                        <button *ngIf=\"servicio.estado=='POR FACTURAR'\" (click)=\"open2(content2, index)\" class=\"btn btn-primary btn-sm\">\r\n                          <i class=\"fa fa-eye\"></i>\r\n                        </button>\r\n                      </td>\r\n                      <td>{{servicio.cantidad}}</td>\r\n                      <td>{{servicio.codigo}}</td>\r\n                      <td>{{servicio.descripcion}}</td>\r\n\r\n                      <td>{{servicio.tiempoEstandar*60*servicio.cantidad | formatTime}}</td>\r\n                      <td>\r\n                        {{servicio.estado}}\r\n                        <p *ngIf=\"servicio.estado=='EN PRODUCCIÓN - PAUSADO'\"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>\r\n                      </td>\r\n                      <td>\r\n                        <p *ngIf=\"servicio.operador\">{{servicio.operador.data.nombre}}</p>\r\n                      </td>\r\n\r\n\r\n                    </tr>\r\n\r\n\r\n\r\n                  </tbody>\r\n                </table>\r\n              </div>\r\n            </div>\r\n\r\n          </ng-template>\r\n        </ngb-tab>\r\n        <ngb-tab>\r\n          <ng-template ngbTabTitle><b>Operaciones finalizadas</b></ng-template>\r\n          <ng-template ngbTabContent>\r\n\r\n            <div class=\"card\">\r\n              <div class=\"card-body\">\r\n                <div class=\"btn-group\">\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-danger border\"></div>&nbsp;\r\n                  <p>Regular</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-warning  border\"></div>&nbsp;\r\n                  <p>Buena</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-success\"></div>&nbsp;\r\n                  <p>Muy buena</p>&nbsp;&nbsp;\r\n                </div>\r\n\r\n                <table id=\"example-datatable\" class=\"table table-bordered table-responsive-sm table-sm\">\r\n                  <thead>\r\n                    <tr>\r\n                      <th>Cantidad</th>\r\n                      <th>Código</th>\r\n                      <th>Servicio</th>\r\n                      <th>Operador</th>\r\n                      <th>Tiempo Estándar</th>\r\n                      <th>Lead Time</th>\r\n                      <th>Tiempo Real</th>\r\n                      <th>Eficiencia</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n\r\n                    <ng-container *ngFor=\"let servicio of servicios \">\r\n                      <tr *ngIf=\"servicio.estado=='POR FACTURAR'\" \r\n                      [class.table-success]=\"servicio.estadisticas.eficiencia>=100\" \r\n                      [class.table-warning]=\"servicio.estadisticas.eficiencia>=80 && servicio.eficiencia<100\"\r\n                        [class.table-danger]=\"servicio.estadisticas.eficiencia<80\" \r\n                        >\r\n                        <td>{{servicio.cantidad}}</td>\r\n                        <td>\r\n                          {{servicio.codigo}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.descripcion}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.operador.data.nombre}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.tiempoEstandar | formatTime}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.leadTime | formatTime}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.tiempoReal | formatTime}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.eficiencia}}%\r\n                        </td>\r\n                      </tr>\r\n                    </ng-container>\r\n\r\n                  </tbody>\r\n                </table>\r\n\r\n\r\n              </div>\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n          </ng-template>\r\n        </ngb-tab>\r\n\r\n      </ngb-tabset>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </div>\r\n  </div>\r\n\r\n  <ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n    <div class=\"modal-header\">\r\n      <h5>Pausar operación</h5>\r\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <p><strong>Servicio: </strong>{{servicioSeleccionado.descripcion}}</p>\r\n      <p><strong>Motivo pausa:</strong>\r\n        <select [(ngModel)]=\"pausa.motivo\">\r\n          <option value=\"\">Seleccionar un motivo...</option>\r\n          <option value=\"FALTA DE AUTORIZACIÓN\">FALTA DE AUTORIZACIÓN</option>\r\n          <option value=\"FALTA DE REPUESTOS\">FALTA DE REPUESTOS</option>\r\n          <option value=\"TRABAJOS DE TERCEROS\">TRABAJOS DE TERCEROS</option>\r\n          <option value=\"OTRO TRABAJO\">OTRO TRABAJO</option>\r\n          <option value=\"BREAK\">BREAK</option>\r\n          <option value=\"ALMUERZO\">ALMUERZO</option>\r\n          <option value=\"FINALIZACIÓN DE JORNADA LABORAL\">FINALIZACIÓN DE JORNADA LABORAL</option>\r\n        </select></p>\r\n\r\n      <p><strong>Observación:</strong> <input [(ngModel)]=\"pausa.observacion\" type=\"text\"></p>\r\n      <p><button [disabled]=\"pausa.motivo==''\" class=\"btn btn-primary\" (click)=\"pausar(); c('Close click')\">Guardar</button></p>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n    </div>\r\n  </ng-template>\r\n\r\n  <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\r\n    <div class=\"modal-header\">\r\n      <h5>Detalle de la operación</h5>\r\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">información</div>\r\n        <div class=\"card-body\">\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <table class=\"table table-bordered table-sm\">\r\n                <tr>\r\n                  <th>Servicio:</th>\r\n                  <td>{{servicioSeleccionado.descripcion}}</td>\r\n                </tr>\r\n\r\n                <tr>\r\n                  <th>Operador:</th>\r\n                  <td>{{servicioSeleccionado.operador.data.nombre}}</td>\r\n                </tr>\r\n\r\n                <tr>\r\n                  <th>Hora Inicio </th>\r\n                  <td>{{ servicioSeleccionado.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Hora Fin </th>\r\n                  <td>{{ servicioSeleccionado.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                </tr>\r\n\r\n              </table>\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <table class=\"table table-bordered table-sm\">\r\n\r\n                <tr>\r\n                  <th>Tiempo estándar</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.tiempoEstandar | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>LeadTime</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.leadTime | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Pausas</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.pausas | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Tiempo real</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.tiempoReal | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Eficiencia</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.eficiencia }}%</td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n\r\n        </div>\r\n      </div>\r\n\r\n\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Pausas\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <table class=\"table table-bordered\">\r\n            <thead>\r\n              <tr>\r\n                <th>Hora inicio</th>\r\n                <th>Hora fin</th>\r\n                <th>Motivo</th>\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let pausa of servicioSeleccionado.pausas\">\r\n                <td>{{ pausa.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                <td>{{ pausa.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                <td>{{pausa.motivo.motivo}}</td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n    </div>\r\n  </ng-template>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Detalle orden'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">\r\n      Información de la orden de trabajo\r\n    </div>\r\n    <div class=\"card-body\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n          <table class=\"table table-sm table-bordered\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>No. OT </th>\r\n                <td>\r\n\r\n                  <a href=\"orden/informacionorden/{{id}}\">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>\r\n                  <a href=\"orden/crearorden/{{id}}\" class=\"btn btn-sm btn-primary\"><i class=\"fa fa-pencil\"></i></a>\r\n                </td>\r\n              </tr>\r\n\r\n\r\n              <tr>\r\n                <th>Fecha OT </th>\r\n                <td>{{ (orden | async)?.fecha.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n              </tr>\r\n\r\n              <tr>\r\n                <th>ID Cliente</th>\r\n                <td>{{ (orden | async)?.cliente.cedula }}</td>\r\n              </tr>\r\n\r\n              <tr>\r\n                <th>Nombre cliente</th>\r\n                <td>{{ (orden | async)?.cliente.nombre }}</td>\r\n              </tr>\r\n              <tr>\r\n                <th>Vehículo</th>\r\n                <td>{{ (orden | async)?.vehiculo.placa }} - {{ (orden | async)?.vehiculo.marca }} - {{ (orden | async)?.vehiculo.modelo\r\n                  }}\r\n                </td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n\r\n        <div class=\"col-md-6\">\r\n          <table class=\"table table-sm\">\r\n\r\n            <tbody>\r\n              <tr>\r\n                <th>Operaciones finalizadas </th>\r\n                <td>{{finalizadas}} de {{ servicios.length }}</td>\r\n              </tr>\r\n\r\n              <tr>\r\n                <th>Total Tiempo Estándar </th>\r\n                <td>{{tiempoEstandar | formatTime}}</td>\r\n              </tr>\r\n\r\n\r\n\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">\r\n      Operaciones\r\n    </div>\r\n    <div class=\"card-body\">\r\n\r\n\r\n\r\n\r\n      <ngb-tabset>\r\n        <ngb-tab title=\"Operaciones\">\r\n          <ng-template ngbTabContent>\r\n            <div class=\"card\">\r\n              <div class=\"card-body\">\r\n\r\n\r\n                <div class=\"btn-group\">\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-danger border\"></div>&nbsp;\r\n                  <p>CITA/RECEPCIÓN</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-warning  border\"></div>&nbsp;\r\n                  <p>EN ESPERA</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-primary\"></div>&nbsp;\r\n                  <p>EN PRODUCCIÓN</p>&nbsp;&nbsp;\r\n\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-success\"></div>&nbsp;\r\n                  <p>POR FACTURAR</p>&nbsp;&nbsp;\r\n                </div>\r\n\r\n\r\n\r\n                <table class=\"table table-bordered table-responsive-sm table-sm\">\r\n                  <thead>\r\n                    <tr>\r\n                      <th>Acciones</th>\r\n                      <th>Cantidad</th>\r\n                      <th>Código</th>\r\n                      <th>Servicio</th>\r\n\r\n                      <th>Tiempo estándar</th>\r\n                      <th>Estado</th>\r\n                      <th>Operador asignado</th>\r\n\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr *ngFor=\"let servicio of servicios let index = index\" [class.table-danger]=\"servicio.estado=='CITA/RECEPCION'\" [class.table-warning]=\"servicio.estado=='EN ESPERA DE PRODUCCIÓN'\"\r\n                      [class.table-primary]=\"servicio.estado=='EN PRODUCCIÓN'\" [class.table-success]=\"servicio.estado=='POR FACTURAR'\"\r\n                      [class.table-warning]=\"servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'\">\r\n                      <td>\r\n\r\n                      <!--   <div class=\"*ngIf=\"servicio.operador.data.correo == user.email\"\"></div> -->\r\n\r\n                        <div >\r\n                            <button *ngIf=\"servicio.estado=='EN ESPERA DE PRODUCCIÓN'\" (click)=\"iniciarServicio(index)\" class=\"btn btn-success btn-sm\"\r\n                            title=\"Iniciar\">\r\n                            <i class=\"fa fa-play\"></i>\r\n  \r\n                          </button>\r\n  \r\n                          <button *ngIf=\"servicio.estado=='EN PRODUCCIÓN'\" (click)=\"open(content, index)\" class=\"btn btn-warning btn-sm\" title=\"Pausar\">\r\n                            <i class=\"fa fa-pause\"></i>\r\n                          </button>\r\n  \r\n                          <button *ngIf=\"servicio.estado=='EN PRODUCCIÓN'\" (click)=\"finalizarServicio(index)\" title=\"Detener\" class=\"btn btn-danger btn-sm\">\r\n                            <i class=\"fa fa-stop\"></i>\r\n                          </button>\r\n                          <button *ngIf=\"servicio.estado=='EN PRODUCCIÓN - PAUSADO'\" (click)=\"reanudarServicio(index)\" class=\"btn btn-success btn-sm text-white\"\r\n                            title=\"Reanudar\">\r\n                            <i class=\"fa fa-play\"></i>\r\n                          </button>\r\n  \r\n                        </div>\r\n                       \r\n                        <button *ngIf=\"servicio.estado=='POR FACTURAR'\" (click)=\"open2(content2, index)\" class=\"btn btn-primary btn-sm\">\r\n                          <i class=\"fa fa-eye\"></i>\r\n                        </button>\r\n                      </td>\r\n                      <td>{{servicio.cantidad}}</td>\r\n                      <td>{{servicio.codigo}}</td>\r\n                      <td>{{servicio.descripcion}}</td>\r\n\r\n                      <td>{{servicio.tiempoEstandar*60*servicio.cantidad | formatTime}}</td>\r\n                      <td>\r\n                        {{servicio.estado}}\r\n                        <p *ngIf=\"servicio.estado=='EN PRODUCCIÓN - PAUSADO'\"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>\r\n                      </td>\r\n                      <td>\r\n                        <p *ngIf=\"servicio.operador\">{{servicio.operador.data.nombre}}</p>\r\n                      </td>\r\n\r\n\r\n                    </tr>\r\n\r\n\r\n\r\n                  </tbody>\r\n                </table>\r\n              </div>\r\n            </div>\r\n\r\n          </ng-template>\r\n        </ngb-tab>\r\n        <ngb-tab>\r\n          <ng-template ngbTabTitle><b>Operaciones finalizadas</b></ng-template>\r\n          <ng-template ngbTabContent>\r\n\r\n            <div class=\"card\">\r\n              <div class=\"card-body\">\r\n                <div class=\"btn-group\">\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-danger border\"></div>&nbsp;\r\n                  <p>Regular</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-warning  border\"></div>&nbsp;\r\n                  <p>Buena</p>&nbsp;&nbsp;&nbsp;\r\n\r\n                  <div style=\"width: 20px; height: 20px;\" class=\"table-success\"></div>&nbsp;\r\n                  <p>Muy buena</p>&nbsp;&nbsp;\r\n                </div>\r\n\r\n                <table id=\"example-datatable\" class=\"table table-bordered table-responsive-sm table-sm\">\r\n                  <thead>\r\n                    <tr>\r\n                      <th>Cantidad</th>\r\n                      <th>Código</th>\r\n                      <th>Servicio</th>\r\n                      <th>Operador</th>\r\n                      <th>Tiempo Estándar</th>\r\n                      <th>Lead Time</th>\r\n                      <th>Tiempo Real</th>\r\n                      <th>Eficiencia</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n\r\n                    <ng-container *ngFor=\"let servicio of servicios \">\r\n                      <tr *ngIf=\"servicio.estado=='POR FACTURAR'\" \r\n                      [class.table-success]=\"servicio.estadisticas.eficiencia>=100\" \r\n                      [class.table-warning]=\"servicio.estadisticas.eficiencia>=80 && servicio.eficiencia<100\"\r\n                        [class.table-danger]=\"servicio.estadisticas.eficiencia<80\" \r\n                        >\r\n                        <td>{{servicio.cantidad}}</td>\r\n                        <td>\r\n                          {{servicio.codigo}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.descripcion}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.operador.data.nombre}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.tiempoEstandar | formatTime}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.leadTime | formatTime}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.tiempoReal | formatTime}}\r\n                        </td>\r\n                        <td>\r\n                          {{servicio.estadisticas.eficiencia}}%\r\n                        </td>\r\n                      </tr>\r\n                    </ng-container>\r\n\r\n                  </tbody>\r\n                </table>\r\n\r\n\r\n              </div>\r\n            </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n          </ng-template>\r\n        </ngb-tab>\r\n\r\n      </ngb-tabset>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </div>\r\n  </div>\r\n\r\n  <ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n    <div class=\"modal-header\">\r\n      <h5>Pausar operación</h5>\r\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <p><strong>Servicio: </strong>{{servicioSeleccionado.descripcion}}</p>\r\n      <p><strong>Motivo pausa:</strong>\r\n        <select [(ngModel)]=\"pausa.motivo\">\r\n          <option value=\"\">Seleccionar un motivo...</option>\r\n          <option value=\"FALTA DE AUTORIZACIÓN\">FALTA DE AUTORIZACIÓN</option>\r\n          <option value=\"FALTA DE REPUESTOS\">FALTA DE REPUESTOS</option>\r\n          <option value=\"TRABAJOS DE TERCEROS\">TRABAJOS DE TERCEROS</option>\r\n          <option value=\"OTRO TRABAJO\">OTRO TRABAJO</option>\r\n          <option value=\"BREAK\">BREAK</option>\r\n          <option value=\"ALMUERZO\">ALMUERZO</option>\r\n          <option value=\"FINALIZACIÓN DE JORNADA LABORAL\">FINALIZACIÓN DE JORNADA LABORAL</option>\r\n        </select></p>\r\n\r\n      <p><strong>Observación:</strong> <input [(ngModel)]=\"pausa.observacion\" type=\"text\"></p>\r\n      <p><button [disabled]=\"pausa.motivo==''\" class=\"btn btn-primary\" (click)=\"pausar(); c('Close click')\">Guardar</button></p>\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n    </div>\r\n  </ng-template>\r\n\r\n  <ng-template #content2 let-c=\"close\" let-d=\"dismiss\">\r\n    <div class=\"modal-header\">\r\n      <h5>Detalle de la operación</h5>\r\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"d('Cross click')\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">información</div>\r\n        <div class=\"card-body\">\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <table class=\"table table-bordered table-sm\">\r\n                <tr>\r\n                  <th>Servicio:</th>\r\n                  <td>{{servicioSeleccionado.descripcion}}</td>\r\n                </tr>\r\n\r\n                <tr>\r\n                  <th>Operador:</th>\r\n                  <td>{{servicioSeleccionado.operador.data.nombre}}</td>\r\n                </tr>\r\n\r\n                <tr>\r\n                  <th>Hora Inicio </th>\r\n                  <td>{{ servicioSeleccionado.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Hora Fin </th>\r\n                  <td>{{ servicioSeleccionado.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                </tr>\r\n\r\n              </table>\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <table class=\"table table-bordered table-sm\">\r\n\r\n                <tr>\r\n                  <th>Tiempo estándar</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.tiempoEstandar | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>LeadTime</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.leadTime | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Pausas</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.pausas | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Tiempo real</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.tiempoReal | formatTime}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <th>Eficiencia</th>\r\n                  <td>{{ servicioSeleccionado.estadisticas.eficiencia }}%</td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n\r\n        </div>\r\n      </div>\r\n\r\n\r\n\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Pausas\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <table class=\"table table-bordered\">\r\n            <thead>\r\n              <tr>\r\n                <th>Hora inicio</th>\r\n                <th>Hora fin</th>\r\n                <th>Motivo</th>\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let pausa of servicioSeleccionado.pausas\">\r\n                <td>{{ pausa.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                <td>{{ pausa.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>\r\n                <td>{{pausa.motivo.motivo}}</td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <button type=\"button\" class=\"btn btn-secondary\" (click)=\"c('Close click')\">Cerrar</button>\r\n    </div>\r\n  </ng-template>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -872,6 +3454,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _servicios_persona_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../servicios/persona.service */ "./src/app/servicios/persona.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -889,14 +3472,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var DetalleOrdenComponent = /** @class */ (function () {
-    function DetalleOrdenComponent(route, modalService, ordenService, db) {
+    function DetalleOrdenComponent(route, modalService, ordenService, personaService, db) {
         var _this = this;
         this.route = route;
         this.modalService = modalService;
         this.ordenService = ordenService;
+        this.personaService = personaService;
         this.db = db;
         this.tiempoEstandar = 0;
+        this.user = '';
         this.tiempoReal = 0;
         this.finalizadas = 0;
         this.pausa = {
@@ -920,6 +3506,10 @@ var DetalleOrdenComponent = /** @class */ (function () {
         });
     }
     DetalleOrdenComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.personaService.obtenerUsuario().subscribe(function (res) {
+            _this.user = res;
+        });
     };
     DetalleOrdenComponent.prototype.iniciarServicio = function (index) {
         var _this = this;
@@ -1085,6 +3675,7 @@ var DetalleOrdenComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
             _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModal"],
             _servicios_orden_orden_service__WEBPACK_IMPORTED_MODULE_2__["OrdenService"],
+            _servicios_persona_service__WEBPACK_IMPORTED_MODULE_8__["PersonaService"],
             angularfire2_firestore__WEBPACK_IMPORTED_MODULE_4__["AngularFirestore"]])
     ], DetalleOrdenComponent);
     return DetalleOrdenComponent;
@@ -1688,6 +4279,10 @@ var OrdenService = /** @class */ (function () {
     };
     OrdenService.prototype.agregarDetalle = function () {
     };
+    OrdenService.prototype.obtenerOrdenesPorFecha = function (campo, valor) {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('ordenes', function (query) { return query.where(campo, '==', valor); });
+    };
     OrdenService.prototype.obtenerOrdenes = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('ordenes', function (query) { return query.orderBy('numero', 'desc'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
@@ -1737,6 +4332,9 @@ var OrdenService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReporteService", function() { return ReporteService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _persona_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../persona.service */ "./src/app/servicios/persona.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../pipes/anadir-ceros.pipe */ "./src/app/pipes/anadir-ceros.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1747,19 +4345,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+var jsPDF = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.min.js");
+__webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
 var ReporteService = /** @class */ (function () {
-    function ReporteService() {
+    function ReporteService(personaService) {
+        var _this = this;
+        this.personaService = personaService;
         this.comapnyJSON = {
-            CompanyName: 'ABCD TECHONOLOGIES',
-            CompanyGSTIN: '37B76C238B7E1Z5',
-            CompanyState: 'KERALA (09)',
-            CompanyPAN: 'B76C238B7E',
-            CompanyAddressLine1: 'ABCDEFGD HOUSE,IX/642-D',
-            CompanyAddressLine2: 'ABCDEFGD P.O., NEDUMBASSERY',
-            CompanyAddressLine3: 'COCHIN',
-            PIN: '683584',
-            companyEmail: 'xyz@gmail.com',
-            companyPhno: '+918189457845',
+            CompanyName: '',
+            CompanyGSTIN: '',
+            CompanyState: '',
+            companyEmail: '',
+            companyPhno: '',
         };
         this.customer_BillingInfoJSON = {
             CustomerName: 'Jino Shaji',
@@ -1786,19 +4386,11 @@ var ReporteService = /** @class */ (function () {
             CustomerPhno: '+918189457845',
         };
         this.invoiceJSON = {
-            InvoiceNo: 'INV-120152',
-            InvoiceDate: '03-12-2017',
-            RefNo: 'REF-78445',
-            TotalAmnt: 'Rs.1,24,200',
-            SubTotalAmnt: 'Rs.1,04,200',
-            TotalGST: 'Rs.2,0000',
-            TotalCGST: 'Rs.1,0000',
-            TotalSGST: 'Rs.1,0000',
-            TotalIGST: 'Rs.0',
-            TotalCESS: 'Rs.0',
+            InvoiceNo: '',
+            InvoiceDate: '',
         };
         this.company_logo = {
-            src1: 'https://upload.wikimedia.org/wikipedia/commons/8/85/Nick_%28Logo%29.png',
+            src1: 'https://firebasestorage.googleapis.com/v0/b/kanban-8cf8b.appspot.com/o/sinFoto.png?alt=media&token=e3507d10-e278-431c-b03e-7beb87fd1dcb',
             w: 80,
             h: 50
         };
@@ -1813,30 +4405,23 @@ var ReporteService = /** @class */ (function () {
         this.lineSpacing = {
             NormalSpacing: 12,
         };
+        personaService.obtenerEmpresa().valueChanges().subscribe(function (empresa) {
+            _this.comapnyJSON = {
+                CompanyName: empresa.nombre,
+                CompanyGSTIN: empresa.ruc,
+                CompanyState: empresa.direccion,
+                companyEmail: empresa.correo,
+                companyPhno: empresa.telefono,
+            };
+        });
     }
-    ReporteService.prototype.generate = function () {
-        var doc = new jsPDF('p', 'pt');
-        var res = doc.autoTableHtmlToJson(document.getElementById("basic-table"));
-        doc.autoTable(res.columns, res.data, { margin: { top: 80 } });
-        var header = function (data) {
-            doc.setFontSize(18);
-            doc.setTextColor(40);
-            doc.setFontStyle('normal');
-            //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
-            doc.text("Testing Report", data.settings.margin.center, 50);
+    ReporteService.prototype.reporteCliente = function (orden) {
+        this.invoiceJSON = {
+            InvoiceNo: 'OT-' + new _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_3__["AnadirCerosPipe"]().transform(orden.data.numero, 5),
+            InvoiceDate: new _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"]('en-US').transform(orden.data.fecha.seconds * 1000, 'dd/MM/yyyy'),
         };
-        var options = {
-            beforePageContent: header,
-            margin: {
-                top: 80
-            },
-            startY: doc.autoTableEndPosY() + 20
-        };
-        doc.autoTable(res.columns, res.data, options);
-        doc.save("table.pdf");
-    };
-    ReporteService.prototype.generate_cutomPDF = function () {
         var doc = new jsPDF('p', 'pt');
+        doc.page = 1; // use this as a counter.
         var rightStartCol1 = 400;
         var rightStartCol2 = 480;
         var InitialstartX = 40;
@@ -1848,21 +4433,17 @@ var ReporteService = /** @class */ (function () {
         doc.setFont('times');
         doc.setFontType('bold');
         //pdf.addImage(agency_logo.src, 'PNG', logo_sizes.centered_x, _y, logo_sizes.w, logo_sizes.h);
-        doc.addImage(this.company_logo.src1, 'PNG', startX, startY += 50, this.company_logo.w, this.company_logo.h);
+        // doc.addImage(this.company_logo.src1, 'PNG', startX,startY+=50, this.company_logo.w,this.company_logo.h);
         doc.textAlign(this.comapnyJSON.CompanyName, { align: "left" }, startX, startY += 15 + this.company_logo.h);
         doc.setFontSize(this.fontSizes.NormalFontSize);
-        doc.textAlign("GSTIN", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+        doc.textAlign("RUC", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
         doc.setFontType('normal');
         // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.comapnyJSON.CompanyGSTIN, { align: "left" }, 80, startY);
+        doc.textAlign(this.comapnyJSON.CompanyGSTIN, { align: "left" }, 85, startY);
         doc.setFontType('bold');
-        doc.textAlign("STATE", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+        doc.textAlign("Dirección", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
         doc.setFontType('normal');
-        doc.textAlign(this.comapnyJSON.CompanyState, { align: "left" }, 80, startY);
-        doc.setFontType('bold');
-        doc.textAlign("PAN", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.comapnyJSON.CompanyPAN, { align: "left" }, 80, startY);
+        doc.textAlign(this.comapnyJSON.CompanyState, { align: "left" }, 85, startY);
         // doc.setFontType('bold');
         // doc.textAlign("Address", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
         // doc.setFontType('normal');
@@ -1870,34 +4451,22 @@ var ReporteService = /** @class */ (function () {
         // doc.textAlign(comapnyJSON.CompanyAddressLine2, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
         // doc.textAlign(comapnyJSON.CompanyAddressLine3, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
         doc.setFontType('bold');
-        doc.textAlign("PIN", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+        doc.textAlign("Email", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
         doc.setFontType('normal');
-        doc.textAlign(this.comapnyJSON.PIN, { align: "left" }, 80, startY);
+        doc.textAlign(this.comapnyJSON.companyEmail, { align: "left" }, 85, startY);
         doc.setFontType('bold');
-        doc.textAlign("EMAIL", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+        doc.textAlign("Teléfono: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
         doc.setFontType('normal');
-        doc.textAlign(this.comapnyJSON.companyEmail, { align: "left" }, 80, startY);
-        doc.setFontType('bold');
-        doc.textAlign("Phone: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.comapnyJSON.companyPhno, { align: "left" }, 80, startY);
+        doc.textAlign(this.comapnyJSON.companyPhno, { align: "left" }, 85, startY);
         var tempY = InitialstartY;
         doc.setFontType('bold');
-        doc.textAlign("INVOICE NO: ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
+        doc.textAlign("Orden de Trabajo ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
         doc.setFontType('normal');
         doc.textAlign(this.invoiceJSON.InvoiceNo, { align: "left" }, rightStartCol2, tempY);
         doc.setFontType('bold');
-        doc.textAlign("INVOICE Date: ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
+        doc.textAlign("Fecha OT: ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
         doc.setFontType('normal');
         doc.textAlign(this.invoiceJSON.InvoiceDate, { align: "left" }, rightStartCol2, tempY);
-        doc.setFontType('bold');
-        doc.textAlign("Reference No: ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.invoiceJSON.RefNo, { align: "left" }, rightStartCol2, tempY);
-        doc.setFontType('bold');
-        doc.textAlign("Total: ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.invoiceJSON.TotalAmnt, { align: "left" }, rightStartCol2, tempY);
         // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"INVOICE No  :  "+invoiceJSON.InvoiceNo + '     ', { align: 'right' });
         // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"INVOICE Date: "+invoiceJSON.InvoiceDate + '     ', { align: 'right' });
         // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"Reference No: "+invoiceJSON.RefNo + '     ', { align: 'right' });
@@ -1909,7 +4478,7 @@ var ReporteService = /** @class */ (function () {
         doc.line(380, startY + this.lineSpacing.NormalSpacing, 580, startY + this.lineSpacing.NormalSpacing);
         doc.setFontSize(this.fontSizes.Head2TitleFontSize);
         doc.setFontType('bold');
-        doc.textAlign("TAX INVOICE", { align: "center" }, startX, startY += this.lineSpacing.NormalSpacing + 2);
+        doc.textAlign("Orden de Trabajo", { align: "center" }, startX, startY += this.lineSpacing.NormalSpacing + 2);
         doc.setFontSize(this.fontSizes.NormalFontSize);
         doc.setFontType('bold');
         //-------Customer Info Billing---------------------
@@ -1950,42 +4519,10 @@ var ReporteService = /** @class */ (function () {
         //-------Customer Info Shipping---------------------
         var rightcol1 = 340;
         var rightcol2 = 400;
-        startY = startBilling;
-        doc.setFontType('bold');
-        doc.textAlign("Shipping Address,", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerName, { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontSize(this.fontSizes.NormalFontSize);
-        doc.setFontType('bold');
-        doc.textAlign("GSTIN", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerGSTIN, { align: "left" }, rightcol2, startY);
         // doc.setFontType('bold');
         // doc.textAlign("PAN", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
         // doc.setFontType('normal');
         // doc.textAlign(customer_BillingInfoJSON.CustomerPAN, {align: "left"}, 80, startY);
-        doc.setFontType('bold');
-        doc.textAlign("Address", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerAddressLine1, { align: "left" }, rightcol2, startY);
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerAddressLine2, { align: "left" }, rightcol2, startY += this.lineSpacing.NormalSpacing);
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerAddressLine3, { align: "left" }, rightcol2, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('bold');
-        doc.textAlign("STATE", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerState, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("PIN", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.customer_BillingInfoJSON.PIN, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("EMAIL", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerEmail, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("Phone: ", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        doc.textAlign(this.customer_BillingInfoJSON.CustomerPhno, { align: "left" }, rightcol2, startY);
         var header = function (data) {
             doc.setFontSize(8);
             doc.setTextColor(40);
@@ -2018,58 +4555,11 @@ var ReporteService = /** @class */ (function () {
             },
             startY: startY += 50
         };
-        var columns = [
-            { title: "ID", dataKey: "id", width: 90 },
-            { title: "Product", dataKey: "Product", width: 40 },
-            { title: "Rate/Item", dataKey: "Rate/Item", width: 40 },
-            { title: "Qty", dataKey: "Qty", width: 40 },
-            { title: "Dsnt", dataKey: "Dsnt", width: 40 },
-            { title: "S.Total", dataKey: "STotal", width: 40 },
-            { title: "CGST", dataKey: "CGST", width: 40 },
-            { title: "SGST", dataKey: "SGST", width: 40 },
-            { title: "IGST", dataKey: "IGST", width: 40 },
-            { title: "CESS", dataKey: "CESS", width: 40 },
-            { title: "Total", dataKey: "Total", width: 40 },
-        ];
-        var rows = [
-            { "id": 1, "Product": "SAMSUNG GALAXY S8 PLUS 64GB HSNCODE: 330854040", "Rate/Item": "10", "Qty": "12", "Dsnt": "0", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 2, "Product": "SAMSUNG GALAXY S8 PLUS 64GB HSNCODE: 330854040", "Rate/Item": "10", "Qty": "12", "Dsnt": "0", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 3, "Product": "SAMSUNG GALAXY S8 PLUS 64GB HSNCODE: 330854040", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "SAMSUNG GALAXY S8 PLUS 64GB HSNCODE: 330854040", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "SAMSUNG GALAXY S8 PLUS 64GB HSNCODE: 330854040", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": 4, "Product": "Shaw", "Rate/Item": "10", "Qty": "12", "Dsnt": "10", "STotal": "120", "CGST": 20, "SGST": 20, "IGST": 0, "CESS": 20, "Total": 180 },
-            { "id": '', "Product": "", "Rate/Item": "Total", "Qty": "", "Dsnt": "20", "STotal": "360", "CGST": 60, "SGST": 60, "IGST": 0, "CESS": 60, "Total": 680 },
-        ];
+        var columns = ["Cantidad", 'Código', "Producto servicio"];
+        var rows = [];
+        orden.data.servicios.forEach(function (servicio) {
+            rows.push([servicio.cantidad, servicio.codigo, servicio.descripcion]);
+        });
         // columnStyles: {
         //   id: {fillColor: 255}
         // },
@@ -2080,50 +4570,17 @@ var ReporteService = /** @class */ (function () {
         var rightcol2 = 430;
         startY = doc.autoTableEndPosY() + 30;
         doc.setFontSize(this.fontSizes.NormalFontSize);
-        doc.setFontType('bold');
-        doc.textAlign("Sub Total,", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.textAlign(this.invoiceJSON.SubTotalAmnt, { align: "left" }, rightcol2, startY);
-        doc.setFontSize(this.fontSizes.NormalFontSize);
-        doc.setFontType('bold');
-        doc.textAlign("CGST Rs.", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
         // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.invoiceJSON.TotalCGST, { align: "left" }, rightcol2, startY);
         doc.setFontType('bold');
-        doc.textAlign("SGST Rs.", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.invoiceJSON.TotalSGST, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("IGST Rs.", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.invoiceJSON.TotalIGST, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("CESS Rs.", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.invoiceJSON.TotalCESS, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("Total GST Rs.", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.invoiceJSON.TotalGST, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign("Grand Total Rs.", { align: "left" }, rightcol1, startY += this.lineSpacing.NormalSpacing);
-        doc.setFontType('normal');
-        // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-        doc.textAlign(this.invoiceJSON.TotalAmnt, { align: "left" }, rightcol2, startY);
-        doc.setFontType('bold');
-        doc.textAlign('For ' + this.comapnyJSON.CompanyName + ',', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
-        doc.textAlign('Authorised Signatory', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
-        doc.save("invoice.pdf");
+        doc.textAlign(this.comapnyJSON.CompanyName + ',', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
+        doc.textAlign('Firma Autorizada', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
+        doc.save('OT-' + new _pipes_anadir_ceros_pipe__WEBPACK_IMPORTED_MODULE_3__["AnadirCerosPipe"]().transform(orden.data.numero, 5) + ".pdf");
     };
     ReporteService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_persona_service__WEBPACK_IMPORTED_MODULE_1__["PersonaService"]])
     ], ReporteService);
     return ReporteService;
 }());

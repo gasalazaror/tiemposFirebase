@@ -23,6 +23,13 @@ export class ReporteService {
     companyPhno: '',
   };
 
+  customer_BillingInfoJSON = {
+    CustomerName: 'Jino Shaji',
+    CustomerState: 'KERALA (09)',
+    CustomerEmail: 'abcd@gmail.com',
+    CustomerPhno: '+918189457845',
+  };
+
   constructor(private personaService: PersonaService) {
 
     personaService.obtenerEmpresa().valueChanges().subscribe(empresa => {
@@ -40,18 +47,7 @@ export class ReporteService {
 
 
 
-  customer_BillingInfoJSON = {
-    CustomerName: 'Jino Shaji',
-    CustomerGSTIN: '37B76C238B7E1Z5',
-    CustomerState: 'KERALA (09)',
-    CustomerPAN: 'B76C238B7E',
-    CustomerAddressLine1: 'ABCDEFGD HOUSE,IX/642-D',
-    CustomerAddressLine2: 'ABCDEFGD P.O., NEDUMBASSERY',
-    CustomerAddressLine3: 'COCHIN',
-    PIN: '683584',
-    CustomerEmail: 'abcd@gmail.com',
-    CustomerPhno: '+918189457845',
-  };
+ 
 
 
   customer_ShippingInfoJSON = {
@@ -94,6 +90,19 @@ export class ReporteService {
   };
 
   reporteCliente(orden) {
+
+    console.log(orden)
+
+    this.customer_BillingInfoJSON = {
+      CustomerName: orden.data.cliente.nombre,
+      CustomerState: orden.data.cliente.direccion,
+      CustomerEmail: orden.data.cliente.correo,
+      CustomerPhno: orden.data.cliente.telefono,
+    };
+
+
+
+
     this.invoiceJSON = {
       InvoiceNo: 'OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5),
       InvoiceDate: new DatePipe('en-US').transform(orden.data.fecha.seconds * 1000, 'dd/MM/yyyy'),
@@ -192,13 +201,13 @@ export class ReporteService {
     //-------Customer Info Billing---------------------
     var startBilling = startY;
 
-    doc.textAlign("Billing Address,", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerName, { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    
+    
     doc.setFontSize(this.fontSizes.NormalFontSize);
-    doc.textAlign("GSTIN", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("Cliente:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerGSTIN, { align: "left" }, 80, startY);
+    doc.textAlign(this.customer_BillingInfoJSON.CustomerName, { align: "left" }, 80, startY);
 
 
     // doc.setFontType('bold');
@@ -206,22 +215,11 @@ export class ReporteService {
     // doc.setFontType('normal');
     // doc.textAlign(customer_BillingInfoJSON.CustomerPAN, {align: "left"}, 80, startY);
 
+ 
     doc.setFontType('bold');
-    doc.textAlign("Address", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.setFontType('normal');
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerAddressLine1, { align: "left" }, 80, startY);
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerAddressLine2, { align: "left" }, 80, startY += this.lineSpacing.NormalSpacing);
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerAddressLine3, { align: "left" }, 80, startY += this.lineSpacing.NormalSpacing);
-
-    doc.setFontType('bold');
-    doc.textAlign("STATE", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("Dirección", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
     doc.textAlign(this.customer_BillingInfoJSON.CustomerState, { align: "left" }, 80, startY);
-
-    doc.setFontType('bold');
-    doc.textAlign("PIN", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.setFontType('normal');
-    doc.textAlign(this.customer_BillingInfoJSON.PIN, { align: "left" }, 80, startY);
 
     doc.setFontType('bold');
     doc.textAlign("EMAIL", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);

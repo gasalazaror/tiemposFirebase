@@ -15,8 +15,8 @@
                 <th>No. OT </th>
                 <td>
 
-                  <a routerLink="orden/informacionorden/{{id}}">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>
-                  <a routerLink="orden/crearorden/{{id}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                  <a href="orden/informacionorden/{{id}}">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>
+                  <a href="orden/crearorden/{{id}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                 </td>
               </tr>
 
