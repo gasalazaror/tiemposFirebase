@@ -68,27 +68,24 @@ export class LoginComponent implements OnInit {
 
         this.afAuth.auth.signInWithEmailAndPassword(this.personaForm.value.email, this.personaForm.value.password)
         .then((usuario: any) => {
-            if (usuario.user.emailVerified) {
-                this.error = ''
-                this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
-                this.empresas = this.db.collection('empresaUsuario',
-                    query => query.where('correo', '==', this.personaForm.value.email).where('tipo', '==', 'usuario')).valueChanges()
-                this.empresas.subscribe(res => {
-                    this.listaEmpresas = []
-                    res.forEach(elemento => {
-                        this.itemDoc = this.db.doc(elemento.empresa.path)
-                        this.itemDoc.valueChanges().subscribe(res => {
-                            res.path = elemento.empresa.path;
-                            this.listaEmpresas.push(res)
-                        })
-                    });
+           
 
-                    
-                })
+            this.error = ''
+            this.itemDoc = this.db.doc('usuario/' + this.afAuth.auth.currentUser.uid);
+            this.empresas = this.db.collection('empresaUsuario',
+                query => query.where('correo', '==', this.personaForm.value.email).where('tipo', '==', 'usuario')).valueChanges()
+            this.empresas.subscribe(res => {
+                this.listaEmpresas = []
+                res.forEach(elemento => {
+                    this.itemDoc = this.db.doc(elemento.empresa.path)
+                    this.itemDoc.valueChanges().subscribe(res => {
+                        res.path = elemento.empresa.path;
+                        this.listaEmpresas.push(res)
+                    })
+                });
 
-            } else {
-                this.router.navigate(['/recuperacion']);
-            }
+                
+            })
 
         }, error => {
             this.error = 'Correo o contraseña incorrectos'

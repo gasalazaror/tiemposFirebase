@@ -126,7 +126,9 @@
                       [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'">
                       <td>
 
-                        <div *ngIf="servicio.operador.data.correo == user.email">
+                      <!--   <div class="*ngIf="servicio.operador.data.correo == user.email""></div> -->
+
+                        <div >
                             <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm"
                             title="Iniciar">
                             <i class="fa fa-play"></i>

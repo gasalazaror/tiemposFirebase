@@ -6,9 +6,13 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2'
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as jsPdf from 'jspdf'
+
 import { ReporteService } from '../../../servicios/reporte/reporte.service';
 import { PersonaService } from '../../../servicios/persona.service';
+
+var jsPDF = require('jspdf')
+require('jspdf-autotable')
+
 
 
 @Component({
@@ -67,8 +71,30 @@ export class ConsultarOrdenComponent implements OnInit {
   }
 
   print(orden) {
+    this.reporteService.reporteCliente(orden)
 
+  //   var columns = ["Cantidad", "Producto servicio"]
+  //   var rows = []
+  //   orden.data.servicios.forEach(servicio => {
+  //     rows.push([servicio.cantidad, servicio.descripcion])
+  //   });
+  //   const doc = new jsPDF()
+  //   var rightStartCol1=400;
+  //   var rightStartCol2=480;
+  //   var InitialstartX=40;
+  //   var startX=40;
+  //   var InitialstartY=50;
+  //   var startY=0;
+  //   var lineHeights=12;
+  //   doc.textAlign('Cineto Telecomunicaciones', {align: "left"}, startX, startX);
+  //   doc.autoTable(columns, rows, {
+   
+    
+  //     margin: {top: 60},
+     
+  // });
 
+  //   doc.save('ejemplo.pdf')
   }
 
   obtenerOrdenes() {
@@ -84,14 +110,14 @@ export class ConsultarOrdenComponent implements OnInit {
           orden.esUsuario == false
 
           orden.data.servicios.forEach(servicio => {
-  
+
 
             if (servicio.operador.data.correo == this.user.email) {
               orden.esUsuario = true
             }
           });
 
-     
+
         });
         this.dtTrigger.next();
       })
@@ -99,7 +125,7 @@ export class ConsultarOrdenComponent implements OnInit {
   }
 
   imprimirOrden(orden) {
-    var pdf = new jsPdf('p', 'pt', 'letter');
+    var pdf = new jsPDF('p', 'pt', 'letter');
     var source = $('#imprimir')[0];
 
     var specialElementHandlers = {

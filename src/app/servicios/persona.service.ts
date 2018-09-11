@@ -99,4 +99,6 @@ export class PersonaService {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa
   }
+
+  
 }

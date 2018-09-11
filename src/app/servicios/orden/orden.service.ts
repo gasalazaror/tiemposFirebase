@@ -34,6 +34,12 @@ export class OrdenService {
     
   }
 
+
+  obtenerOrdenesPorFecha(campo, valor){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('ordenes', query=>query.where(campo,'==',valor))
+  }
+
   obtenerOrdenes() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('ordenes', query=> query.orderBy('numero', 'desc')).snapshotChanges().pipe(
