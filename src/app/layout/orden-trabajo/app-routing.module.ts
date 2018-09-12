@@ -7,6 +7,7 @@ import { InformacionOrdenComponent } from './informacion-orden/informacion-orden
 import { OperacionComponent } from './operacion/operacion.component';
 import { MisOrdenesComponent } from './mis-ordenes/mis-ordenes.component';
 import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orden.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'misoperaciones',
     component: MisOrdenesComponent
+  },
+  {
+    path: 'configuracion',
+    component: ConfiguracionComponent
   }
 ];
 

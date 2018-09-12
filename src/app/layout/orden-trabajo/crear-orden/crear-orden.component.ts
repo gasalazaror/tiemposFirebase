@@ -86,7 +86,12 @@ export class CrearOrdenComponent implements OnInit {
         if(res[0]){
           this.numeroOrden = res[0].numero+1
         }else{
-          this.numeroOrden = 1
+
+          this.personaService.obtenerEmpresa().valueChanges().subscribe(res=>{
+            this.numeroOrden = res.otInicio
+          })
+
+         
         }
       
       })

@@ -19,6 +19,7 @@ import { DetalleOrdenComponent } from './detalleOrden/detalle-orden/detalle-orde
 import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
 import { FormatTimePipe } from '../../pipes/format-time.pipe';
 import { AnadirCerosPipe } from '../../pipes/anadir-ceros.pipe';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 
 
@@ -38,6 +39,6 @@ import { AnadirCerosPipe } from '../../pipes/anadir-ceros.pipe';
     ServicioModule
   ],
   exports:[AnadirCerosPipe,FormatTimePipe],
-  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent, AnadirCerosPipe]
+  declarations: [CrearOrdenComponent, ConsultarOrdenComponent, InformacionOrdenComponent, OperacionComponent, OrdenTrabajoComponent, MisOrdenesComponent, DetalleOrdenComponent, DetalleTareaComponent, AnadirCerosPipe, ConfiguracionComponent]
 })
 export class OrdenTrabajoModule { }

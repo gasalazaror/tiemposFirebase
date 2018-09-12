@@ -1,0 +1,35 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Configuración órdenes de trabajo'" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+
+
+      <div class="card mb-3">
+        <div class="card-header">Ordenes de trabajo</div>
+        <div class="card-body table-responsive">
+
+    
+
+          <div class="form-inline">
+            <div class="form-group mb-2 mx-sm-2">
+              <label for="staticEmail2" class="">Inicio numeración Ordenes de Trabajo <span style="color: red">* &nbsp; &nbsp; &nbsp;</span></label>
+              <input autofocus type="number" [(ngModel)]="numeroInicial"   style="max-width: 100px;" class="form-control"
+                id="staticEmail2">
+            </div>
+            <button title="Guardar" type="button" (click)="guardarNumeracion()" class="btn btn-primary mb-2">Guardar</button>
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+</div>

@@ -99,6 +99,12 @@ export class PersonaService {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa
   }
+  
+
+  editarNumeracionInicial(otInicio){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.update({otInicio: otInicio})
+  }
 
   
 }
