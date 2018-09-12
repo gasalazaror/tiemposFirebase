@@ -28,6 +28,7 @@ export class ReporteService {
     CustomerState: 'KERALA (09)',
     CustomerEmail: 'abcd@gmail.com',
     CustomerPhno: '+918189457845',
+    vehiculo: ''
   };
 
   constructor(private personaService: PersonaService) {
@@ -81,7 +82,7 @@ export class ReporteService {
     Head2TitleFontSize: 16,
     TitleFontSize: 14,
     SubTitleFontSize: 12,
-    NormalFontSize: 10,
+    NormalFontSize: 8,
     SmallFontSize: 8
   };
 
@@ -98,6 +99,7 @@ export class ReporteService {
       CustomerState: orden.data.cliente.direccion,
       CustomerEmail: orden.data.cliente.correo,
       CustomerPhno: orden.data.cliente.telefono,
+      vehiculo: orden.data.vehiculo.placa,
     };
 
 
@@ -109,7 +111,7 @@ export class ReporteService {
 
     }
 
-    var doc = new jsPDF('p', 'pt');
+    var doc = new jsPDF('p', 'pt', 'a4');
 
     doc.page = 1; // use this as a counter.
 
@@ -132,19 +134,12 @@ export class ReporteService {
     doc.setFontType('bold');
 
     //pdf.addImage(agency_logo.src, 'PNG', logo_sizes.centered_x, _y, logo_sizes.w, logo_sizes.h);
-    // doc.addImage(this.company_logo.src1, 'PNG', startX,startY+=50, this.company_logo.w,this.company_logo.h);
+     //doc.addImage(this.company_logo.src1, 'png', startX,startY+=50, this.company_logo.w,this.company_logo.h);
+  
 
     doc.textAlign(this.comapnyJSON.CompanyName, { align: "left" }, startX, startY += 15 + this.company_logo.h);
     doc.setFontSize(this.fontSizes.NormalFontSize);
-    doc.textAlign("RUC", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.setFontType('normal');
-    // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-    doc.textAlign(this.comapnyJSON.CompanyGSTIN, { align: "left" }, 85, startY);
-
-    doc.setFontType('bold');
-    doc.textAlign("Dirección", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.setFontType('normal');
-    doc.textAlign(this.comapnyJSON.CompanyState, { align: "left" }, 85, startY);
+   
 
     // doc.setFontType('bold');
     // doc.textAlign("Address", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
@@ -154,20 +149,20 @@ export class ReporteService {
     // doc.textAlign(comapnyJSON.CompanyAddressLine3, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
 
     doc.setFontType('bold');
-    doc.textAlign("Email", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("Email:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
-    doc.textAlign(this.comapnyJSON.companyEmail, { align: "left" }, 85, startY);
+    doc.textAlign(this.comapnyJSON.companyEmail, { align: "left" }, 86, startY);
 
     doc.setFontType('bold');
     doc.textAlign("Teléfono: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
-    doc.textAlign(this.comapnyJSON.companyPhno, { align: "left" }, 85, startY);
+    doc.textAlign(this.comapnyJSON.companyPhno, { align: "left" }, 86, startY);
 
     var tempY = InitialstartY;
 
 
     doc.setFontType('bold');
-    doc.textAlign("Orden de Trabajo ", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("Orden de Trabajo:", { align: "left" }, rightStartCol1, tempY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
     doc.textAlign(this.invoiceJSON.InvoiceNo, { align: "left" }, rightStartCol2, tempY);
 
@@ -186,28 +181,28 @@ export class ReporteService {
 
     doc.setFontType('normal');
 
-    doc.setLineWidth(1);
-    // doc.line(20, startY+lineSpacing.NormalSpacing, 580, startY+=lineSpacing.NormalSpacing);
-    doc.line(20, startY + this.lineSpacing.NormalSpacing, 220, startY + this.lineSpacing.NormalSpacing);
-    doc.line(380, startY + this.lineSpacing.NormalSpacing, 580, startY + this.lineSpacing.NormalSpacing);
-
-    doc.setFontSize(this.fontSizes.Head2TitleFontSize);
-    doc.setFontType('bold');
-    doc.textAlign("Orden de Trabajo", { align: "center" }, startX, startY += this.lineSpacing.NormalSpacing + 2);
-
+ 
+ 
     doc.setFontSize(this.fontSizes.NormalFontSize);
     doc.setFontType('bold');
 
     //-------Customer Info Billing---------------------
     var startBilling = startY;
 
+    doc.setFontSize(this.fontSizes.NormalFontSize);
+    doc.textAlign("", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.setFontType('normal');
+    // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
+    doc.textAlign('', { align: "left" }, 86, startY);
+
     
     
     doc.setFontSize(this.fontSizes.NormalFontSize);
+    doc.setFontType('bold');
     doc.textAlign("Cliente:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerName, { align: "left" }, 80, startY);
+    doc.textAlign(this.customer_BillingInfoJSON.CustomerName, { align: "left" }, 86, startY);
 
 
     // doc.setFontType('bold');
@@ -217,19 +212,19 @@ export class ReporteService {
 
  
     doc.setFontType('bold');
-    doc.textAlign("Dirección", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("Email:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerState, { align: "left" }, 80, startY);
+    doc.textAlign(this.customer_BillingInfoJSON.CustomerEmail, { align: "left" }, 86, startY);
 
     doc.setFontType('bold');
-    doc.textAlign("EMAIL", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("Teléfono: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerEmail, { align: "left" }, 80, startY);
+    doc.textAlign(this.customer_BillingInfoJSON.CustomerPhno, { align: "left" }, 86, startY);
 
     doc.setFontType('bold');
-    doc.textAlign("Phone: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.textAlign("ID/Placa: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
-    doc.textAlign(this.customer_BillingInfoJSON.CustomerPhno, { align: "left" }, 80, startY);
+    doc.textAlign(this.customer_BillingInfoJSON.vehiculo, { align: "left" }, 86, startY);
 
 
 
@@ -261,7 +256,7 @@ export class ReporteService {
     var options = {
       beforePageContent: header,
       margin: {
-        top: 50
+        top: 10
       },
       styles: {
         overflow: 'linebreak',
@@ -277,13 +272,13 @@ export class ReporteService {
         5: { columnWidth: 'auto' },
         6: { columnWidth: 'auto' },
       },
-      startY: startY += 50
+      startY: startY += 10
     };
 
-    var columns = ["Cantidad", 'Código', "Producto servicio"]
+    var columns = ["Cantidad", 'Código', "Producto/Servicio", "Tiempo Estándar"]
     var rows = []
     orden.data.servicios.forEach(servicio => {
-      rows.push([servicio.cantidad, servicio.codigo, servicio.descripcion])
+      rows.push([servicio.cantidad, servicio.codigo, servicio.descripcion, new FormatTimePipe().transform(servicio.tiempoEstandar*60*servicio.cantidad)])
     });
 
 
@@ -308,10 +303,11 @@ export class ReporteService {
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
 
     doc.setFontType('bold');
-    doc.textAlign(this.comapnyJSON.CompanyName + ',', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
+    doc.textAlign(this.comapnyJSON.CompanyName, { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing -15);
     doc.textAlign('Firma Autorizada', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
 
     doc.save('OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5)+".pdf");
+   
   }
 
 
