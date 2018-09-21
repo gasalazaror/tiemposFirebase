@@ -1,8 +1,24 @@
 <div class="row">
     <div class="col-xl-12">
-        <h2 class="page-header">
-            {{heading}}
-        </h2>
+        
+        <div class="d-flex justify-content-end">
+            <div class="mr-auto p-2">
+                <h4 class="page-header">
+                    {{heading}}
+                </h4>
+            </div>
+            <div *ngIf="nuevo" class="p-1">
+                <a  [routerLink]="[nuevo]" title="Nuevo" class="btn btn-success"><i class="fa fa-plus"></i></a>
+            </div>
+            <div *ngIf="edicion" class="p-1">
+                <a  [routerLink]="[edicion]" title="Modificar" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+            </div>
+            <div *ngIf="pdf" class="p-1">
+                <button  title="PDF" (click)="function2()" class="btn btn-danger"><i class="fa fa-file-pdf-o"></i></button>
+            </div>
+        
+          </div>
+       
         <!-- <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <i class="fa fa-dashboard"></i> <a href="Javascript:void(0)" [routerLink]="['/dashboard']">Dashboard</a>

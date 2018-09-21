@@ -106,8 +106,6 @@ export class DetalleOrdenComponent implements OnInit {
       }
     })
 
-
-
   }
 
   calcularEstadisticas(index) {
@@ -192,11 +190,6 @@ export class DetalleOrdenComponent implements OnInit {
 
       }
     })
-
-
-
-
-   
   }
 
   open(content, index) {
@@ -222,17 +215,10 @@ export class DetalleOrdenComponent implements OnInit {
   }
 
   pausar() {
-
-
-
-
     const id = this.db.createId()
-
     if (!this.servicios[this.newIndex].pausas) {
       this.servicios[this.newIndex].pausas = []
     }
-
-
     swal({
       title: 'Está seguro?',
       text: "Desea pausar la operación seleccionada!",

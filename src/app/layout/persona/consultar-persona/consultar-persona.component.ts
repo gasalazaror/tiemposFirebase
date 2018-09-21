@@ -5,6 +5,7 @@ import { PersonaService } from '../../../servicios/persona.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2'
+import { ReporteService } from '../../../servicios/reporte/reporte.service';
 
 @Component({
   selector: 'app-consultar-persona',
@@ -48,7 +49,7 @@ export class ConsultarPersonaComponent implements  OnInit {
   };
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private personaService: PersonaService) {
+  constructor(private personaService: PersonaService, private reporteService: ReporteService) {
   }
 
 
@@ -82,6 +83,11 @@ export class ConsultarPersonaComponent implements  OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers'
     };
+  }
+
+  imprimirReporte(){
+    this.reporteService.reportePersonas(this.personas)
+    
   }
 
  

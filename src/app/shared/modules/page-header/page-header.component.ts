@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -8,8 +8,16 @@ import { RouterModule } from '@angular/router';
 })
 export class PageHeaderComponent implements OnInit {
     @Input() heading: string;
+    @Input() pdf: boolean;
+    @Input() nuevo: string;
+    @Input() edicion: string;
     @Input() icon: string;
-    constructor() {}
+    @Output() myEvent = new EventEmitter();
+    constructor() { }
 
-    ngOnInit() {}
+    ngOnInit() { }
+
+    function2() {
+        this.myEvent.emit(null)
+    }
 }

@@ -92,7 +92,7 @@ export class ReporteService {
 
   reporteCliente(orden) {
 
-    console.log(orden)
+
 
     this.customer_BillingInfoJSON = {
       CustomerName: orden.data.cliente.nombre,
@@ -307,6 +307,171 @@ export class ReporteService {
     doc.textAlign('Firma Autorizada', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
 
     doc.save('OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5)+".pdf");
+   
+  }
+
+  reportePersonas(personas) {
+
+
+
+
+
+
+  
+
+    var doc = new jsPDF('p', 'pt', 'a4');
+
+    doc.page = 1; // use this as a counter.
+
+    
+
+    var rightStartCol1 = 400;
+    var rightStartCol2 = 480;
+
+
+    var InitialstartX = 40;
+    var startX = 40;
+    var InitialstartY = 50;
+    var startY = 0;
+
+    var lineHeights = 12;
+
+
+    doc.setFontSize(this.fontSizes.SubTitleFontSize);
+    doc.setFont('times');
+    doc.setFontType('bold');
+
+    //pdf.addImage(agency_logo.src, 'PNG', logo_sizes.centered_x, _y, logo_sizes.w, logo_sizes.h);
+     //doc.addImage(this.company_logo.src1, 'png', startX,startY+=50, this.company_logo.w,this.company_logo.h);
+  
+
+    doc.textAlign(this.comapnyJSON.CompanyName, { align: "left" }, startX, startY += 15 + this.company_logo.h);
+    doc.setFontSize(this.fontSizes.NormalFontSize);
+   
+
+    // doc.setFontType('bold');
+    // doc.textAlign("Address", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
+    // doc.setFontType('normal');
+    // doc.textAlign(comapnyJSON.CompanyAddressLine1, {align: "left"}, 80, startY);
+    // doc.textAlign(comapnyJSON.CompanyAddressLine2, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
+    // doc.textAlign(comapnyJSON.CompanyAddressLine3, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
+
+    doc.setFontType('bold');
+    doc.textAlign("Email:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.setFontType('normal');
+    doc.textAlign(this.comapnyJSON.companyEmail, { align: "left" }, 86, startY);
+
+    doc.setFontType('bold');
+    doc.textAlign("Teléfono: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.setFontType('normal');
+    doc.textAlign(this.comapnyJSON.companyPhno, { align: "left" }, 86, startY);
+
+    var tempY = InitialstartY;
+
+
+    
+
+    // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"INVOICE No  :  "+invoiceJSON.InvoiceNo + '     ', { align: 'right' });
+    // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"INVOICE Date: "+invoiceJSON.InvoiceDate + '     ', { align: 'right' });
+    // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"Reference No: "+invoiceJSON.RefNo + '     ', { align: 'right' });
+    // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"Total       :  Rs. "+invoiceJSON.TotalAmnt + '     ', { align: 'right' });
+
+    doc.setFontType('normal');
+
+ 
+ 
+    doc.setFontSize(this.fontSizes.NormalFontSize);
+    doc.setFontType('bold');
+
+    //-------Customer Info Billing---------------------
+    var startBilling = startY;
+
+    doc.setFontSize(this.fontSizes.NormalFontSize);
+    doc.textAlign("", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
+    doc.setFontType('normal');
+    // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
+    doc.textAlign('', { align: "left" }, 86, startY);
+
+    
+    
+  
+
+    //-------Customer Info Shipping---------------------
+    var rightcol1 = 340;
+    var rightcol2 = 400;
+
+
+    // doc.setFontType('bold');
+    // doc.textAlign("PAN", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
+    // doc.setFontType('normal');
+    // doc.textAlign(customer_BillingInfoJSON.CustomerPAN, {align: "left"}, 80, startY);
+
+
+
+    var header = function (data) {
+      doc.setFontSize(8);
+      doc.setTextColor(40);
+      doc.setFontStyle('normal');
+      // doc.textAlign("TAX INVOICE", {align: "center"}, data.settings.margin.left, 50);
+
+      //doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+      // doc.text("Testing Report", 110, 50);
+    };
+    // doc.autoTable(res.columns, res.data, {margin: {top:  startY+=30}});
+    doc.setFontSize(8);
+    doc.setFontStyle('normal');
+
+    var options = {
+      beforePageContent: header,
+      margin: {
+        top: 10
+      },
+      styles: {
+        overflow: 'linebreak',
+        fontSize: 8,
+        rowHeight: 'auto',
+        columnWidth: 'wrap'
+      },
+      columnStyles: {
+        1: { columnWidth: 'auto' },
+        2: { columnWidth: 'auto' },
+        3: { columnWidth: 'auto' },
+        4: { columnWidth: 'auto' },
+        5: { columnWidth: 'auto' },
+        6: { columnWidth: 'auto' },
+      },
+      startY: startY += 10
+    };
+
+    var columns = ["Identificaciön", 'Nombre / Razón Social', "Correo", "Tipo", "Estado"]
+    var rows = []
+
+    personas.forEach(persona => {
+      rows.push([persona.data.cedula, persona.data.nombre, persona.data.correo, persona.data.tipo, persona.data.estado])
+    });
+   
+
+
+    // columnStyles: {
+    //   id: {fillColor: 255}
+    // },
+
+    doc.autoTable(columns, rows, options);   //From dynamic data.
+    // doc.autoTable(res.columns, res.data, options); //From htmlTable
+
+
+
+    //-------Invoice Footer---------------------
+    var rightcol1 = 340;
+    var rightcol2 = 430;
+
+    startY = doc.autoTableEndPosY() + 30;
+    doc.setFontSize(this.fontSizes.NormalFontSize);
+
+
+    // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
+
+    doc.save('personas.pdf');
    
   }
 

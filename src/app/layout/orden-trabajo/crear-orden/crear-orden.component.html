@@ -143,10 +143,12 @@
 
           <p>
             <strong>Servicios seleccionados: </strong>{{serviciosSeleccionados.length}}</p>
-          <table class="table table-bordered table-responsive-sm table-sm">
+          <table *ngIf="serviciosSeleccionados.length>0" class="table table-bordered table-responsive-sm table-sm" datatable id="example-datatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
             <thead>
               <tr>
                 <th></th>
+                <th></th>
+                <th scope="col">#</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Código</th>
                 <th scope="col">Servicio</th>
@@ -162,6 +164,19 @@
                     <i class="fa fa-trash"></i>
                   </button>
                 </td>
+                <td>
+
+              
+                      <button title="Subir una posición" class="btn btn-sm " [disabled]="i==0" (click)="modificarPosiciones('+', i)"><i class="fa fa-angle-up"></i></button>
+       
+      
+                      <button title="Bajar una posición" class="btn btn-sm " [disabled]="i==serviciosSeleccionados.length-1" (click)="modificarPosiciones('-', i)"><i class="fa fa-angle-down"></i></button>
+ 
+                  
+                  
+                  
+                </td>
+                <td>{{i+1 | anadirCeros:2}}</td>
                 <td *ngIf="servicio.data"><input [disabled]="servicio.data.estado=='POR FACTURAR'|| servicio.data.estado=='EN PRODUCCIÓN' || servicio.data.estado=='EN PRODUCCIÓN - PAUSADO'" style="max-width: 60px" class="form-control" type="number" min="1" [(ngModel)]="servicio.data.cantidad"></td>
                 <td *ngIf="servicio.data">{{servicio.data.codigo}}</td>
                 <td *ngIf="servicio.data">{{servicio.data.descripcion}}</td>

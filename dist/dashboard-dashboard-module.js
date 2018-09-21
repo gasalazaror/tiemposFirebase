@@ -331,15 +331,15 @@ var DashboardComponent = /** @class */ (function () {
             _this.numeroOrdenes = res.length;
         });
         this.sliders.push({
-            imagePath: 'assets/images/banner1.jpg',
+            imagePath: 'assets/images/banners-03-01.png',
             label: '',
             text: ''
         }, {
-            imagePath: 'assets/images/banner2.jpg',
+            imagePath: 'assets/images/banners-03-02.png',
             label: '',
             text: ''
         }, {
-            imagePath: 'assets/images/banner3.jpg',
+            imagePath: 'assets/images/banners-03-03.png',
             label: '',
             text: ''
         });

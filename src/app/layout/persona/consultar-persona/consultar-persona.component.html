@@ -1,8 +1,8 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Consultar persona'" [icon]="'fa-edit'"></app-page-header>
-
+  <app-page-header [heading]="'Consultar persona'"  (myEvent)="imprimirReporte($event)" [pdf]="true" [nuevo]="'/persona/crearpersona/nuevo'" [icon]="'fa-edit'"></app-page-header>
   <div class="row">
     <div class="col col-xl-12 col-lg-12">
+
 
 
       <div class="card mb-3">
@@ -12,13 +12,13 @@
             <thead>
               <tr>
                 <th></th>
-                <th>Tipo</th>
-                <th>Cédula</th>
-                <th>Nombre</th>
-                <th>Dirección</th>
+      
+                <th>Identificación</th>
+                <th style="width: 50%">Nombre</th>
+   
                 <th>Correo</th>
                 <th>Teléfono</th>
-                <th>Roles</th>
+  
 
               </tr>
             </thead>
@@ -31,16 +31,22 @@
                   </div>
                   
                 </td>
-                <td>{{persona.data.tipo}}</td>
-                <td>{{persona.data.cedula }}</td>
-                <td><a title="Ver información" routerLink="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre}}</a></td>
-                <td>{{persona.data.direccion}}</td>
+         
+                <td>{{persona.data.cedula}}</td>
+                <td>
+                  <a title="Ver información" routerLink="/persona/informacionpersona/{{persona.id}}">{{persona.data.nombre}}</a>
+                 <br>
+                 <p>
+                 <small [class.text-danger]="persona.data.estado=='Inactivo'" [class.text-success]="persona.data.estado=='Activo'"> <i [class.fa-check-square]="persona.data.estado=='Activo'" [class.fa-minus-square]="persona.data.estado=='Inactivo'" class="fa"></i> {{persona.data.estado}} </small> <small> - </small>
+                 <small><i class="fa fa-user"></i> {{persona.data.tipo}} </small> <small> - </small>
+                  <small *ngIf="persona.data.cliente"> Cliente </small> 
+                  <small *ngIf="persona.data.empleado"> Empleado </small> 
+                </p>
+                </td>
+  
                 <td>{{persona.data.correo }}</td>
                 <td>{{persona.data.telefono}}</td>
-                <td>
-                  <p *ngIf="persona.data.cliente">Cliente</p>
-                  <p *ngIf="persona.data.empleado">Empleado</p>
-                </td>
+   
               </tr>
 
 
