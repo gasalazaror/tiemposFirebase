@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Información Orden de trabajo'" [pdf]="true" [nuevo]="'/orden/crearorden/nuevo'"
+  <app-page-header [heading]="'Información Orden de trabajo'" [pdf]="true" (myEvent)="imprimirReporte($event)" [nuevo]="'/orden/crearorden/nuevo'"
     [edicion]="'/orden/crearorden/'+id" [icon]="'fa-edit'"></app-page-header>
 
   <div class="card">

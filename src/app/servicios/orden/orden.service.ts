@@ -40,6 +40,18 @@ export class OrdenService {
     return this.empresa.collection('ordenes', query=>query.where(campo,'==',valor))
   }
 
+  obtenerOrdenesFecha(inicio, fin) {
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('ordenes', query=> query.where('fecha','>=',inicio).where('fecha','<=',fin).orderBy('fecha', 'desc')).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+   
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+  }
+
   obtenerOrdenes() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('ordenes', query=> query.orderBy('numero', 'desc')).snapshotChanges().pipe(

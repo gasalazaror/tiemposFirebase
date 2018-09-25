@@ -72,29 +72,11 @@ export class ConsultarOrdenComponent implements OnInit {
 
   print(orden) {
     this.reporteService.reporteCliente(orden)
+  }
 
-  //   var columns = ["Cantidad", "Producto servicio"]
-  //   var rows = []
-  //   orden.data.servicios.forEach(servicio => {
-  //     rows.push([servicio.cantidad, servicio.descripcion])
-  //   });
-  //   const doc = new jsPDF()
-  //   var rightStartCol1=400;
-  //   var rightStartCol2=480;
-  //   var InitialstartX=40;
-  //   var startX=40;
-  //   var InitialstartY=50;
-  //   var startY=0;
-  //   var lineHeights=12;
-  //   doc.textAlign('Cineto Telecomunicaciones', {align: "left"}, startX, startX);
-  //   doc.autoTable(columns, rows, {
-   
+  imprimirReporte(){
+    this.reporteService.reporteDatos(this.ordenes, 'Órdenes de Trabajo')
     
-  //     margin: {top: 60},
-     
-  // });
-
-  //   doc.save('ejemplo.pdf')
   }
 
   obtenerOrdenes() {

@@ -86,7 +86,7 @@ export class ConsultarPersonaComponent implements  OnInit {
   }
 
   imprimirReporte(){
-    this.reporteService.reportePersonas(this.personas)
+    this.reporteService.reporteDatos(this.personas, 'Personas')
     
   }
 

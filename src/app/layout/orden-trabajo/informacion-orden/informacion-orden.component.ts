@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { ReporteService } from '../../../servicios/reporte/reporte.service';
 
 @Component({
   selector: 'app-informacion-orden',
@@ -56,7 +57,9 @@ export class InformacionOrdenComponent implements OnInit {
 
   id: any
   orden: Observable<any>;
+  ordenReporte: any = []
   servicios: any;
+  serviciosOperaciones: any;
   newIndex: any
   servicioSeleccionado: any
   closeResult: string;
@@ -79,18 +82,27 @@ export class InformacionOrdenComponent implements OnInit {
     private fb: FormBuilder,
     private personaService: PersonaService,
     private modalService: NgbModal,
+    private reporteService: ReporteService
   ) {
     this.servicios = []
+    this.serviciosOperaciones = []
     this.id = this.route.snapshot.paramMap.get('id');
     this.orden = this.ordenService.obtenerUnaOrden(this.id);
     this.orden.subscribe(res => {
+      this.ordenReporte = res
+      console.log(this.ordenReporte)
       $('#example-datatable').DataTable().destroy();
       this.servicios = res.servicios
+      this.serviciosOperaciones = res.servicios
       this.dtTrigger.next()
     })
     this.personas = this.personaService.obtenerUsuarios();
 
 
+  }
+
+  imprimirReporte() {
+    this.reporteService.reporteCliente(this.ordenReporte)
   }
 
   open(content, index) {
@@ -116,7 +128,7 @@ export class InformacionOrdenComponent implements OnInit {
   }
 
   seleccionarPersona(servicio, index) {
-    console.log(servicio.operador)
+
 
     if (servicio.operador.id == "") {
       swal('Existió un error', 'Debe seleccionar un operador', 'error')
@@ -182,8 +194,7 @@ export class InformacionOrdenComponent implements OnInit {
   }
 
   calcularEstadisticas(index) {
-    console.log('ESTADISTICAS')
-    console.log(this.servicios[index])
+  
 
     //tiempo estandar
     const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
@@ -216,10 +227,9 @@ export class InformacionOrdenComponent implements OnInit {
     const real = lead - pausas
     var tiempoReal = moment.utc(real * 1000).format('HH:mm:ss');
 
-    console.log(real)
+
     const eficiencia = (((tiempoEstandarSec) / real) * 100).toFixed(2)
 
-    console.log(eficiencia)
 
     return {
       eficiencia: eficiencia,

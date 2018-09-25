@@ -5,6 +5,7 @@ import { ServicioService } from '../../../servicios/servicio/servicio.service';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2'
+import { ReporteService } from '../../../servicios/reporte/reporte.service';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class ConsultarServicioComponent implements OnInit {
 
   
 
-  constructor(private servicioService: ServicioService) {
+  constructor(private servicioService: ServicioService, private reporteService: ReporteService) {
     this.obtenerServicios()
   }
 
@@ -70,9 +71,12 @@ export class ConsultarServicioComponent implements OnInit {
     })
   }
 
+  imprimirReporte(){
+    this.reporteService.reporteDatos(this.servicios, 'Servicios')
+    
+  }
+
   eliminarServicio(servicio) {
-
-
     swal({
       title: 'Está seguro?',
       text: "¿Está seguro que desea eliminar el servicio: "+servicio.data.descripcion+"?",
@@ -84,10 +88,7 @@ export class ConsultarServicioComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-
-        
     this.servicioService.eliminarServicio(servicio).then(res=>{
-
       swal(
         'Eliminado!',
         'El registro ha sido eliminado.',

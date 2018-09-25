@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { AnadirCerosPipe } from '../../pipes/anadir-ceros.pipe';
 import { OrdenTrabajoModule } from '../orden-trabajo/orden-trabajo.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ChartsModule as Ng2Charts } from 'ng2-charts';
+
 
 @NgModule({
   imports: [
@@ -17,7 +19,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     DataTablesModule,
     FormsModule,
     OrdenTrabajoModule,
-    NgSelectModule
+    NgSelectModule,
+    Ng2Charts
   ],
   declarations: [ReporteComponent]
 })

@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Consultar servicio'" [nuevo]="'/servicio/crearservicio/nuevo'" [pdf]="true" [icon]="'fa-edit'"></app-page-header>
+  <app-page-header [heading]="'Consultar servicio'" [nuevo]="'/servicio/crearservicio/nuevo'" (myEvent)="imprimirReporte($event)" [pdf]="true" [icon]="'fa-edit'"></app-page-header>
   <div class="row">
     <div class="col col-xl-12 col-lg-12">
 

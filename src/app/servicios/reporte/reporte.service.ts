@@ -48,7 +48,7 @@ export class ReporteService {
 
 
 
- 
+
 
 
   customer_ShippingInfoJSON = {
@@ -95,19 +95,19 @@ export class ReporteService {
 
 
     this.customer_BillingInfoJSON = {
-      CustomerName: orden.data.cliente.nombre,
-      CustomerState: orden.data.cliente.direccion,
-      CustomerEmail: orden.data.cliente.correo,
-      CustomerPhno: orden.data.cliente.telefono,
-      vehiculo: orden.data.vehiculo.placa,
+      CustomerName: orden.cliente.nombre,
+      CustomerState: orden.cliente.direccion,
+      CustomerEmail: orden.cliente.correo,
+      CustomerPhno: orden.cliente.telefono,
+      vehiculo: orden.vehiculo.placa,
     };
 
 
 
 
     this.invoiceJSON = {
-      InvoiceNo: 'OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5),
-      InvoiceDate: new DatePipe('en-US').transform(orden.data.fecha.seconds * 1000, 'dd/MM/yyyy'),
+      InvoiceNo: 'OT-' + new AnadirCerosPipe().transform(orden.numero, 5),
+      InvoiceDate: new DatePipe('en-US').transform(orden.fecha.seconds * 1000, 'dd/MM/yyyy'),
 
     }
 
@@ -115,7 +115,7 @@ export class ReporteService {
 
     doc.page = 1; // use this as a counter.
 
-    
+
 
     var rightStartCol1 = 400;
     var rightStartCol2 = 480;
@@ -134,12 +134,12 @@ export class ReporteService {
     doc.setFontType('bold');
 
     //pdf.addImage(agency_logo.src, 'PNG', logo_sizes.centered_x, _y, logo_sizes.w, logo_sizes.h);
-     //doc.addImage(this.company_logo.src1, 'png', startX,startY+=50, this.company_logo.w,this.company_logo.h);
-  
+    //doc.addImage(this.company_logo.src1, 'png', startX,startY+=50, this.company_logo.w,this.company_logo.h);
+
 
     doc.textAlign(this.comapnyJSON.CompanyName, { align: "left" }, startX, startY += 15 + this.company_logo.h);
     doc.setFontSize(this.fontSizes.NormalFontSize);
-   
+
 
     // doc.setFontType('bold');
     // doc.textAlign("Address", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
@@ -181,8 +181,8 @@ export class ReporteService {
 
     doc.setFontType('normal');
 
- 
- 
+
+
     doc.setFontSize(this.fontSizes.NormalFontSize);
     doc.setFontType('bold');
 
@@ -195,8 +195,8 @@ export class ReporteService {
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
     doc.textAlign('', { align: "left" }, 86, startY);
 
-    
-    
+
+
     doc.setFontSize(this.fontSizes.NormalFontSize);
     doc.setFontType('bold');
     doc.textAlign("Cliente:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
@@ -210,7 +210,7 @@ export class ReporteService {
     // doc.setFontType('normal');
     // doc.textAlign(customer_BillingInfoJSON.CustomerPAN, {align: "left"}, 80, startY);
 
- 
+
     doc.setFontType('bold');
     doc.textAlign("Email:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
     doc.setFontType('normal');
@@ -254,6 +254,7 @@ export class ReporteService {
     doc.setFontStyle('normal');
 
     var options = {
+      theme: 'grid',
       beforePageContent: header,
       margin: {
         top: 10
@@ -277,8 +278,8 @@ export class ReporteService {
 
     var columns = ["Cantidad", 'Código', "Producto/Servicio", "Tiempo Estándar"]
     var rows = []
-    orden.data.servicios.forEach(servicio => {
-      rows.push([servicio.cantidad, servicio.codigo, servicio.descripcion, new FormatTimePipe().transform(servicio.tiempoEstandar*60*servicio.cantidad)])
+    orden.servicios.forEach(servicio => {
+      rows.push([servicio.cantidad, servicio.codigo, servicio.descripcion, new FormatTimePipe().transform(servicio.tiempoEstandar * 60 * servicio.cantidad)])
     });
 
 
@@ -303,32 +304,18 @@ export class ReporteService {
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
 
     doc.setFontType('bold');
-    doc.textAlign(this.comapnyJSON.CompanyName, { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing -15);
+    doc.textAlign(this.comapnyJSON.CompanyName, { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing - 15);
     doc.textAlign('Firma Autorizada', { align: "center" }, rightcol2, startY += this.lineSpacing.NormalSpacing + 50);
 
-    doc.save('OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5)+".pdf");
-   
+    doc.save('OT-' + new AnadirCerosPipe().transform(orden.numero, 5) + ".pdf");
+
   }
 
-  reportePersonas(personas) {
-
-
-
-
-
-
-  
-
+  reporteDatos(datos, titulo) {
     var doc = new jsPDF('p', 'pt', 'a4');
-
     doc.page = 1; // use this as a counter.
-
-    
-
     var rightStartCol1 = 400;
     var rightStartCol2 = 480;
-
-
     var InitialstartX = 40;
     var startX = 40;
     var InitialstartY = 50;
@@ -342,12 +329,12 @@ export class ReporteService {
     doc.setFontType('bold');
 
     //pdf.addImage(agency_logo.src, 'PNG', logo_sizes.centered_x, _y, logo_sizes.w, logo_sizes.h);
-     //doc.addImage(this.company_logo.src1, 'png', startX,startY+=50, this.company_logo.w,this.company_logo.h);
-  
+    //doc.addImage(this.company_logo.src1, 'png', startX,startY+=50, this.company_logo.w,this.company_logo.h);
+
 
     doc.textAlign(this.comapnyJSON.CompanyName, { align: "left" }, startX, startY += 15 + this.company_logo.h);
     doc.setFontSize(this.fontSizes.NormalFontSize);
-   
+
 
     // doc.setFontType('bold');
     // doc.textAlign("Address", {align: "left"}, startX, startY+=lineSpacing.NormalSpacing);
@@ -356,20 +343,9 @@ export class ReporteService {
     // doc.textAlign(comapnyJSON.CompanyAddressLine2, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
     // doc.textAlign(comapnyJSON.CompanyAddressLine3, {align: "left"}, 80, startY+=lineSpacing.NormalSpacing);
 
-    doc.setFontType('bold');
-    doc.textAlign("Email:", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.setFontType('normal');
-    doc.textAlign(this.comapnyJSON.companyEmail, { align: "left" }, 86, startY);
-
-    doc.setFontType('bold');
-    doc.textAlign("Teléfono: ", { align: "left" }, startX, startY += this.lineSpacing.NormalSpacing);
-    doc.setFontType('normal');
-    doc.textAlign(this.comapnyJSON.companyPhno, { align: "left" }, 86, startY);
-
-    var tempY = InitialstartY;
 
 
-    
+
 
     // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"INVOICE No  :  "+invoiceJSON.InvoiceNo + '     ', { align: 'right' });
     // doc.writeText(0, tempY+=lineSpacing.NormalSpacing ,"INVOICE Date: "+invoiceJSON.InvoiceDate + '     ', { align: 'right' });
@@ -378,8 +354,23 @@ export class ReporteService {
 
     doc.setFontType('normal');
 
- 
- 
+
+
+    doc.setFontSize(this.fontSizes.NormalFontSize);
+    doc.setFontType('bold');
+
+
+    doc.setFontType('normal');
+
+    doc.setLineWidth(1);
+    // doc.line(20, startY+lineSpacing.NormalSpacing, 580, startY+=lineSpacing.NormalSpacing);
+    doc.line(20, startY + this.lineSpacing.NormalSpacing, 220, startY + this.lineSpacing.NormalSpacing);
+    doc.line(380, startY + this.lineSpacing.NormalSpacing, 580, startY + this.lineSpacing.NormalSpacing);
+
+    doc.setFontSize(this.fontSizes.Head2TitleFontSize);
+    doc.setFontType('bold');
+    doc.textAlign(titulo, { align: "center" }, startX, startY += this.lineSpacing.NormalSpacing + 2);
+
     doc.setFontSize(this.fontSizes.NormalFontSize);
     doc.setFontType('bold');
 
@@ -392,9 +383,9 @@ export class ReporteService {
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
     doc.textAlign('', { align: "left" }, 86, startY);
 
-    
-    
-  
+
+
+
 
     //-------Customer Info Shipping---------------------
     var rightcol1 = 340;
@@ -422,6 +413,8 @@ export class ReporteService {
     doc.setFontStyle('normal');
 
     var options = {
+      theme: 'grid',
+     
       beforePageContent: header,
       margin: {
         top: 10
@@ -443,13 +436,49 @@ export class ReporteService {
       startY: startY += 10
     };
 
-    var columns = ["Identificaciön", 'Nombre / Razón Social', "Correo", "Tipo", "Estado"]
-    var rows = []
 
-    personas.forEach(persona => {
-      rows.push([persona.data.cedula, persona.data.nombre, persona.data.correo, persona.data.tipo, persona.data.estado])
-    });
-   
+
+    switch (titulo) {
+      case 'Personas':
+
+        var columns = ["Identificaciön", 'Nombre / Razón Social', "Correo", "Tipo", "Estado"]
+        var rows = []
+        datos.forEach(persona => {
+          rows.push([persona.data.cedula, persona.data.nombre, persona.data.correo, persona.data.tipo, persona.data.estado])
+        });
+        break;
+
+      case 'Vehículos':
+        var columns = ["ID / Placa", 'Marca', "Modelo", "No. Chásis", "Color"]
+        var rows = []
+        datos.forEach(vehiculo => {
+          rows.push([vehiculo.data.placa, vehiculo.data.marca, vehiculo.data.modelo, vehiculo.data.numeroMotor, vehiculo.data.color])
+        });
+        break;
+
+      case 'Servicios':
+        var columns = ["Código", 'Servicio', "Tiempo Estándar"]
+        var rows = []
+        datos.forEach(servicio => {
+          console.log(servicio)
+          rows.push([servicio.data.codigo, servicio.data.descripcion, new FormatTimePipe().transform(servicio.data.tiempoEstandar * 60)])
+        });
+        break;
+
+      case 'Órdenes de Trabajo':
+        var columns = ["No. OT", 'Fecha OT', "Hora OT", "ID Cliente", "Nombre del cliente", 'ID/Placa']
+        var rows = []
+        datos.forEach(orden => {
+          rows.push(['OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5), new DatePipe('en-US').transform(orden.data.fecha.seconds * 1000, 'dd/MM/yyyy'), new DatePipe('en-US').transform(orden.data.fecha.seconds * 1000, 'HH:mm'), orden.data.cliente.cedula, orden.data.cliente.nombre, orden.data.vehiculo.placa])
+        });
+        break;
+
+      default:
+        break;
+    }
+
+
+
 
 
     // columnStyles: {
@@ -471,8 +500,8 @@ export class ReporteService {
 
     // var w = doc.getStringUnitWidth('GSTIN') * NormalFontSize;
 
-    doc.save('personas.pdf');
-   
+    doc.save(titulo + '.pdf');
+
   }
 
 

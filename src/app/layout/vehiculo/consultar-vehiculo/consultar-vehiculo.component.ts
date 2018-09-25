@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import swal from 'sweetalert2'
+import { ReporteService } from '../../../servicios/reporte/reporte.service';
 
 
 
@@ -50,7 +51,7 @@ export class ConsultarVehiculoComponent implements OnInit {
   
   vehiculos:any[] = [];
 
-  constructor(private vehiculoService: VehiculoService) { 
+  constructor(private vehiculoService: VehiculoService, private reporteService: ReporteService) { 
     this.obtenerVehiculos()
   }
 
@@ -64,6 +65,11 @@ export class ConsultarVehiculoComponent implements OnInit {
       this.vehiculos = res
       this.dtTrigger.next();
     })
+  }
+
+  imprimirReporte(){
+    this.reporteService.reporteDatos(this.vehiculos, 'Vehículos')
+    
   }
 
 
