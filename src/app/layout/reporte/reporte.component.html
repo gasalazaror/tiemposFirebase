@@ -6,36 +6,15 @@
         <div class="card-header">Búsqueda</div>
         <div class="card-body ">
           <div class="row">
-            <div class="col-md-6">
-              <table class="table table-sm table-bordered">
 
-
-                <tr>
-                  <td>Desde:</td>
-                  <td>
-                    <div class="btn-group">
-                      <input type="date" [(ngModel)]="filtroTiempo.inicio" class="form-control">
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Hasta:</td>
-                  <td>
-                    <div class="btn-group">
-                      <input type="date" [(ngModel)]="filtroTiempo.fin" class="form-control">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <button class="btn btn-primary" (click)="buscarOrdenes()"><i class="fa fa-search"></i> Consultar</button>
-                  </td>
-                </tr>
-
-              </table>
+            <div class="btn-group">
+           <label for="">Desde</label>
+              <input type="date" [(ngModel)]="filtroTiempo.inicio" class="form-control">
+              <p>Hasta: </p>
+              <input type="date" [(ngModel)]="filtroTiempo.fin" class="form-control">
+              <button class="btn btn-primary" (click)="buscarOrdenes()"><i class="fa fa-search"></i> Consultar</button>
             </div>
+          
 
           </div>
 
@@ -55,9 +34,17 @@
           <canvas baseChart height="150px" [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
             (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
           </canvas>
+
+          <div class="align-bottom" style="text-align: right">
+           
+          </div>
+
+       
         </div>
       </div>
     </div>
+
+   
 
     <div class="col-md-6">
       <div class="card mb-3">
@@ -67,20 +54,25 @@
         <div class="card-body">
             <table class="table table-sm table-bordered">
 
+              <tr>
+                <th>Operaciones finalizadas</th>
+                <td>{{estadisticas.fin}} de {{tareas.length}}</td>
+              </tr>
+
 
                 <tr>
                   <th>Total Tiempo Estándar</th>
-                  <td>00:00:00</td>
+                  <td>{{estadisticas.te | formatTime}}</td>
                 </tr>
 
                 <tr>
                   <th>Total Tiempo Real:</th>
-                  <td>00:00:00</td>
+                  <td>{{estadisticas.tr | formatTime}}</td>
                 </tr>
 
                 <tr>
                     <th>Total Eficiencia:</th>
-                    <td>100%</td>
+                    <td>{{estadisticas.eficiencia}}%</td>
                   </tr>
               
 
@@ -120,16 +112,31 @@
             <td>{{tarea.cantidad}}</td>
             <td>{{tarea.codigo}}</td>
             <td>{{tarea.descripcion}}</td>
-            <td>{{tarea.estado}}</td>
+            <td
+            [class.table-danger]="tarea.estado=='CITA/RECEPCION'"
+                  [class.table-warning]="tarea.estado=='EN ESPERA DE PRODUCCIÓN'" 
+                  [class.table-primary]="tarea.estado=='EN PRODUCCIÓN'"
+                  [class.table-success]="tarea.estado=='POR FACTURAR'" 
+                  [class.table-warning]="tarea.estado=='EN PRODUCCIÓN - PAUSADO' || tarea.estado=='EN ESPERA DE PRODUCCIÓN'"
+                  
+            >{{tarea.estado}}</td>
             <td>{{tarea.operador.data.nombre}}</td>
             <td>{{tarea.tiempoEstandar * tarea.cantidad * 60 | formatTime}}</td>
             <td>
               <p *ngIf="!tarea.estadisticas">--</p>
-              <p *ngIf="tarea.estadisticas">{{tarea.estadisticas.tiempoReal | formatTime}}</p>
+              <p *ngIf="tarea.estadisticas"
+              
+              
+
+              >{{tarea.estadisticas.tiempoReal | formatTime}}</p>
             </td>
-            <td>
+            <td
+            [class.table-success]="tarea.estadisticas && tarea.estadisticas.eficiencia>=100" 
+            [class.table-warning]="tarea.estadisticas && tarea.estadisticas.eficiencia>=80 && tarea.eficiencia<100"
+             [class.table-danger]="tarea.estadisticas && tarea.estadisticas.eficiencia<80"
+            >
               <p *ngIf="!tarea.estadisticas">--</p>
-              <p *ngIf="tarea.estadisticas">{{tarea.estadisticas.eficiencia}}</p>
+              <p *ngIf="tarea.estadisticas">{{tarea.estadisticas.eficiencia}}%</p>
             </td>
           </tr>
         </tbody>

@@ -87,9 +87,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let servicio of servicios let index = index" [class.table-danger]="servicio.estado=='CITA/RECEPCION'"
-                  [class.table-warning]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" [class.table-primary]="servicio.estado=='EN PRODUCCIÓN'"
-                  [class.table-success]="servicio.estado=='POR FACTURAR'" [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'">
+                <tr *ngFor="let servicio of servicios let index = index" 
+                [class.table-danger]="servicio.estado=='CITA/RECEPCION'"
+                  [class.table-warning]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" 
+                  [class.table-primary]="servicio.estado=='EN PRODUCCIÓN'"
+                  [class.table-success]="servicio.estado=='POR FACTURAR'" 
+                  [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
+                  
+                  >
                   
                  
                   <td>

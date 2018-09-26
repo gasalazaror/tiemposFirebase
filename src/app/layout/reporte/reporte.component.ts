@@ -54,21 +54,30 @@ export class ReporteComponent implements OnInit {
   ordenes: Observable<any>
   ordenSeleccionada: any = ""
   tareas: any[] = []
+  estadisticas: any = {te:0, tr:0, fin:0, tefin:0, eficiencia:0}
 
   cita
 
   orden: any[] = []
 
-   // Pie
-   public pieChartLabels: string[] = [
+ 
+  public pieChartLabels: string[] = [
     'Cita/Recepción',
     'En Producción',
     'En Espera',
     'En Pausa',
     'Por Facturar'
-];
-public pieChartData: number[] = [0, 0,0, 0];
-public pieChartType: string = 'pie';
+  ];
+  public pieChartData: number[] = [0, 0, 0, 0];
+
+  public pieChartLabelsEficiencia: string[] = [
+    'Muy buena',
+    'Buena',
+    'Regular',
+  ];
+  public pieChartDataEficiencia: number[] = [0, 0, 0];
+
+  public pieChartType: string = 'pie';
 
 
   operadores: Observable<any>
@@ -78,11 +87,11 @@ public pieChartType: string = 'pie';
 
 
   constructor(private ordenService: OrdenService, private personaService: PersonaService, private servicioService: ServicioService) {
-   // this.ordenes = ordenService.obtenerOrdenes();
-   // this.operadores = personaService.obtenerUsuarios()
-   // this.servicios = servicioService.obtenerServicios()
+    // this.ordenes = ordenService.obtenerOrdenes();
+    // this.operadores = personaService.obtenerUsuarios()
+    // this.servicios = servicioService.obtenerServicios()
 
-   this.dtTrigger.next()
+    this.dtTrigger.next()
 
   }
 
@@ -93,10 +102,10 @@ public pieChartType: string = 'pie';
   }
 
   public randomize(): void {
-    
-   
-  
-}
+
+
+
+  }
 
   ngOnInit() {
 
@@ -151,73 +160,90 @@ public pieChartType: string = 'pie';
     this.ordenService.obtenerOrdenesFecha(fechiInicio, fechaFin)
       .subscribe(ordenes => {
         $('#example-datatable').DataTable().destroy();
-     
+
         this.tareas = []
 
-     
-    
-       
-
-        var porfacturar  = 0
+        var porfacturar = 0
         var cita = 0
         var produccion = 0
         var espera = 0
         var pausa = 0
+        this.estadisticas.te = 0
+        this.estadisticas.tr = 0
+        this.estadisticas.fin = 0
+        this.estadisticas.tefin = 0
+        this.estadisticas.eficiencia = 100
 
-        ordenes.forEach((orden:any) => {
-    
+        ordenes.forEach((orden: any) => {
+
           orden.data.servicios.forEach(servicio => {
 
-          
+            this.estadisticas.te+= servicio.tiempoEstandar*servicio.cantidad*60
 
-            if (servicio.estado =='POR FACTURAR') {
+
+
+            if (servicio.estado == 'POR FACTURAR') {
               porfacturar++
+              this.estadisticas.fin++
+              this.estadisticas.tr += servicio.estadisticas.tiempoReal
+              this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
             }
 
-            if (servicio.estado =='EN PRODUCCIÓN') {
+            if (servicio.estado == 'EN PRODUCCIÓN') {
               produccion++
             }
 
-            if (servicio.estado =='CITA/RECEPCION') {
+            if (servicio.estado == 'CITA/RECEPCION') {
               cita++
             }
 
-            if(servicio.estado == 'EN ESPERA DE PRODUCCIÓN'){
+            if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
               espera++
             }
 
-            if(servicio.estado=='EN PRODUCCIÓN - PAUSADO'){
+            if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
               pausa++
             }
 
-          
-           // clone[0].data = data;
-          //  this.pieChartData = clone;
-            
-            servicio.orden = {id:orden.id,numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha}
-            
-            this.tareas.push(servicio)
+
+            // clone[0].data = data;
+            //  this.pieChartData = clone;
+
      
-            
+
+            servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
+
+            this.tareas.push(servicio)
+
+
+
           });
         });
 
         const data = [
-          cita,produccion,espera,pausa,porfacturar
-      ];
-     
-     
-      this.pieChartData = data;
+          cita, produccion, espera, pausa, porfacturar
+        ];
 
-  
-      this.dtTrigger.next();
-      
+
+        this.pieChartData = data;
+
+        if(this.estadisticas.tefin==0 || this.estadisticas.tr==0){
+          this.estadisticas.eficiencia = 100
+        }else{
+          this.estadisticas.eficiencia = ((this.estadisticas.tefin / this.estadisticas.tr)*100).toFixed(2)
+    
+        }
+
+       
+
+        this.dtTrigger.next();
+
       })
   }
 
   public chartClicked(e: any): void {
     console.log(e);
-}
+  }
 
 
 
