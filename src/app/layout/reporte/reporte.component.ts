@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { PersonaService } from '../../servicios/persona.service';
 import { ServicioService } from '../../servicios/servicio/servicio.service';
 import swal from 'sweetalert2'
+import { AnadirCerosPipe } from '../../pipes/anadir-ceros.pipe';
 
 @Component({
   selector: 'app-reporte',
@@ -19,6 +20,8 @@ export class ReporteComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   user: any = ''
+  ordenSeleccionada: any = ''
+  operadorSeleccionado: any = ''
   dtOptions: DataTables.Settings = this.dtOptions = {
     pagingType: 'full_numbers',
     pageLength: 10,
@@ -51,16 +54,17 @@ export class ReporteComponent implements OnInit {
 
   filtro: String = "1"
   fechaInicio: Date = new Date
-  ordenes: Observable<any>
-  ordenSeleccionada: any = ""
+  ordenes: any = [];
+  operadores: any = []
+
   tareas: any[] = []
-  estadisticas: any = {te:0, tr:0, fin:0, tefin:0, eficiencia:0}
+  estadisticas: any = { te: 0, tr: 0, fin: 0, tefin: 0, eficiencia: 0 }
 
   cita
 
   orden: any[] = []
 
- 
+
   public pieChartLabels: string[] = [
     'Cita/Recepción',
     'En Producción',
@@ -80,18 +84,20 @@ export class ReporteComponent implements OnInit {
   public pieChartType: string = 'pie';
 
 
-  operadores: Observable<any>
+
   servicios: Observable<any>
   filtroTiempo: any = { inicio: this.convertir(Date.now()), iniciohora: '00:00', fin: this.convertir(Date.now()), finhora: '23:59' }
   operaciones: Observable<any>
 
 
   constructor(private ordenService: OrdenService, private personaService: PersonaService, private servicioService: ServicioService) {
-    // this.ordenes = ordenService.obtenerOrdenes();
-    // this.operadores = personaService.obtenerUsuarios()
-    // this.servicios = servicioService.obtenerServicios()
 
-    this.dtTrigger.next()
+    $('#reporte').DataTable().destroy();
+    this.tareas = []
+    this.dtTrigger.next();
+
+
+
 
   }
 
@@ -115,22 +121,7 @@ export class ReporteComponent implements OnInit {
 
   }
 
-  buscar() {
-    switch (this.filtro) {
-      case "1":
-        this.buscarPorOrden()
-        break;
-      case "2":
-        this.buscarPorOperador()
-        break;
-      case "3":
-        this.buscarPorServicio()
-        break;
 
-      default:
-        break;
-    }
-  }
 
   buscarPorOrden() {
 
@@ -144,13 +135,9 @@ export class ReporteComponent implements OnInit {
 
   }
 
-  buscarPorOperador() {
-    console.log('operador')
-  }
 
-  buscarPorServicio() {
-    console.log('servicio')
-  }
+
+
 
 
   buscarOrdenes() {
@@ -159,7 +146,10 @@ export class ReporteComponent implements OnInit {
 
     this.ordenService.obtenerOrdenesFecha(fechiInicio, fechaFin)
       .subscribe(ordenes => {
-        $('#example-datatable').DataTable().destroy();
+        this.ordenes = []
+        this.operadores = []
+
+
 
         this.tareas = []
 
@@ -176,49 +166,139 @@ export class ReporteComponent implements OnInit {
 
         ordenes.forEach((orden: any) => {
 
-          orden.data.servicios.forEach(servicio => {
+          orden.data.numero = 'OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5)
 
-            this.estadisticas.te+= servicio.tiempoEstandar*servicio.cantidad*60
+          this.ordenes.push(orden)
+
+          if (this.ordenSeleccionada && this.ordenSeleccionada != "") {
+            if (orden.id == this.ordenSeleccionada) {
+              orden.data.servicios.forEach(servicio => {
+
+                this.operadores.push(servicio.operador);
+
+
+                this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
+                if (servicio.estadisticas) {
+                  porfacturar++
+                  this.estadisticas.fin++
+                  this.estadisticas.tr += servicio.estadisticas.tiempoReal
+                  this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                }
+
+                if (servicio.estado == 'EN PRODUCCIÓN') {
+                  produccion++
+                }
+
+                if (servicio.estado == 'CITA/RECEPCION') {
+                  cita++
+                }
+
+                if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
+                  espera++
+                }
+
+                if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
+                  pausa++
+                }
 
 
 
-            if (servicio.estado == 'POR FACTURAR') {
-              porfacturar++
-              this.estadisticas.fin++
-              this.estadisticas.tr += servicio.estadisticas.tiempoReal
-              this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
+                this.tareas.push(servicio)
+
+              });
+
+
             }
-
-            if (servicio.estado == 'EN PRODUCCIÓN') {
-              produccion++
-            }
-
-            if (servicio.estado == 'CITA/RECEPCION') {
-              cita++
-            }
-
-            if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
-              espera++
-            }
-
-            if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
-              pausa++
-            }
+          } else {
 
 
-            // clone[0].data = data;
-            //  this.pieChartData = clone;
+            orden.data.servicios.forEach(servicio => {
 
-     
+              this.operadores.push(servicio.operador)
 
-            servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
-
-            this.tareas.push(servicio)
-
+              if(this.operadorSeleccionado && this.operadorSeleccionado != ""){
+                if(this.operadorSeleccionado==servicio.operador.id){
+                
 
 
-          });
+                  this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
+                  if (servicio.estadisticas) {
+                    porfacturar++
+                    this.estadisticas.fin++
+                    this.estadisticas.tr += servicio.estadisticas.tiempoReal
+                    this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                  }
+    
+                  if (servicio.estado == 'EN PRODUCCIÓN') {
+                    produccion++
+                  }
+    
+                  if (servicio.estado == 'CITA/RECEPCION') {
+                    cita++
+                  }
+    
+                  if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
+                    espera++
+                  }
+    
+                  if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
+                    pausa++
+                  }
+    
+    
+    
+                  servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
+                  this.tareas.push(servicio)
+                }
+              }else{
+          
+
+
+                this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
+                if (servicio.estadisticas) {
+                  porfacturar++
+                  this.estadisticas.fin++
+                  this.estadisticas.tr += servicio.estadisticas.tiempoReal
+                  this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                }
+  
+                if (servicio.estado == 'EN PRODUCCIÓN') {
+                  produccion++
+                }
+  
+                if (servicio.estado == 'CITA/RECEPCION') {
+                  cita++
+                }
+  
+                if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
+                  espera++
+                }
+  
+                if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
+                  pausa++
+                }
+  
+  
+  
+                servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
+                this.tareas.push(servicio)
+              }
+
+
+
+            
+
+            });
+
+          }
+
+
+
         });
+
+
+
 
         const data = [
           cita, produccion, espera, pausa, porfacturar
@@ -227,22 +307,22 @@ export class ReporteComponent implements OnInit {
 
         this.pieChartData = data;
 
-        if(this.estadisticas.tefin==0 || this.estadisticas.tr==0){
+        if (this.estadisticas.tefin == 0 || this.estadisticas.tr == 0) {
           this.estadisticas.eficiencia = 100
-        }else{
-          this.estadisticas.eficiencia = ((this.estadisticas.tefin / this.estadisticas.tr)*100).toFixed(2)
-    
+        } else {
+          this.estadisticas.eficiencia = ((this.estadisticas.tefin / this.estadisticas.tr) * 100).toFixed(2)
+
         }
-
-       
-
+        $('#reporte').DataTable().destroy();
         this.dtTrigger.next();
+        this.operadores = this.eliminarObjetosDuplicados(this.operadores, "id")
+
 
       })
   }
 
   public chartClicked(e: any): void {
-    console.log(e);
+
   }
 
 
@@ -279,6 +359,21 @@ export class ReporteComponent implements OnInit {
 
       })
 
+  }
+
+  eliminarObjetosDuplicados(arr, prop) {
+    var nuevoArray = [];
+    var lookup = {};
+
+    for (var i in arr) {
+      lookup[arr[i][prop]] = arr[i];
+    }
+
+    for (i in lookup) {
+      nuevoArray.push(lookup[i]);
+    }
+
+    return nuevoArray;
   }
 
 }

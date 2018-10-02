@@ -7,14 +7,48 @@
         <div class="card-body ">
           <div class="row">
 
-            <div class="btn-group">
-           <label for="">Desde</label>
-              <input type="date" [(ngModel)]="filtroTiempo.inicio" class="form-control">
-              <p>Hasta: </p>
-              <input type="date" [(ngModel)]="filtroTiempo.fin" class="form-control">
-              <button class="btn btn-primary" (click)="buscarOrdenes()"><i class="fa fa-search"></i> Consultar</button>
+            <div class="col-md-6">
+              <table class="table">
+                <tr>
+                  <th>Desde:</th>
+                  <td>
+                    <input type="date" [(ngModel)]="filtroTiempo.inicio" class="form-control">
+                  </td>
+                </tr>
+                <tr>
+                  <th>Hasta:</th>
+                  <td>
+                    <input type="date" [(ngModel)]="filtroTiempo.fin" class="form-control">
+                  </td>
+                </tr>
+                <tr>
+                  <th>Orden de trabajo:</th>
+                  <td>
+                    <ng-select [(ngModel)]="ordenSeleccionada" class="form-control" style="font-size: 14px" autofocus
+                      style="width: 230px;" class="form-control" [items]="ordenes" bindLabel="data.numero" bindValue="id">
+                    </ng-select>
+
+                  </td>
+                </tr>
+                <tr>
+                  <th>Operador:</th>
+                  <td>
+                    <ng-select [(ngModel)]="operadorSeleccionado" class="form-control" style="font-size: 14px" autofocus
+                      style="width: 230px;" class="form-control" [items]="operadores" bindLabel="data.nombre" bindValue="id">
+                    </ng-select>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button class="btn btn-primary" (click)="buscarOrdenes()"><i class="fa fa-search"></i> Consultar</button>
+                  </td>
+                </tr>
+              </table>
             </div>
-          
+
+
 
           </div>
 
@@ -36,15 +70,15 @@
           </canvas>
 
           <div class="align-bottom" style="text-align: right">
-           
+
           </div>
 
-       
+
         </div>
       </div>
     </div>
 
-   
+
 
     <div class="col-md-6">
       <div class="card mb-3">
@@ -52,37 +86,37 @@
           Resumen
         </div>
         <div class="card-body">
-            <table class="table table-sm table-bordered">
+          <table class="table table-sm table-bordered">
 
-              <tr>
-                <th>Operaciones finalizadas</th>
-                <td>{{estadisticas.fin}} de {{tareas.length}}</td>
-              </tr>
+            <tr>
+              <th>Operaciones finalizadas</th>
+              <td>{{estadisticas.fin}} de {{tareas.length}}</td>
+            </tr>
 
 
-                <tr>
-                  <th>Total Tiempo Estándar</th>
-                  <td>{{estadisticas.te | formatTime}}</td>
-                </tr>
+            <tr>
+              <th>Total Tiempo Estándar</th>
+              <td>{{estadisticas.te | formatTime}}</td>
+            </tr>
 
-                <tr>
-                  <th>Total Tiempo Real:</th>
-                  <td>{{estadisticas.tr | formatTime}}</td>
-                </tr>
+            <tr>
+              <th>Total Tiempo Real:</th>
+              <td>{{estadisticas.tr | formatTime}}</td>
+            </tr>
 
-                <tr>
-                    <th>Total Eficiencia:</th>
-                    <td>{{estadisticas.eficiencia}}%</td>
-                  </tr>
-              
+            <tr>
+              <th>Total Eficiencia:</th>
+              <td>{{estadisticas.eficiencia}}%</td>
+            </tr>
 
-              </table>
+
+          </table>
         </div>
       </div>
     </div>
   </div>
 
-  <div  class="card mb-3">
+  <div class="card mb-3">
     <div class="card-header">Resumen</div>
     <div class="card-body">
 
@@ -90,7 +124,7 @@
 
 
 
-      <table id="example-datatable" class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <table id="reporte" class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
           <tr>
             <th>No. OT</th>
@@ -107,34 +141,22 @@
         </thead>
         <tbody>
           <tr *ngFor="let tarea of tareas">
-            <td> <a routerLink="/orden/informacionorden/{{tarea.orden.id}}">OT-{{tarea.orden.numero | anadirCeros:5}}
+            <td> <a routerLink="/orden/informacionorden/{{tarea.orden.id}}">{{tarea.orden.numero}}
               </a></td>
             <td>{{tarea.cantidad}}</td>
             <td>{{tarea.codigo}}</td>
             <td>{{tarea.descripcion}}</td>
-            <td
-            [class.table-danger]="tarea.estado=='CITA/RECEPCION'"
-                  [class.table-warning]="tarea.estado=='EN ESPERA DE PRODUCCIÓN'" 
-                  [class.table-primary]="tarea.estado=='EN PRODUCCIÓN'"
-                  [class.table-success]="tarea.estado=='POR FACTURAR'" 
-                  [class.table-warning]="tarea.estado=='EN PRODUCCIÓN - PAUSADO' || tarea.estado=='EN ESPERA DE PRODUCCIÓN'"
-                  
-            >{{tarea.estado}}</td>
+            <td [class.table-danger]="tarea.estado=='CITA/RECEPCION'" [class.table-warning]="tarea.estado=='EN ESPERA DE PRODUCCIÓN'"
+              [class.table-primary]="tarea.estado=='EN PRODUCCIÓN'" [class.table-success]="tarea.estado=='POR FACTURAR'"
+              [class.table-warning]="tarea.estado=='EN PRODUCCIÓN - PAUSADO' || tarea.estado=='EN ESPERA DE PRODUCCIÓN'">{{tarea.estado}}</td>
             <td>{{tarea.operador.data.nombre}}</td>
             <td>{{tarea.tiempoEstandar * tarea.cantidad * 60 | formatTime}}</td>
             <td>
               <p *ngIf="!tarea.estadisticas">--</p>
-              <p *ngIf="tarea.estadisticas"
-              
-              
-
-              >{{tarea.estadisticas.tiempoReal | formatTime}}</p>
+              <p *ngIf="tarea.estadisticas">{{tarea.estadisticas.tiempoReal | formatTime}}</p>
             </td>
-            <td
-            [class.table-success]="tarea.estadisticas && tarea.estadisticas.eficiencia>=100" 
-            [class.table-warning]="tarea.estadisticas && tarea.estadisticas.eficiencia>=80 && tarea.eficiencia<100"
-             [class.table-danger]="tarea.estadisticas && tarea.estadisticas.eficiencia<80"
-            >
+            <td [class.table-success]="tarea.estadisticas && tarea.estadisticas.eficiencia>=100" [class.table-warning]="tarea.estadisticas && tarea.estadisticas.eficiencia>=80 && tarea.eficiencia<100"
+              [class.table-danger]="tarea.estadisticas && tarea.estadisticas.eficiencia<80">
               <p *ngIf="!tarea.estadisticas">--</p>
               <p *ngIf="tarea.estadisticas">{{tarea.estadisticas.eficiencia}}%</p>
             </td>

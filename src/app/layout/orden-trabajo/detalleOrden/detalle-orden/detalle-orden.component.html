@@ -1,5 +1,6 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Detalle orden'" [icon]="'fa-edit'"></app-page-header>
+  <app-page-header [heading]="'Información Orden de trabajo'" [pdf]="true" (myEvent)="imprimirReporte($event)" [nuevo]="'/orden/crearorden/nuevo'"
+  [edicion]="'/orden/crearorden/'+id" [icon]="'fa-edit'"></app-page-header>
 
   <div class="card">
     <div class="card-header">
@@ -14,9 +15,7 @@
               <tr>
                 <th>No. OT </th>
                 <td>
-
-                  <a href="orden/informacionorden/{{id}}">OT-{{(orden | async)?.numero | anadirCeros:5}} </a>
-                  <a href="orden/crearorden/{{id}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                    OT-{{(orden | async)?.numero | anadirCeros:5}}
                 </td>
               </tr>
 
@@ -81,178 +80,86 @@
 
 
 
-      <ngb-tabset>
-        <ngb-tab title="Operaciones">
-          <ng-template ngbTabContent>
-            <div class="card">
-              <div class="card-body">
-
-
-                <div class="btn-group">
-                  <div style="width: 20px; height: 20px;" class="table-danger border"></div>&nbsp;
-                  <p>CITA/RECEPCIÓN</p>&nbsp;&nbsp;&nbsp;
-                  <div style="width: 20px; height: 20px;" class="table-warning  border"></div>&nbsp;
-                  <p>EN ESPERA</p>&nbsp;&nbsp;&nbsp;
-                  <div style="width: 20px; height: 20px;" class="table-primary"></div>&nbsp;
-                  <p>EN PRODUCCIÓN</p>&nbsp;&nbsp;
-                  <div style="width: 20px; height: 20px;" class="table-success"></div>&nbsp;
-                  <p>POR FACTURAR</p>&nbsp;&nbsp;
-                </div>
+        <div class="btn-group">
+            <div style="width: 20px; height: 20px;" class="table-danger border"></div>&nbsp;
+            <p>CITA/RECEPCIÓN</p>&nbsp;&nbsp;&nbsp;
+            <div style="width: 20px; height: 20px;" class="table-warning  border"></div>&nbsp;
+            <p>EN ESPERA</p>&nbsp;&nbsp;&nbsp;
+            <div style="width: 20px; height: 20px;" class="table-primary"></div>&nbsp;
+            <p>EN PRODUCCIÓN</p>&nbsp;&nbsp;
+            <div style="width: 20px; height: 20px;" class="table-success"></div>&nbsp;
+            <p>POR FACTURAR</p>&nbsp;&nbsp;
+          </div>
 
 
 
-                <table class="table table-bordered table-responsive-sm table-sm">
-                  <thead>
-                    <tr>
-                      <th>Acciones</th>
-                      <th>Cantidad</th>
-                      <th>Código</th>
-                      <th>Servicio</th>
+          <table class="table table-bordered table-responsive-sm table-sm">
+            <thead>
+              <tr>
+                <th>Acciones</th>
+                <th>Cantidad</th>
+                <th>Código</th>
+                <th>Servicio</th>
 
-                      <th>Tiempo estándar</th>
-                      <th>Estado</th>
-                      <th>Operador asignado</th>
+                <th>Tiempo estándar</th>
+                <th>Estado</th>
+                <th>Operador asignado</th>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let servicio of servicios let index = index" [class.table-danger]="servicio.estado=='CITA/RECEPCION'" [class.table-warning]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
-                      [class.table-primary]="servicio.estado=='EN PRODUCCIÓN'" [class.table-success]="servicio.estado=='POR FACTURAR'"
-                      [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'">
-                      <td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let servicio of servicios let index = index" [class.table-danger]="servicio.estado=='CITA/RECEPCION'" [class.table-warning]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
+                [class.table-primary]="servicio.estado=='EN PRODUCCIÓN'" [class.table-success]="servicio.estado=='POR FACTURAR'"
+                [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'">
+                <td>
 
-                      <!--   <div class="*ngIf="servicio.operador.data.correo == user.email""></div> -->
+                <!--   <div class="*ngIf="servicio.operador.data.correo == user.email""></div> -->
 
-                        <div >
-                            <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm"
-                            title="Iniciar">
-                            <i class="fa fa-play"></i>
-  
-                          </button>
-  
-                          <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-warning btn-sm" title="Pausar">
-                            <i class="fa fa-pause"></i>
-                          </button>
-  
-                          <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" title="Detener" class="btn btn-danger btn-sm">
-                            <i class="fa fa-stop"></i>
-                          </button>
-                          <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-success btn-sm text-white"
-                            title="Reanudar">
-                            <i class="fa fa-play"></i>
-                          </button>
-  
-                        </div>
-                       
-                        <button *ngIf="servicio.estado=='POR FACTURAR'" (click)="open2(content2, index)" class="btn btn-primary btn-sm">
-                          <i class="fa fa-eye"></i>
-                        </button>
-                      </td>
-                      <td>{{servicio.cantidad}}</td>
-                      <td>{{servicio.codigo}}</td>
-                      <td>{{servicio.descripcion}}</td>
+                  <div >
+                      <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm"
+                      title="Iniciar">
+                      <i class="fa fa-play"></i>
 
-                      <td>{{servicio.tiempoEstandar*60*servicio.cantidad | formatTime}}</td>
-                      <td>
-                        {{servicio.estado}}
-                        <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
-                      </td>
-                      <td>
-                        <p *ngIf="servicio.operador">{{servicio.operador.data.nombre}}</p>
-                      </td>
+                    </button>
 
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-warning btn-sm" title="Pausar">
+                      <i class="fa fa-pause"></i>
+                    </button>
 
-                    </tr>
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" title="Detener" class="btn btn-danger btn-sm">
+                      <i class="fa fa-stop"></i>
+                    </button>
+                    <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)" class="btn btn-success btn-sm text-white"
+                      title="Reanudar">
+                      <i class="fa fa-play"></i>
+                    </button>
+
+                  </div>
+                 
+                  <button *ngIf="servicio.estado=='POR FACTURAR'" (click)="open2(content2, index)" class="btn btn-primary btn-sm">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                </td>
+                <td>{{servicio.cantidad}}</td>
+                <td>{{servicio.codigo}}</td>
+                <td>{{servicio.descripcion}}</td>
+
+                <td>{{servicio.tiempoEstandar*60*servicio.cantidad | formatTime}}</td>
+                <td>
+                  {{servicio.estado}}
+                  <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
+                </td>
+                <td>
+                  <p *ngIf="servicio.operador">{{servicio.operador.data.nombre}}</p>
+                </td>
 
 
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab>
-          <ng-template ngbTabTitle><b>Operaciones finalizadas</b></ng-template>
-          <ng-template ngbTabContent>
-
-            <div class="card">
-              <div class="card-body">
-                <div class="btn-group">
-
-                  <div style="width: 20px; height: 20px;" class="table-danger border"></div>&nbsp;
-                  <p>Regular</p>&nbsp;&nbsp;&nbsp;
-
-                  <div style="width: 20px; height: 20px;" class="table-warning  border"></div>&nbsp;
-                  <p>Buena</p>&nbsp;&nbsp;&nbsp;
-
-                  <div style="width: 20px; height: 20px;" class="table-success"></div>&nbsp;
-                  <p>Muy buena</p>&nbsp;&nbsp;
-                </div>
-
-                <table id="example-datatable" class="table table-bordered table-responsive-sm table-sm">
-                  <thead>
-                    <tr>
-                      <th>Cantidad</th>
-                      <th>Código</th>
-                      <th>Servicio</th>
-                      <th>Operador</th>
-                      <th>Tiempo Estándar</th>
-                      <th>Lead Time</th>
-                      <th>Tiempo Real</th>
-                      <th>Eficiencia</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <ng-container *ngFor="let servicio of servicios ">
-                      <tr *ngIf="servicio.estado=='POR FACTURAR'" 
-                      [class.table-success]="servicio.estadisticas.eficiencia>=100" 
-                      [class.table-warning]="servicio.estadisticas.eficiencia>=80 && servicio.eficiencia<100"
-                        [class.table-danger]="servicio.estadisticas.eficiencia<80" 
-                        >
-                        <td>{{servicio.cantidad}}</td>
-                        <td>
-                          {{servicio.codigo}}
-                        </td>
-                        <td>
-                          {{servicio.descripcion}}
-                        </td>
-                        <td>
-                          {{servicio.operador.data.nombre}}
-                        </td>
-                        <td>
-                          {{servicio.estadisticas.tiempoEstandar | formatTime}}
-                        </td>
-                        <td>
-                          {{servicio.estadisticas.leadTime | formatTime}}
-                        </td>
-                        <td>
-                          {{servicio.estadisticas.tiempoReal | formatTime}}
-                        </td>
-                        <td>
-                          {{servicio.estadisticas.eficiencia}}%
-                        </td>
-                      </tr>
-                    </ng-container>
-
-                  </tbody>
-                </table>
-
-
-              </div>
-            </div>
+              </tr>
 
 
 
-
-
-
-          </ng-template>
-        </ngb-tab>
-
-      </ngb-tabset>
+            </tbody>
+          </table>
 
 
 

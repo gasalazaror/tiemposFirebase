@@ -334,8 +334,7 @@ export class CrearOrdenComponent implements OnInit {
               numero: this.numeroOrden,
               cliente: cliente,
               vehiculo: vehiculo,
-              servicios: servicios,
-              fecha: new Date()
+              servicios: servicios 
             }
             this.ordenService.modificarOrden(this.id, orden)
 

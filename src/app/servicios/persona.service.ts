@@ -54,6 +54,19 @@ export class PersonaService {
     );
   }
 
+  obtenerEmpresas(){
+    return this.afs.collection('empresa').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+
+
+
+  }
+
   obtenerUsuarios() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
     return this.empresa.collection('personas', query => query.where('empleado', '==', true)).snapshotChanges().pipe(

@@ -1,7 +1,6 @@
 <div [@routerTransition]>
   <app-page-header [heading]="'Información Orden de trabajo'" [pdf]="true" (myEvent)="imprimirReporte($event)" [nuevo]="'/orden/crearorden/nuevo'"
-    [edicion]="'/orden/crearorden/'+id" [icon]="'fa-edit'"></app-page-header>
-
+  [edicion]="'/orden/crearorden/'+id" [icon]="'fa-edit'"></app-page-header>
   <div class="card">
     <div class="card-header">
       Información de la orden de trabajo
@@ -9,7 +8,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <table class="table table-sm table-bordered">
+          <table class="table table-sm table-bordered" >
 
             <tbody>
               <tr>
@@ -50,168 +49,48 @@
       Asignación de operadores
     </div>
     <div class="card-body">
+      <table class="table  table-responsive-sm">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Cantidad</th>
+            <th>Código</th>
+            <th>Servicio</th>
+            <th>Tiempo estándar</th>
+            <th>Estado</th>
+            <th>Operador asignado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let servicio of servicios let index = index">
+            <td>
+              <button [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'" title="Guardar cambios" class="btn btn-sm btn-primary" (click)="seleccionarPersona(servicio, index)"><i class="fa fa-floppy-o "></i></button>
+            </td>
+            <td>{{servicio.cantidad}}</td>
+            <td>{{servicio.codigo}}</td>
+            <td>{{servicio.descripcion}}</td>
+            <td>{{servicio.tiempoEstandar*servicio.cantidad*60 | formatTime}}</td>
+            <td>{{servicio.estado}}</td>
+            <td>
 
-      <ngb-tabset>
-        <ngb-tab title="Operaciones">
-          <ng-template ngbTabContent>
+              <div class="">
+                <div class="row">
+                  <ng-select [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'"  class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 230px;" class="form-control"
+                    [items]="personas | async" bindLabel="data.nombre">
+                  </ng-select>
 
-            <br><br>
+                </div>
 
-            <div class="btn-group">
-              <div style="width: 20px; height: 20px;" class="table-danger border"></div>&nbsp;
-              <p>CITA/RECEPCIÓN</p>&nbsp;&nbsp;&nbsp;
-              <div style="width: 20px; height: 20px;" class="table-warning  border"></div>&nbsp;
-              <p>EN ESPERA</p>&nbsp;&nbsp;&nbsp;
-              <div style="width: 20px; height: 20px;" class="table-primary"></div>&nbsp;
-              <p>EN PRODUCCIÓN</p>&nbsp;&nbsp;
-              <div style="width: 20px; height: 20px;" class="table-success"></div>&nbsp;
-              <p>POR FACTURAR</p>&nbsp;&nbsp;
-            </div>
-            
-            <br><br>
+              </div>
 
-            <table class="table table-bordered table-responsive-sm table-sm" datatable id="example-datatable" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-              <thead>
-                <tr>
-                  
-                  <th></th>
-                  <th>#</th>
-                  <th>Cantidad</th>
-                  <th>Código</th>
-                  <th>Servicio</th>
+            </td>
 
-                  <th>Tiempo estándar</th>
-                  <th>Estado</th>
-                  <th>Operador asignado</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let servicio of servicios let index = index" 
-                [class.table-danger]="servicio.estado=='CITA/RECEPCION'"
-                  [class.table-warning]="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" 
-                  [class.table-primary]="servicio.estado=='EN PRODUCCIÓN'"
-                  [class.table-success]="servicio.estado=='POR FACTURAR'" 
-                  [class.table-warning]="servicio.estado=='EN PRODUCCIÓN - PAUSADO' || servicio.estado=='EN ESPERA DE PRODUCCIÓN'"
-                  
-                  >
-                  
-                 
-                  <td>
-
-                    <!--   <div class="*ngIf="servicio.operador.data.correo == user.email""></div> -->
-
-                    <div>
-                      <button *ngIf="servicio.estado=='EN ESPERA DE PRODUCCIÓN'" (click)="iniciarServicio(index)" class="btn btn-success btn-sm"
-                        title="Iniciar">
-                        <i class="fa fa-play"></i>
-
-                      </button>
-
-                      <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="open(content, index)" class="btn btn-warning btn-sm"
-                        title="Pausar">
-                        <i class="fa fa-pause"></i>
-                      </button>
-
-                      <button *ngIf="servicio.estado=='EN PRODUCCIÓN'" (click)="finalizarServicio(index)" title="Detener"
-                        class="btn btn-danger btn-sm">
-                        <i class="fa fa-stop"></i>
-                      </button>
-                      <button *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'" (click)="reanudarServicio(index)"
-                        class="btn btn-success btn-sm text-white" title="Reanudar">
-                        <i class="fa fa-play"></i>
-                      </button>
-
-                    </div>
-
-                    <button *ngIf="servicio.estado=='POR FACTURAR'" (click)="open2(content2, index)" class="btn btn-primary btn-sm">
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </td>
-                  <td>{{index+1 | anadirCeros:2}}</td>
-                  <td>{{servicio.cantidad}}</td>
-                  <td>{{servicio.codigo}}</td>
-                  <td>{{servicio.descripcion}}</td>
-
-                  <td>{{servicio.tiempoEstandar*60*servicio.cantidad | formatTime}}</td>
-                  <td>
-                    {{servicio.estado}}
-                    <p *ngIf="servicio.estado=='EN PRODUCCIÓN - PAUSADO'"> <strong>Motivo: </strong>{{servicio.motivoPausa}}</p>
-                  </td>
-                  <td>
-                    <p *ngIf="servicio.operador">{{servicio.operador.data.nombre}}</p>
-                  </td>
-
-
-                </tr>
+          </tr>
 
 
 
-              </tbody>
-            </table>
-
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab>
-          <ng-template ngbTabTitle><b>Asignación de operadores</b></ng-template>
-          <ng-template ngbTabContent>
-            <table class="table  table-responsive-sm">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>#</th>
-                  <th>Operador asignado</th>
-                  <th>Cantidad</th>
-                  <th>Código</th>
-                  <th>Servicio</th>
-                  <th>Tiempo estándar</th>
-                  <th>Estado</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let servicio of servicios let index = index">
-                  <td>
-                    <button [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'"
-                      title="Guardar cambios" class="btn btn-sm btn-primary" (click)="seleccionarPersona(servicio, index)"><i
-                        class="fa fa-floppy-o "></i></button>
-                  </td>
-                  <td>{{index+1 | anadirCeros:2}}</td>
-                  <td>
-
-                    <div class="">
-                      <div class="row">
-                        <ng-select [disabled]="servicio.estado=='POR FACTURAR'|| servicio.estado=='EN PRODUCCIÓN' || servicio.estado=='EN PRODUCCIÓN - PAUSADO'"
-                          class="form-control" style="font-size: 14px" [(ngModel)]="servicio.operador" autofocus style="width: 230px;"
-                          class="form-control" [items]="personas | async" bindLabel="data.nombre">
-                        </ng-select>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-                  <td>{{servicio.cantidad}}</td>
-                  <td>{{servicio.codigo}}</td>
-                  <td>{{servicio.descripcion}}</td>
-                  <td>{{servicio.tiempoEstandar*servicio.cantidad*60 | formatTime}}</td>
-                  <td>{{servicio.estado}}</td>
-
-
-                </tr>
-
-
-
-              </tbody>
-            </table>
-
-          </ng-template>
-        </ngb-tab>
-
-      </ngb-tabset>
-
-
-
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -220,130 +99,3 @@
 
 
 </div>
-<ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h5>Pausar operación</h5>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p><strong>Servicio: </strong>{{servicioSeleccionado.descripcion}}</p>
-    <p><strong>Motivo pausa:</strong>
-      <select [(ngModel)]="pausa.motivo">
-        <option value="">Seleccionar un motivo...</option>
-        <option value="FALTA DE AUTORIZACIÓN">FALTA DE AUTORIZACIÓN</option>
-        <option value="FALTA DE REPUESTOS">FALTA DE REPUESTOS</option>
-        <option value="TRABAJOS DE TERCEROS">TRABAJOS DE TERCEROS</option>
-        <option value="OTRO TRABAJO">OTRO TRABAJO</option>
-        <option value="BREAK">BREAK</option>
-        <option value="ALMUERZO">ALMUERZO</option>
-        <option value="FINALIZACIÓN DE JORNADA LABORAL">FINALIZACIÓN DE JORNADA LABORAL</option>
-      </select></p>
-
-    <p><strong>Observación:</strong> <input [(ngModel)]="pausa.observacion" type="text"></p>
-    <p><button [disabled]="pausa.motivo==''" class="btn btn-primary" (click)="pausar(); c('Close click')">Guardar</button></p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
-  </div>
-</ng-template>
-
-<ng-template #content2 let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h5>Detalle de la operación</h5>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-
-    <div class="card">
-      <div class="card-header">información</div>
-      <div class="card-body">
-
-        <div class="row">
-          <div class="col-md-6">
-            <table class="table table-bordered table-sm">
-              <tr>
-                <th>Servicio:</th>
-                <td>{{servicioSeleccionado.descripcion}}</td>
-              </tr>
-
-              <tr>
-                <th>Operador:</th>
-                <td>{{servicioSeleccionado.operador.data.nombre}}</td>
-              </tr>
-
-              <tr>
-                <th>Hora Inicio </th>
-                <td>{{ servicioSeleccionado.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
-              </tr>
-              <tr>
-                <th>Hora Fin </th>
-                <td>{{ servicioSeleccionado.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
-              </tr>
-
-            </table>
-          </div>
-          <div class="col-md-6">
-            <table class="table table-bordered table-sm">
-
-              <tr>
-                <th>Tiempo estándar</th>
-                <td>{{ servicioSeleccionado.estadisticas.tiempoEstandar | formatTime}}</td>
-              </tr>
-              <tr>
-                <th>LeadTime</th>
-                <td>{{ servicioSeleccionado.estadisticas.leadTime | formatTime}}</td>
-              </tr>
-              <tr>
-                <th>Pausas</th>
-                <td>{{ servicioSeleccionado.estadisticas.pausas | formatTime}}</td>
-              </tr>
-              <tr>
-                <th>Tiempo real</th>
-                <td>{{ servicioSeleccionado.estadisticas.tiempoReal | formatTime}}</td>
-              </tr>
-              <tr>
-                <th>Eficiencia</th>
-                <td>{{ servicioSeleccionado.estadisticas.eficiencia }}%</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-
-
-    <div class="card">
-      <div class="card-header">
-        Pausas
-      </div>
-      <div class="card-body">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Hora inicio</th>
-              <th>Hora fin</th>
-              <th>Motivo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let pausa of servicioSeleccionado.pausas">
-              <td>{{ pausa.horaInicio.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
-              <td>{{ pausa.horaFin.seconds*1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
-              <td>{{pausa.motivo.motivo}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cerrar</button>
-  </div>
-</ng-template>
