@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
         this.empresa = this.personaService.obtenerEmpresa().valueChanges()
 
         this.usuario.subscribe(res=>{
-            console.log(res.email)
+         
             this.user = res.email
         })
         this.empresa.subscribe(res=>{

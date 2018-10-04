@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
         this.personas = this.personaService.obtenerClientes()
         this.personas.subscribe(res => {
             this.numeroPersonas = res.length
-            console.log(this.numeroPersonas)
+      
         })
 
         this.vehiculos = this.vehiculoService.obtenerVehiculos()

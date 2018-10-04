@@ -56,13 +56,14 @@ export class InformacionOrdenComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
 
   id: any
-  orden: Observable<any>;
+  orden: any;
   ordenReporte: any = []
   servicios: any;
   serviciosOperaciones: any;
   newIndex: any
   servicioSeleccionado: any
   closeResult: string;
+  observacion: String = ''
 
   pausa = {
     motivo: '',
@@ -89,8 +90,11 @@ export class InformacionOrdenComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.orden = this.ordenService.obtenerUnaOrden(this.id);
     this.orden.subscribe(res => {
+      if(res.observacion){
+        this.observacion = res.observacion
+      }
       this.ordenReporte = res
-      console.log(this.ordenReporte)
+  
       $('#example-datatable').DataTable().destroy();
       this.servicios = res.servicios
       this.serviciosOperaciones = res.servicios

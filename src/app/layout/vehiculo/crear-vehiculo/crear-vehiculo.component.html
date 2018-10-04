@@ -9,6 +9,14 @@
 
         <div class="row">
           <div class="col-md-4">
+              <div class="form-group">
+                  <label for="staticEmail2" class="">Estado</label>
+
+                  <select class="form-control form-control-sm" formControlName="estado" name="" id="">
+                      <option value="Activo">Activo</option>
+                      <option value="Inactivo">Inactivo</option>
+                  </select>
+              </div>
             <div class="form-group">
               <label for="inputPassword2" class="">ID/Placa <span style="color: red">*</span></label>
               <input autofocus type="text" maxlength="30" class="form-control" formControlName="placa" id="inputPassword2" placeholder="ID o Placa">
@@ -26,12 +34,14 @@
               <input type="text" maxlength="30" class="form-control" formControlName="color" id="inputPassword2" placeholder="Color">
             </div>
 
-          </div>
-          <div class="col-md-4">
             <div class="form-group">
-              <label for="inputPassword2" class="">Número de motor <span style="color: red">*</span></label>
+              <label for="inputPassword2" class="">Número de motor</label>
               <input type="text" maxlength="30" class="form-control" formControlName="numeroMotor" id="inputPassword2" placeholder="No Motor">
             </div>
+
+          </div>
+          <div class="col-md-4">
+          
             <div class="form-group">
               <label for="inputPassword2" class="">Número de chasis</label>
               <input type="text" maxlength="30" class="form-control" formControlName="numeroChasis" id="inputPassword2" placeholder="No Chasis">
@@ -40,6 +50,16 @@
             <div class="form-group">
               <label for="inputPassword2" class="">Año fabricación <span style="color: red">*</span></label>
               <input type="text" maxlength="4"  class="form-control" formControlName="anioFabricacion" id="inputPassword2" placeholder="Año de fabricación">
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword2" class="">Kilometraje Anterior</label>
+              <input disabled type="text"   class="form-control" formControlName="kilometrajeAnterior" id="inputPassword2" placeholder="Año de fabricación">
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword2" class="">Kilometraje Actual <span style="color: red">*</span></label>
+              <input type="text"   class="form-control" formControlName="kilometrajeActual" id="inputPassword2" placeholder="Año de fabricación">
             </div>
 
             <div class="form-group">

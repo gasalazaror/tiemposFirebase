@@ -53,7 +53,7 @@ export class CrearOrdenComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject();
 
   persona: any;
-  personas: Observable<any[]>;
+  personas: any = [];
   personaSeleccionada: any
   vehiculoSeleccionado: any
   vehiculoSeleccionadoaux: any
@@ -63,6 +63,7 @@ export class CrearOrdenComponent implements OnInit {
   ultimaOrden: Observable<any[]>;
   numeroOrden: number = 0;
   serviciosSeleccionados: any[];
+  observacion: String= ''
 
   id: any
   orden: Observable<any>;
@@ -100,6 +101,9 @@ export class CrearOrdenComponent implements OnInit {
 
       this.orden = this.ordenService.obtenerUnaOrden(this.id);
       this.orden.subscribe(res => {
+        if(res.observacion){
+          this.observacion = res.observacion
+        }
         this.personaSeleccionada = { data: res.cliente };
         this.vehiculoSeleccionado = { data: res.vehiculo }
 
@@ -134,7 +138,7 @@ export class CrearOrdenComponent implements OnInit {
 
 
 
-    this.vehiculos = this.vehiculoService.obtenerVehiculos()
+    this.vehiculos = this.vehiculoService.obtenerVehiculosActivos()
 
 
 
@@ -149,7 +153,14 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   obtenerPersonas() {
-    this.personas = this.personaService.obtenerClientes()
+    this.personaService.obtenerClientes().subscribe(personas=>{
+      personas.forEach(persona => {
+        persona.data.nombreCedula = persona.data.cedula+" - "+persona.data.nombre 
+      });
+
+      this.personas = personas
+      
+    })
   }
 
   obtenerServicios() {
@@ -265,7 +276,8 @@ export class CrearOrdenComponent implements OnInit {
               cliente: cliente,
               vehiculo: vehiculo,
               servicios: servicios,
-              fecha: new Date()
+              fecha: new Date(),
+              observacion: this.observacion
             }
             const id = this.ordenService.crearOrden(orden, servicios)
 
@@ -320,7 +332,7 @@ export class CrearOrdenComponent implements OnInit {
 
             var servicios = []
 
-            console.log(this.serviciosSeleccionados)
+          
 
             this.serviciosSeleccionados.forEach(servicio => {
               if (!servicio.data.operador) {
@@ -334,7 +346,8 @@ export class CrearOrdenComponent implements OnInit {
               numero: this.numeroOrden,
               cliente: cliente,
               vehiculo: vehiculo,
-              servicios: servicios 
+              servicios: servicios,
+              observacion: this.observacion 
             }
             this.ordenService.modificarOrden(this.id, orden)
 

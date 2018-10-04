@@ -18,10 +18,10 @@
                   <th>Buscar:</th>
                   <td>
 
-                    <div class="btn-group">
+                    <div class="btn-group" style="font-size: 8px">
                       <form class="form" [formGroup]="ClienteForm" (ngSubmit)="seleccionarPersona()">
-                        <ng-select class="form-control" style="font-size: 14px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
-                          [items]="personas | async" bindLabel="data.nombre" formControlName="persona">
+                        <ng-select class="form-control" style="font-size: 10px" autofocus style="width: 250px;" (change)="seleccionarPersona()" class="form-control"
+                          [items]="personas" bindLabel="data.nombreCedula" formControlName="persona">
                         </ng-select>
                       </form>
                       <button class="btn btn-white btn-sm" (click)="open(content)"><i class="fa fa-plus"></i></button>
@@ -186,6 +186,9 @@
               </tr>
             </tbody>
           </table>
+          <hr>
+          <label for="txtDescripcion">Observación</label>
+          <textarea [(ngModel)]="observacion"  id="txtDescripcion" class="form-control" cols="30" rows="2"></textarea>
           <hr>
 
           <button  class="btn btn-primary"

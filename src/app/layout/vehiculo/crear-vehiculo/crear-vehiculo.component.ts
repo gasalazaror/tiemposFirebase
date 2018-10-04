@@ -6,7 +6,7 @@ import { PersonaService } from '../../../servicios/persona.service';
 import { Observable } from 'rxjs';
 import { VehiculoService } from '../../../servicios/vehiculo/vehiculo.service';
 import { ActivatedRoute } from '@angular/router';
-import swal from'sweetalert2';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-vehiculo',
@@ -19,14 +19,18 @@ export class CrearVehiculoComponent implements OnInit {
   vehiculo: Observable<any>;
   id: any
   vehiculoGuardado: Boolean = false
+  kilometrajeActual: Number = 0
 
   vehiculoForm = this.fb.group({
+    estado: ['Activo', Validators.required],
     placa: ['', Validators.required],
     marca: ['', Validators.required],
     modelo: ['', Validators.required],
     color: [''],
     numeroMotor: ['', Validators.required],
     numeroChasis: [''],
+    kilometrajeAnterior: [0],
+    kilometrajeActual: [0],
     anioFabricacion: ['', Validators.required],
     dueno: [{}, Validators.required]
   })
@@ -43,13 +47,19 @@ export class CrearVehiculoComponent implements OnInit {
     if (this.id != 'nuevo' && this.id != null) {
       this.vehiculo = this.vehiculoService.obtenerUnVehiculo(this.id);
       this.vehiculo.subscribe(vehiculo => {
+
+        this.kilometrajeActual = vehiculo.kilometrajeActual
+
         this.vehiculoForm = this.fb.group({
+          estado: [vehiculo.estado, Validators.required],
           placa: [vehiculo.placa, Validators.required],
           marca: [vehiculo.marca, Validators.required],
           modelo: [vehiculo.modelo, Validators.required],
           color: [vehiculo.color],
           numeroMotor: [vehiculo.numeroMotor, Validators.required],
           numeroChasis: [vehiculo.numeroChasis],
+          kilometrajeAnterior: [vehiculo.kilometrajeAnterior],
+          kilometrajeActual: [vehiculo.kilometrajeActual],
           anioFabricacion: [vehiculo.anioFabricacion, Validators.required],
           dueno: [vehiculo.dueno, Validators.required],
         })
@@ -68,48 +78,56 @@ export class CrearVehiculoComponent implements OnInit {
 
 
     if (this.vehiculoForm.value.placa == '') {
-      swal( 'Existió un error','ID/Placa es requerido', 'error');
+      swal('Existió un error', 'ID/Placa es requerido', 'error');
 
     } else if (this.vehiculoForm.value.marca == '') {
-      swal( 'Existió un error','La marca es requerida', 'error');
-   
-    } else if (this.vehiculoForm.value.modelo == '') {
-      swal( 'Existió un error','El modelo es requerido', 'error');
+      swal('Existió un error', 'La marca es requerida', 'error');
 
-    } else if (this.vehiculoForm.value.numeroMotor == '') {
-      swal( 'Existió un error','El número de motor es requerido', 'error');
+    } else if (this.vehiculoForm.value.modelo == '') {
+      swal('Existió un error', 'El modelo es requerido', 'error');
 
     } else if (this.vehiculoForm.value.anioFabricacion == '') {
-      swal( 'Existió un error','El año de fabricación es requerido', 'error');
-     
+      swal('Existió un error', 'El año de fabricación es requerido', 'error');
+
     } else if (this.vehiculoForm.value.dueno == {}) {
-      swal( 'Existió un error','El dueño es requerido', 'error');
- 
+      swal('Existió un error', 'El dueño es requerido', 'error');
+
     } else {
 
 
       if (this.id == 'nuevo' || this.id == null) {
         this.vehiculoService.crearVehiculo(this.vehiculoForm.value)
           .then(vehiculo => {
-            swal( 'Listo!','Vehículo guardado exitosamente', 'success');
+            swal('Listo!', 'Vehículo guardado exitosamente', 'success');
             this.vehiculoForm = this.fb.group({
+              estado: ['Activo', Validators.required],
               placa: ['', Validators.required],
               marca: ['', Validators.required],
               modelo: ['', Validators.required],
               color: [''],
               numeroMotor: ['', Validators.required],
               numeroChasis: [''],
+              kilometrajeAnterior: [0],
+              kilometrajeActual: [0],
               anioFabricacion: ['', Validators.required],
               dueno: [{}, Validators.required]
             })
           }, error => {
-        
+
           })
       } else {
+
+        if(this.vehiculoForm.value.kilometrajeActual!=this.kilometrajeActual){
+          this.vehiculoForm.value.kilometrajeAnterior = this.kilometrajeActual
+        }
+    
+        
+     
+
         this.vehiculoService.modificarVehiculo(this.id, this.vehiculoForm.value).then(res => {
-          swal( 'Listo!','Vehículo modificado exitosamente', 'success');
+          swal('Listo!', 'Vehículo modificado exitosamente', 'success');
         }, error => {
-          swal( 'Existió un error','Existió un error al guardar el vehículo', 'error');
+          swal('Existió un error', 'Existió un error al guardar el vehículo', 'error');
         })
       }
 

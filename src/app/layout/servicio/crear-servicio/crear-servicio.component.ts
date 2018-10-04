@@ -48,7 +48,7 @@ export class CrearServicioComponent implements OnInit {
 
 
 
-        console.log(servicio.categoria.path)
+    
         this.servicioForm = this.fb.group({
           codigo: [servicio.codigo, Validators.required],
           descripcion: [servicio.descripcion, Validators.required],

@@ -174,37 +174,76 @@ export class ReporteComponent implements OnInit {
             if (orden.id == this.ordenSeleccionada) {
               orden.data.servicios.forEach(servicio => {
 
-                this.operadores.push(servicio.operador);
+                this.operadores.push(servicio.operador)
 
-
-                this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
-                if (servicio.estadisticas) {
-                  porfacturar++
-                  this.estadisticas.fin++
-                  this.estadisticas.tr += servicio.estadisticas.tiempoReal
-                  this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                if(this.operadorSeleccionado && this.operadorSeleccionado != ""){
+                  if(this.operadorSeleccionado==servicio.operador.id){
+                  
+  
+  
+                    this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
+                    if (servicio.estadisticas) {
+                      porfacturar++
+                      this.estadisticas.fin++
+                      this.estadisticas.tr += servicio.estadisticas.tiempoReal
+                      this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                    }
+      
+                    if (servicio.estado == 'EN PRODUCCIÓN') {
+                      produccion++
+                    }
+      
+                    if (servicio.estado == 'CITA/RECEPCION') {
+                      cita++
+                    }
+      
+                    if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
+                      espera++
+                    }
+      
+                    if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
+                      pausa++
+                    }
+      
+      
+      
+                    servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
+                    this.tareas.push(servicio)
+                  }
+                }else{
+            
+  
+  
+                  this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
+                  if (servicio.estadisticas) {
+                    porfacturar++
+                    this.estadisticas.fin++
+                    this.estadisticas.tr += servicio.estadisticas.tiempoReal
+                    this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
+                  }
+    
+                  if (servicio.estado == 'EN PRODUCCIÓN') {
+                    produccion++
+                  }
+    
+                  if (servicio.estado == 'CITA/RECEPCION') {
+                    cita++
+                  }
+    
+                  if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
+                    espera++
+                  }
+    
+                  if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
+                    pausa++
+                  }
+    
+    
+    
+                  servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
+                  this.tareas.push(servicio)
                 }
-
-                if (servicio.estado == 'EN PRODUCCIÓN') {
-                  produccion++
-                }
-
-                if (servicio.estado == 'CITA/RECEPCION') {
-                  cita++
-                }
-
-                if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
-                  espera++
-                }
-
-                if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
-                  pausa++
-                }
-
-
-
-                servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
-                this.tareas.push(servicio)
+  
 
               });
 

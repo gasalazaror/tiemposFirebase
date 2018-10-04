@@ -77,7 +77,7 @@ export class SidebarComponent {
     }
 
     onLoggedout() {
-        console.log('cerrar')
+ 
         localStorage.removeItem('isLoggedin');
         localStorage.removeItem('empresa');
     }

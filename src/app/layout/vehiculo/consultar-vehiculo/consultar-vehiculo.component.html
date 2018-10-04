@@ -30,7 +30,15 @@
                     </div>
                   
                   </td>
-                  <td><a title="Ver información" routerLink="/vehiculo/informacionvehiculo/{{vehiculo.id}}">{{vehiculo.data.placa}}</a></td>
+                  <td>
+                    <a title="Ver información" routerLink="/vehiculo/informacionvehiculo/{{vehiculo.id}}">{{vehiculo.data.placa}}</a>
+                   
+                   <p>
+                    <small [class.text-danger]="vehiculo.data.estado=='Inactivo'" [class.text-success]="vehiculo.data.estado=='Activo'"> <i [class.fa-check-square]="vehiculo.data.estado=='Activo'" [class.fa-minus-square]="vehiculo.data.estado=='Inactivo'" class="fa"></i> {{vehiculo.data.estado}} </small> 
+               
+                 
+                   </p>
+                  </td>
                   <td>{{vehiculo.data.marca}}</td>
                   <td>{{vehiculo.data.modelo}}</td>
                   <td>{{vehiculo.data.color}}</td>

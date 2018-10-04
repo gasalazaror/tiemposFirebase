@@ -320,7 +320,6 @@ var DashboardComponent = /** @class */ (function () {
         this.personas = this.personaService.obtenerClientes();
         this.personas.subscribe(function (res) {
             _this.numeroPersonas = res.length;
-            console.log(_this.numeroPersonas);
         });
         this.vehiculos = this.vehiculoService.obtenerVehiculos();
         this.vehiculos.subscribe(function (res) {
@@ -558,6 +557,14 @@ var OrdenService = /** @class */ (function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('ordenes', function (query) { return query.where(campo, '==', valor); });
     };
+    OrdenService.prototype.obtenerOrdenesFecha = function (inicio, fin) {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('ordenes', function (query) { return query.where('fecha', '>=', inicio).where('fecha', '<=', fin).orderBy('fecha', 'desc'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
     OrdenService.prototype.obtenerOrdenes = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('ordenes', function (query) { return query.orderBy('numero', 'desc'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
@@ -647,6 +654,13 @@ var PersonaService = /** @class */ (function () {
     PersonaService.prototype.obtenerPersonas = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('personas', function (query) { return query.orderBy('nombre'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    PersonaService.prototype.obtenerEmpresas = function () {
+        return this.afs.collection('empresa').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
             var data = a.payload.doc.data();
             var id = a.payload.doc.id;
             return { id: id, data: data };

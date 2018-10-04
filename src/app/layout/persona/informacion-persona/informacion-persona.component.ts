@@ -42,7 +42,7 @@ export class InformacionPersonaComponent implements OnInit {
 
   generarUsuario(persona) {
     this.empresa = this.db.doc(localStorage.getItem('empresa'));
-    console.log(this.personaq)
+
 
   
     this.auth.auth.createUserWithEmailAndPassword(this.personaq.correo, this.personaq.cedula)
@@ -60,10 +60,10 @@ export class InformacionPersonaComponent implements OnInit {
      
       }, err => {
       
-        console.log(this.auth.auth.currentUser.uid)
+     
 
         this.auth.user.subscribe(res=>{
-          console.log(res)
+ 
         })
 
         this.user = this.db.doc('usuario/'+this.auth.auth.currentUser.uid);
@@ -82,18 +82,18 @@ export class InformacionPersonaComponent implements OnInit {
               swal( 'Listo!','Usuario creado correctamente', 'success');
             })
           } else {
-            console.log('Ya existe un usuario con el correo electrónico ingresado')
+      
             this.error = 'Ya existe un usuario con el correo electrónico ingresado'
           }
         })
-        console.log(err)
+    
      //   this.db.collection('usuario').doc(this.auth.auth.currentUser.uid).set({empresa:this.empresa.ref, nombre: this.personaq.nombre,  id: this.auth.auth.currentUser.uid});
     //    
       })
   }
 
   enviarCorreoRecuperacion(persona){
-    console.log(persona)
+
     this.auth.auth.sendPasswordResetEmail(persona.correo).then(email=>{
       alert('Se envió un email de recuperación correctamente')
     },error=>{

@@ -148,13 +148,11 @@ var RecuperacionComponent = /** @class */ (function () {
     };
     RecuperacionComponent.prototype.enviar = function () {
         var _this = this;
-        console.log(this.usuario);
         this.afAuth.auth.sendPasswordResetEmail(this.usuario.email).then(function (envio) {
             _this.error = '';
             _this.success = true;
             _this.usuario.email = '';
         }, function (error) {
-            console.log(error);
             _this.error = error.message;
             _this.success = false;
         });

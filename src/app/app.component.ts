@@ -25,6 +25,6 @@ export class AppComponent implements OnInit {
     }
 
     timbrar(id) {
-        console.log(id)
+     
     }
 }

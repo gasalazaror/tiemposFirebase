@@ -80,7 +80,7 @@ export class PersonaService {
 
   obtenerClientes() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('personas', query => query.where('cliente', '==', true)).snapshotChanges().pipe(
+    return this.empresa.collection('personas', query => query.where('cliente', '==', true).where('estado','==','Activo')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;

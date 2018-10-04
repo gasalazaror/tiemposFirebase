@@ -35,6 +35,17 @@ export class VehiculoService {
     );
   }
 
+  obtenerVehiculosActivos() {
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    return this.empresa.collection('vehiculos', query => query.where('estado','==','Activo')).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, data };
+      }))
+    );
+  }
+
   eliminarVehiculo(idVehiculo) {
     return this.empresa.collection('vehiculos').doc(idVehiculo).delete()
   }

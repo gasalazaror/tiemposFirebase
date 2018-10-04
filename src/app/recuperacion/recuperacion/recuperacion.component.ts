@@ -23,14 +23,14 @@ export class RecuperacionComponent implements OnInit {
 
   enviar(){
 
-    console.log(this.usuario)
+
 
     this.afAuth.auth.sendPasswordResetEmail(this.usuario.email).then(envio=>{
       this.error = ''
       this.success = true
       this.usuario.email = ''
     }, error=>{
-      console.log(error)
+
     this.error = error.message
     this.success = false
     })

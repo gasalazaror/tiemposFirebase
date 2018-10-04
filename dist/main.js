@@ -12,6 +12,10 @@ var map = {
 		"./src/app/access-denied/access-denied.module.ts",
 		"access-denied-access-denied-module"
 	],
+	"./administracion/administracion.module": [
+		"./src/app/layout/administracion/administracion.module.ts",
+		"administracion-administracion-module"
+	],
 	"./dashboard/dashboard.module": [
 		"./src/app/layout/dashboard/dashboard.module.ts",
 		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
@@ -36,10 +40,10 @@ var map = {
 	"./orden-trabajo/orden-trabajo.module": [
 		"./src/app/layout/orden-trabajo/orden-trabajo.module.ts",
 		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
+		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module",
+		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module"
 	],
@@ -47,8 +51,7 @@ var map = {
 		"./src/app/layout/persona/persona.module.ts",
 		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module",
-		"persona-persona-module"
+		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module"
 	],
 	"./recuperacion/recuperacion.module": [
 		"./src/app/recuperacion/recuperacion.module.ts",
@@ -58,10 +61,10 @@ var map = {
 	"./reporte/reporte.module": [
 		"./src/app/layout/reporte/reporte.module.ts",
 		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
+		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module",
+		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module",
 		"reporte-reporte-module"
@@ -73,8 +76,8 @@ var map = {
 	"./servicio/servicio.module": [
 		"./src/app/layout/servicio/servicio.module.ts",
 		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
+		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module"
 	],
 	"./signup/signup.module": [
@@ -215,7 +218,6 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.ngOnInit = function () {
     };
     AppComponent.prototype.timbrar = function (id) {
-        console.log(id);
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -455,7 +457,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-xl-12\">\r\n        <h2 class=\"page-header\">\r\n            {{heading}}\r\n        </h2>\r\n        <!-- <ol class=\"breadcrumb\">\r\n            <li class=\"breadcrumb-item\">\r\n                <i class=\"fa fa-dashboard\"></i> <a href=\"Javascript:void(0)\" [routerLink]=\"['/dashboard']\">Dashboard</a>\r\n            </li>\r\n            <li class=\"breadcrumb-item active\"><i class=\"fa {{icon}}\"></i> {{heading}}</li>\r\n        </ol> -->\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-xl-12\">\r\n        \r\n        <div class=\"d-flex justify-content-end\">\r\n            <div class=\"mr-auto p-2\">\r\n                <h4 class=\"page-header\">\r\n                    {{heading}}\r\n                </h4>\r\n            </div>\r\n            <div *ngIf=\"nuevo\" class=\"p-1\">\r\n                <a  [routerLink]=\"[nuevo]\" title=\"Nuevo\" class=\"btn btn-success\"><i class=\"fa fa-plus\"></i></a>\r\n            </div>\r\n            <div *ngIf=\"edicion\" class=\"p-1\">\r\n                <a  [routerLink]=\"[edicion]\" title=\"Modificar\" class=\"btn btn-primary\"><i class=\"fa fa-pencil\"></i></a>\r\n            </div>\r\n            <div *ngIf=\"pdf\" class=\"p-1\">\r\n                <button  title=\"PDF\" (click)=\"function2()\" class=\"btn btn-danger\"><i class=\"fa fa-file-pdf-o\"></i></button>\r\n            </div>\r\n        \r\n          </div>\r\n       \r\n        <!-- <ol class=\"breadcrumb\">\r\n            <li class=\"breadcrumb-item\">\r\n                <i class=\"fa fa-dashboard\"></i> <a href=\"Javascript:void(0)\" [routerLink]=\"['/dashboard']\">Dashboard</a>\r\n            </li>\r\n            <li class=\"breadcrumb-item active\"><i class=\"fa {{icon}}\"></i> {{heading}}</li>\r\n        </ol> -->\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -493,16 +495,36 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var PageHeaderComponent = /** @class */ (function () {
     function PageHeaderComponent() {
+        this.myEvent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     PageHeaderComponent.prototype.ngOnInit = function () { };
+    PageHeaderComponent.prototype.function2 = function () {
+        this.myEvent.emit(null);
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
     ], PageHeaderComponent.prototype, "heading", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], PageHeaderComponent.prototype, "pdf", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], PageHeaderComponent.prototype, "nuevo", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], PageHeaderComponent.prototype, "edicion", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
     ], PageHeaderComponent.prototype, "icon", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], PageHeaderComponent.prototype, "myEvent", void 0);
     PageHeaderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-page-header',

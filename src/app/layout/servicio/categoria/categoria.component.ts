@@ -45,34 +45,34 @@ export class CategoriaComponent implements OnInit {
   };
   dtTrigger: Subject<any> = new Subject();
 
-  categorias: Observable<any[]>;
+  categorias: any[] = [];
 
   constructor(private servicioService: ServicioService) {
     this.obtenerServicios()
-   }
+  }
 
   ngOnInit() {
   }
 
   obtenerServicios() {
 
-    this.categorias = this.servicioService.obtenerCategorias()
-
-    this.categorias.subscribe(res => {
-      $('#example-datatable').DataTable().destroy();
-      this.dtTrigger.next();
-    })
+    this.servicioService.obtenerCategorias()
+      .subscribe(res => {
+        $('#example-datatable').DataTable().destroy();
+        this.categorias = res
+        this.dtTrigger.next();
+      })
   }
 
-  eliminarCategoria(categoria){
+  eliminarCategoria(categoria) {
     swal({
       title: 'Está seguro?',
-      text: "Desea eliminar la categoría: "+categoria.data.nombre,
+      text: "Desea eliminar la categoría: " + categoria.data.nombre,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      cancelButtonText:'Cancelar',
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, eliminar!'
     }).then((result) => {
       if (result.value) {
@@ -118,8 +118,8 @@ export class CategoriaComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
 
-            this.servicioService.modificarCategoria(categoria.id,{ nombre: categoriaInput }).then(res => {
-                 
+            this.servicioService.modificarCategoria(categoria.id, { nombre: categoriaInput }).then(res => {
+
               swal('Listo!', 'Categoría guardada exitosamente', 'success');
             })
 
@@ -162,9 +162,9 @@ export class CategoriaComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
 
-          
+
             this.servicioService.crearCategoria({ nombre: categoria }).then(res => {
-             
+
               swal('Listo!', 'Categoría guardada exitosamente', 'success');
             })
 

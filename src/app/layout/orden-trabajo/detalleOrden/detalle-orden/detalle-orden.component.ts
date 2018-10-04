@@ -28,6 +28,7 @@ export class DetalleOrdenComponent implements OnInit {
   user:any=''
   tiempoReal: number = 0;
   tiempoRealFor: any;
+  observacion: String = ''
 
   finalizadas: number = 0
   servicios: any;
@@ -50,6 +51,10 @@ export class DetalleOrdenComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.orden = this.ordenService.obtenerUnaOrden(this.id);
     this.orden.subscribe(res => {
+      if(res.observacion){
+        this.observacion = res.observacion
+        
+      }
       this.servicios = res.servicios
       this.tiempoEstandar = 0
       this.finalizadas = 0
@@ -109,8 +114,8 @@ export class DetalleOrdenComponent implements OnInit {
   }
 
   calcularEstadisticas(index) {
-    console.log('ESTADISTICAS')
-    console.log(this.servicios[index])
+ 
+
 
     //tiempo estandar
     const tiempoEstandar = moment.utc((this.servicios[index].tiempoEstandar * 60) * 1000).format('HH:mm:ss');
@@ -143,10 +148,10 @@ export class DetalleOrdenComponent implements OnInit {
     const real = lead - pausas
     var tiempoReal = moment.utc(real * 1000).format('HH:mm:ss');
 
-    console.log(real)
+   
     const eficiencia = (((tiempoEstandarSec) / real) * 100).toFixed(2)
 
-    console.log(eficiencia)
+
 
     return {
       eficiencia: eficiencia,

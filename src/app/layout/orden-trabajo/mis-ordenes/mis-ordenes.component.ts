@@ -55,7 +55,7 @@ export class MisOrdenesComponent implements OnInit {
 
 
         });
-        console.log(this.tareas)
+ 
 
       });
     })

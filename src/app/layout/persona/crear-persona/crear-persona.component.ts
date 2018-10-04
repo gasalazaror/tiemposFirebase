@@ -49,8 +49,8 @@ export class CrearPersonaComponent implements OnInit {
 
           this.existePersona = true
           this.personaForm = this.fb.group({
-            estado: ['Activo', Validators.required],
-            tipo: ['Natural', Validators.required],
+            estado: [persona.estado, Validators.required],
+            tipo: [persona.tipo, Validators.required],
             cedula: [persona.cedula, [Validators.required]],
             nombre: [persona.nombre, [Validators.required]],
             direccion: [persona.direccion, []],

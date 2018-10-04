@@ -1,0 +1,34 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Configuración usuario'" [pdf]="false" [icon]="'fa-edit'"></app-page-header>
+
+  <div class="card mb-3">
+    <div class="card-header">Cambio de contraseña</div>
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="txtPass">Contraseña anterior</label>
+            <input [(ngModel)]="anterior" id="txtPass" class="form-control" type="password">
+          </div>
+
+          <div class="form-group">
+            <label for="txtPass">Contraseña nueva</label>
+            <input [(ngModel)]="nueva" id="txtPass" class="form-control" type="password">
+          </div>
+
+          <div class="form-group">
+            <label for="txtPass">Confirmar contraseña</label>
+            <input [(ngModel)]="confirmacion" id="txtPass" class="form-control" type="password">
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

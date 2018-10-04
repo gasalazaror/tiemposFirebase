@@ -2849,7 +2849,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n    <app-page-header [heading]=\"'Consultar vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  \r\n    <div class=\"row\">\r\n      <div class=\"col col-xl-12 col-lg-12\">\r\n  \r\n  \r\n        <div class=\"card mb-3\">\r\n          <div class=\"card-header\">Vehículos</div>\r\n          <div class=\"card-body table-responsive\">\r\n            <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n              <thead>\r\n                <tr>\r\n                  <th></th>\r\n                  <th>ID/Placa</th>\r\n                  <th>Marca</th>\r\n                  <th>Modelo</th>\r\n                  <th>Color</th>\r\n                  <th>No. Motor</th>\r\n                  <th>No. Chasis</th>\r\n                  <th>Año de fabricación</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let vehiculo of vehiculos\">\r\n                  <td>\r\n                    <div class=\"btn-group\">\r\n                        <a title=\"Editar Vehículo\" routerLink=\"/vehiculo/crearvehiculo/{{vehiculo.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                        <button title=\"Eliminar Vehículo\" class=\"btn btn-danger btn-sm\" (click)=\"eliminarVehiculo(vehiculo)\"><i class=\"fa fa-trash\"></i></button>\r\n                    </div>\r\n                  \r\n                  </td>\r\n                  <td><a title=\"Ver información\" routerLink=\"/vehiculo/informacionvehiculo/{{vehiculo.id}}\">{{vehiculo.data.placa}}</a></td>\r\n                  <td>{{vehiculo.data.marca}}</td>\r\n                  <td>{{vehiculo.data.modelo}}</td>\r\n                  <td>{{vehiculo.data.color}}</td>\r\n                  <td>{{vehiculo.data.numeroMotor}}</td>\r\n                  <td>{{vehiculo.data.numeroChasis}}</td>\r\n                  <td>{{vehiculo.data.anioFabricacion}}</td>\r\n                 \r\n                </tr>\r\n  \r\n  \r\n  \r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n  \r\n      </div>\r\n    </div>\r\n  \r\n  \r\n  \r\n  \r\n  </div>"
+module.exports = "<div [@routerTransition]>\r\n    <app-page-header [heading]=\"'Consultar vehículo'\" [nuevo]=\"'/vehiculo/crearvehiculo/nuevo'\" (myEvent)=\"imprimirReporte($event)\" [pdf]=\"true\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  \r\n    <div class=\"row\">\r\n      <div class=\"col col-xl-12 col-lg-12\">\r\n  \r\n  \r\n        <div class=\"card mb-3\">\r\n          <div class=\"card-header\">Vehículos</div>\r\n          <div class=\"card-body table-responsive\">\r\n            <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n              <thead>\r\n                <tr>\r\n                  <th></th>\r\n                  <th>ID/Placa</th>\r\n                  <th>Marca</th>\r\n                  <th>Modelo</th>\r\n                  <th>Color</th>\r\n                  <th>No. Motor</th>\r\n                  <th>No. Chasis</th>\r\n                  <th>Año de fabricación</th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let vehiculo of vehiculos\">\r\n                  <td>\r\n                    <div class=\"btn-group\">\r\n                        <a title=\"Editar Vehículo\" routerLink=\"/vehiculo/crearvehiculo/{{vehiculo.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                        <button title=\"Eliminar Vehículo\" class=\"btn btn-danger btn-sm\" (click)=\"eliminarVehiculo(vehiculo)\"><i class=\"fa fa-trash\"></i></button>\r\n                    </div>\r\n                  \r\n                  </td>\r\n                  <td>\r\n                    <a title=\"Ver información\" routerLink=\"/vehiculo/informacionvehiculo/{{vehiculo.id}}\">{{vehiculo.data.placa}}</a>\r\n                   \r\n                   <p>\r\n                    <small [class.text-danger]=\"vehiculo.data.estado=='Inactivo'\" [class.text-success]=\"vehiculo.data.estado=='Activo'\"> <i [class.fa-check-square]=\"vehiculo.data.estado=='Activo'\" [class.fa-minus-square]=\"vehiculo.data.estado=='Inactivo'\" class=\"fa\"></i> {{vehiculo.data.estado}} </small> \r\n               \r\n                 \r\n                   </p>\r\n                  </td>\r\n                  <td>{{vehiculo.data.marca}}</td>\r\n                  <td>{{vehiculo.data.modelo}}</td>\r\n                  <td>{{vehiculo.data.color}}</td>\r\n                  <td>{{vehiculo.data.numeroMotor}}</td>\r\n                  <td>{{vehiculo.data.numeroChasis}}</td>\r\n                  <td>{{vehiculo.data.anioFabricacion}}</td>\r\n                 \r\n                </tr>\r\n  \r\n  \r\n  \r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n  \r\n      </div>\r\n    </div>\r\n  \r\n  \r\n  \r\n  \r\n  </div>"
 
 /***/ }),
 
@@ -2881,6 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _servicios_reporte_reporte_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../servicios/reporte/reporte.service */ "./src/app/servicios/reporte/reporte.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2896,9 +2897,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ConsultarVehiculoComponent = /** @class */ (function () {
-    function ConsultarVehiculoComponent(vehiculoService) {
+    function ConsultarVehiculoComponent(vehiculoService, reporteService) {
         this.vehiculoService = vehiculoService;
+        this.reporteService = reporteService;
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 5,
@@ -2941,6 +2944,9 @@ var ConsultarVehiculoComponent = /** @class */ (function () {
             _this.dtTrigger.next();
         });
     };
+    ConsultarVehiculoComponent.prototype.imprimirReporte = function () {
+        this.reporteService.reporteDatos(this.vehiculos, 'Vehículos');
+    };
     ConsultarVehiculoComponent.prototype.eliminarVehiculo = function (vehiculo) {
         var _this = this;
         sweetalert2__WEBPACK_IMPORTED_MODULE_5___default()({
@@ -2971,7 +2977,7 @@ var ConsultarVehiculoComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./consultar-vehiculo.component.scss */ "./src/app/layout/vehiculo/consultar-vehiculo/consultar-vehiculo.component.scss")],
             animations: [Object(_router_animations__WEBPACK_IMPORTED_MODULE_1__["routerTransition"])()]
         }),
-        __metadata("design:paramtypes", [_servicios_vehiculo_vehiculo_service__WEBPACK_IMPORTED_MODULE_2__["VehiculoService"]])
+        __metadata("design:paramtypes", [_servicios_vehiculo_vehiculo_service__WEBPACK_IMPORTED_MODULE_2__["VehiculoService"], _servicios_reporte_reporte_service__WEBPACK_IMPORTED_MODULE_6__["ReporteService"]])
     ], ConsultarVehiculoComponent);
     return ConsultarVehiculoComponent;
 }());
@@ -2987,7 +2993,7 @@ var ConsultarVehiculoComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n \r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">Información del vehículo</div>\r\n    <div class=\"card-body\">\r\n      <form class=\"form\" [formGroup]=\"vehiculoForm\" (ngSubmit)=\"guardarVehiculo()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-md-4\">\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">ID/Placa <span style=\"color: red\">*</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"placa\" id=\"inputPassword2\" placeholder=\"ID o Placa\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Marca <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"marca\" id=\"inputPassword2\" placeholder=\"Marca\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Modelo <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"modelo\" id=\"inputPassword2\" placeholder=\"modelo\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Color</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"color\" id=\"inputPassword2\" placeholder=\"Color\">\r\n            </div>\r\n\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de motor <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroMotor\" id=\"inputPassword2\" placeholder=\"No Motor\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de chasis</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroChasis\" id=\"inputPassword2\" placeholder=\"No Chasis\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Año fabricación <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"4\"  class=\"form-control\" formControlName=\"anioFabricacion\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Dueño actual <span style=\"color: red\">*</span></label>\r\n              <ng-select class=\"form-control\" [items]=\"personas | async\" bindLabel=\"data.nombre\" formControlName=\"dueno\">\r\n              </ng-select>\r\n            </div>\r\n\r\n            <div  class=\"alert alert-info\" role=\"alert\">\r\n                Todos los campos marcados con <strong>(*)</strong> son obligatorios\r\n            </div>\r\n\r\n      \r\n            <button title=\"Guardar vehículo\"  type=\"submit\" class=\"btn btn-primary mb-2\">Guardar Vehículo</button>\r\n\r\n          </div>\r\n        </div>\r\n\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n \r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">Información del vehículo</div>\r\n    <div class=\"card-body\">\r\n      <form class=\"form\" [formGroup]=\"vehiculoForm\" (ngSubmit)=\"guardarVehiculo()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-md-4\">\r\n              <div class=\"form-group\">\r\n                  <label for=\"staticEmail2\" class=\"\">Estado</label>\r\n\r\n                  <select class=\"form-control form-control-sm\" formControlName=\"estado\" name=\"\" id=\"\">\r\n                      <option value=\"Activo\">Activo</option>\r\n                      <option value=\"Inactivo\">Inactivo</option>\r\n                  </select>\r\n              </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">ID/Placa <span style=\"color: red\">*</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"placa\" id=\"inputPassword2\" placeholder=\"ID o Placa\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Marca <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"marca\" id=\"inputPassword2\" placeholder=\"Marca\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Modelo <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"modelo\" id=\"inputPassword2\" placeholder=\"modelo\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Color</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"color\" id=\"inputPassword2\" placeholder=\"Color\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de motor</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroMotor\" id=\"inputPassword2\" placeholder=\"No Motor\">\r\n            </div>\r\n\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n          \r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de chasis</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroChasis\" id=\"inputPassword2\" placeholder=\"No Chasis\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Año fabricación <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"4\"  class=\"form-control\" formControlName=\"anioFabricacion\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Kilometraje Anterior</label>\r\n              <input disabled type=\"text\"   class=\"form-control\" formControlName=\"kilometrajeAnterior\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Kilometraje Actual <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\"   class=\"form-control\" formControlName=\"kilometrajeActual\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Dueño actual <span style=\"color: red\">*</span></label>\r\n              <ng-select class=\"form-control\" [items]=\"personas | async\" bindLabel=\"data.nombre\" formControlName=\"dueno\">\r\n              </ng-select>\r\n            </div>\r\n\r\n            <div  class=\"alert alert-info\" role=\"alert\">\r\n                Todos los campos marcados con <strong>(*)</strong> son obligatorios\r\n            </div>\r\n\r\n      \r\n            <button title=\"Guardar vehículo\"  type=\"submit\" class=\"btn btn-primary mb-2\">Guardar Vehículo</button>\r\n\r\n          </div>\r\n        </div>\r\n\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -3045,13 +3051,17 @@ var CrearVehiculoComponent = /** @class */ (function () {
         this.vehiculoService = vehiculoService;
         this.route = route;
         this.vehiculoGuardado = false;
+        this.kilometrajeActual = 0;
         this.vehiculoForm = this.fb.group({
+            estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             placa: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             marca: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             modelo: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             color: [''],
             numeroMotor: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             numeroChasis: [''],
+            kilometrajeAnterior: [0],
+            kilometrajeActual: [0],
             anioFabricacion: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             dueno: [{}, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
@@ -3059,13 +3069,17 @@ var CrearVehiculoComponent = /** @class */ (function () {
         if (this.id != 'nuevo' && this.id != null) {
             this.vehiculo = this.vehiculoService.obtenerUnVehiculo(this.id);
             this.vehiculo.subscribe(function (vehiculo) {
+                _this.kilometrajeActual = vehiculo.kilometrajeActual;
                 _this.vehiculoForm = _this.fb.group({
+                    estado: [vehiculo.estado, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     placa: [vehiculo.placa, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     marca: [vehiculo.marca, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     modelo: [vehiculo.modelo, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     color: [vehiculo.color],
                     numeroMotor: [vehiculo.numeroMotor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     numeroChasis: [vehiculo.numeroChasis],
+                    kilometrajeAnterior: [vehiculo.kilometrajeAnterior],
+                    kilometrajeActual: [vehiculo.kilometrajeActual],
                     anioFabricacion: [vehiculo.anioFabricacion, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     dueno: [vehiculo.dueno, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                 });
@@ -3086,9 +3100,6 @@ var CrearVehiculoComponent = /** @class */ (function () {
         else if (this.vehiculoForm.value.modelo == '') {
             sweetalert2__WEBPACK_IMPORTED_MODULE_6___default()('Existió un error', 'El modelo es requerido', 'error');
         }
-        else if (this.vehiculoForm.value.numeroMotor == '') {
-            sweetalert2__WEBPACK_IMPORTED_MODULE_6___default()('Existió un error', 'El número de motor es requerido', 'error');
-        }
         else if (this.vehiculoForm.value.anioFabricacion == '') {
             sweetalert2__WEBPACK_IMPORTED_MODULE_6___default()('Existió un error', 'El año de fabricación es requerido', 'error');
         }
@@ -3101,12 +3112,15 @@ var CrearVehiculoComponent = /** @class */ (function () {
                     .then(function (vehiculo) {
                     sweetalert2__WEBPACK_IMPORTED_MODULE_6___default()('Listo!', 'Vehículo guardado exitosamente', 'success');
                     _this.vehiculoForm = _this.fb.group({
+                        estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         placa: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         marca: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         modelo: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         color: [''],
                         numeroMotor: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         numeroChasis: [''],
+                        kilometrajeAnterior: [0],
+                        kilometrajeActual: [0],
                         anioFabricacion: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         dueno: [{}, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
                     });
@@ -3114,6 +3128,9 @@ var CrearVehiculoComponent = /** @class */ (function () {
                 });
             }
             else {
+                if (this.vehiculoForm.value.kilometrajeActual != this.kilometrajeActual) {
+                    this.vehiculoForm.value.kilometrajeAnterior = this.kilometrajeActual;
+                }
                 this.vehiculoService.modificarVehiculo(this.id, this.vehiculoForm.value).then(function (res) {
                     sweetalert2__WEBPACK_IMPORTED_MODULE_6___default()('Listo!', 'Vehículo modificado exitosamente', 'success');
                 }, function (error) {
@@ -3153,7 +3170,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Información vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <table class=\"table table-sm table-bordered\">\r\n\r\n        <tbody>\r\n          <tr>\r\n            <th>ID / Placa</th>\r\n            <td>{{ (vehiculo | async)?.placa }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Marca</th>\r\n            <td>{{ (vehiculo | async)?.marca }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Modelo</th>\r\n            <td>{{ (vehiculo | async)?.modelo }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Color</th>\r\n            <td>{{ (vehiculo | async)?.color }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>No. Motor</th>\r\n            <td>{{ (vehiculo | async)?.numeroMotor }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>No. Chasis</th>\r\n            <td>{{ (vehiculo | async)?.numeroChasis }}</td>\r\n          </tr>\r\n\r\n          <tr>\r\n            <th>Año de fabricación</th>\r\n            <td>{{ (vehiculo | async)?.anioFabricacion }}</td>\r\n          </tr>\r\n      \r\n        </tbody>\r\n      </table>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Información vehículo'\" [nuevo]=\"'/vehiculo/crearvehiculo/nuevo'\" [edicion]=\"'/vehiculo/crearvehiculo/'+id\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <table class=\"table table-sm table-bordered\">\r\n\r\n        <tbody>\r\n          <tr>\r\n            <th>ID / Placa</th>\r\n            <td>{{ (vehiculo | async)?.placa }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Marca</th>\r\n            <td>{{ (vehiculo | async)?.marca }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Modelo</th>\r\n            <td>{{ (vehiculo | async)?.modelo }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>Color</th>\r\n            <td>{{ (vehiculo | async)?.color }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>No. Motor</th>\r\n            <td>{{ (vehiculo | async)?.numeroMotor }}</td>\r\n          </tr>\r\n          <tr>\r\n            <th>No. Chasis</th>\r\n            <td>{{ (vehiculo | async)?.numeroChasis }}</td>\r\n          </tr>\r\n\r\n          <tr>\r\n            <th>Año de fabricación</th>\r\n            <td>{{ (vehiculo | async)?.anioFabricacion }}</td>\r\n          </tr>\r\n      \r\n        </tbody>\r\n      </table>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -3275,113 +3292,6 @@ var VehiculoModule = /** @class */ (function () {
         })
     ], VehiculoModule);
     return VehiculoModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/servicios/persona.service.ts":
-/*!**********************************************!*\
-  !*** ./src/app/servicios/persona.service.ts ***!
-  \**********************************************/
-/*! exports provided: PersonaService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PersonaService", function() { return PersonaService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var PersonaService = /** @class */ (function () {
-    function PersonaService(afs, afAuth) {
-        this.afs = afs;
-        this.afAuth = afAuth;
-        this.personasCollection = afs.collection('persona');
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    }
-    PersonaService.prototype.crearPersona = function (persona) {
-        var id = this.afs.createId();
-        return this.empresa.collection('personas').doc(id).set(persona);
-    };
-    PersonaService.prototype.comprobar = function (valor, campo) {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.collection('personas', function (query) { return query.where(valor, '==', campo); }).stateChanges();
-    };
-    PersonaService.prototype.modificarPersona = function (id, persona) {
-        return this.empresa.collection('personas').doc(id).update(persona);
-    };
-    PersonaService.prototype.eliminarPersona = function (idPersona) {
-        return this.empresa.collection('personas').doc(idPersona).delete();
-    };
-    PersonaService.prototype.obtenerPersonas = function () {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.collection('personas', function (query) { return query.orderBy('nombre'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
-            var data = a.payload.doc.data();
-            var id = a.payload.doc.id;
-            return { id: id, data: data };
-        }); }));
-    };
-    PersonaService.prototype.obtenerUsuarios = function () {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.collection('personas', function (query) { return query.where('empleado', '==', true); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
-            var data = a.payload.doc.data();
-            var id = a.payload.doc.id;
-            return { id: id, data: data };
-        }); }));
-    };
-    PersonaService.prototype.obtenerClientes = function () {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.collection('personas', function (query) { return query.where('cliente', '==', true); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
-            var data = a.payload.doc.data();
-            var id = a.payload.doc.id;
-            return { id: id, data: data };
-        }); }));
-    };
-    PersonaService.prototype.obtenerVehiculos = function (uid) {
-        var userRef = this.afs.collection('personas').doc(uid);
-        return this.empresa.collection('vehiculos', function (query) { return query.where('dueno', '==', userRef.ref); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
-            var data = a.payload.doc.data();
-            var id = a.payload.doc.id;
-            return { id: id, data: data };
-        }); }));
-    };
-    PersonaService.prototype.obtenerUnaPersona = function (id) {
-        return this.empresa.collection('personas').doc(id).valueChanges();
-    };
-    PersonaService.prototype.obtenerUsuario = function () {
-        return this.afAuth.user;
-    };
-    PersonaService.prototype.obtenerEmpresa = function () {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa;
-    };
-    PersonaService.prototype.editarNumeracionInicial = function (otInicio) {
-        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.update({ otInicio: otInicio });
-    };
-    PersonaService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
-            providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"], angularfire2_auth__WEBPACK_IMPORTED_MODULE_3__["AngularFireAuth"]])
-    ], PersonaService);
-    return PersonaService;
 }());
 
 

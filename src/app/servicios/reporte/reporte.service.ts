@@ -34,13 +34,14 @@ export class ReporteService {
   constructor(private personaService: PersonaService) {
 
     personaService.obtenerEmpresa().valueChanges().subscribe(empresa => {
-      this.comapnyJSON = {
-        CompanyName: empresa.nombre,
-        CompanyGSTIN: empresa.ruc,
-        CompanyState: empresa.direccion,
-        companyEmail: empresa.correo,
-        companyPhno: empresa.telefono,
-      };
+
+      if(empresa.nombre){this.comapnyJSON.CompanyName = empresa.nombre};
+      if(empresa.ruc){this.comapnyJSON.CompanyGSTIN = empresa.ruc};
+      if(empresa.direccion){this.comapnyJSON.CompanyState = empresa.direccion};
+      if(empresa.correo){this.comapnyJSON.companyEmail = empresa.correo};
+      if(empresa.telefono){this.comapnyJSON.companyPhno = empresa.nombre};
+
+     
     })
   }
 
@@ -52,16 +53,16 @@ export class ReporteService {
 
 
   customer_ShippingInfoJSON = {
-    CustomerName: 'Jino Shaji',
-    CustomerGSTIN: '37B76C238B7E1Z5',
-    CustomerState: 'KERALA (09)',
-    CustomerPAN: 'B76C238B7E',
-    CustomerAddressLine1: 'ABCDEFGD HOUSE,IX/642-D',
-    CustomerAddressLine2: 'ABCDEFGD P.O., NEDUMBASSERY',
-    CustomerAddressLine3: 'COCHIN',
-    PIN: '683584',
-    CustomerEmail: 'abcd@gmail.com',
-    CustomerPhno: '+918189457845',
+    CustomerName: '',
+    CustomerGSTIN: '',
+    CustomerState: '',
+    CustomerPAN: '',
+    CustomerAddressLine1: '',
+    CustomerAddressLine2: '',
+    CustomerAddressLine3: '',
+    PIN: '',
+    CustomerEmail: '',
+    CustomerPhno: '',
   };
 
 
@@ -254,7 +255,7 @@ export class ReporteService {
     doc.setFontStyle('normal');
 
     var options = {
-      theme: 'grid',
+      theme: 'plain',
       beforePageContent: header,
       margin: {
         top: 10
@@ -413,7 +414,7 @@ export class ReporteService {
     doc.setFontStyle('normal');
 
     var options = {
-      theme: 'grid',
+      theme: 'plain',
      
       beforePageContent: header,
       margin: {
