@@ -16,21 +16,28 @@ var map = {
 		"./src/app/layout/administracion/administracion.module.ts",
 		"administracion-administracion-module"
 	],
+	"./configuracion/configuracion.module": [
+		"./src/app/layout/configuracion/configuracion.module.ts",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-ord~9978e548",
+		"configuracion-configuracion-module~orden-trabajo-orden-trabajo-module~persona-persona-module~reporte~016823e4",
+		"configuracion-configuracion-module"
+	],
 	"./dashboard/dashboard.module": [
 		"./src/app/layout/dashboard/dashboard.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-ord~9978e548",
 		"dashboard-dashboard-module"
 	],
 	"./layout/layout.module": [
 		"./src/app/layout/layout.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-ord~9978e548",
 		"layout-layout-module"
 	],
 	"./login/login.module": [
 		"./src/app/login/login.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
 		"login-login-module"
 	],
 	"./not-found/not-found.module": [
@@ -39,9 +46,10 @@ var map = {
 	],
 	"./orden-trabajo/orden-trabajo.module": [
 		"./src/app/layout/orden-trabajo/orden-trabajo.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-ord~9978e548",
+		"configuracion-configuracion-module~orden-trabajo-orden-trabajo-module~persona-persona-module~reporte~016823e4",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module",
@@ -49,20 +57,23 @@ var map = {
 	],
 	"./persona/persona.module": [
 		"./src/app/layout/persona/persona.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~orden-trabajo-orden-trabajo-module~persona-persona-module~reporte~016823e4",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module"
+		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module",
+		"persona-persona-module"
 	],
 	"./recuperacion/recuperacion.module": [
 		"./src/app/recuperacion/recuperacion.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
 		"recuperacion-recuperacion-module"
 	],
 	"./reporte/reporte.module": [
 		"./src/app/layout/reporte/reporte.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-ord~9978e548",
+		"configuracion-configuracion-module~orden-trabajo-orden-trabajo-module~persona-persona-module~reporte~016823e4",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module",
@@ -75,9 +86,10 @@ var map = {
 	],
 	"./servicio/servicio.module": [
 		"./src/app/layout/servicio/servicio.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~orden-trabajo-ord~9978e548",
+		"configuracion-configuracion-module~orden-trabajo-orden-trabajo-module~persona-persona-module~reporte~016823e4",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"dashboard-dashboard-module~layout-layout-module~orden-trabajo-orden-trabajo-module~reporte-reporte-m~a2df2a69",
 		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~servicio-servicio-module"
 	],
 	"./signup/signup.module": [
@@ -86,13 +98,15 @@ var map = {
 	],
 	"./vehiculo/vehiculo.module": [
 		"./src/app/layout/vehiculo/vehiculo.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
+		"configuracion-configuracion-module~orden-trabajo-orden-trabajo-module~persona-persona-module~reporte~016823e4",
 		"orden-trabajo-orden-trabajo-module~persona-persona-module~reporte-reporte-module~servicio-servicio-m~567e489a",
-		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module"
+		"orden-trabajo-orden-trabajo-module~reporte-reporte-module~vehiculo-vehiculo-module",
+		"vehiculo-vehiculo-module"
 	],
 	"./verificacion/verificacion.module": [
 		"./src/app/verificacion/verificacion.module.ts",
-		"dashboard-dashboard-module~layout-layout-module~login-login-module~orden-trabajo-orden-trabajo-modul~aae1e794",
+		"configuracion-configuracion-module~dashboard-dashboard-module~layout-layout-module~login-login-modul~cf078124",
 		"verificacion-verificacion-module"
 	]
 };
@@ -259,12 +273,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
 /* harmony import */ var _node_modules_angularfire2_auth__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../node_modules/angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
+/* harmony import */ var _node_modules_angularfire2_storage__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../node_modules/angularfire2/storage */ "./node_modules/angularfire2/storage/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -301,6 +317,7 @@ var AppModule = /** @class */ (function () {
                 angularfire2__WEBPACK_IMPORTED_MODULE_10__["AngularFireModule"].initializeApp(_environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].firebase),
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
                 angularfire2_firestore__WEBPACK_IMPORTED_MODULE_12__["AngularFirestoreModule"],
+                _node_modules_angularfire2_storage__WEBPACK_IMPORTED_MODULE_14__["AngularFireStorageModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"],
                 _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"].forRoot({
                     loader: {

@@ -69,7 +69,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\n  <app-page-header [heading]=\"'Gestión de categorías'\" [icon]=\"'fa-edit'\"></app-page-header>\n  <div class=\"row\">\n    <div class=\"col col-xl-12 col-lg-12\">\n      <div class=\"card mb-3\">\n        <div class=\"card-header\">Categorías</div>\n        <div class=\"card-body table-responsive\">\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\n            <thead>\n              <tr>\n                <th></th>\n                <th>Categoría</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let categoria of categorias | async\">\n                <td>\n                  <div class=\"btn-group\">\n                    <button title=\"Editar Categoría \" class=\"btn btn-primary btn-sm\" (click)=\"modificarCategoria(categoria)\" > <i class=\"fa fa-pencil\"></i> </button>\n                      <button title=\"Eliminar Categoría\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarCategoria(categoria)\" (click)=\"eliminarServicio(categoria)\"><i class=\"fa fa-trash\"></i></button>\n                  </div>\n                </td>\n                <td>\n                    {{categoria.data.nombre}}\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br>\n          <button class=\"btn btn-primary\" (click)=\"agregarCategoria()\"><i class=\"fa fa-plus\"></i> Agregar elemento</button>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div [@routerTransition]>\n  <app-page-header [heading]=\"'Gestión de categorías'\" [icon]=\"'fa-edit'\"></app-page-header>\n  <div class=\"row\">\n    <div class=\"col col-xl-12 col-lg-12\">\n      <div class=\"card mb-3\">\n        <div class=\"card-header\">Categorías</div>\n        <div class=\"card-body table-responsive\">\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\n            <thead>\n              <tr>\n                <th></th>\n                <th>Categoría</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let categoria of categorias\">\n                <td>\n                  <div class=\"btn-group\">\n                    <button title=\"Editar Categoría \" class=\"btn btn-primary btn-sm\" (click)=\"modificarCategoria(categoria)\" > <i class=\"fa fa-pencil\"></i> </button>\n                      <button title=\"Eliminar Categoría\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarCategoria(categoria)\" (click)=\"eliminarServicio(categoria)\"><i class=\"fa fa-trash\"></i></button>\n                  </div>\n                </td>\n                <td>\n                    {{categoria.data.nombre}}\n                </td>\n              </tr>\n            </tbody>\n          </table>\n          <br>\n          <button class=\"btn btn-primary\" (click)=\"agregarCategoria()\"><i class=\"fa fa-plus\"></i> Agregar elemento</button>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -121,7 +121,7 @@ var CategoriaComponent = /** @class */ (function () {
         this.servicioService = servicioService;
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 25,
             autoWidth: true,
             language: {
                 processing: "Procesando...",
@@ -147,15 +147,17 @@ var CategoriaComponent = /** @class */ (function () {
             }
         };
         this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        this.categorias = [];
         this.obtenerServicios();
     }
     CategoriaComponent.prototype.ngOnInit = function () {
     };
     CategoriaComponent.prototype.obtenerServicios = function () {
         var _this = this;
-        this.categorias = this.servicioService.obtenerCategorias();
-        this.categorias.subscribe(function (res) {
+        this.servicioService.obtenerCategorias()
+            .subscribe(function (res) {
             $('#example-datatable').DataTable().destroy();
+            _this.categorias = res;
             _this.dtTrigger.next();
         });
     };
@@ -275,7 +277,7 @@ var CategoriaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar servicio'\" [nuevo]=\"'/servicio/crearservicio/nuevo'\" (myEvent)=\"imprimirReporte($event)\" [pdf]=\"true\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Servicios</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n                <th>Código</th>\r\n                <th>Servicio</th>\r\n                <th>Tiempo estándar</th>\r\n\r\n            \r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of servicios\">\r\n\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                      <a title=\"Editar Servicio\"  routerLink=\"/servicio/crearservicio/{{servicio.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                      <button title=\"Eliminar Servicio\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarServicio(servicio)\"><i class=\"fa fa-trash\"></i></button>\r\n                  </div>\r\n                   \r\n                </td>\r\n            \r\n                <td>{{servicio.data.codigo}}</td>\r\n                <td>\r\n                    {{servicio.data.descripcion}}\r\n                </td>\r\n                <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>\r\n              \r\n            \r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n        \r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Consultar servicio'\" [nuevo]=\"'/servicio/crearservicio/nuevo'\" (myEvent)=\"imprimirReporte($event)\" [pdf]=\"true\" [icon]=\"'fa-edit'\"></app-page-header>\r\n  <div class=\"row\">\r\n    <div class=\"col col-xl-12 col-lg-12\">\r\n\r\n\r\n      <div class=\"card mb-3\">\r\n        <div class=\"card-header\">Servicios</div>\r\n        <div class=\"card-body table-responsive\">\r\n          <table id=\"example-datatable\"  class=\"table\" datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\">\r\n            <thead>\r\n              <tr>\r\n                <th></th>\r\n               \r\n                <th>Código</th>\r\n                \r\n                <th>Servicio</th>\r\n                <th>Categoría</th>\r\n                <th>Tiempo estándar</th>\r\n\r\n            \r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let servicio of servicios\">\r\n\r\n                <td>\r\n                  <div class=\"btn-group\">\r\n                      <a title=\"Editar Servicio\"  routerLink=\"/servicio/crearservicio/{{servicio.id}}\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></a>\r\n                      <button title=\"Eliminar Servicio\"  class=\"btn btn-danger btn-sm\" (click)=\"eliminarServicio(servicio)\"><i class=\"fa fa-trash\"></i></button>\r\n                  </div>\r\n                   \r\n                </td>\r\n\r\n              \r\n            \r\n                <td>{{servicio.data.codigo}}</td>\r\n                <td>\r\n                    {{servicio.data.descripcion}}\r\n                </td>\r\n                <td>{{servicio.data.cat}}</td>\r\n                <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>\r\n              \r\n            \r\n\r\n              </tr>\r\n\r\n\r\n\r\n            </tbody>\r\n          </table>\r\n\r\n        \r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -330,7 +332,7 @@ var ConsultarServicioComponent = /** @class */ (function () {
         this.reporteService = reporteService;
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 25,
             autoWidth: true,
             language: {
                 processing: "Procesando...",
@@ -367,6 +369,13 @@ var ConsultarServicioComponent = /** @class */ (function () {
             .subscribe(function (res) {
             $('#example-datatable').DataTable().destroy();
             _this.servicios = res;
+            _this.servicios.forEach(function (servicio) {
+                _this.servicioService.obtenerUnaCategoriaID(servicio.data.categoria.id).subscribe(function (res) {
+                    if (res) {
+                        servicio.data.cat = res.nombre;
+                    }
+                });
+            });
             _this.dtTrigger.next();
         });
     };
@@ -419,7 +428,7 @@ var ConsultarServicioComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear servicio'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row container\">\r\n    <div class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Manejo de categorías y subcategorías\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"card\">\r\n            <div class=\"card-body\">\r\n              <div>\r\n                <p>Seleccionar una categoría</p>\r\n\r\n                <div class=\"row\">\r\n                  <div class=\"col-md-12\">\r\n                    <ul class=\"list-inline border\">\r\n                      <li class=\"list-inline-item\" *ngFor=\"let categoria of categorias | async\">\r\n                        <button title=\"Seleccionar categoría\" type=\"button\" (click)=\"seleccionarCategoria(categoria)\" class=\"btn btn-link\">{{categoria.data.nombre}}</button>\r\n                      </li>\r\n                      <li class=\"list-inline-item\">\r\n                   \r\n                      </li>\r\n                    </ul>\r\n                    <a routerLink=\"/servicio/categorias\" class=\"btn btn-sm btn-light\">Gestión de categorías</a>\r\n                  </div>\r\n                 \r\n                </div>\r\n\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"categoriaSeleccionada\" class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Generación de productos o servicios\r\n        </div>\r\n        <div class=\"card-body\">\r\n\r\n        \r\n          <div class=\"btn-group\">\r\n              <h5 *ngIf=\"categoriaSeleccionada\">\r\n\r\n                  <strong>Categoría: </strong>{{categoriaSeleccionada.data.nombre}}</h5>\r\n\r\n                 \r\n        \r\n          </div>\r\n          <br>\r\n          <br><br>\r\n\r\n         \r\n          <form class=\"form-inline\" [formGroup]=\"servicioForm\" (ngSubmit)=\"guardarServicio()\">\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Código <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"14\" formControlName=\"codigo\" style=\"max-width: 150px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Servicio <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"text\" maxlength=\"40\" formControlName=\"descripcion\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-3\">\r\n              <label for=\"staticEmail2\" class=\"\">Tiempo estándar(min) <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"number\" formControlName=\"tiempoEstandar\" style=\"max-width: 100px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Detalle &nbsp; &nbsp; &nbsp; &nbsp;</label>\r\n\r\n              <textarea formControlName=\"detalle\" maxlength=\"50\" cols=\"26\" class=\"form-control\"></textarea>\r\n            </div>\r\n\r\n\r\n\r\n            <button title=\"Guardar Servicio\" type=\"submit\"  class=\"btn btn-primary mb-2\">Guardar Servicio</button>\r\n          </form>\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear servicio'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n\r\n\r\n  <div class=\"row container\">\r\n    <div class=\"col-md-12 mb-3\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Manejo de categorías y subcategorías\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <div class=\"card\">\r\n            <div class=\"card-body\">\r\n              <div>\r\n                <p>Seleccionar una categoría</p>\r\n\r\n                <div class=\"row\">\r\n                  <div class=\"col-md-12\">\r\n                    <ul class=\"list-inline border\">\r\n                      <li class=\"list-inline-item\" *ngFor=\"let categoria of categorias | async\">\r\n                        <button title=\"Seleccionar categoría\" type=\"button\" (click)=\"seleccionarCategoria(categoria)\" class=\"btn btn-link\">{{categoria.data.nombre}}</button>\r\n                      </li>\r\n                      <li class=\"list-inline-item\">\r\n                   \r\n                      </li>\r\n                    </ul>\r\n                    <a routerLink=\"/servicio/categorias\" class=\"btn btn-sm btn-light\">Gestión de categorías</a>\r\n                  </div>\r\n                 \r\n                </div>\r\n\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"categoriaSeleccionada\" class=\"col-md-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          Generación de productos o servicios\r\n        </div>\r\n        <div class=\"card-body\">\r\n\r\n        \r\n          <div class=\"btn-group\">\r\n              <h5 *ngIf=\"categoriaSeleccionada.data\">\r\n\r\n                  <strong>Categoría: </strong>{{categoriaSeleccionada.data.nombre}}</h5>\r\n\r\n                 \r\n        \r\n          </div>\r\n          <br>\r\n          <br><br>\r\n\r\n         \r\n          <form class=\"form-inline\" [formGroup]=\"servicioForm\" (ngSubmit)=\"guardarServicio()\">\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Código <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"14\" formControlName=\"codigo\" style=\"max-width: 150px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Servicio <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"text\" formControlName=\"descripcion\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-3\">\r\n              <label for=\"staticEmail2\" class=\"\">Tiempo estándar(min) <span style=\"color: red\">* &nbsp; &nbsp; &nbsp;</span></label>\r\n              <input type=\"number\" formControlName=\"tiempoEstandar\" style=\"max-width: 100px;\" class=\"form-control\" id=\"staticEmail2\">\r\n            </div>\r\n\r\n            <div class=\"form-group mb-2 mx-sm-2\">\r\n              <label for=\"staticEmail2\" class=\"\">Detalle &nbsp; &nbsp; &nbsp; &nbsp;</label>\r\n\r\n              <textarea formControlName=\"detalle\" maxlength=\"50\" cols=\"26\" class=\"form-control\"></textarea>\r\n            </div>\r\n\r\n\r\n\r\n            <button title=\"Guardar Servicio\" type=\"submit\"  class=\"btn btn-primary mb-2\">Guardar Servicio</button>\r\n          </form>\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -815,11 +824,15 @@ var ServicioService = /** @class */ (function () {
     };
     ServicioService.prototype.obtenerServicios = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-        return this.empresa.collection('servicios').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+        return this.empresa.collection('servicios', function (query) { return query.orderBy('codigo'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
             var data = a.payload.doc.data();
             var id = a.payload.doc.id;
             return { id: id, data: data };
         }); }));
+    };
+    ServicioService.prototype.obtenerUnaCategoriaID = function (id) {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('categorias').doc(id).valueChanges();
     };
     ServicioService.prototype.crearVehiculo = function (persona, vehiculo) {
         var itemDoc = this.afs.doc('personas/' + persona);

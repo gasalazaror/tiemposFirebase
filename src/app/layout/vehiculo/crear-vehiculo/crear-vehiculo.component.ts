@@ -15,7 +15,7 @@ import swal from 'sweetalert2';
   animations: [routerTransition()]
 })
 export class CrearVehiculoComponent implements OnInit {
-  personas: Observable<any[]>;
+  personas: any[] = [];
   vehiculo: Observable<any>;
   id: any
   vehiculoGuardado: Boolean = false
@@ -29,7 +29,7 @@ export class CrearVehiculoComponent implements OnInit {
     color: [''],
     numeroMotor: ['', Validators.required],
     numeroChasis: [''],
-    kilometrajeAnterior: [0],
+    kilometrajeAnterior: [{value: 0, disabled: true}],
     kilometrajeActual: [0],
     anioFabricacion: ['', Validators.required],
     dueno: [{}, Validators.required]
@@ -58,7 +58,7 @@ export class CrearVehiculoComponent implements OnInit {
           color: [vehiculo.color],
           numeroMotor: [vehiculo.numeroMotor, Validators.required],
           numeroChasis: [vehiculo.numeroChasis],
-          kilometrajeAnterior: [vehiculo.kilometrajeAnterior],
+          kilometrajeAnterior: [{value: vehiculo.kilometrajeAnterior, disabled: true}],
           kilometrajeActual: [vehiculo.kilometrajeActual],
           anioFabricacion: [vehiculo.anioFabricacion, Validators.required],
           dueno: [vehiculo.dueno, Validators.required],
@@ -72,11 +72,6 @@ export class CrearVehiculoComponent implements OnInit {
   ngOnInit() {
   }
   guardarVehiculo() {
-
-
-
-
-
     if (this.vehiculoForm.value.placa == '') {
       swal('Existió un error', 'ID/Placa es requerido', 'error');
 
@@ -107,7 +102,7 @@ export class CrearVehiculoComponent implements OnInit {
               color: [''],
               numeroMotor: ['', Validators.required],
               numeroChasis: [''],
-              kilometrajeAnterior: [0],
+              kilometrajeAnterior: [{value: 0, disabled: true}],
               kilometrajeActual: [0],
               anioFabricacion: ['', Validators.required],
               dueno: [{}, Validators.required]
@@ -147,8 +142,12 @@ export class CrearVehiculoComponent implements OnInit {
 
   }
   obtenerPersonas() {
-    this.personas = this.personaService.obtenerClientes()
-    this.personas.subscribe(res => {
+    this.personaService.obtenerClientes()
+    .subscribe(res => {
+      this.personas = res
+      this.personas.forEach(persona => {
+        persona.data.nombreCed = persona.data.cedula + " - "+ persona.data.nombre
+      });
     })
   }
 }

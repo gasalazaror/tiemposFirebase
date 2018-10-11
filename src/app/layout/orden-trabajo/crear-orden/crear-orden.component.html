@@ -127,8 +127,8 @@
             <div class="btn-group">
               <p>Seleccione productos o servicios: &nbsp;&nbsp;</p>
               <form class="form" [formGroup]="ServicioForm" (ngSubmit)="seleccionarServicio()">
-                  <ng-select class="form-control" style="width: 250px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios | async"
-                  bindLabel="data.descripcion" formControlName="servicio">
+                  <ng-select class="form-control" style="width: 500px;" (change)="seleccionarServicio()" class="form-control" [items]="servicios"
+                  bindLabel="data.descripcionCod" formControlName="servicio">
                 </ng-select>
               </form>
               <button class="btn btn-white btn-sm" (click)="open(contentServicio)">

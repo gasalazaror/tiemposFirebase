@@ -8,22 +8,22 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="txtPass">Contraseña anterior</label>
-            <input [(ngModel)]="anterior" id="txtPass" class="form-control" type="password">
+            <label for="txtAnterior">Contraseña anterior</label>
+            <input [(ngModel)]="anterior" id="txtAnterior" class="form-control" type="password">
           </div>
 
           <div class="form-group">
-            <label for="txtPass">Contraseña nueva</label>
-            <input [(ngModel)]="nueva" id="txtPass" class="form-control" type="password">
+            <label for="txtNueva">Contraseña nueva</label>
+            <input [(ngModel)]="nueva" id="txtNueva" class="form-control" type="password">
           </div>
 
           <div class="form-group">
-            <label for="txtPass">Confirmar contraseña</label>
-            <input [(ngModel)]="confirmacion" id="txtPass" class="form-control" type="password">
+            <label for="txtConfirmacion">Confirmar contraseña</label>
+            <input [(ngModel)]="confirmacion" id="txtConfirmacion" class="form-control" type="password">
           </div>
 
           <div class="form-group">
-            <button class="btn btn-primary">Guardar</button>
+            <button class="btn btn-primary" (click)="cambiarContrasena()">Guardar</button>
           </div>
         </div>
       </div>

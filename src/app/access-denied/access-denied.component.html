@@ -1,3 +1,49 @@
-<p>
-  access-denied works!
-</p>
+<!-- <div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+            <h1>Control de tiempos</h1>
+            <div class="form-content">
+                <div class="form-group">
+                    <input autofocus type="text" [(ngModel)]="usuario.email" class="form-control input-underline input-lg" id="1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" [(ngModel)]="usuario.password" class="form-control input-underline input-lg" id="2" placeholder="Password">
+                </div>
+                <div *ngIf="error!=''" class="alert alert-danger" role="alert">
+                    <strong>Error: </strong> {{error}}
+                </div>
+            </div>
+
+            <select *ngIf="listaEmpresas.length>0" class="form-control">
+                <option value="">Seleccionar...</option>
+                <option *ngFor="let empresa of listaEmpresas">{{empresa.nombre}}</option>
+            </select>
+            <br>
+            <button class="btn rounded-btn" (click)="onLoggedin2()">Iniciar sesión</button>
+        </div>
+    </div>
+</div> -->
+
+<body class="text-center">
+  <div class="form-signin">
+    <img class="mb-4" src="/assets/images/kanban.png" alt="" width="100%">
+    <h1 class="h3 mb-3 font-weight-normal">Control de tiempo</h1>
+    <hr>
+
+
+    <div class="alert alert-danger" role="alert">
+      <h4>
+        La prueba gratuita a expirado <strong> por falta de utilización</strong> comunicate con nosotros para activar
+        una cuenta paga
+      </h4>
+    </div>
+
+
+   <a routerLink="/">Volver al inicio</a>
+
+
+
+  </div>
+
+</body>

@@ -461,7 +461,7 @@ export class ReporteService {
         var columns = ["Código", 'Servicio', "Tiempo Estándar"]
         var rows = []
         datos.forEach(servicio => {
-          console.log(servicio)
+ 
           rows.push([servicio.data.codigo, servicio.data.descripcion, new FormatTimePipe().transform(servicio.data.tiempoEstandar * 60)])
         });
         break;

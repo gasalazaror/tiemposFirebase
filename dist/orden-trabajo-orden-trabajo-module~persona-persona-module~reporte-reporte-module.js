@@ -118,9 +118,8 @@ var ConsultarPersonaComponent = /** @class */ (function () {
         this.reporteService = reporteService;
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 25,
             autoWidth: true,
-            responsive: true,
             language: {
                 processing: "Procesando...",
                 search: "Buscar:",
@@ -145,6 +144,7 @@ var ConsultarPersonaComponent = /** @class */ (function () {
             }
         };
         this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        this.personas = [];
     }
     ConsultarPersonaComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -156,22 +156,6 @@ var ConsultarPersonaComponent = /** @class */ (function () {
         });
     };
     ConsultarPersonaComponent.prototype.ngOnDestroy = function () {
-        // Do not forget to unsubscribe the event
-        this.dtTrigger.unsubscribe();
-    };
-    ConsultarPersonaComponent.prototype.rerender = function () {
-        var _this = this;
-        this.dtElement.dtInstance.then(function (dtInstance) {
-            // Destroy the table first
-            dtInstance.destroy();
-            // Call the dtTrigger to rerender again
-            _this.dtTrigger.next();
-        });
-    };
-    ConsultarPersonaComponent.prototype.llenarTabla = function () {
-        this.dtOptions = {
-            pagingType: 'full_numbers'
-        };
     };
     ConsultarPersonaComponent.prototype.imprimirReporte = function () {
         this.reporteService.reporteDatos(this.personas, 'Personas');
@@ -196,8 +180,8 @@ var ConsultarPersonaComponent = /** @class */ (function () {
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"]),
-        __metadata("design:type", Array)
-    ], ConsultarPersonaComponent.prototype, "personas", void 0);
+        __metadata("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_3__["DataTableDirective"])
+    ], ConsultarPersonaComponent.prototype, "dtElement", void 0);
     ConsultarPersonaComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-consultar-persona',
@@ -295,8 +279,8 @@ var CrearPersonaComponent = /** @class */ (function () {
                 if (persona != null) {
                     _this.existePersona = true;
                     _this.personaForm = _this.fb.group({
-                        estado: ['Activo', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-                        tipo: ['Natural', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+                        estado: [persona.estado, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+                        tipo: [persona.tipo, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         cedula: [persona.cedula, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
                         nombre: [persona.nombre, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]],
                         direccion: [persona.direccion, []],

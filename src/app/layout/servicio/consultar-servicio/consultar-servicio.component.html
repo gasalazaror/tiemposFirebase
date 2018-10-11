@@ -11,8 +11,11 @@
             <thead>
               <tr>
                 <th></th>
+               
                 <th>Código</th>
+                
                 <th>Servicio</th>
+                <th>Categoría</th>
                 <th>Tiempo estándar</th>
 
             
@@ -28,11 +31,14 @@
                   </div>
                    
                 </td>
+
+              
             
                 <td>{{servicio.data.codigo}}</td>
                 <td>
                     {{servicio.data.descripcion}}
                 </td>
+                <td>{{servicio.data.cat}}</td>
                 <td>{{servicio.data.tiempoEstandar*60 | formatTime}}</td>
               
             

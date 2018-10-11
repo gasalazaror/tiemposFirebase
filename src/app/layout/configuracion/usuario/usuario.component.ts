@@ -9,9 +9,19 @@ import { routerTransition } from '../../../router.animations';
 })
 export class UsuarioComponent implements OnInit {
 
+  anterior: String = ''
+  nueva: String = ''
+  confirmacion: String = ''
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  cambiarContrasena(){
+
+ 
+
   }
 
 }

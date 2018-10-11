@@ -85,13 +85,19 @@ export class ServicioService {
 
   obtenerServicios() {
     this.empresa = this.afs.doc(localStorage.getItem('empresa'));
-    return this.empresa.collection('servicios').snapshotChanges().pipe(
+    return this.empresa.collection('servicios' , query => query.orderBy('codigo')).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as any;
         const id = a.payload.doc.id;
         return { id, data };
       }))
     );
+  }
+
+  obtenerUnaCategoriaID(id){
+    this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+
+    return this.empresa.collection('categorias').doc(id).valueChanges()
   }
 
 

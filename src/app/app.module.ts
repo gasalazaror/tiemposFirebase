@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuth } from '../../node_modules/angularfire2/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from '../../node_modules/angularfire2/storage';
 import { FormatTimePipe } from './pipes/format-time.pipe';
 
 
@@ -37,6 +38,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         AngularFireModule.initializeApp(environment.firebase),
         BrowserAnimationsModule,
         AngularFirestoreModule,
+        AngularFireStorageModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {

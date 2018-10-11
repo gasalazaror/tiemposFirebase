@@ -4,6 +4,7 @@ import { AppRoutingModule } from './/app-routing.module';
 
 import { PageHeaderModule } from '../../shared';
 import { AdministracionComponent } from './administracion.component';
+import { EmpresaComponent } from './empresa/empresa.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { AdministracionComponent } from './administracion.component';
     PageHeaderModule
     
   ],
-  declarations: [AdministracionComponent ]
+  declarations: [AdministracionComponent, EmpresaComponent ]
 })
 export class AdministracionModule { }

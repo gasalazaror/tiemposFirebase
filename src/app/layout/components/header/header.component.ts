@@ -14,11 +14,11 @@ export class HeaderComponent implements OnInit {
 
     usuario: Observable<any>
     empresa: Observable<any>
-    user:any
-    empresaq:any
+    user: any
+    empresaq: any
 
     constructor(private translate: TranslateService, public router: Router, public personaService: PersonaService) {
-        this.user=''
+        this.user = ''
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -27,13 +27,24 @@ export class HeaderComponent implements OnInit {
         this.usuario = this.personaService.obtenerUsuario()
         this.empresa = this.personaService.obtenerEmpresa().valueChanges()
 
-        this.usuario.subscribe(res=>{
-         
+        this.usuario.subscribe(res => {
+
             this.user = res.email
         })
-        this.empresa.subscribe(res=>{
+        this.empresa.subscribe(res => {
             this.empresaq = res.nombre
+      
+
+           if(res.estado=='Inactivo'){
+            localStorage.removeItem('isLoggedin');
+            localStorage.removeItem('empresa');
+            this.router.navigate(['/access-denied'])
+            
+           }else{
+       
+           }
         })
+
 
         this.router.events.subscribe(val => {
             if (
@@ -46,7 +57,7 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');

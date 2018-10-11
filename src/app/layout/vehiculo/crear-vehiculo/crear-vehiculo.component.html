@@ -54,7 +54,7 @@
 
             <div class="form-group">
               <label for="inputPassword2" class="">Kilometraje Anterior</label>
-              <input disabled type="text"   class="form-control" formControlName="kilometrajeAnterior" id="inputPassword2" placeholder="Año de fabricación">
+              <input type="text"   class="form-control" formControlName="kilometrajeAnterior" id="inputPassword2" placeholder="Año de fabricación">
             </div>
 
             <div class="form-group">
@@ -64,7 +64,7 @@
 
             <div class="form-group">
               <label for="inputPassword2" class="">Dueño actual <span style="color: red">*</span></label>
-              <ng-select class="form-control" [items]="personas | async" bindLabel="data.nombre" formControlName="dueno">
+              <ng-select class="form-control" [items]="personas" bindLabel="data.nombreCed" formControlName="dueno">
               </ng-select>
             </div>
 

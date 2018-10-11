@@ -2904,7 +2904,7 @@ var ConsultarVehiculoComponent = /** @class */ (function () {
         this.reporteService = reporteService;
         this.dtOptions = {
             pagingType: 'full_numbers',
-            pageLength: 5,
+            pageLength: 25,
             autoWidth: true,
             language: {
                 processing: "Procesando...",
@@ -2993,7 +2993,7 @@ var ConsultarVehiculoComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n \r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">Información del vehículo</div>\r\n    <div class=\"card-body\">\r\n      <form class=\"form\" [formGroup]=\"vehiculoForm\" (ngSubmit)=\"guardarVehiculo()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-md-4\">\r\n              <div class=\"form-group\">\r\n                  <label for=\"staticEmail2\" class=\"\">Estado</label>\r\n\r\n                  <select class=\"form-control form-control-sm\" formControlName=\"estado\" name=\"\" id=\"\">\r\n                      <option value=\"Activo\">Activo</option>\r\n                      <option value=\"Inactivo\">Inactivo</option>\r\n                  </select>\r\n              </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">ID/Placa <span style=\"color: red\">*</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"placa\" id=\"inputPassword2\" placeholder=\"ID o Placa\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Marca <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"marca\" id=\"inputPassword2\" placeholder=\"Marca\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Modelo <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"modelo\" id=\"inputPassword2\" placeholder=\"modelo\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Color</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"color\" id=\"inputPassword2\" placeholder=\"Color\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de motor</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroMotor\" id=\"inputPassword2\" placeholder=\"No Motor\">\r\n            </div>\r\n\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n          \r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de chasis</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroChasis\" id=\"inputPassword2\" placeholder=\"No Chasis\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Año fabricación <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"4\"  class=\"form-control\" formControlName=\"anioFabricacion\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Kilometraje Anterior</label>\r\n              <input disabled type=\"text\"   class=\"form-control\" formControlName=\"kilometrajeAnterior\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Kilometraje Actual <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\"   class=\"form-control\" formControlName=\"kilometrajeActual\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Dueño actual <span style=\"color: red\">*</span></label>\r\n              <ng-select class=\"form-control\" [items]=\"personas | async\" bindLabel=\"data.nombre\" formControlName=\"dueno\">\r\n              </ng-select>\r\n            </div>\r\n\r\n            <div  class=\"alert alert-info\" role=\"alert\">\r\n                Todos los campos marcados con <strong>(*)</strong> son obligatorios\r\n            </div>\r\n\r\n      \r\n            <button title=\"Guardar vehículo\"  type=\"submit\" class=\"btn btn-primary mb-2\">Guardar Vehículo</button>\r\n\r\n          </div>\r\n        </div>\r\n\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
+module.exports = "<div [@routerTransition]>\r\n  <app-page-header [heading]=\"'Crear vehículo'\" [icon]=\"'fa-edit'\"></app-page-header>\r\n \r\n\r\n  <div class=\"card\">\r\n    <div class=\"card-header\">Información del vehículo</div>\r\n    <div class=\"card-body\">\r\n      <form class=\"form\" [formGroup]=\"vehiculoForm\" (ngSubmit)=\"guardarVehiculo()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-md-4\">\r\n              <div class=\"form-group\">\r\n                  <label for=\"staticEmail2\" class=\"\">Estado</label>\r\n\r\n                  <select class=\"form-control form-control-sm\" formControlName=\"estado\" name=\"\" id=\"\">\r\n                      <option value=\"Activo\">Activo</option>\r\n                      <option value=\"Inactivo\">Inactivo</option>\r\n                  </select>\r\n              </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">ID/Placa <span style=\"color: red\">*</span></label>\r\n              <input autofocus type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"placa\" id=\"inputPassword2\" placeholder=\"ID o Placa\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Marca <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"marca\" id=\"inputPassword2\" placeholder=\"Marca\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Modelo <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"modelo\" id=\"inputPassword2\" placeholder=\"modelo\">\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Color</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"color\" id=\"inputPassword2\" placeholder=\"Color\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de motor</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroMotor\" id=\"inputPassword2\" placeholder=\"No Motor\">\r\n            </div>\r\n\r\n          </div>\r\n          <div class=\"col-md-4\">\r\n          \r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Número de chasis</label>\r\n              <input type=\"text\" maxlength=\"30\" class=\"form-control\" formControlName=\"numeroChasis\" id=\"inputPassword2\" placeholder=\"No Chasis\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Año fabricación <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\" maxlength=\"4\"  class=\"form-control\" formControlName=\"anioFabricacion\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Kilometraje Anterior</label>\r\n              <input type=\"text\"   class=\"form-control\" formControlName=\"kilometrajeAnterior\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Kilometraje Actual <span style=\"color: red\">*</span></label>\r\n              <input type=\"text\"   class=\"form-control\" formControlName=\"kilometrajeActual\" id=\"inputPassword2\" placeholder=\"Año de fabricación\">\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n              <label for=\"inputPassword2\" class=\"\">Dueño actual <span style=\"color: red\">*</span></label>\r\n              <ng-select class=\"form-control\" [items]=\"personas\" bindLabel=\"data.nombreCed\" formControlName=\"dueno\">\r\n              </ng-select>\r\n            </div>\r\n\r\n            <div  class=\"alert alert-info\" role=\"alert\">\r\n                Todos los campos marcados con <strong>(*)</strong> son obligatorios\r\n            </div>\r\n\r\n      \r\n            <button title=\"Guardar vehículo\"  type=\"submit\" class=\"btn btn-primary mb-2\">Guardar Vehículo</button>\r\n\r\n          </div>\r\n        </div>\r\n\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n\r\n\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -3050,6 +3050,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
         this.personaService = personaService;
         this.vehiculoService = vehiculoService;
         this.route = route;
+        this.personas = [];
         this.vehiculoGuardado = false;
         this.kilometrajeActual = 0;
         this.vehiculoForm = this.fb.group({
@@ -3060,7 +3061,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
             color: [''],
             numeroMotor: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             numeroChasis: [''],
-            kilometrajeAnterior: [0],
+            kilometrajeAnterior: [{ value: 0, disabled: true }],
             kilometrajeActual: [0],
             anioFabricacion: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             dueno: [{}, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
@@ -3078,7 +3079,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
                     color: [vehiculo.color],
                     numeroMotor: [vehiculo.numeroMotor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     numeroChasis: [vehiculo.numeroChasis],
-                    kilometrajeAnterior: [vehiculo.kilometrajeAnterior],
+                    kilometrajeAnterior: [{ value: vehiculo.kilometrajeAnterior, disabled: true }],
                     kilometrajeActual: [vehiculo.kilometrajeActual],
                     anioFabricacion: [vehiculo.anioFabricacion, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                     dueno: [vehiculo.dueno, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
@@ -3119,7 +3120,7 @@ var CrearVehiculoComponent = /** @class */ (function () {
                         color: [''],
                         numeroMotor: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         numeroChasis: [''],
-                        kilometrajeAnterior: [0],
+                        kilometrajeAnterior: [{ value: 0, disabled: true }],
                         kilometrajeActual: [0],
                         anioFabricacion: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
                         dueno: [{}, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
@@ -3140,8 +3141,13 @@ var CrearVehiculoComponent = /** @class */ (function () {
         }
     };
     CrearVehiculoComponent.prototype.obtenerPersonas = function () {
-        this.personas = this.personaService.obtenerClientes();
-        this.personas.subscribe(function (res) {
+        var _this = this;
+        this.personaService.obtenerClientes()
+            .subscribe(function (res) {
+            _this.personas = res;
+            _this.personas.forEach(function (persona) {
+                persona.data.nombreCed = persona.data.cedula + " - " + persona.data.nombre;
+            });
         });
     };
     CrearVehiculoComponent = __decorate([
@@ -3338,6 +3344,14 @@ var VehiculoService = /** @class */ (function () {
     VehiculoService.prototype.obtenerVehiculos = function () {
         this.empresa = this.afs.doc(localStorage.getItem('empresa'));
         return this.empresa.collection('vehiculos').snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    VehiculoService.prototype.obtenerVehiculosActivos = function () {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('vehiculos', function (query) { return query.where('estado', '==', 'Activo'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
             var data = a.payload.doc.data();
             var id = a.payload.doc.id;
             return { id: id, data: data };

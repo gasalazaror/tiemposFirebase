@@ -19,7 +19,7 @@ export class ConsultarServicioComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {
     pagingType: 'full_numbers',
-    pageLength: 5,
+    pageLength: 25,
     autoWidth: true,
     language: {
       processing: "Procesando...",
@@ -67,6 +67,15 @@ export class ConsultarServicioComponent implements OnInit {
     
       $('#example-datatable').DataTable().destroy();
       this.servicios = res
+
+      this.servicios.forEach(servicio => {
+        this.servicioService.obtenerUnaCategoriaID(servicio.data.categoria.id).subscribe((res:any)=>{
+          if(res){
+            servicio.data.cat = res.nombre
+          }
+          
+        })
+      });
       this.dtTrigger.next();
     })
   }

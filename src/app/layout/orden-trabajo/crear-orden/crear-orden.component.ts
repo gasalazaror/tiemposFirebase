@@ -59,11 +59,11 @@ export class CrearOrdenComponent implements OnInit {
   vehiculoSeleccionadoaux: any
   closeResult: string;
   vehiculos: Observable<any[]>;
-  servicios: Observable<any[]>;
+  servicios: any[] = [];
   ultimaOrden: Observable<any[]>;
   numeroOrden: number = 0;
   serviciosSeleccionados: any[];
-  observacion: String= ''
+  observacion: String = ''
 
   id: any
   orden: Observable<any>;
@@ -101,7 +101,7 @@ export class CrearOrdenComponent implements OnInit {
 
       this.orden = this.ordenService.obtenerUnaOrden(this.id);
       this.orden.subscribe(res => {
-        if(res.observacion){
+        if (res.observacion) {
           this.observacion = res.observacion
         }
         this.personaSeleccionada = { data: res.cliente };
@@ -153,18 +153,24 @@ export class CrearOrdenComponent implements OnInit {
   }
 
   obtenerPersonas() {
-    this.personaService.obtenerClientes().subscribe(personas=>{
+    this.personaService.obtenerClientes().subscribe(personas => {
       personas.forEach(persona => {
-        persona.data.nombreCedula = persona.data.cedula+" - "+persona.data.nombre 
+        persona.data.nombreCedula = persona.data.cedula + " - " + persona.data.nombre
       });
 
       this.personas = personas
-      
+
     })
   }
 
   obtenerServicios() {
-    this.servicios = this.servicioService.obtenerServicios()
+    this.servicioService.obtenerServicios().subscribe(res => {
+      this.servicios = res
+      this.servicios.forEach(servicio => {
+        servicio.data.descripcionCod = servicio.data.codigo + " - "+servicio.data.descripcion
+
+      });
+    })
   }
 
   seleccionarPersona() {
@@ -192,25 +198,25 @@ export class CrearOrdenComponent implements OnInit {
   modificarPosiciones(opcion: String, indice) {
 
     $('#example-datatable').DataTable().destroy();
-  
+
     switch (opcion) {
       case "+":
 
-      var actual  = this.serviciosSeleccionados[indice]
-      var arriba = this.serviciosSeleccionados[indice-1]
+        var actual = this.serviciosSeleccionados[indice]
+        var arriba = this.serviciosSeleccionados[indice - 1]
 
-      this.serviciosSeleccionados[indice] = arriba
-      this.serviciosSeleccionados[indice-1] = actual
+        this.serviciosSeleccionados[indice] = arriba
+        this.serviciosSeleccionados[indice - 1] = actual
 
         break;
 
       case "-":
 
-      var actual  = this.serviciosSeleccionados[indice]
-      var abajo = this.serviciosSeleccionados[indice+1]
+        var actual = this.serviciosSeleccionados[indice]
+        var abajo = this.serviciosSeleccionados[indice + 1]
 
-      this.serviciosSeleccionados[indice] = abajo
-      this.serviciosSeleccionados[indice+1] = actual
+        this.serviciosSeleccionados[indice] = abajo
+        this.serviciosSeleccionados[indice + 1] = actual
 
         break;
 
@@ -332,7 +338,7 @@ export class CrearOrdenComponent implements OnInit {
 
             var servicios = []
 
-          
+
 
             this.serviciosSeleccionados.forEach(servicio => {
               if (!servicio.data.operador) {
@@ -347,7 +353,7 @@ export class CrearOrdenComponent implements OnInit {
               cliente: cliente,
               vehiculo: vehiculo,
               servicios: servicios,
-              observacion: this.observacion 
+              observacion: this.observacion
             }
             this.ordenService.modificarOrden(this.id, orden)
 
@@ -395,7 +401,7 @@ export class CrearOrdenComponent implements OnInit {
 
   eliminarServicio(indice): void {
 
-    
+
 
     swal({
       title: 'Esta seguro?',

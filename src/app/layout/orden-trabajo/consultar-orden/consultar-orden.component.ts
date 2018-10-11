@@ -27,7 +27,7 @@ export class ConsultarOrdenComponent implements OnInit {
   user: any = ''
   dtOptions: DataTables.Settings = this.dtOptions = {
     pagingType: 'full_numbers',
-    pageLength: 5,
+    pageLength: 25,
     autoWidth: true,
     language: {
       processing: "Procesando...",

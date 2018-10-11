@@ -1,0 +1,72 @@
+<div class="card mb-3">
+  <div class="card-header">
+    Configuraciones de la empresa
+  </div>
+  <div class="card-body">
+    <div class="ror">
+      <div class="col-md-12">
+        <form [formGroup]="formularioEmpresa" (ngSubmit)="guardarEmpresa()">
+
+
+          <div class="form-group row">
+            <label for="ruc" class="col-2 col-form-label">RUC</label>
+            <div class="col-10">
+              <input class="form-control" type="text" formControlName="ruc" id="ruc">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="razon" class="col-2 col-form-label">Razón social</label>
+            <div class="col-10">
+              <input  class="form-control" type="text" formControlName="nombre" id="razon">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="correo" class="col-2 col-form-label">Correo</label>
+            <div class="col-10">
+              <input  class="form-control" type="text" formControlName="correo" id="correo">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="direccion" class="col-2 col-form-label">Dirección</label>
+            <div class="col-10">
+              <input  class="form-control" type="text" formControlName="direccion" id="direccion  ">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="telefono" class="col-2 col-form-label">Teléfono</label>
+            <div class="col-10">
+              <input class="form-control" type="text" formControlName="telefono" id="direccion  ">
+            </div>
+          </div>
+
+   
+
+          <hr>
+
+          <div class="form-group row">
+            <label for="imagen" class="col-2 col-form-label">Imagen</label>
+            <div class="col-10">
+              <img src="{{formularioEmpresa.value.foto}}" width="250px" id="imagen" alt="">
+             <br> <input type="file" (change)="uploadFile($event)" accept="image/*">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="button" class="col-2 col-form-label"></label>
+            <div class="col-10">
+              <input class="btn btn-primary" value="Guardar" type="submit">
+
+            </div>
+          </div>
+
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

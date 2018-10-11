@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit,OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { Observable } from 'rxjs';
 import { PersonaService } from '../../../servicios/persona.service';
@@ -15,47 +15,49 @@ import { ReporteService } from '../../../servicios/reporte/reporte.service';
 })
 export class ConsultarPersonaComponent implements  OnInit {
   @ViewChild(DataTableDirective)
-
-  personas:any[]
   dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings =  {
+  dtOptions: DataTables.Settings = {
     pagingType: 'full_numbers',
-    pageLength: 5,
+    pageLength: 25,
     autoWidth: true,
-   responsive: true,
-   language: {
-    processing: "Procesando...",
-    search: "Buscar:",
-    lengthMenu: "Mostrar _MENU_ elementos",
-    info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-    infoEmpty: "Mostrando ningún elemento.",
-    infoFiltered: "(filtrado _MAX_ elementos total)",
-    infoPostFix: "",
-    loadingRecords: "Cargando registros...",
-    zeroRecords: "No se encontraron registros",
-    emptyTable: "No hay datos disponibles en la tabla",
-    paginate: {
-      first: "Primero",
-      previous: "Anterior",
-      next: "Siguiente",
-      last: "Último"
-    },
-    aria: {
-      sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-      sortDescending: ": Activar para ordenar la tabla en orden descendente"
+    language: {
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ elementos",
+      info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+      infoEmpty: "Mostrando ningún elemento.",
+      infoFiltered: "(filtrado _MAX_ elementos total)",
+      infoPostFix: "",
+      loadingRecords: "Cargando registros...",
+      zeroRecords: "No se encontraron registros",
+      emptyTable: "No hay datos disponibles en la tabla",
+      paginate: {
+        first: "Primero",
+        previous: "Anterior",
+        next: "Siguiente",
+        last: "Último"
+      },
+      aria: {
+        sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+        sortDescending: ": Activar para ordenar la tabla en orden descendente"
+      }
     }
-  }
 
   };
   dtTrigger: Subject<any> = new Subject();
+  
+  personas:any[] = [];
+
+  observable: Observable<any[]>
 
   constructor(private personaService: PersonaService, private reporteService: ReporteService) {
-  }
+
+ }
 
 
   ngOnInit() {
     this.personaService.obtenerPersonas()
-    .subscribe(res => {
+    .subscribe((res: any[]) => {
       $('#example-datatable').DataTable().destroy();
       this.personas = res
       this.dtTrigger.next();
@@ -63,28 +65,17 @@ export class ConsultarPersonaComponent implements  OnInit {
 
   }
 
+  ngOnDestroy(){
+
+  }
+
   
   
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
+ 
 
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
-  }
-  llenarTabla() {
-    this.dtOptions = {
-      pagingType: 'full_numbers'
-    };
-  }
 
+ 
   imprimirReporte(){
     this.reporteService.reporteDatos(this.personas, 'Personas')
     
@@ -94,8 +85,6 @@ export class ConsultarPersonaComponent implements  OnInit {
 
 
   eliminarPersona(persona) {
-
-
     swal({
       title: 'Está seguro?',
       text: "¿Está seguro que desea eliminar la persona: "+persona.data.nombre+"?",

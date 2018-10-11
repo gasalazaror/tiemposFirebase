@@ -14644,22 +14644,12 @@ var a=function(){function t(){this.pos=0,this.bufferLength=0,this.eof=!1,this.bu
     // some variables
     var can_display_preview = true, // if true a preview of the PDF can be displayed in the iframe,
             // this value is set to false if the browser can't display the preview
-            preview_container = $('#pdf_preview'),
-            update_preview_button = $('#flyer_preview_btn'),
-            download_button = $('#flyer_download_btn');
+            //preview_container = $('#pdf_preview'),
+            //update_preview_button = $('#flyer_preview_btn'),
+            //download_button = $('#flyer_download_btn');
 
     // preview can be displayed?
-    if (navigator.msSaveBlob) { // older IE
-            update_preview_button.prop('disabled', true);
-            can_display_preview = false;
-            preview_container.replaceWith(
-                    '<div class="no_iframe">' +
-                    '<div>' +
-                    "The preview can't be displayed" +
-                    '</div>' +
-                    '</div>'
-            );
-    }
+   
 
     // utilities
     var hex2rgb = function(hex_string) {
