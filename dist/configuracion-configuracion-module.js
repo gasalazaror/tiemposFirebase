@@ -15,12 +15,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _usuario_usuario_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./usuario/usuario.component */ "./src/app/layout/configuracion/usuario/usuario.component.ts");
 /* harmony import */ var _empresa_empresa_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./empresa/empresa.component */ "./src/app/layout/configuracion/empresa/empresa.component.ts");
 /* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./layout/layout.component */ "./src/app/layout/configuracion/layout/layout.component.ts");
+/* harmony import */ var _usuarios_usuarios_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./usuarios/usuarios.component */ "./src/app/layout/configuracion/usuarios/usuarios.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -38,6 +40,10 @@ var routes = [
     {
         path: 'empresa',
         component: _empresa_empresa_component__WEBPACK_IMPORTED_MODULE_3__["EmpresaComponent"]
+    },
+    {
+        path: 'usuarios',
+        component: _usuarios_usuarios_component__WEBPACK_IMPORTED_MODULE_5__["UsuariosComponent"]
     }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -75,12 +81,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _empresa_empresa_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./empresa/empresa.component */ "./src/app/layout/configuracion/empresa/empresa.component.ts");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/index.js");
 /* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./layout/layout.component */ "./src/app/layout/configuracion/layout/layout.component.ts");
+/* harmony import */ var _usuarios_usuarios_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./usuarios/usuarios.component */ "./src/app/layout/configuracion/usuarios/usuarios.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -103,7 +111,7 @@ var ConfiguracionModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ReactiveFormsModule"]
             ],
-            declarations: [_usuario_usuario_component__WEBPACK_IMPORTED_MODULE_3__["UsuarioComponent"], _empresa_empresa_component__WEBPACK_IMPORTED_MODULE_6__["EmpresaComponent"], _layout_layout_component__WEBPACK_IMPORTED_MODULE_8__["LayoutComponent"]]
+            declarations: [_usuario_usuario_component__WEBPACK_IMPORTED_MODULE_3__["UsuarioComponent"], _empresa_empresa_component__WEBPACK_IMPORTED_MODULE_6__["EmpresaComponent"], _layout_layout_component__WEBPACK_IMPORTED_MODULE_8__["LayoutComponent"], _usuarios_usuarios_component__WEBPACK_IMPORTED_MODULE_9__["UsuariosComponent"]]
         })
     ], ConfiguracionModule);
     return ConfiguracionModule;
@@ -120,7 +128,7 @@ var ConfiguracionModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card mb-3\">\n  <div class=\"card-header\">\n    Configuraciones de la empresa\n  </div>\n  <div class=\" card-body\">\n    <div class=\"ror\">\n      <div class=\"col-md-12\">\n        <form [formGroup]=\"formularioEmpresa\" (ngSubmit)=\"guardarEmpresa()\">\n\n\n          <div class=\"form-group row\">\n            <label for=\"ruc\" class=\"col-2 col-form-label\">RUC</label>\n            <div class=\"col-10\">\n              <input class=\"form-control\" type=\"text\" formControlName=\"ruc\" id=\"ruc\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"razon\" class=\"col-2 col-form-label\">Razón social</label>\n            <div class=\"col-10\">\n              <input  class=\"form-control\" type=\"text\" formControlName=\"nombre\" id=\"razon\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"correo\" class=\"col-2 col-form-label\">Correo</label>\n            <div class=\"col-10\">\n              <input  class=\"form-control\" type=\"text\" formControlName=\"correo\" id=\"correo\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"direccion\" class=\"col-2 col-form-label\">Dirección</label>\n            <div class=\"col-10\">\n              <input  class=\"form-control\" type=\"text\" formControlName=\"direccion\" id=\"direccion  \">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"telefono\" class=\"col-2 col-form-label\">Teléfono</label>\n            <div class=\"col-10\">\n              <input class=\"form-control\" type=\"text\" formControlName=\"telefono\" id=\"direccion  \">\n            </div>\n          </div>\n\n   \n\n          <hr>\n\n          <div class=\"form-group row\">\n            <label for=\"imagen\" class=\"col-2 col-form-label\">Imagen</label>\n            <div class=\"col-10\">\n              <img src=\"{{formularioEmpresa.value.foto}}\" width=\"250px\" id=\"imagen\" alt=\"\">\n             <br> <input type=\"file\" (change)=\"uploadFile($event)\" accept=\"image/*\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"button\" class=\"col-2 col-form-label\"></label>\n            <div class=\"col-10\">\n              <input class=\"btn btn-primary\" value=\"Guardar\" type=\"submit\">\n\n            </div>\n          </div>\n\n\n\n        </form>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"card mb-3\">\n  <div class=\"card-header\">\n    Configuraciones de la empresa\n  </div>\n  <div class=\"card-body\">\n    <div class=\"ror\">\n      <div class=\"col-md-12\">\n        <form [formGroup]=\"formularioEmpresa\" (ngSubmit)=\"guardarEmpresa()\">\n\n\n          <div class=\"form-group row\">\n            <label for=\"ruc\" class=\"col-2 col-form-label\">RUC</label>\n            <div class=\"col-10\">\n              <input class=\"form-control\" type=\"text\" formControlName=\"ruc\" id=\"ruc\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"razon\" class=\"col-2 col-form-label\">Razón social</label>\n            <div class=\"col-10\">\n              <input  class=\"form-control\" type=\"text\" formControlName=\"nombre\" id=\"razon\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"correo\" class=\"col-2 col-form-label\">Correo</label>\n            <div class=\"col-10\">\n              <input  class=\"form-control\" type=\"text\" formControlName=\"correo\" id=\"correo\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"direccion\" class=\"col-2 col-form-label\">Dirección</label>\n            <div class=\"col-10\">\n              <input  class=\"form-control\" type=\"text\" formControlName=\"direccion\" id=\"direccion  \">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"telefono\" class=\"col-2 col-form-label\">Teléfono</label>\n            <div class=\"col-10\">\n              <input class=\"form-control\" type=\"text\" formControlName=\"telefono\" id=\"direccion  \">\n            </div>\n          </div>\n\n   \n\n          <hr>\n\n          <div class=\"form-group row\">\n            <label for=\"imagen\" class=\"col-2 col-form-label\">Imagen</label>\n            <div class=\"col-10\">\n              <img src=\"{{formularioEmpresa.value.foto}}\" width=\"250px\" id=\"imagen\" alt=\"\">\n             <br> <input type=\"file\" (change)=\"uploadFile($event)\" accept=\"image/*\">\n            </div>\n          </div>\n\n          <div class=\"form-group row\">\n            <label for=\"button\" class=\"col-2 col-form-label\"></label>\n            <div class=\"col-10\">\n              <input class=\"btn btn-primary\" value=\"Guardar\" type=\"submit\">\n\n            </div>\n          </div>\n\n\n\n        </form>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -261,7 +269,7 @@ var EmpresaComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div [@routerTransition]>\n    <app-page-header [heading]=\"'Configuración'\" [pdf]=\"false\" [icon]=\"'fa-edit'\"></app-page-header>\n  \n    <ngb-tabset>\n        <ngb-tab title=\"General\">\n            <ng-template ngbTabContent>\n               <div class=\"container mb-3\">\n                 <br>\n                 <app-empresa></app-empresa>\n               </div>\n            </ng-template>\n        </ngb-tab>\n        <ngb-tab>\n            <ng-template ngbTabTitle><b>Usuarios</b></ng-template>\n            <ng-template ngbTabContent>\n              \n            </ng-template>\n        </ngb-tab>\n        \n    </ngb-tabset>\n  </div>"
+module.exports = "<div [@routerTransition]>\n    <app-page-header [heading]=\"'Configuración'\" [pdf]=\"false\" [icon]=\"'fa-edit'\"></app-page-header>\n\n    <ngb-tabset>\n        <ngb-tab title=\"General\">\n            <ng-template ngbTabContent>\n                <div class=\"container mb-3\">\n                    <br>\n                    <app-empresa></app-empresa>\n                </div>\n            </ng-template>\n        </ngb-tab>\n        <ngb-tab>\n            <ng-template ngbTabTitle><b>Usuarios</b></ng-template>\n            <ng-template ngbTabContent>\n                <div class=\"container mb-3\">\n                    <br>\n                    <app-usuarios></app-usuarios>\n                </div>\n            </ng-template>\n        </ngb-tab>\n\n\n\n    </ngb-tabset>\n</div>"
 
 /***/ }),
 
@@ -385,6 +393,150 @@ var UsuarioComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], UsuarioComponent);
     return UsuarioComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/layout/configuracion/usuarios/usuarios.component.html":
+/*!***********************************************************************!*\
+  !*** ./src/app/layout/configuracion/usuarios/usuarios.component.html ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"card mb-3\">\n  <div class=\"card-header\">Usuarios del sistema</div>\n  <div class=\"card-body\">\n    <table class=\"table\">\n      <thead>\n        <tr>\n          <th>Correo</th>\n\n          <th>Perfil</th>\n          <th>Estado</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let usuario of usuarios\">\n          <td>{{usuario.data.correo}}</td>\n      \n          <td>{{usuario.data.tipo}}</td>\n          <td>{{usuario.data.estado}}</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/layout/configuracion/usuarios/usuarios.component.scss":
+/*!***********************************************************************!*\
+  !*** ./src/app/layout/configuracion/usuarios/usuarios.component.scss ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/layout/configuracion/usuarios/usuarios.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/layout/configuracion/usuarios/usuarios.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: UsuariosComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuariosComponent", function() { return UsuariosComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _servicios_usuario_usuario_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../servicios/usuario/usuario.service */ "./src/app/servicios/usuario/usuario.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UsuariosComponent = /** @class */ (function () {
+    function UsuariosComponent(usuarioService) {
+        var _this = this;
+        this.usuarioService = usuarioService;
+        this.usuarios = [];
+        this.suscripcion = this.usuarioService.obtenerUsuarios()
+            .subscribe(function (res) {
+            _this.usuarios = res;
+        });
+    }
+    UsuariosComponent.prototype.ngOnInit = function () {
+    };
+    UsuariosComponent.prototype.ngOnDestroy = function () {
+        console.log(this.suscripcion.unsubscribe());
+    };
+    UsuariosComponent.prototype.obtenerServicios = function () {
+    };
+    UsuariosComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-usuarios',
+            template: __webpack_require__(/*! ./usuarios.component.html */ "./src/app/layout/configuracion/usuarios/usuarios.component.html"),
+            styles: [__webpack_require__(/*! ./usuarios.component.scss */ "./src/app/layout/configuracion/usuarios/usuarios.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_servicios_usuario_usuario_service__WEBPACK_IMPORTED_MODULE_1__["UsuarioService"]])
+    ], UsuariosComponent);
+    return UsuariosComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/servicios/usuario/usuario.service.ts":
+/*!******************************************************!*\
+  !*** ./src/app/servicios/usuario/usuario.service.ts ***!
+  \******************************************************/
+/*! exports provided: UsuarioService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuarioService", function() { return UsuarioService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var angularfire2_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angularfire2/auth */ "./node_modules/angularfire2/auth/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var UsuarioService = /** @class */ (function () {
+    function UsuarioService(afs, afAuth) {
+        this.afs = afs;
+        this.afAuth = afAuth;
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+    }
+    UsuarioService.prototype.crearPersona = function (persona) {
+        var id = this.afs.createId();
+        return this.empresa.collection('personas').doc(id).set(persona);
+    };
+    UsuarioService.prototype.obtenerUsuarios = function () {
+        var _this = this;
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.afs.collection('empresaUsuario', function (query) { return query.where('empresa', '==', _this.empresa.ref); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    UsuarioService.prototype.obtenerServicios = function () {
+        this.empresa = this.afs.doc(localStorage.getItem('empresa'));
+        return this.empresa.collection('servicios', function (query) { return query.orderBy('codigo'); }).snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (actions) { return actions.map(function (a) {
+            var data = a.payload.doc.data();
+            var id = a.payload.doc.id;
+            return { id: id, data: data };
+        }); }));
+    };
+    UsuarioService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"], angularfire2_auth__WEBPACK_IMPORTED_MODULE_3__["AngularFireAuth"]])
+    ], UsuarioService);
+    return UsuarioService;
 }());
 
 

@@ -148,11 +148,7 @@ export class ReporteComponent implements OnInit {
       .subscribe(ordenes => {
         this.ordenes = []
         this.operadores = []
-
-
-
         this.tareas = []
-
         var porfacturar = 0
         var cita = 0
         var produccion = 0
@@ -163,24 +159,15 @@ export class ReporteComponent implements OnInit {
         this.estadisticas.fin = 0
         this.estadisticas.tefin = 0
         this.estadisticas.eficiencia = 100
-
         ordenes.forEach((orden: any) => {
-
           orden.data.numero = 'OT-' + new AnadirCerosPipe().transform(orden.data.numero, 5)
-
           this.ordenes.push(orden)
-
           if (this.ordenSeleccionada && this.ordenSeleccionada != "") {
             if (orden.id == this.ordenSeleccionada) {
               orden.data.servicios.forEach(servicio => {
-
                 this.operadores.push(servicio.operador)
-
                 if(this.operadorSeleccionado && this.operadorSeleccionado != ""){
                   if(this.operadorSeleccionado==servicio.operador.id){
-                  
-  
-  
                     this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
                     if (servicio.estadisticas) {
                       porfacturar++
@@ -204,16 +191,10 @@ export class ReporteComponent implements OnInit {
                     if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
                       pausa++
                     }
-      
-      
-      
                     servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
                     this.tareas.push(servicio)
                   }
                 }else{
-            
-  
-  
                   this.estadisticas.te += servicio.tiempoEstandar * servicio.cantidad * 60
                   if (servicio.estadisticas) {
                     porfacturar++
@@ -221,33 +202,22 @@ export class ReporteComponent implements OnInit {
                     this.estadisticas.tr += servicio.estadisticas.tiempoReal
                     this.estadisticas.tefin += servicio.estadisticas.tiempoEstandar
                   }
-    
                   if (servicio.estado == 'EN PRODUCCIÓN') {
                     produccion++
                   }
-    
                   if (servicio.estado == 'CITA/RECEPCION') {
                     cita++
                   }
-    
                   if (servicio.estado == 'EN ESPERA DE PRODUCCIÓN') {
                     espera++
                   }
-    
                   if (servicio.estado == 'EN PRODUCCIÓN - PAUSADO') {
                     pausa++
                   }
-    
-    
-    
                   servicio.orden = { id: orden.id, numero: orden.data.numero, cliente: orden.data.cliente, vehiculo: orden.data.vehiculo, fecha: orden.data.fecha }
                   this.tareas.push(servicio)
                 }
-  
-
               });
-
-
             }
           } else {
 

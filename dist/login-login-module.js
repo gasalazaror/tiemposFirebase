@@ -139,7 +139,7 @@ var LoginComponent = /** @class */ (function () {
             .then(function (usuario) {
             _this.error = '';
             _this.itemDoc = _this.db.doc('usuario/' + _this.afAuth.auth.currentUser.uid);
-            _this.empresas = _this.db.collection('empresaUsuario', function (query) { return query.where('correo', '==', _this.personaForm.value.email).where('tipo', '==', 'usuario'); }).valueChanges();
+            _this.empresas = _this.db.collection('empresaUsuario', function (query) { return query.where('correo', '==', _this.personaForm.value.email).where('estado', '==', 'Activo'); }).valueChanges();
             _this.empresas.subscribe(function (res) {
                 if (res.length == 1) {
                     _this.empresaSeleccionada = res[0].empresa.path;
